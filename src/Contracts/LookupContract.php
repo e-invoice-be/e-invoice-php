@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Models\GetResponse;
+use EInvoiceAPI\RequestOptions;
 
 interface LookupContract
 {
@@ -25,6 +25,6 @@ interface LookupContract
      */
     public function retrieve(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): GetResponse;
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\RequestOptions;
 
 interface InboxContract
 {
@@ -36,7 +36,7 @@ interface InboxContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 
     /**
@@ -55,7 +55,7 @@ interface InboxContract
      */
     public function listCreditNotes(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 
     /**
@@ -74,6 +74,6 @@ interface InboxContract
      */
     public function listInvoices(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 }

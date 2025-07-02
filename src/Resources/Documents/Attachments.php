@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Resources\Documents;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\AttachmentsContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Models\Documents\DocumentAttachment;
 use EInvoiceAPI\Models\Documents\DeleteResponse;
-use EInvoiceAPI\Parameters\Documents\Attachments\RetrieveParams;
-use EInvoiceAPI\Parameters\Documents\Attachments\DeleteParams;
+use EInvoiceAPI\Models\Documents\DocumentAttachment;
 use EInvoiceAPI\Parameters\Documents\Attachments\AddParams;
+use EInvoiceAPI\Parameters\Documents\Attachments\DeleteParams;
+use EInvoiceAPI\Parameters\Documents\Attachments\RetrieveParams;
+use EInvoiceAPI\RequestOptions;
 
 class Attachments implements AttachmentsContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{documentID?: string, attachmentID?: string} $params
      * @param RequestOptions|array{
@@ -34,7 +36,7 @@ class Attachments implements AttachmentsContract
     public function retrieve(
         string $attachmentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentAttachment {
         [$parsed, $options] = RetrieveParams::parseRequest(
             $params,
@@ -71,7 +73,7 @@ class Attachments implements AttachmentsContract
     public function list(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): array {
         $resp = $this->client->request(
             method: 'get',
@@ -100,7 +102,7 @@ class Attachments implements AttachmentsContract
     public function delete(
         string $attachmentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeleteResponse {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
         $documentID = $parsed['documentID'];
@@ -132,7 +134,7 @@ class Attachments implements AttachmentsContract
     public function add(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentAttachment {
         [$parsed, $options] = AddParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -145,9 +147,5 @@ class Attachments implements AttachmentsContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(DocumentAttachment::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

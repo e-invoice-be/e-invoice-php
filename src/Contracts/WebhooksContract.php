@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Models\WebhookResponse;
 use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Models\WebhookResponse;
+use EInvoiceAPI\RequestOptions;
 
 interface WebhooksContract
 {
@@ -26,7 +26,7 @@ interface WebhooksContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): WebhookResponse;
 
     /**
@@ -46,7 +46,7 @@ interface WebhooksContract
     public function retrieve(
         string $webhookID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): WebhookResponse;
 
     /**
@@ -73,7 +73,7 @@ interface WebhooksContract
     public function update(
         string $webhookID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): WebhookResponse;
 
     /**
@@ -111,6 +111,6 @@ interface WebhooksContract
     public function delete(
         string $webhookID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeleteResponse;
 }

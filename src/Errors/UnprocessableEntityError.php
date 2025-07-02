@@ -2,6 +2,4 @@
 
 namespace EInvoiceAPI\Errors;
 
-class UnprocessableEntityError extends APIStatusError
-{
-}
+class UnprocessableEntityError extends APIStatusError {}

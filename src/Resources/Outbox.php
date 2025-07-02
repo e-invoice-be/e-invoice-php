@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Resources;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\OutboxContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
 use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
+use EInvoiceAPI\RequestOptions;
 
 class Outbox implements OutboxContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{page?: int, pageSize?: int} $params
      * @param RequestOptions|array{
@@ -30,7 +32,7 @@ class Outbox implements OutboxContract
      */
     public function listDraftDocuments(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse {
         [$parsed, $options] = ListDraftDocumentsParams::parseRequest(
             $params,
@@ -74,7 +76,7 @@ class Outbox implements OutboxContract
      */
     public function listReceivedDocuments(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse {
         [$parsed, $options] = ListReceivedDocumentsParams::parseRequest(
             $params,
@@ -89,9 +91,5 @@ class Outbox implements OutboxContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(DocumentResponse::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

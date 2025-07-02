@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Resources;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\LookupContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\GetResponse;
 use EInvoiceAPI\Parameters\Lookup\RetrieveParams;
+use EInvoiceAPI\RequestOptions;
 
 class Lookup implements LookupContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{peppolID?: string} $params
      * @param RequestOptions|array{
@@ -29,7 +31,7 @@ class Lookup implements LookupContract
      */
     public function retrieve(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): GetResponse {
         [$parsed, $options] = RetrieveParams::parseRequest(
             $params,
@@ -44,9 +46,5 @@ class Lookup implements LookupContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(GetResponse::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

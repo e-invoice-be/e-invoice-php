@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts\Documents;
 
-use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Models\Documents\DocumentAttachment;
 use EInvoiceAPI\Models\Documents\DeleteResponse;
+use EInvoiceAPI\Models\Documents\DocumentAttachment;
+use EInvoiceAPI\RequestOptions;
 
 interface AttachmentsContract
 {
@@ -27,7 +27,7 @@ interface AttachmentsContract
     public function retrieve(
         string $attachmentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentAttachment;
 
     /**
@@ -49,7 +49,7 @@ interface AttachmentsContract
     public function list(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): array;
 
     /**
@@ -69,7 +69,7 @@ interface AttachmentsContract
     public function delete(
         string $attachmentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeleteResponse;
 
     /**
@@ -89,6 +89,6 @@ interface AttachmentsContract
     public function add(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentAttachment;
 }

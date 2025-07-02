@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Serde\UnionOf;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\MapOf;
+use EInvoiceAPI\Core\Serde\UnionOf;
 
 class Certificate implements BaseModel
 {
@@ -19,7 +19,7 @@ class Certificate implements BaseModel
     public string $status;
 
     /**
-     * @var array<string, mixed>|null $details
+     * @var null|array<string, mixed> $details
      */
     #[Api(type: new UnionOf([new MapOf('mixed'), 'null']), optional: true)]
     public ?array $details;
@@ -28,15 +28,14 @@ class Certificate implements BaseModel
     public ?string $error;
 
     /**
-     * @param array<string, mixed>|null $details
-     * @param string|null               $error
+     * @param null|array<string, mixed> $details
+     * @param null|string               $error
      */
     final public function __construct(
         string $status,
-        array|None|null $details = None::NOT_SET,
-        string|None|null $error = None::NOT_SET,
+        null|array|None $details = None::NOT_SET,
+        null|None|string $error = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -47,7 +46,6 @@ class Certificate implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

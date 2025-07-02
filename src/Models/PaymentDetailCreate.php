@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 
 class PaymentDetailCreate implements BaseModel
 {
@@ -26,18 +26,17 @@ class PaymentDetailCreate implements BaseModel
     public ?string $swift;
 
     /**
-     * @param string|null $bankAccountNumber
-     * @param string|null $iban
-     * @param string|null $paymentReference
-     * @param string|null $swift
+     * @param null|string $bankAccountNumber
+     * @param null|string $iban
+     * @param null|string $paymentReference
+     * @param null|string $swift
      */
     final public function __construct(
-        string|None|null $bankAccountNumber = None::NOT_SET,
-        string|None|null $iban = None::NOT_SET,
-        string|None|null $paymentReference = None::NOT_SET,
-        string|None|null $swift = None::NOT_SET,
+        null|None|string $bankAccountNumber = None::NOT_SET,
+        null|None|string $iban = None::NOT_SET,
+        null|None|string $paymentReference = None::NOT_SET,
+        null|None|string $swift = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -48,7 +47,6 @@ class PaymentDetailCreate implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 
