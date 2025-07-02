@@ -66,17 +66,11 @@ class ValidateJsonParams implements BaseModel
     #[Api('document_type', optional: true)]
     public string $documentType;
 
-    /**
-     * @var null|mixed $dueDate
-     */
     #[Api('due_date', optional: true)]
-    public mixed $dueDate;
+    public ?\DateTimeInterface $dueDate;
 
-    /**
-     * @var null|mixed $invoiceDate
-     */
     #[Api('invoice_date', optional: true)]
-    public mixed $invoiceDate;
+    public ?\DateTimeInterface $invoiceDate;
 
     #[Api('invoice_id', optional: true)]
     public ?string $invoiceID;
@@ -145,17 +139,11 @@ class ValidateJsonParams implements BaseModel
     #[Api('service_address_recipient', optional: true)]
     public ?string $serviceAddressRecipient;
 
-    /**
-     * @var null|mixed $serviceEndDate
-     */
     #[Api('service_end_date', optional: true)]
-    public mixed $serviceEndDate;
+    public ?\DateTimeInterface $serviceEndDate;
 
-    /**
-     * @var null|mixed $serviceStartDate
-     */
     #[Api('service_start_date', optional: true)]
-    public mixed $serviceStartDate;
+    public ?\DateTimeInterface $serviceStartDate;
 
     #[Api('shipping_address', optional: true)]
     public ?string $shippingAddress;

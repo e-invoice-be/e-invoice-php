@@ -19,7 +19,7 @@ class ValidatePeppolIDResponse implements BaseModel
      *
      *     countryCode?: string|null,
      *     name?: string|null,
-     *     registrationDate?: mixed|null,
+     *     registrationDate?: \DateTimeInterface|null,
      *
      * }|null $businessCard
      */
@@ -46,7 +46,7 @@ class ValidatePeppolIDResponse implements BaseModel
      *
      *     countryCode?: string|null,
      *     name?: string|null,
-     *     registrationDate?: mixed|null,
+     *     registrationDate?: \DateTimeInterface|null,
      *
      * }|null $businessCard
      * @param list<string> $supportedDocumentTypes

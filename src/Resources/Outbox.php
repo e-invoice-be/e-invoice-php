@@ -52,8 +52,8 @@ class Outbox implements OutboxContract
     /**
      * @param array{
      *
-     *     dateFrom?: mixed|null,
-     *     dateTo?: mixed|null,
+     *     dateFrom?: \DateTimeInterface|null,
+     *     dateTo?: \DateTimeInterface|null,
      *     page?: int,
      *     pageSize?: int,
      *     search?: string|null,
