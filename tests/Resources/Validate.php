@@ -3,9 +3,9 @@
 namespace EInvoiceAPI\Tests\Resources;
 
 use EInvoiceAPI\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -47,7 +47,8 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validatePeppolID(['peppolID' => 'peppol_id']);
+            ->validatePeppolID(['peppolID' => 'peppol_id'])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -61,7 +62,8 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validatePeppolID(['peppolID' => 'peppol_id']);
+            ->validatePeppolID(['peppolID' => 'peppol_id'])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 

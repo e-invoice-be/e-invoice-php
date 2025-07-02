@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models\Documents;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 
 class GetResponse implements BaseModel
 {
@@ -41,34 +41,33 @@ class GetResponse implements BaseModel
     public ?string $signedURL;
 
     /**
-     * @var mixed|null $validatedAt
+     * @var null|mixed $validatedAt
      */
     #[Api('validated_at', optional: true)]
     public mixed $validatedAt;
 
     /**
-     * @param string|null $fileHash
+     * @param null|string $fileHash
      * @param int         $fileSize
-     * @param string|null $receiverPeppolID
-     * @param string|null $receiverPeppolScheme
-     * @param string|null $senderPeppolID
-     * @param string|null $senderPeppolScheme
-     * @param string|null $signedURL
-     * @param mixed|null  $validatedAt
+     * @param null|string $receiverPeppolID
+     * @param null|string $receiverPeppolScheme
+     * @param null|string $senderPeppolID
+     * @param null|string $senderPeppolScheme
+     * @param null|string $signedURL
+     * @param null|mixed  $validatedAt
      */
     final public function __construct(
         string $id,
         string $fileName,
-        string|None|null $fileHash = None::NOT_SET,
+        null|None|string $fileHash = None::NOT_SET,
         int|None $fileSize = None::NOT_SET,
-        string|None|null $receiverPeppolID = None::NOT_SET,
-        string|None|null $receiverPeppolScheme = None::NOT_SET,
-        string|None|null $senderPeppolID = None::NOT_SET,
-        string|None|null $senderPeppolScheme = None::NOT_SET,
-        string|None|null $signedURL = None::NOT_SET,
-        mixed $validatedAt = None::NOT_SET,
+        null|None|string $receiverPeppolID = None::NOT_SET,
+        null|None|string $receiverPeppolScheme = None::NOT_SET,
+        null|None|string $senderPeppolID = None::NOT_SET,
+        null|None|string $senderPeppolScheme = None::NOT_SET,
+        null|None|string $signedURL = None::NOT_SET,
+        mixed $validatedAt = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -79,7 +78,6 @@ class GetResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

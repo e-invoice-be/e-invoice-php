@@ -2,6 +2,4 @@
 
 namespace EInvoiceAPI\Errors;
 
-class PermissionDeniedError extends APIStatusError
-{
-}
+class PermissionDeniedError extends APIStatusError {}

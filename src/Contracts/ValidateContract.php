@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Models\ValidatePeppolIDResponse;
+use EInvoiceAPI\RequestOptions;
 
 interface ValidateContract
 {
@@ -88,7 +88,7 @@ interface ValidateContract
      */
     public function validateJson(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): UblDocumentValidation;
 
     /**
@@ -107,7 +107,7 @@ interface ValidateContract
      */
     public function validatePeppolID(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): ValidatePeppolIDResponse;
 
     /**
@@ -126,6 +126,6 @@ interface ValidateContract
      */
     public function validateUbl(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): UblDocumentValidation;
 }

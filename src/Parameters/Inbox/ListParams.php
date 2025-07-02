@@ -15,13 +15,13 @@ class ListParams implements BaseModel
     use Params;
 
     /**
-     * @var mixed|null $dateFrom
+     * @var null|mixed $dateFrom
      */
     #[Api(optional: true)]
     public mixed $dateFrom;
 
     /**
-     * @var mixed|null $dateTo
+     * @var null|mixed $dateTo
      */
     #[Api(optional: true)]
     public mixed $dateTo;

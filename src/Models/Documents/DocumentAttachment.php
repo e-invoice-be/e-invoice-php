@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models\Documents;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 
 class DocumentAttachment implements BaseModel
 {
@@ -31,16 +31,15 @@ class DocumentAttachment implements BaseModel
     /**
      * @param int         $fileSize
      * @param string      $fileType
-     * @param string|null $fileURL
+     * @param null|string $fileURL
      */
     final public function __construct(
         string $id,
         string $fileName,
         int|None $fileSize = None::NOT_SET,
-        string|None $fileType = None::NOT_SET,
-        string|None|null $fileURL = None::NOT_SET,
+        None|string $fileType = None::NOT_SET,
+        null|None|string $fileURL = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -51,7 +50,6 @@ class DocumentAttachment implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

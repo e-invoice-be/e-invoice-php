@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 class UblDocumentValidation implements BaseModel
@@ -54,16 +54,15 @@ class UblDocumentValidation implements BaseModel
      *     test?: string|null,
      *
      * }> $issues
-     * @param string|null $ublDocument
+     * @param null|string $ublDocument
      */
     final public function __construct(
         string $id,
         ?string $fileName,
         bool $isValid,
         array $issues,
-        string|None|null $ublDocument = None::NOT_SET,
+        null|None|string $ublDocument = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -74,7 +73,6 @@ class UblDocumentValidation implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 
