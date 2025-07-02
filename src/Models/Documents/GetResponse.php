@@ -40,21 +40,18 @@ class GetResponse implements BaseModel
     #[Api('signed_url', optional: true)]
     public ?string $signedURL;
 
-    /**
-     * @var null|mixed $validatedAt
-     */
     #[Api('validated_at', optional: true)]
-    public mixed $validatedAt;
+    public ?\DateTimeInterface $validatedAt;
 
     /**
-     * @param null|string $fileHash
-     * @param int         $fileSize
-     * @param null|string $receiverPeppolID
-     * @param null|string $receiverPeppolScheme
-     * @param null|string $senderPeppolID
-     * @param null|string $senderPeppolScheme
-     * @param null|string $signedURL
-     * @param null|mixed  $validatedAt
+     * @param null|string             $fileHash
+     * @param int                     $fileSize
+     * @param null|string             $receiverPeppolID
+     * @param null|string             $receiverPeppolScheme
+     * @param null|string             $senderPeppolID
+     * @param null|string             $senderPeppolScheme
+     * @param null|string             $signedURL
+     * @param null|\DateTimeInterface $validatedAt
      */
     final public function __construct(
         string $id,
@@ -66,7 +63,7 @@ class GetResponse implements BaseModel
         null|None|string $senderPeppolID = None::NOT_SET,
         null|None|string $senderPeppolScheme = None::NOT_SET,
         null|None|string $signedURL = None::NOT_SET,
-        mixed $validatedAt = None::NOT_SET
+        null|\DateTimeInterface|None $validatedAt = None::NOT_SET
     ) {
         $args = func_get_args();
 

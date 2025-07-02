@@ -63,17 +63,11 @@ class DocumentCreate implements BaseModel
     #[Api('document_type', optional: true)]
     public string $documentType;
 
-    /**
-     * @var null|mixed $dueDate
-     */
     #[Api('due_date', optional: true)]
-    public mixed $dueDate;
+    public ?\DateTimeInterface $dueDate;
 
-    /**
-     * @var null|mixed $invoiceDate
-     */
     #[Api('invoice_date', optional: true)]
-    public mixed $invoiceDate;
+    public ?\DateTimeInterface $invoiceDate;
 
     #[Api('invoice_id', optional: true)]
     public ?string $invoiceID;
@@ -142,17 +136,11 @@ class DocumentCreate implements BaseModel
     #[Api('service_address_recipient', optional: true)]
     public ?string $serviceAddressRecipient;
 
-    /**
-     * @var null|mixed $serviceEndDate
-     */
     #[Api('service_end_date', optional: true)]
-    public mixed $serviceEndDate;
+    public ?\DateTimeInterface $serviceEndDate;
 
-    /**
-     * @var null|mixed $serviceStartDate
-     */
     #[Api('service_start_date', optional: true)]
-    public mixed $serviceStartDate;
+    public ?\DateTimeInterface $serviceStartDate;
 
     #[Api('shipping_address', optional: true)]
     public ?string $shippingAddress;
@@ -224,8 +212,8 @@ class DocumentCreate implements BaseModel
      * @param null|string                         $customerTaxID
      * @param string                              $direction
      * @param string                              $documentType
-     * @param null|mixed                          $dueDate
-     * @param null|mixed                          $invoiceDate
+     * @param null|\DateTimeInterface             $dueDate
+     * @param null|\DateTimeInterface             $invoiceDate
      * @param null|string                         $invoiceID
      * @param null|float|string                   $invoiceTotal
      * @param list<array{
@@ -250,8 +238,8 @@ class DocumentCreate implements BaseModel
      * @param null|string                    $remittanceAddressRecipient
      * @param null|string                    $serviceAddress
      * @param null|string                    $serviceAddressRecipient
-     * @param null|mixed                     $serviceEndDate
-     * @param null|mixed                     $serviceStartDate
+     * @param null|\DateTimeInterface        $serviceEndDate
+     * @param null|\DateTimeInterface        $serviceStartDate
      * @param null|string                    $shippingAddress
      * @param null|string                    $shippingAddressRecipient
      * @param string                         $state
@@ -283,8 +271,8 @@ class DocumentCreate implements BaseModel
         null|None|string $customerTaxID = None::NOT_SET,
         None|string $direction = None::NOT_SET,
         None|string $documentType = None::NOT_SET,
-        mixed $dueDate = None::NOT_SET,
-        mixed $invoiceDate = None::NOT_SET,
+        null|\DateTimeInterface|None $dueDate = None::NOT_SET,
+        null|\DateTimeInterface|None $invoiceDate = None::NOT_SET,
         null|None|string $invoiceID = None::NOT_SET,
         mixed $invoiceTotal = None::NOT_SET,
         null|array|None $items = None::NOT_SET,
@@ -297,8 +285,8 @@ class DocumentCreate implements BaseModel
         null|None|string $remittanceAddressRecipient = None::NOT_SET,
         null|None|string $serviceAddress = None::NOT_SET,
         null|None|string $serviceAddressRecipient = None::NOT_SET,
-        mixed $serviceEndDate = None::NOT_SET,
-        mixed $serviceStartDate = None::NOT_SET,
+        null|\DateTimeInterface|None $serviceEndDate = None::NOT_SET,
+        null|\DateTimeInterface|None $serviceStartDate = None::NOT_SET,
         null|None|string $shippingAddress = None::NOT_SET,
         null|None|string $shippingAddressRecipient = None::NOT_SET,
         None|string $state = None::NOT_SET,
