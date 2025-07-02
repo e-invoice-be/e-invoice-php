@@ -13,6 +13,17 @@ use Psr\Http\Message\ResponseInterface;
 class DocumentsNumberPage extends AbstractPage
 {
     /**
+     * @var list<TItem>
+     */
+    public array $items;
+
+    public int $page;
+
+    public int $pageSize;
+
+    public int $total;
+
+    /**
      * @param array{
      *
      * items?: list<TItem>, page?: int, pageSize?: int, total?: int
@@ -23,26 +34,13 @@ class DocumentsNumberPage extends AbstractPage
         protected BaseClient $client,
         protected PageRequestOptions $options,
         protected ResponseInterface $response,
-        protected mixed $body,
+        protected mixed $body
     ) {
-
         $this->items = $body['items'] ?? [];
         $this->page = $body['page'] ?? 0;
         $this->pageSize = $body['pageSize'] ?? 0;
         $this->total = $body['total'] ?? 0;
-
     }
-
-    /**
-     * @var list<TItem>
-     */
-    public array $items;
-
-    public int $page;
-
-    public int $pageSize;
-
-    public int $total;
 
     public function nextPageRequestOptions(): ?PageRequestOptions
     {

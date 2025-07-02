@@ -8,8 +8,8 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 
@@ -19,13 +19,13 @@ class CreateParams implements BaseModel
     use Params;
 
     /**
-     * @var float|string|null $amountDue
+     * @var null|float|string $amountDue
      */
     #[Api('amount_due', optional: true)]
     public mixed $amountDue;
 
     /**
-     * @var list<DocumentAttachmentCreate>|null $attachments
+     * @var null|list<DocumentAttachmentCreate> $attachments
      */
     #[Api(
         type: new UnionOf([new ListOf(DocumentAttachmentCreate::class), 'null']),
@@ -67,13 +67,13 @@ class CreateParams implements BaseModel
     public string $documentType;
 
     /**
-     * @var mixed|null $dueDate
+     * @var null|mixed $dueDate
      */
     #[Api('due_date', optional: true)]
     public mixed $dueDate;
 
     /**
-     * @var mixed|null $invoiceDate
+     * @var null|mixed $invoiceDate
      */
     #[Api('invoice_date', optional: true)]
     public mixed $invoiceDate;
@@ -82,7 +82,7 @@ class CreateParams implements BaseModel
     public ?string $invoiceID;
 
     /**
-     * @var float|string|null $invoiceTotal
+     * @var null|float|string $invoiceTotal
      */
     #[Api('invoice_total', optional: true)]
     public mixed $invoiceTotal;
@@ -112,7 +112,7 @@ class CreateParams implements BaseModel
     public ?string $note;
 
     /**
-     * @var list<PaymentDetailCreate>|null $paymentDetails
+     * @var null|list<PaymentDetailCreate> $paymentDetails
      */
     #[Api(
         'payment_details',
@@ -125,7 +125,7 @@ class CreateParams implements BaseModel
     public ?string $paymentTerm;
 
     /**
-     * @var float|string|null $previousUnpaidBalance
+     * @var null|float|string $previousUnpaidBalance
      */
     #[Api('previous_unpaid_balance', optional: true)]
     public mixed $previousUnpaidBalance;
@@ -146,13 +146,13 @@ class CreateParams implements BaseModel
     public ?string $serviceAddressRecipient;
 
     /**
-     * @var mixed|null $serviceEndDate
+     * @var null|mixed $serviceEndDate
      */
     #[Api('service_end_date', optional: true)]
     public mixed $serviceEndDate;
 
     /**
-     * @var mixed|null $serviceStartDate
+     * @var null|mixed $serviceStartDate
      */
     #[Api('service_start_date', optional: true)]
     public mixed $serviceStartDate;
@@ -167,7 +167,7 @@ class CreateParams implements BaseModel
     public string $state;
 
     /**
-     * @var float|string|null $subtotal
+     * @var null|float|string $subtotal
      */
     #[Api(optional: true)]
     public mixed $subtotal;
@@ -187,13 +187,13 @@ class CreateParams implements BaseModel
     public ?array $taxDetails;
 
     /**
-     * @var float|string|null $totalDiscount
+     * @var null|float|string $totalDiscount
      */
     #[Api('total_discount', optional: true)]
     public mixed $totalDiscount;
 
     /**
-     * @var float|string|null $totalTax
+     * @var null|float|string $totalTax
      */
     #[Api('total_tax', optional: true)]
     public mixed $totalTax;

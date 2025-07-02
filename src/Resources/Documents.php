@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Resources;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\DocumentsContract;
 use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Models\DocumentAttachmentCreate;
-use EInvoiceAPI\Models\PaymentDetailCreate;
-use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Models\DocumentAttachmentCreate;
+use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Parameters\Documents\CreateParams;
 use EInvoiceAPI\Parameters\Documents\SendParams;
+use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Resources\Documents\Attachments;
 use EInvoiceAPI\Resources\Documents\Ubl;
 
@@ -22,6 +22,12 @@ class Documents implements DocumentsContract
     public Attachments $attachments;
 
     public Ubl $ubl;
+
+    public function __construct(protected Client $client)
+    {
+        $this->attachments = new Attachments($client);
+        $this->ubl = new Ubl($client);
+    }
 
     /**
      * @param array{
@@ -99,7 +105,7 @@ class Documents implements DocumentsContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -130,7 +136,7 @@ class Documents implements DocumentsContract
     public function retrieve(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse {
         $resp = $this->client->request(
             method: 'get',
@@ -159,7 +165,7 @@ class Documents implements DocumentsContract
     public function delete(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeleteResponse {
         $resp = $this->client->request(
             method: 'delete',
@@ -197,7 +203,7 @@ class Documents implements DocumentsContract
     public function send(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse {
         [$parsed, $options] = SendParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -209,13 +215,5 @@ class Documents implements DocumentsContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(DocumentResponse::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
-
-        $this->attachments = new Attachments($client);
-        $this->ubl = new Ubl($client);
-
     }
 }

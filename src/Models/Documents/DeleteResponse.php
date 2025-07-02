@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models\Documents;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 
 class DeleteResponse implements BaseModel
 {
@@ -18,7 +18,6 @@ class DeleteResponse implements BaseModel
 
     final public function __construct(bool $isDeleted)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -29,7 +28,6 @@ class DeleteResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 
