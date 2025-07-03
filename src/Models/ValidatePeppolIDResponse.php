@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 class ValidatePeppolIDResponse implements BaseModel
@@ -19,7 +19,7 @@ class ValidatePeppolIDResponse implements BaseModel
      *
      *     countryCode?: string|null,
      *     name?: string|null,
-     *     registrationDate?: mixed|null,
+     *     registrationDate?: \DateTimeInterface|null,
      *
      * }|null $businessCard
      */
@@ -46,7 +46,7 @@ class ValidatePeppolIDResponse implements BaseModel
      *
      *     countryCode?: string|null,
      *     name?: string|null,
-     *     registrationDate?: mixed|null,
+     *     registrationDate?: \DateTimeInterface|null,
      *
      * }|null $businessCard
      * @param list<string> $supportedDocumentTypes
@@ -56,9 +56,8 @@ class ValidatePeppolIDResponse implements BaseModel
         bool $businessCardValid,
         bool $dnsValid,
         bool $isValid,
-        array|None $supportedDocumentTypes = None::NOT_SET,
+        array|None $supportedDocumentTypes = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -69,7 +68,6 @@ class ValidatePeppolIDResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

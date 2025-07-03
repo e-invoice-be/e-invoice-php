@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Models\DocumentAttachmentCreate;
-use EInvoiceAPI\Models\PaymentDetailCreate;
-use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Models\DocumentAttachmentCreate;
+use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\PaymentDetailCreate;
+use EInvoiceAPI\RequestOptions;
 
 interface DocumentsContract
 {
@@ -28,8 +28,8 @@ interface DocumentsContract
      *       customerTaxID?: string|null,
      *       direction?: string,
      *       documentType?: string,
-     *       dueDate?: mixed|null,
-     *       invoiceDate?: mixed|null,
+     *       dueDate?: \DateTimeInterface|null,
+     *       invoiceDate?: \DateTimeInterface|null,
      *       invoiceID?: string|null,
      *       invoiceTotal?: float|string|null,
      *       items?: list<array{
@@ -54,8 +54,8 @@ interface DocumentsContract
      *       remittanceAddressRecipient?: string|null,
      *       serviceAddress?: string|null,
      *       serviceAddressRecipient?: string|null,
-     *       serviceEndDate?: mixed|null,
-     *       serviceStartDate?: mixed|null,
+     *       serviceEndDate?: \DateTimeInterface|null,
+     *       serviceStartDate?: \DateTimeInterface|null,
      *       shippingAddress?: string|null,
      *       shippingAddressRecipient?: string|null,
      *       state?: string,
@@ -88,7 +88,7 @@ interface DocumentsContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 
     /**
@@ -108,7 +108,7 @@ interface DocumentsContract
     public function retrieve(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 
     /**
@@ -128,7 +128,7 @@ interface DocumentsContract
     public function delete(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeleteResponse;
 
     /**
@@ -157,6 +157,6 @@ interface DocumentsContract
     public function send(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 }

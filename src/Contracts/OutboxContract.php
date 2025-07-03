@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\RequestOptions;
 
 interface OutboxContract
 {
@@ -25,14 +25,14 @@ interface OutboxContract
      */
     public function listDraftDocuments(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 
     /**
      * @param array{
      *
-     *       dateFrom?: mixed|null,
-     *       dateTo?: mixed|null,
+     *       dateFrom?: \DateTimeInterface|null,
+     *       dateTo?: \DateTimeInterface|null,
      *       page?: int,
      *       pageSize?: int,
      *       search?: string|null,
@@ -55,6 +55,6 @@ interface OutboxContract
      */
     public function listReceivedDocuments(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 }

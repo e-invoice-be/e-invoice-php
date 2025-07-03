@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 class PaginatedDocumentResponse implements BaseModel
@@ -40,9 +40,8 @@ class PaginatedDocumentResponse implements BaseModel
         int $page,
         int $pageSize,
         int $pages,
-        int $total,
+        int $total
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -53,7 +52,6 @@ class PaginatedDocumentResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

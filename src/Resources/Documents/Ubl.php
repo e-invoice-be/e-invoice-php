@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Resources\Documents;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\UblContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\Documents\GetResponse;
+use EInvoiceAPI\RequestOptions;
 
 class Ubl implements UblContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{documentID?: string} $params
      * @param RequestOptions|array{
@@ -29,7 +31,7 @@ class Ubl implements UblContract
     public function get(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): GetResponse {
         $resp = $this->client->request(
             method: 'get',
@@ -39,9 +41,5 @@ class Ubl implements UblContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(GetResponse::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

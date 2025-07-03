@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Resources;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\WebhooksContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Models\WebhookResponse;
 use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Models\WebhookResponse;
 use EInvoiceAPI\Parameters\Webhooks\CreateParams;
 use EInvoiceAPI\Parameters\Webhooks\UpdateParams;
+use EInvoiceAPI\RequestOptions;
 
 class Webhooks implements WebhooksContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{events?: list<string>, url?: string, enabled?: bool} $params
      * @param RequestOptions|array{
@@ -32,7 +34,7 @@ class Webhooks implements WebhooksContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): WebhookResponse {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -63,7 +65,7 @@ class Webhooks implements WebhooksContract
     public function retrieve(
         string $webhookID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): WebhookResponse {
         $resp = $this->client->request(
             method: 'get',
@@ -99,7 +101,7 @@ class Webhooks implements WebhooksContract
     public function update(
         string $webhookID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): WebhookResponse {
         [$parsed, $options] = UpdateParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -158,7 +160,7 @@ class Webhooks implements WebhooksContract
     public function delete(
         string $webhookID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeleteResponse {
         $resp = $this->client->request(
             method: 'delete',
@@ -168,9 +170,5 @@ class Webhooks implements WebhooksContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(DeleteResponse::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

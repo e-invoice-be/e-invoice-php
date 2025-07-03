@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Resources;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\ValidateContract;
 use EInvoiceAPI\Core\Serde;
@@ -15,9 +14,12 @@ use EInvoiceAPI\Models\ValidatePeppolIDResponse;
 use EInvoiceAPI\Parameters\Validate\ValidateJsonParams;
 use EInvoiceAPI\Parameters\Validate\ValidatePeppolIDParams;
 use EInvoiceAPI\Parameters\Validate\ValidateUblParams;
+use EInvoiceAPI\RequestOptions;
 
 class Validate implements ValidateContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{
      *
@@ -34,8 +36,8 @@ class Validate implements ValidateContract
      *     customerTaxID?: string|null,
      *     direction?: string,
      *     documentType?: string,
-     *     dueDate?: mixed|null,
-     *     invoiceDate?: mixed|null,
+     *     dueDate?: \DateTimeInterface|null,
+     *     invoiceDate?: \DateTimeInterface|null,
      *     invoiceID?: string|null,
      *     invoiceTotal?: float|string|null,
      *     items?: list<array{
@@ -60,8 +62,8 @@ class Validate implements ValidateContract
      *     remittanceAddressRecipient?: string|null,
      *     serviceAddress?: string|null,
      *     serviceAddressRecipient?: string|null,
-     *     serviceEndDate?: mixed|null,
-     *     serviceStartDate?: mixed|null,
+     *     serviceEndDate?: \DateTimeInterface|null,
+     *     serviceStartDate?: \DateTimeInterface|null,
      *     shippingAddress?: string|null,
      *     shippingAddressRecipient?: string|null,
      *     state?: string,
@@ -94,7 +96,7 @@ class Validate implements ValidateContract
      */
     public function validateJson(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): UblDocumentValidation {
         [$parsed, $options] = ValidateJsonParams::parseRequest(
             $params,
@@ -127,7 +129,7 @@ class Validate implements ValidateContract
      */
     public function validatePeppolID(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): ValidatePeppolIDResponse {
         [$parsed, $options] = ValidatePeppolIDParams::parseRequest(
             $params,
@@ -160,7 +162,7 @@ class Validate implements ValidateContract
      */
     public function validateUbl(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): UblDocumentValidation {
         [$parsed, $options] = ValidateUblParams::parseRequest(
             $params,
@@ -176,9 +178,5 @@ class Validate implements ValidateContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(UblDocumentValidation::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

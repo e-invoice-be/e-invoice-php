@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 class GetResponse implements BaseModel
@@ -192,9 +192,8 @@ class GetResponse implements BaseModel
         float $executionTimeMs,
         array $queryMetadata,
         array $serviceMetadata,
-        string $status,
+        string $status
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -205,7 +204,6 @@ class GetResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\RequestOptions;
 
 interface InboxContract
 {
     /**
      * @param array{
      *
-     *       dateFrom?: mixed|null,
-     *       dateTo?: mixed|null,
+     *       dateFrom?: \DateTimeInterface|null,
+     *       dateTo?: \DateTimeInterface|null,
      *       page?: int,
      *       pageSize?: int,
      *       search?: string|null,
@@ -36,7 +36,7 @@ interface InboxContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 
     /**
@@ -55,7 +55,7 @@ interface InboxContract
      */
     public function listCreditNotes(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 
     /**
@@ -74,6 +74,6 @@ interface InboxContract
      */
     public function listInvoices(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DocumentResponse;
 }

@@ -14,17 +14,11 @@ class ListParams implements BaseModel
     use Model;
     use Params;
 
-    /**
-     * @var mixed|null $dateFrom
-     */
     #[Api(optional: true)]
-    public mixed $dateFrom;
+    public ?\DateTimeInterface $dateFrom;
 
-    /**
-     * @var mixed|null $dateTo
-     */
     #[Api(optional: true)]
-    public mixed $dateTo;
+    public ?\DateTimeInterface $dateTo;
 
     #[Api(optional: true)]
     public int $page;

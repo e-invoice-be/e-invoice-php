@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts\Documents;
 
-use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Models\Documents\GetResponse;
+use EInvoiceAPI\RequestOptions;
 
 interface UblContract
 {
@@ -26,6 +26,6 @@ interface UblContract
     public function get(
         string $documentID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): GetResponse;
 }
