@@ -26,6 +26,7 @@
   },
   "license": "APACHE-2.0",
   "name": "e-invoice/e-invoice-api",
+  "description": "PHP library for the e-invoice.be Peppol API",
   "require": {
     "php": "^8.1",
     "php-http/discovery": "^1.17",
