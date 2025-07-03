@@ -1,12 +1,12 @@
-# E Invoice PHP API library
+# e-invoice.be PHP API library
 
-The E Invoice PHP library provides convenient access to the E Invoice REST API from any PHP 8.1.0+ application.
+This library provides convenient access to the e-invoice REST API from any PHP 8.1.0+ application.
 
-It is generated with [Stainless](https://www.stainless.com/).
+To get an API key, [make a free account](https://app.e-invoice.be/register?ref=php) and register your company.
 
 ## Documentation
 
-The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be).
+The full REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be).
 
 ## Installation
 
