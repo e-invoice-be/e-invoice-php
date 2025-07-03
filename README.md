@@ -164,7 +164,7 @@ $response = $client->request(
   query: ['dog' => 'woof'],
   headers: ['useful-header' => 'interesting-value'],
   body: ['hello' => 'world']
-)
+);
 ```
 
 ## Versioning

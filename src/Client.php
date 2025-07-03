@@ -40,8 +40,8 @@ class Client extends BaseClient
             headers: [
                 'Content-Type' => 'application/json', 'Accept' => 'application/json',
             ],
-            options: new RequestOptions(),
             baseUrl: $base,
+            options: new RequestOptions(),
         );
 
         $this->documents = new Documents($this);
