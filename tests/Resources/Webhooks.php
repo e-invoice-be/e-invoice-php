@@ -3,6 +3,8 @@
 namespace EInvoiceAPI\Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Models\WebhookResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +40,8 @@ final class WebhooksTest extends TestCase
             ->webhooks
             ->create(['events' => ['string'], 'url' => 'https://example.com'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -55,7 +58,8 @@ final class WebhooksTest extends TestCase
                 'events' => ['string'], 'url' => 'https://example.com', 'enabled' => true,
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -66,7 +70,8 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->retrieve('webhook_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -77,7 +82,8 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->update('webhook_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -88,7 +94,8 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->list([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertIsList($result);
     }
 
     #[Test]
@@ -99,6 +106,7 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->delete('webhook_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DeleteResponse::class, $result);
     }
 }

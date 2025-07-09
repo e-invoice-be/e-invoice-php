@@ -3,6 +3,7 @@
 namespace EInvoiceAPI\Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Models\DocumentResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +35,8 @@ final class OutboxTest extends TestCase
         }
 
         $result = $this->client->outbox->listDraftDocuments([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -45,6 +47,7 @@ final class OutboxTest extends TestCase
         }
 
         $result = $this->client->outbox->listReceivedDocuments([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 }

@@ -3,6 +3,7 @@
 namespace EInvoiceAPI\Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Models\DocumentResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +35,8 @@ final class InboxTest extends TestCase
         }
 
         $result = $this->client->inbox->list([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -45,7 +47,8 @@ final class InboxTest extends TestCase
         }
 
         $result = $this->client->inbox->listCreditNotes([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -56,6 +59,7 @@ final class InboxTest extends TestCase
         }
 
         $result = $this->client->inbox->listInvoices([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 }

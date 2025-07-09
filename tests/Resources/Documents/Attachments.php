@@ -3,6 +3,8 @@
 namespace EInvoiceAPI\Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Models\Documents\DeleteResponse;
+use EInvoiceAPI\Models\Documents\DocumentAttachment;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -39,7 +41,8 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve('attachment_id', ['documentID' => 'document_id'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 
     #[Test]
@@ -55,7 +58,8 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve('attachment_id', ['documentID' => 'document_id'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 
     #[Test]
@@ -66,7 +70,8 @@ final class AttachmentsTest extends TestCase
         }
 
         $result = $this->client->documents->attachments->list('document_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertIsList($result);
     }
 
     #[Test]
@@ -82,7 +87,8 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete('attachment_id', ['documentID' => 'document_id'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DeleteResponse::class, $result);
     }
 
     #[Test]
@@ -98,7 +104,8 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete('attachment_id', ['documentID' => 'document_id'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DeleteResponse::class, $result);
     }
 
     #[Test]
@@ -114,7 +121,8 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->add('document_id', ['file' => 'file'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 
     #[Test]
@@ -130,6 +138,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->add('document_id', ['file' => 'file'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 }
