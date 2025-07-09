@@ -3,6 +3,8 @@
 namespace EInvoiceAPI\Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Models\DocumentResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +36,8 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->create([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -45,7 +48,8 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->retrieve('document_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -56,7 +60,8 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->delete('document_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DeleteResponse::class, $result);
     }
 
     #[Test]
@@ -67,6 +72,7 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->send('document_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 }

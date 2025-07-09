@@ -3,6 +3,8 @@
 namespace EInvoiceAPI\Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Models\UblDocumentValidation;
+use EInvoiceAPI\Models\ValidatePeppolIDResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +36,8 @@ final class ValidateTest extends TestCase
         }
 
         $result = $this->client->validate->validateJson([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
 
     #[Test]
@@ -49,7 +52,8 @@ final class ValidateTest extends TestCase
             ->validate
             ->validatePeppolID(['peppolID' => 'peppol_id'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(ValidatePeppolIDResponse::class, $result);
     }
 
     #[Test]
@@ -64,7 +68,8 @@ final class ValidateTest extends TestCase
             ->validate
             ->validatePeppolID(['peppolID' => 'peppol_id'])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(ValidatePeppolIDResponse::class, $result);
     }
 
     #[Test]
@@ -75,7 +80,8 @@ final class ValidateTest extends TestCase
         }
 
         $result = $this->client->validate->validateUbl(['file' => 'file']);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
 
     #[Test]
@@ -86,6 +92,7 @@ final class ValidateTest extends TestCase
         }
 
         $result = $this->client->validate->validateUbl(['file' => 'file']);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
 }
