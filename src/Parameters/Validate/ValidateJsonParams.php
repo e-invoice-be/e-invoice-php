@@ -36,7 +36,7 @@ class ValidateJsonParams implements BaseModel
     public ?string $billingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $currency;
+    public ?string $currency;
 
     #[Api('customer_address', optional: true)]
     public ?string $customerAddress;
@@ -57,10 +57,10 @@ class ValidateJsonParams implements BaseModel
     public ?string $customerTaxID;
 
     #[Api(optional: true)]
-    public string $direction;
+    public ?string $direction;
 
     #[Api('document_type', optional: true)]
-    public string $documentType;
+    public ?string $documentType;
 
     #[Api('due_date', optional: true)]
     public ?\DateTimeInterface $dueDate;
@@ -140,7 +140,7 @@ class ValidateJsonParams implements BaseModel
     public ?string $shippingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $state;
+    public ?string $state;
 
     /** @var null|float|string $subtotal */
     #[Api(optional: true)]

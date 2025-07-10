@@ -9,7 +9,6 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Core\Serde\UnionOf;
 
 class ValidatePeppolIDResponse implements BaseModel
 {
@@ -35,11 +34,7 @@ class ValidatePeppolIDResponse implements BaseModel
     public bool $isValid;
 
     /** @var null|list<string> $supportedDocumentTypes */
-    #[Api(
-        'supported_document_types',
-        type: new UnionOf([new ListOf('string'), 'null']),
-        optional: true,
-    )]
+    #[Api('supported_document_types', type: new ListOf('string'), optional: true)]
     public ?array $supportedDocumentTypes;
 
     /**

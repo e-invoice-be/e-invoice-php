@@ -9,7 +9,6 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
 
 class DocumentResponse implements BaseModel
@@ -23,10 +22,7 @@ class DocumentResponse implements BaseModel
     public ?string $amountDue;
 
     /** @var null|list<DocumentAttachment> $attachments */
-    #[Api(
-        type: new UnionOf([new ListOf(DocumentAttachment::class), 'null']),
-        optional: true,
-    )]
+    #[Api(type: new ListOf(DocumentAttachment::class), optional: true)]
     public ?array $attachments;
 
     #[Api('billing_address', optional: true)]
@@ -36,7 +32,7 @@ class DocumentResponse implements BaseModel
     public ?string $billingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $currency;
+    public ?string $currency;
 
     #[Api('customer_address', optional: true)]
     public ?string $customerAddress;
@@ -57,10 +53,10 @@ class DocumentResponse implements BaseModel
     public ?string $customerTaxID;
 
     #[Api(optional: true)]
-    public string $direction;
+    public ?string $direction;
 
     #[Api('document_type', optional: true)]
-    public string $documentType;
+    public ?string $documentType;
 
     #[Api('due_date', optional: true)]
     public ?\DateTimeInterface $dueDate;
@@ -87,10 +83,7 @@ class DocumentResponse implements BaseModel
      *   unitPrice?: string|null,
      * }>|null $items
      */
-    #[Api(
-        type: new UnionOf([new ListOf(new ListOf('mixed')), 'null']),
-        optional: true
-    )]
+    #[Api(type: new ListOf(new ListOf('mixed')), optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
@@ -106,8 +99,8 @@ class DocumentResponse implements BaseModel
      */
     #[Api(
         'payment_details',
-        type: new UnionOf([new ListOf(new ListOf('mixed')), 'null']),
-        optional: true,
+        type: new ListOf(new ListOf('mixed')),
+        optional: true
     )]
     public ?array $paymentDetails;
 
@@ -145,7 +138,7 @@ class DocumentResponse implements BaseModel
     public ?string $shippingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $state;
+    public ?string $state;
 
     #[Api(optional: true)]
     public ?string $subtotal;
@@ -153,11 +146,7 @@ class DocumentResponse implements BaseModel
     /**
      * @var null|list<array{amount?: null|string, rate?: null|string}> $taxDetails
      */
-    #[Api(
-        'tax_details',
-        type: new UnionOf([new ListOf(new ListOf('mixed')), 'null']),
-        optional: true,
-    )]
+    #[Api('tax_details', type: new ListOf(new ListOf('mixed')), optional: true)]
     public ?array $taxDetails;
 
     #[Api('total_discount', optional: true)]
@@ -187,15 +176,15 @@ class DocumentResponse implements BaseModel
      * @param null|list<DocumentAttachment> $attachments
      * @param null|string                   $billingAddress
      * @param null|string                   $billingAddressRecipient
-     * @param string                        $currency
+     * @param null|string                   $currency
      * @param null|string                   $customerAddress
      * @param null|string                   $customerAddressRecipient
      * @param null|string                   $customerEmail
      * @param null|string                   $customerID
      * @param null|string                   $customerName
      * @param null|string                   $customerTaxID
-     * @param string                        $direction
-     * @param string                        $documentType
+     * @param null|string                   $direction
+     * @param null|string                   $documentType
      * @param null|\DateTimeInterface       $dueDate
      * @param null|\DateTimeInterface       $invoiceDate
      * @param null|string                   $invoiceID
@@ -229,7 +218,7 @@ class DocumentResponse implements BaseModel
      * @param null|\DateTimeInterface                                    $serviceStartDate
      * @param null|string                                                $shippingAddress
      * @param null|string                                                $shippingAddressRecipient
-     * @param string                                                     $state
+     * @param null|string                                                $state
      * @param null|string                                                $subtotal
      * @param null|list<array{amount?: null|string, rate?: null|string}> $taxDetails
      * @param null|string                                                $totalDiscount

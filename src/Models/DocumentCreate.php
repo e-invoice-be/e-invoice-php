@@ -33,7 +33,7 @@ class DocumentCreate implements BaseModel
     public ?string $billingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $currency;
+    public ?string $currency;
 
     #[Api('customer_address', optional: true)]
     public ?string $customerAddress;
@@ -54,10 +54,10 @@ class DocumentCreate implements BaseModel
     public ?string $customerTaxID;
 
     #[Api(optional: true)]
-    public string $direction;
+    public ?string $direction;
 
     #[Api('document_type', optional: true)]
-    public string $documentType;
+    public ?string $documentType;
 
     #[Api('due_date', optional: true)]
     public ?\DateTimeInterface $dueDate;
@@ -137,7 +137,7 @@ class DocumentCreate implements BaseModel
     public ?string $shippingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $state;
+    public ?string $state;
 
     /** @var null|float|string $subtotal */
     #[Api(optional: true)]
@@ -183,15 +183,15 @@ class DocumentCreate implements BaseModel
      * @param null|list<DocumentAttachmentCreate> $attachments
      * @param null|string                         $billingAddress
      * @param null|string                         $billingAddressRecipient
-     * @param string                              $currency
+     * @param null|string                         $currency
      * @param null|string                         $customerAddress
      * @param null|string                         $customerAddressRecipient
      * @param null|string                         $customerEmail
      * @param null|string                         $customerID
      * @param null|string                         $customerName
      * @param null|string                         $customerTaxID
-     * @param string                              $direction
-     * @param string                              $documentType
+     * @param null|string                         $direction
+     * @param null|string                         $documentType
      * @param null|\DateTimeInterface             $dueDate
      * @param null|\DateTimeInterface             $invoiceDate
      * @param null|string                         $invoiceID
@@ -220,7 +220,7 @@ class DocumentCreate implements BaseModel
      * @param null|\DateTimeInterface        $serviceStartDate
      * @param null|string                    $shippingAddress
      * @param null|string                    $shippingAddressRecipient
-     * @param string                         $state
+     * @param null|string                    $state
      * @param null|float|string              $subtotal
      * @param list<array{
      *   amount?: float|string|null, rate?: string|null
