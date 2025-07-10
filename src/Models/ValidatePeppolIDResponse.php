@@ -38,14 +38,19 @@ class ValidatePeppolIDResponse implements BaseModel
     public ?array $supportedDocumentTypes;
 
     /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
      * @param array{
      *   countryCode?: string|null,
      *   name?: string|null,
      *   registrationDate?: \DateTimeInterface|null,
-     * }|null $businessCard
-     * @param bool              $businessCardValid
-     * @param bool              $dnsValid
-     * @param bool              $isValid
+     * }|null $businessCard `required`
+     * @param bool              $businessCardValid      `required`
+     * @param bool              $dnsValid               `required`
+     * @param bool              $isValid                `required`
      * @param null|list<string> $supportedDocumentTypes
      */
     final public function __construct(

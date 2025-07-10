@@ -96,6 +96,11 @@ class GetResponse implements BaseModel
     public string $status;
 
     /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
      * @param array{
      *   entities?: list<array{
      *     additionalInformation?: list<string>|null,
@@ -106,23 +111,23 @@ class GetResponse implements BaseModel
      *   queryTimeMs?: float,
      *   status?: string,
      *   error?: string|null,
-     * } $businessCard
-     * @param list<Certificate> $certificates
+     * } $businessCard `required`
+     * @param list<Certificate> $certificates `required`
      * @param array{
      *   dnsRecords?: list<array{ip?: string}>,
      *   smlHostname?: string,
      *   status?: string,
      *   error?: string|null,
-     * } $dnsInfo
-     * @param list<string> $errors
-     * @param float        $executionTimeMs
+     * } $dnsInfo `required`
+     * @param list<string> $errors          `required`
+     * @param float        $executionTimeMs `required`
      * @param array{
      *   identifierScheme?: string,
      *   identifierValue?: string,
      *   smlDomain?: string,
      *   timestamp?: string,
      *   version?: string,
-     * } $queryMetadata
+     * } $queryMetadata `required`
      * @param array{
      *   endpoints?: list<array{
      *     documentTypes?: list<array{scheme?: string, value?: string}>,
@@ -146,8 +151,8 @@ class GetResponse implements BaseModel
      *   queryTimeMs?: float,
      *   status?: string,
      *   error?: string|null,
-     * } $serviceMetadata
-     * @param string $status
+     * } $serviceMetadata `required`
+     * @param string $status `required`
      */
     final public function __construct(
         $businessCard,

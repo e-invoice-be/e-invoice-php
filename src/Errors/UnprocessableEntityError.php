@@ -2,4 +2,8 @@
 
 namespace EInvoiceAPI\Errors;
 
-class UnprocessableEntityError extends APIStatusError {}
+class UnprocessableEntityError extends APIStatusError
+{
+    /** @var string */
+    protected const DESC = 'EInvoiceAPI Unprocessable Entity Error';
+}

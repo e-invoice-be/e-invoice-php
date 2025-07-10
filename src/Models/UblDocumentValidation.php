@@ -41,9 +41,14 @@ class UblDocumentValidation implements BaseModel
     public ?string $ublDocument;
 
     /**
-     * @param string      $id
-     * @param null|string $fileName
-     * @param bool        $isValid
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string      $id       `required`
+     * @param null|string $fileName `required`
+     * @param bool        $isValid  `required`
      * @param list<array{
      *   message?: string,
      *   schematron?: string,
@@ -52,7 +57,7 @@ class UblDocumentValidation implements BaseModel
      *   location?: string|null,
      *   ruleID?: string|null,
      *   test?: string|null,
-     * }> $issues
+     * }> $issues `required`
      * @param null|string $ublDocument
      */
     final public function __construct(
