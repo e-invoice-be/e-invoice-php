@@ -31,10 +31,15 @@ class WebhookResponse implements BaseModel
     public ?bool $enabled;
 
     /**
-     * @param string       $id
-     * @param list<string> $events
-     * @param string       $secret
-     * @param string       $url
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string       $id      `required`
+     * @param list<string> $events  `required`
+     * @param string       $secret  `required`
+     * @param string       $url     `required`
      * @param null|bool    $enabled
      */
     final public function __construct(

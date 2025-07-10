@@ -15,7 +15,14 @@ class DeleteResponse implements BaseModel
     #[Api('is_deleted')]
     public bool $isDeleted;
 
-    /** @param bool $isDeleted */
+    /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param bool $isDeleted `required`
+     */
     final public function __construct($isDeleted)
     {
         $this->constructFromArgs(func_get_args());
