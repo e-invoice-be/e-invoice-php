@@ -33,10 +33,10 @@ class ListReceivedDocumentsParams implements BaseModel
     public ?string $sender;
 
     #[Api(optional: true)]
-    public string $state;
+    public ?string $state;
 
     #[Api(optional: true)]
-    public string $type;
+    public ?string $type;
 }
 
 ListReceivedDocumentsParams::_loadMetadata();
