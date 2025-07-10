@@ -20,36 +20,29 @@ class DocumentAttachment implements BaseModel
     public string $fileName;
 
     #[Api('file_size', optional: true)]
-    public int $fileSize;
+    public ?int $fileSize;
 
     #[Api('file_type', optional: true)]
-    public string $fileType;
+    public ?string $fileType;
 
     #[Api('file_url', optional: true)]
     public ?string $fileURL;
 
     /**
-     * @param int         $fileSize
-     * @param string      $fileType
+     * @param string      $id
+     * @param string      $fileName
+     * @param null|int    $fileSize
+     * @param null|string $fileType
      * @param null|string $fileURL
      */
     final public function __construct(
-        string $id,
-        string $fileName,
-        int|None $fileSize = None::NOT_SET,
-        None|string $fileType = None::NOT_SET,
-        null|None|string $fileURL = None::NOT_SET
+        $id,
+        $fileName,
+        $fileSize = None::NOT_GIVEN,
+        $fileType = None::NOT_GIVEN,
+        $fileURL = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

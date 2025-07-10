@@ -6,7 +6,7 @@ namespace EInvoiceAPI\Core\Pagination;
 
 use EInvoiceAPI\Core\BaseClient;
 use EInvoiceAPI\Core\Concerns\Pager;
-use EInvoiceAPI\Core\Errors\EInvoiceAPIError;
+use EInvoiceAPI\Errors\Error;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -49,13 +49,13 @@ abstract class AbstractPage implements \IteratorAggregate, Pager
      *
      * @return static of AbstractPage<Item>
      *
-     * @throws EInvoiceAPIError
+     * @throws Error
      */
     public function getNextPage(): static
     {
         $nextOptions = $this->nextPageRequestOptions();
         if (!$nextOptions) {
-            throw new EInvoiceAPIError(
+            throw new Error(
                 'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.'
             );
         }

@@ -25,15 +25,13 @@ class UblDocumentValidation implements BaseModel
 
     /**
      * @var list<array{
-     *
-     *     message?: string,
-     *     schematron?: string,
-     *     type?: string,
-     *     flag?: string|null,
-     *     location?: string|null,
-     *     ruleID?: string|null,
-     *     test?: string|null,
-     *
+     *   message?: string,
+     *   schematron?: string,
+     *   type?: string,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   ruleID?: string|null,
+     *   test?: string|null,
      * }> $issues
      */
     #[Api(type: new ListOf(new ListOf('mixed')))]
@@ -43,36 +41,28 @@ class UblDocumentValidation implements BaseModel
     public ?string $ublDocument;
 
     /**
+     * @param string      $id
+     * @param null|string $fileName
+     * @param bool        $isValid
      * @param list<array{
-     *
-     *     message?: string,
-     *     schematron?: string,
-     *     type?: string,
-     *     flag?: string|null,
-     *     location?: string|null,
-     *     ruleID?: string|null,
-     *     test?: string|null,
-     *
+     *   message?: string,
+     *   schematron?: string,
+     *   type?: string,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   ruleID?: string|null,
+     *   test?: string|null,
      * }> $issues
      * @param null|string $ublDocument
      */
     final public function __construct(
-        string $id,
-        ?string $fileName,
-        bool $isValid,
-        array $issues,
-        null|None|string $ublDocument = None::NOT_SET
+        $id,
+        $fileName,
+        $isValid,
+        $issues,
+        $ublDocument = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

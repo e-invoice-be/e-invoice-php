@@ -17,9 +17,7 @@ class WebhookResponse implements BaseModel
     #[Api]
     public string $id;
 
-    /**
-     * @var list<string> $events
-     */
+    /** @var list<string> $events */
     #[Api(type: new ListOf('string'))]
     public array $events;
 
@@ -30,29 +28,23 @@ class WebhookResponse implements BaseModel
     public string $url;
 
     #[Api(optional: true)]
-    public bool $enabled;
+    public ?bool $enabled;
 
     /**
+     * @param string       $id
      * @param list<string> $events
-     * @param bool         $enabled
+     * @param string       $secret
+     * @param string       $url
+     * @param null|bool    $enabled
      */
     final public function __construct(
-        string $id,
-        array $events,
-        string $secret,
-        string $url,
-        bool|None $enabled = None::NOT_SET
+        $id,
+        $events,
+        $secret,
+        $url,
+        $enabled = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

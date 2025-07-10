@@ -19,9 +19,7 @@ class UpdateParams implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
-    /**
-     * @var null|list<string> $events
-     */
+    /** @var null|list<string> $events */
     #[Api(type: new UnionOf([new ListOf('string'), 'null']), optional: true)]
     public ?array $events;
 
