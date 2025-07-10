@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Serde\UnionOf;
 
 class ValidatePeppolIDResponse implements BaseModel
 {
@@ -16,11 +17,9 @@ class ValidatePeppolIDResponse implements BaseModel
 
     /**
      * @var array{
-     *
-     *     countryCode?: string|null,
-     *     name?: string|null,
-     *     registrationDate?: \DateTimeInterface|null,
-     *
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: \DateTimeInterface|null,
      * }|null $businessCard
      */
     #[Api('business_card')]
@@ -35,39 +34,33 @@ class ValidatePeppolIDResponse implements BaseModel
     #[Api('is_valid')]
     public bool $isValid;
 
-    /**
-     * @var list<string> $supportedDocumentTypes
-     */
-    #[Api('supported_document_types', type: new ListOf('string'), optional: true)]
-    public array $supportedDocumentTypes;
+    /** @var null|list<string> $supportedDocumentTypes */
+    #[Api(
+        'supported_document_types',
+        type: new UnionOf([new ListOf('string'), 'null']),
+        optional: true,
+    )]
+    public ?array $supportedDocumentTypes;
 
     /**
      * @param array{
-     *
-     *     countryCode?: string|null,
-     *     name?: string|null,
-     *     registrationDate?: \DateTimeInterface|null,
-     *
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: \DateTimeInterface|null,
      * }|null $businessCard
-     * @param list<string> $supportedDocumentTypes
+     * @param bool              $businessCardValid
+     * @param bool              $dnsValid
+     * @param bool              $isValid
+     * @param null|list<string> $supportedDocumentTypes
      */
     final public function __construct(
-        ?array $businessCard,
-        bool $businessCardValid,
-        bool $dnsValid,
-        bool $isValid,
-        array|None $supportedDocumentTypes = None::NOT_SET
+        $businessCard,
+        $businessCardValid,
+        $dnsValid,
+        $isValid,
+        $supportedDocumentTypes = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

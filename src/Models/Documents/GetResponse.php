@@ -23,7 +23,7 @@ class GetResponse implements BaseModel
     public ?string $fileHash;
 
     #[Api('file_size', optional: true)]
-    public int $fileSize;
+    public ?int $fileSize;
 
     #[Api('receiver_peppol_id', optional: true)]
     public ?string $receiverPeppolID;
@@ -44,8 +44,10 @@ class GetResponse implements BaseModel
     public ?\DateTimeInterface $validatedAt;
 
     /**
+     * @param string                  $id
+     * @param string                  $fileName
      * @param null|string             $fileHash
-     * @param int                     $fileSize
+     * @param null|int                $fileSize
      * @param null|string             $receiverPeppolID
      * @param null|string             $receiverPeppolScheme
      * @param null|string             $senderPeppolID
@@ -54,27 +56,18 @@ class GetResponse implements BaseModel
      * @param null|\DateTimeInterface $validatedAt
      */
     final public function __construct(
-        string $id,
-        string $fileName,
-        null|None|string $fileHash = None::NOT_SET,
-        int|None $fileSize = None::NOT_SET,
-        null|None|string $receiverPeppolID = None::NOT_SET,
-        null|None|string $receiverPeppolScheme = None::NOT_SET,
-        null|None|string $senderPeppolID = None::NOT_SET,
-        null|None|string $senderPeppolScheme = None::NOT_SET,
-        null|None|string $signedURL = None::NOT_SET,
-        null|\DateTimeInterface|None $validatedAt = None::NOT_SET
+        $id,
+        $fileName,
+        $fileHash = None::NOT_GIVEN,
+        $fileSize = None::NOT_GIVEN,
+        $receiverPeppolID = None::NOT_GIVEN,
+        $receiverPeppolScheme = None::NOT_GIVEN,
+        $senderPeppolID = None::NOT_GIVEN,
+        $senderPeppolScheme = None::NOT_GIVEN,
+        $signedURL = None::NOT_GIVEN,
+        $validatedAt = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

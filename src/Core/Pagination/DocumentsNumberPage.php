@@ -12,29 +12,23 @@ use Psr\Http\Message\ResponseInterface;
  */
 class DocumentsNumberPage extends AbstractPage
 {
-    /**
-     * @var list<TItem>
-     */
+    /** @var list<TItem> */
     public array $items;
 
-    public int $page;
+    public ?int $page;
 
-    public int $pageSize;
+    public ?int $pageSize;
 
-    public int $total;
+    public ?int $total;
 
     /**
-     * @param array{
-     *
-     * items?: list<TItem>, page?: int, pageSize?: int, total?: int
-     *
-     * } $body
+     * @param array{items?: list<TItem>, page?: int, pageSize?: int, total?: int} $body
      */
     public function __construct(
         protected BaseClient $client,
         protected PageRequestOptions $options,
         protected ResponseInterface $response,
-        protected mixed $body
+        protected mixed $body,
     ) {
         $this->items = $body['items'] ?? [];
         $this->page = $body['page'] ?? 0;
@@ -44,14 +38,12 @@ class DocumentsNumberPage extends AbstractPage
 
     public function nextPageRequestOptions(): ?PageRequestOptions
     {
-        $currentPage = $currentPage = $this->page ?? $this;
+        $currentPage = $this->page ?? 1;
 
-        return $this->options->withquery('page', $currentPage + 1);
+        return $this->options->withQuery('page', $currentPage + 1);
     }
 
-    /**
-     * @return list<TItem>
-     */
+    /** @return list<TItem> */
     public function getPaginatedItems(): array
     {
         return $this->items;

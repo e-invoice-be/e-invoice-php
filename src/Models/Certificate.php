@@ -18,9 +18,7 @@ class Certificate implements BaseModel
     #[Api]
     public string $status;
 
-    /**
-     * @var null|array<string, mixed> $details
-     */
+    /** @var null|array<string, mixed> $details */
     #[Api(type: new UnionOf([new MapOf('mixed'), 'null']), optional: true)]
     public ?array $details;
 
@@ -28,24 +26,16 @@ class Certificate implements BaseModel
     public ?string $error;
 
     /**
+     * @param string                    $status
      * @param null|array<string, mixed> $details
      * @param null|string               $error
      */
     final public function __construct(
-        string $status,
-        null|array|None $details = None::NOT_SET,
-        null|None|string $error = None::NOT_SET
+        $status,
+        $details = None::NOT_GIVEN,
+        $error = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

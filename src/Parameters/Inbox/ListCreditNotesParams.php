@@ -15,10 +15,10 @@ class ListCreditNotesParams implements BaseModel
     use Params;
 
     #[Api(optional: true)]
-    public int $page;
+    public ?int $page;
 
     #[Api(optional: true)]
-    public int $pageSize;
+    public ?int $pageSize;
 }
 
 ListCreditNotesParams::_loadMetadata();

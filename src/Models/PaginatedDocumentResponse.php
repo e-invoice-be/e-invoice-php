@@ -7,16 +7,13 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 class PaginatedDocumentResponse implements BaseModel
 {
     use Model;
 
-    /**
-     * @var list<DocumentResponse> $items
-     */
+    /** @var list<DocumentResponse> $items */
     #[Api(type: new ListOf(DocumentResponse::class))]
     public array $items;
 
@@ -34,24 +31,14 @@ class PaginatedDocumentResponse implements BaseModel
 
     /**
      * @param list<DocumentResponse> $items
+     * @param int                    $page
+     * @param int                    $pageSize
+     * @param int                    $pages
+     * @param int                    $total
      */
-    final public function __construct(
-        array $items,
-        int $page,
-        int $pageSize,
-        int $pages,
-        int $total
-    ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+    final public function __construct($items, $page, $pageSize, $pages, $total)
+    {
+        $this->constructFromArgs(func_get_args());
     }
 }
 
