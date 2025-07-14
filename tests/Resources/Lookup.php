@@ -49,4 +49,34 @@ final class LookupTest extends TestCase
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
+
+    #[Test]
+    public function testRetrieveParticipants(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: tests are disabled for the time being');
+        }
+
+        $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testRetrieveParticipantsWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: tests are disabled for the time being');
+        }
+
+        $result = $this
+            ->client
+            ->lookup
+            ->retrieveParticipants([
+                'query' => 'query', 'countryCode' => 'country_code',
+            ])
+        ;
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
 }
