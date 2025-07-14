@@ -7,8 +7,10 @@ namespace EInvoiceAPI\Resources;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\LookupContract;
 use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Models\GetParticipantsResponse;
 use EInvoiceAPI\Models\GetResponse;
 use EInvoiceAPI\Parameters\Lookup\RetrieveParams;
+use EInvoiceAPI\Parameters\Lookup\RetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 
 class Lookup implements LookupContract
@@ -35,5 +37,27 @@ class Lookup implements LookupContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(GetResponse::class, value: $resp);
+    }
+
+    /**
+     * @param array{query?: string, countryCode?: null|string} $params
+     */
+    public function retrieveParticipants(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): GetParticipantsResponse {
+        [$parsed, $options] = RetrieveParticipantsParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $resp = $this->client->request(
+            method: 'get',
+            path: 'api/lookup/participants',
+            query: $parsed,
+            options: $options,
+        );
+
+        // @phpstan-ignore-next-line;
+        return Serde::coerce(GetParticipantsResponse::class, value: $resp);
     }
 }
