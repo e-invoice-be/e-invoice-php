@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -14,9 +13,7 @@ class PaginatedDocumentResponse implements BaseModel
 {
     use Model;
 
-    /**
-     * @var list<DocumentResponse> $items
-     */
+    /** @var list<DocumentResponse> $items */
     #[Api(type: new ListOf(DocumentResponse::class))]
     public array $items;
 
@@ -33,27 +30,20 @@ class PaginatedDocumentResponse implements BaseModel
     public int $total;
 
     /**
-     * @param list<DocumentResponse> $items
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param list<DocumentResponse> $items    `required`
+     * @param int                    $page     `required`
+     * @param int                    $pageSize `required`
+     * @param int                    $pages    `required`
+     * @param int                    $total    `required`
      */
-    final public function __construct(
-        array $items,
-        int $page,
-        int $pageSize,
-        int $pages,
-        int $total,
-    ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+    final public function __construct($items, $page, $pageSize, $pages, $total)
+    {
+        $this->constructFromArgs(func_get_args());
     }
 }
 

@@ -15,45 +15,29 @@ class RequestOptions
     public const DEFAULT_MAX_RETRY_DELAY = 8.0;
 
     /**
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $options
+     * @param list<string> $extraHeaders
+     * @param list<string> $extraQueryParams
+     * @param list<string> $extraBodyParams
      */
-    public static function parse(mixed $options): self
-    {
-        if (is_null($options)) {
-            return new self();
-        }
-
-        if ($options instanceof self) {
-            return $options;
-        }
-
-        $opts = new self();
-        $opts->__unserialize($options);
-
-        return $opts;
-    }
+    public function __construct(
+        public float $timeout = self::DEFAULT_TIMEOUT,
+        public int $maxRetries = self::DEFAULT_MAX_RETRIES,
+        public float $initialRetryDelay = self::DEFAULT_INITIAL_RETRYDELAY,
+        public float $maxRetryDelay = self::DEFAULT_MAX_RETRY_DELAY,
+        public array $extraHeaders = [],
+        public array $extraQueryParams = [],
+        public array $extraBodyParams = [],
+    ) {}
 
     /**
      * @return array{
-     *
-     *     timeout?: float,
-     *     maxRetries?: int,
-     *     initialRetryDelay?: float,
-     *     maxRetryDelay?: float,
-     *     extraHeaders?: list<string>,
-     *     extraQueryParams?: list<string>,
-     *     extraBodyParams?: list<string>,
-     *
+     *   timeout?: float,
+     *   maxRetries?: int,
+     *   initialRetryDelay?: float,
+     *   maxRetryDelay?: float,
+     *   extraHeaders?: list<string>,
+     *   extraQueryParams?: list<string>,
+     *   extraBodyParams?: list<string>,
      * }
      */
     public function __serialize(): array
@@ -71,26 +55,26 @@ class RequestOptions
 
     /**
      * @param array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
      * } $data
      */
     public function __unserialize(array $data): void
     {
         $this->timeout = $data['timeout'] ?? self::DEFAULT_TIMEOUT;
         $this
-            ->maxRetries = $data['maxRetries'] ?? self::DEFAULT_MAX_RETRIES;
+            ->maxRetries = $data['maxRetries'] ?? self::DEFAULT_MAX_RETRIES
+        ;
         $this
-        ->initialRetryDelay = $data[
-      'initialRetryDelay'
-    ] ?? self::DEFAULT_INITIAL_RETRYDELAY;
+            ->initialRetryDelay = $data[
+          'initialRetryDelay'
+        ] ?? self::DEFAULT_INITIAL_RETRYDELAY
+        ;
         $this->maxRetryDelay = $data[
           'maxRetryDelay'
         ] ?? self::DEFAULT_MAX_RETRY_DELAY;
@@ -99,22 +83,34 @@ class RequestOptions
         ] ?? [];
         $this->extraQueryParams = $data['extraQueryParams'] ?? [];
         $this
-            ->extraBodyParams = $data['extraBodyParams'] ?? [];
+            ->extraBodyParams = $data['extraBodyParams'] ?? []
+        ;
     }
 
     /**
-     * @param list<string> $extraHeaders
-     * @param list<string> $extraQueryParams
-     * @param list<string> $extraBodyParams
+     * @param RequestOptions|array{
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
+     * }|null $options
      */
-    public function __construct(
-        public float $timeout = self::DEFAULT_TIMEOUT,
-        public int $maxRetries = self::DEFAULT_MAX_RETRIES,
-        public float $initialRetryDelay = self::DEFAULT_INITIAL_RETRYDELAY,
-        public float $maxRetryDelay = self::DEFAULT_MAX_RETRY_DELAY,
-        public array $extraHeaders = [],
-        public array $extraQueryParams = [],
-        public array $extraBodyParams = [],
-    ) {
+    public static function parse(mixed $options): self
+    {
+        if (is_null($options)) {
+            return new self();
+        }
+
+        if ($options instanceof self) {
+            return $options;
+        }
+
+        $opts = new self();
+        $opts->__unserialize($options);
+
+        return $opts;
     }
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 
 class PaymentDetailCreate implements BaseModel
 {
@@ -26,29 +26,23 @@ class PaymentDetailCreate implements BaseModel
     public ?string $swift;
 
     /**
-     * @param string|null $bankAccountNumber
-     * @param string|null $iban
-     * @param string|null $paymentReference
-     * @param string|null $swift
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param null|string $bankAccountNumber
+     * @param null|string $iban
+     * @param null|string $paymentReference
+     * @param null|string $swift
      */
     final public function __construct(
-        string|None|null $bankAccountNumber = None::NOT_SET,
-        string|None|null $iban = None::NOT_SET,
-        string|None|null $paymentReference = None::NOT_SET,
-        string|None|null $swift = None::NOT_SET,
+        $bankAccountNumber = None::NOT_GIVEN,
+        $iban = None::NOT_GIVEN,
+        $paymentReference = None::NOT_GIVEN,
+        $swift = None::NOT_GIVEN,
     ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+        $this->constructFromArgs(func_get_args());
     }
 }
 

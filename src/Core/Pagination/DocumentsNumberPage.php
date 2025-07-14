@@ -12,30 +12,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class DocumentsNumberPage extends AbstractPage
 {
-    /**
-     * @param array{
-     *
-     * items?: list<TItem>, page?: int, pageSize?: int, total?: int
-     *
-     * } $body
-     */
-    public function __construct(
-        protected BaseClient $client,
-        protected PageRequestOptions $options,
-        protected ResponseInterface $response,
-        protected mixed $body,
-    ) {
-
-        $this->items = $body['items'] ?? [];
-        $this->page = $body['page'] ?? 0;
-        $this->pageSize = $body['pageSize'] ?? 0;
-        $this->total = $body['total'] ?? 0;
-
-    }
-
-    /**
-     * @var list<TItem>
-     */
+    /** @var list<TItem> */
     public array $items;
 
     public int $page;
@@ -44,16 +21,29 @@ class DocumentsNumberPage extends AbstractPage
 
     public int $total;
 
-    public function nextPageRequestOptions(): ?PageRequestOptions
-    {
-        $currentPage = $currentPage = $this->page ?? $this;
-
-        return $this->options->withquery('page', $currentPage + 1);
+    /**
+     * @param array{items?: list<TItem>, page?: int, pageSize?: int, total?: int} $body
+     */
+    public function __construct(
+        protected BaseClient $client,
+        protected PageRequestOptions $options,
+        protected ResponseInterface $response,
+        protected mixed $body,
+    ) {
+        $this->items = $body['items'] ?? [];
+        $this->page = $body['page'] ?? 0;
+        $this->pageSize = $body['pageSize'] ?? 0;
+        $this->total = $body['total'] ?? 0;
     }
 
-    /**
-     * @return list<TItem>
-     */
+    public function nextPageRequestOptions(): ?PageRequestOptions
+    {
+        $currentPage = $this->page ?? null;
+
+        return $this->options->withQuery('page', $currentPage + 1);
+    }
+
+    /** @return list<TItem> */
     public function getPaginatedItems(): array
     {
         return $this->items;

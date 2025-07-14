@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 
 class DocumentAttachmentCreate implements BaseModel
 {
@@ -20,34 +20,29 @@ class DocumentAttachmentCreate implements BaseModel
     public ?string $fileData;
 
     #[Api('file_size', optional: true)]
-    public int $fileSize;
+    public ?int $fileSize;
 
     #[Api('file_type', optional: true)]
-    public string $fileType;
+    public ?string $fileType;
 
     /**
-     * @param string|null $fileData
-     * @param int         $fileSize
-     * @param string      $fileType
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string      $fileName `required`
+     * @param null|string $fileData
+     * @param null|int    $fileSize
+     * @param null|string $fileType
      */
     final public function __construct(
-        string $fileName,
-        string|None|null $fileData = None::NOT_SET,
-        int|None $fileSize = None::NOT_SET,
-        string|None $fileType = None::NOT_SET,
+        $fileName,
+        $fileData = None::NOT_GIVEN,
+        $fileSize = None::NOT_GIVEN,
+        $fileType = None::NOT_GIVEN,
     ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+        $this->constructFromArgs(func_get_args());
     }
 }
 

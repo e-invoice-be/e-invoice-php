@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models\Documents;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 
 class GetResponse implements BaseModel
 {
@@ -23,7 +23,7 @@ class GetResponse implements BaseModel
     public ?string $fileHash;
 
     #[Api('file_size', optional: true)]
-    public int $fileSize;
+    public ?int $fileSize;
 
     #[Api('receiver_peppol_id', optional: true)]
     public ?string $receiverPeppolID;
@@ -40,46 +40,39 @@ class GetResponse implements BaseModel
     #[Api('signed_url', optional: true)]
     public ?string $signedURL;
 
-    /**
-     * @var mixed|null $validatedAt
-     */
     #[Api('validated_at', optional: true)]
-    public mixed $validatedAt;
+    public ?\DateTimeInterface $validatedAt;
 
     /**
-     * @param string|null $fileHash
-     * @param int         $fileSize
-     * @param string|null $receiverPeppolID
-     * @param string|null $receiverPeppolScheme
-     * @param string|null $senderPeppolID
-     * @param string|null $senderPeppolScheme
-     * @param string|null $signedURL
-     * @param mixed|null  $validatedAt
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string                  $id                   `required`
+     * @param string                  $fileName             `required`
+     * @param null|string             $fileHash
+     * @param null|int                $fileSize
+     * @param null|string             $receiverPeppolID
+     * @param null|string             $receiverPeppolScheme
+     * @param null|string             $senderPeppolID
+     * @param null|string             $senderPeppolScheme
+     * @param null|string             $signedURL
+     * @param null|\DateTimeInterface $validatedAt
      */
     final public function __construct(
-        string $id,
-        string $fileName,
-        string|None|null $fileHash = None::NOT_SET,
-        int|None $fileSize = None::NOT_SET,
-        string|None|null $receiverPeppolID = None::NOT_SET,
-        string|None|null $receiverPeppolScheme = None::NOT_SET,
-        string|None|null $senderPeppolID = None::NOT_SET,
-        string|None|null $senderPeppolScheme = None::NOT_SET,
-        string|None|null $signedURL = None::NOT_SET,
-        mixed $validatedAt = None::NOT_SET,
+        $id,
+        $fileName,
+        $fileHash = None::NOT_GIVEN,
+        $fileSize = None::NOT_GIVEN,
+        $receiverPeppolID = None::NOT_GIVEN,
+        $receiverPeppolScheme = None::NOT_GIVEN,
+        $senderPeppolID = None::NOT_GIVEN,
+        $senderPeppolScheme = None::NOT_GIVEN,
+        $signedURL = None::NOT_GIVEN,
+        $validatedAt = None::NOT_GIVEN,
     ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+        $this->constructFromArgs(func_get_args());
     }
 }
 

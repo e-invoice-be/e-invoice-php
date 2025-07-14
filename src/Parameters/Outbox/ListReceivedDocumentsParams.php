@@ -14,23 +14,17 @@ class ListReceivedDocumentsParams implements BaseModel
     use Model;
     use Params;
 
-    /**
-     * @var mixed|null $dateFrom
-     */
     #[Api(optional: true)]
-    public mixed $dateFrom;
-
-    /**
-     * @var mixed|null $dateTo
-     */
-    #[Api(optional: true)]
-    public mixed $dateTo;
+    public ?\DateTimeInterface $dateFrom;
 
     #[Api(optional: true)]
-    public int $page;
+    public ?\DateTimeInterface $dateTo;
 
     #[Api(optional: true)]
-    public int $pageSize;
+    public ?int $page;
+
+    #[Api(optional: true)]
+    public ?int $pageSize;
 
     #[Api(optional: true)]
     public ?string $search;
@@ -39,10 +33,10 @@ class ListReceivedDocumentsParams implements BaseModel
     public ?string $sender;
 
     #[Api(optional: true)]
-    public string $state;
+    public ?string $state;
 
     #[Api(optional: true)]
-    public string $type;
+    public ?string $type;
 }
 
 ListReceivedDocumentsParams::_loadMetadata();

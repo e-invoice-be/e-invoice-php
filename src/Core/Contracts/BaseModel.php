@@ -12,4 +12,6 @@ use Stringable;
  */
 interface BaseModel extends \ArrayAccess, JsonSerializable, Stringable, StaticConverter
 {
+    /** @return array<string, mixed> */
+    public function toArray(): array;
 }

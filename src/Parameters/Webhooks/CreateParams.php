@@ -15,9 +15,7 @@ class CreateParams implements BaseModel
     use Model;
     use Params;
 
-    /**
-     * @var list<string> $events
-     */
+    /** @var list<string> $events */
     #[Api(type: new ListOf('string'))]
     public array $events;
 
@@ -25,7 +23,7 @@ class CreateParams implements BaseModel
     public string $url;
 
     #[Api(optional: true)]
-    public bool $enabled;
+    public ?bool $enabled;
 }
 
 CreateParams::_loadMetadata();

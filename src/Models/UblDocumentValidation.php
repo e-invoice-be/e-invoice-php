@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 class UblDocumentValidation implements BaseModel
@@ -25,15 +25,13 @@ class UblDocumentValidation implements BaseModel
 
     /**
      * @var list<array{
-     *
-     *     message?: string,
-     *     schematron?: string,
-     *     type?: string,
-     *     flag?: string|null,
-     *     location?: string|null,
-     *     ruleID?: string|null,
-     *     test?: string|null,
-     *
+     *   message?: string,
+     *   schematron?: string,
+     *   type?: string,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   ruleID?: string|null,
+     *   test?: string|null,
      * }> $issues
      */
     #[Api(type: new ListOf(new ListOf('mixed')))]
@@ -43,38 +41,33 @@ class UblDocumentValidation implements BaseModel
     public ?string $ublDocument;
 
     /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string      $id       `required`
+     * @param null|string $fileName `required`
+     * @param bool        $isValid  `required`
      * @param list<array{
-     *
-     *     message?: string,
-     *     schematron?: string,
-     *     type?: string,
-     *     flag?: string|null,
-     *     location?: string|null,
-     *     ruleID?: string|null,
-     *     test?: string|null,
-     *
-     * }> $issues
-     * @param string|null $ublDocument
+     *   message?: string,
+     *   schematron?: string,
+     *   type?: string,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   ruleID?: string|null,
+     *   test?: string|null,
+     * }> $issues `required`
+     * @param null|string $ublDocument
      */
     final public function __construct(
-        string $id,
-        ?string $fileName,
-        bool $isValid,
-        array $issues,
-        string|None|null $ublDocument = None::NOT_SET,
+        $id,
+        $fileName,
+        $isValid,
+        $issues,
+        $ublDocument = None::NOT_GIVEN
     ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+        $this->constructFromArgs(func_get_args());
     }
 }
 

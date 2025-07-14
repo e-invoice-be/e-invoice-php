@@ -1,11 +1,11 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources;
+namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -34,6 +34,7 @@ final class LookupTest extends TestCase
         }
 
         $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -45,6 +46,37 @@ final class LookupTest extends TestCase
         }
 
         $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testRetrieveParticipants(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: tests are disabled for the time being');
+        }
+
+        $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testRetrieveParticipantsWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: tests are disabled for the time being');
+        }
+
+        $result = $this
+            ->client
+            ->lookup
+            ->retrieveParticipants([
+                'query' => 'query', 'countryCode' => 'country_code',
+            ])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

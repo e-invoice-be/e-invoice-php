@@ -1,11 +1,11 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources\Documents;
+namespace Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -37,7 +37,9 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->retrieve('attachment_id', ['documentID' => 'document_id']);
+            ->retrieve('attachment_id', ['documentID' => 'document_id'])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -52,7 +54,9 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->retrieve('attachment_id', ['documentID' => 'document_id']);
+            ->retrieve('attachment_id', ['documentID' => 'document_id'])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -64,6 +68,7 @@ final class AttachmentsTest extends TestCase
         }
 
         $result = $this->client->documents->attachments->list('document_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -78,7 +83,9 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->delete('attachment_id', ['documentID' => 'document_id']);
+            ->delete('attachment_id', ['documentID' => 'document_id'])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -93,7 +100,9 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->delete('attachment_id', ['documentID' => 'document_id']);
+            ->delete('attachment_id', ['documentID' => 'document_id'])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -108,7 +117,9 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->add('document_id', ['file' => 'file']);
+            ->add('document_id', ['file' => 'file'])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -123,7 +134,9 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->add('document_id', ['file' => 'file']);
+            ->add('document_id', ['file' => 'file'])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources;
+namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -34,6 +34,7 @@ final class InboxTest extends TestCase
         }
 
         $result = $this->client->inbox->list([]);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -45,6 +46,7 @@ final class InboxTest extends TestCase
         }
 
         $result = $this->client->inbox->listCreditNotes([]);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -56,6 +58,7 @@ final class InboxTest extends TestCase
         }
 
         $result = $this->client->inbox->listInvoices([]);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

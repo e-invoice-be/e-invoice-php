@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Serde\UnionOf;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\MapOf;
+use EInvoiceAPI\Core\Serde\UnionOf;
 
 class Certificate implements BaseModel
 {
@@ -18,9 +18,7 @@ class Certificate implements BaseModel
     #[Api]
     public string $status;
 
-    /**
-     * @var array<string, mixed>|null $details
-     */
+    /** @var null|array<string, mixed> $details */
     #[Api(type: new UnionOf([new MapOf('mixed'), 'null']), optional: true)]
     public ?array $details;
 
@@ -28,26 +26,21 @@ class Certificate implements BaseModel
     public ?string $error;
 
     /**
-     * @param array<string, mixed>|null $details
-     * @param string|null               $error
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string                    $status  `required`
+     * @param null|array<string, mixed> $details
+     * @param null|string               $error
      */
     final public function __construct(
-        string $status,
-        array|None|null $details = None::NOT_SET,
-        string|None|null $error = None::NOT_SET,
+        $status,
+        $details = None::NOT_GIVEN,
+        $error = None::NOT_GIVEN
     ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+        $this->constructFromArgs(func_get_args());
     }
 }
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core;
 
-use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\MessageInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 final class Util
 {
@@ -34,10 +34,8 @@ final class Util
      *
      * @return array<string, T>
      */
-    public static function array_transform_keys(
-        array $array,
-        array $map,
-    ): array {
+    public static function array_transform_keys(array $array, array $map): array
+    {
         $acc = [];
         foreach ($array as $key => $value) {
             $acc[$map[$key] ?? $key] = $value;
@@ -47,7 +45,7 @@ final class Util
     }
 
     /**
-     * @param string|int|list<string|int>|callable $key
+     * @param callable|int|list<int|string>|string $key
      */
     public static function dig(mixed $array, mixed $key): mixed
     {
@@ -71,7 +69,7 @@ final class Util
     }
 
     /**
-     * @param string|list<string> $path
+     * @param list<string>|string $path
      */
     public static function parsePath(mixed $path): string
     {
@@ -94,7 +92,7 @@ final class Util
     public static function joinUri(
         UriInterface $base,
         string $path,
-        array $query = [],
+        array $query = []
     ): UriInterface {
         $parsed = parse_url($path);
         if ($scheme = $parsed['scheme'] ?? null) {
@@ -124,16 +122,21 @@ final class Util
     }
 
     /**
-     * @param array<string, string|list<string>|null> $headers
+     * @param array<string, null|int|list<int|string>|string> $headers
      */
     public static function withSetHeaders(
         RequestInterface $req,
-        array $headers,
+        array $headers
     ): RequestInterface {
         foreach ($headers as $name => $value) {
             if (is_null($value)) {
                 $req = $req->withoutHeader($name);
             } else {
+                $value = is_int($value)
+                            ? (string) $value
+                            : (is_array($value)
+                            ? array_map(static fn ($v) => (string) $v, array: $value)
+                            : $value);
                 $req = $req->withHeader($name, $value);
             }
         }
@@ -149,6 +152,7 @@ final class Util
         if (!$stream->isReadable()) {
             return;
         }
+
         try {
             while (!$stream->eof()) {
                 yield $stream->read(self::BUF_SIZE);
@@ -159,64 +163,9 @@ final class Util
     }
 
     /**
-     * @param list<callable> $closing
-     *
-     * @return \Generator<string>
-     */
-    private static function writeMultipartContent(
-        mixed $val,
-        array &$closing,
-        ?string $contentType = null,
-    ): \Generator {
-        $contentLine = "Content-Type: %s\r\n\r\n";
-
-        if (is_resource($val)) {
-            yield sprintf($contentLine, $contentType ?? 'application/octet-stream');
-            while (!feof($val)) {
-                if ($read = fread($val, length: self::BUF_SIZE)) {
-                    yield $read;
-                }
-            }
-        } elseif (is_string($val) || is_numeric($val) || is_bool($val)) {
-            yield sprintf($contentLine, $contentType ?? 'text/plain');
-            yield (string) $val;
-        } else {
-            yield sprintf($contentLine, $contentType ?? 'application/json');
-            yield json_encode($val, flags: self::JSON_ENCODE_FLAGS);
-        }
-
-        yield "\r\n";
-    }
-
-    /**
-     * @param list<callable> $closing
-     *
-     * @return \Generator<string>
-     */
-    private static function writeMultipartChunk(
-        string $boundary,
-        ?string $key,
-        mixed $val,
-        array &$closing,
-    ): \Generator {
-        yield "--{$boundary}\r\n";
-        yield 'Content-Disposition: form-data';
-
-        if (!is_null($key)) {
-            $name = rawurlencode($key);
-            yield "; name=\"{$name}\"";
-        }
-
-        yield "\r\n";
-        foreach (self::writeMultipartContent($val, closing: $closing) as $chunk) {
-            yield $chunk;
-        }
-    }
-
-    /**
-     * @param array<
-     * string, mixed
-     * >|bool|int|float|string|resource|\Traversable<mixed>|null $body
+     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     *   mixed
+     * >|null $body
      *
      * @return array{string, \Generator<string>}
      */
@@ -225,6 +174,7 @@ final class Util
         $boundary = rtrim(strtr(base64_encode(random_bytes(60)), '+/', '-_'), '=');
         $gen = (function () use ($boundary, $body) {
             $closing = [];
+
             try {
                 if (is_array($body) || is_object($body)) {
                     foreach ((array) $body as $key => $val) {
@@ -237,6 +187,7 @@ final class Util
                         yield $chunk;
                     }
                 }
+
                 yield "--{$boundary}--\r\n";
             } finally {
                 foreach ($closing as $c) {
@@ -249,14 +200,14 @@ final class Util
     }
 
     /**
-     * @param array<
-     * string, mixed
-     * >|bool|int|float|string|resource|\Traversable<mixed>|null $body
+     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     *   mixed
+     * >|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
         RequestInterface $req,
-        mixed $body,
+        mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
             return $req->withBody($body);
@@ -312,14 +263,11 @@ final class Util
     /**
      * @param \Iterator<string> $lines
      *
-     * @return \Iterator<array{
-     *
-     *     event?: string|null,
-     *     data?: string|null,
-     *     id?: string|null,
-     *     retry?: int|null,
-     *
-     * },>
+     * @return \Iterator<
+     *   array{
+     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
+     *   },
+     * >
      */
     public static function decodeSSE(\Iterator $lines): \Iterator
     {
@@ -332,6 +280,7 @@ final class Util
                 if (empty($acc)) {
                     continue;
                 }
+
                 yield [...$blank, ...$acc];
                 $acc = [];
             }
@@ -347,19 +296,26 @@ final class Util
                 switch ($field) {
                     case 'event':
                         $acc['event'] = $value;
+
                         break;
+
                     case 'data':
                         if (isset($acc['data'])) {
                             $acc['data'] .= "\n".$value;
                         } else {
                             $acc['data'] = $value;
                         }
+
                         break;
+
                     case 'id':
                         $acc['id'] = $value;
+
                         break;
+
                     case 'retry':
                         $acc['retry'] = (int) $value;
+
                         break;
                 }
             }
@@ -389,5 +345,64 @@ final class Util
         }
 
         return self::streamIterator($body);
+    }
+
+    /**
+     * @param list<callable> $closing
+     *
+     * @return \Generator<string>
+     */
+    private static function writeMultipartContent(
+        mixed $val,
+        array &$closing,
+        ?string $contentType = null
+    ): \Generator {
+        $contentLine = "Content-Type: %s\r\n\r\n";
+
+        if (is_resource($val)) {
+            yield sprintf($contentLine, $contentType ?? 'application/octet-stream');
+            while (!feof($val)) {
+                if ($read = fread($val, length: self::BUF_SIZE)) {
+                    yield $read;
+                }
+            }
+        } elseif (is_string($val) || is_numeric($val) || is_bool($val)) {
+            yield sprintf($contentLine, $contentType ?? 'text/plain');
+
+            yield (string) $val;
+        } else {
+            yield sprintf($contentLine, $contentType ?? 'application/json');
+
+            yield json_encode($val, flags: self::JSON_ENCODE_FLAGS);
+        }
+
+        yield "\r\n";
+    }
+
+    /**
+     * @param list<callable> $closing
+     *
+     * @return \Generator<string>
+     */
+    private static function writeMultipartChunk(
+        string $boundary,
+        ?string $key,
+        mixed $val,
+        array &$closing
+    ): \Generator {
+        yield "--{$boundary}\r\n";
+
+        yield 'Content-Disposition: form-data';
+
+        if (!is_null($key)) {
+            $name = rawurlencode($key);
+
+            yield "; name=\"{$name}\"";
+        }
+
+        yield "\r\n";
+        foreach (self::writeMultipartContent($val, closing: $closing) as $chunk) {
+            yield $chunk;
+        }
     }
 }

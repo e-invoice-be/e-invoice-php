@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 class ValidatePeppolIDResponse implements BaseModel
@@ -16,11 +16,9 @@ class ValidatePeppolIDResponse implements BaseModel
 
     /**
      * @var array{
-     *
-     *     countryCode?: string|null,
-     *     name?: string|null,
-     *     registrationDate?: mixed|null,
-     *
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: \DateTimeInterface|null,
      * }|null $businessCard
      */
     #[Api('business_card')]
@@ -35,41 +33,34 @@ class ValidatePeppolIDResponse implements BaseModel
     #[Api('is_valid')]
     public bool $isValid;
 
-    /**
-     * @var list<string> $supportedDocumentTypes
-     */
+    /** @var null|list<string> $supportedDocumentTypes */
     #[Api('supported_document_types', type: new ListOf('string'), optional: true)]
-    public array $supportedDocumentTypes;
+    public ?array $supportedDocumentTypes;
 
     /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
      * @param array{
-     *
-     *     countryCode?: string|null,
-     *     name?: string|null,
-     *     registrationDate?: mixed|null,
-     *
-     * }|null $businessCard
-     * @param list<string> $supportedDocumentTypes
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: \DateTimeInterface|null,
+     * }|null $businessCard `required`
+     * @param bool              $businessCardValid      `required`
+     * @param bool              $dnsValid               `required`
+     * @param bool              $isValid                `required`
+     * @param null|list<string> $supportedDocumentTypes
      */
     final public function __construct(
-        ?array $businessCard,
-        bool $businessCardValid,
-        bool $dnsValid,
-        bool $isValid,
-        array|None $supportedDocumentTypes = None::NOT_SET,
+        $businessCard,
+        $businessCardValid,
+        $dnsValid,
+        $isValid,
+        $supportedDocumentTypes = None::NOT_GIVEN,
     ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+        $this->constructFromArgs(func_get_args());
     }
 }
 

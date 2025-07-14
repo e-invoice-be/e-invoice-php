@@ -1,11 +1,11 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources;
+namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -36,7 +36,9 @@ final class WebhooksTest extends TestCase
         $result = $this
             ->client
             ->webhooks
-            ->create(['events' => ['string'], 'url' => 'https://example.com']);
+            ->create(['events' => ['string'], 'url' => 'https://example.com'])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -52,7 +54,9 @@ final class WebhooksTest extends TestCase
             ->webhooks
             ->create([
                 'events' => ['string'], 'url' => 'https://example.com', 'enabled' => true,
-            ]);
+            ])
+        ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -64,6 +68,7 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->retrieve('webhook_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -75,6 +80,7 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->update('webhook_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -86,6 +92,7 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->list([]);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -97,6 +104,7 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->delete('webhook_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

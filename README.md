@@ -1,23 +1,69 @@
-# E Invoice PHP API library
+# e-invoice.be PHP API library
 
-The E Invoice PHP library provides convenient access to the E Invoice REST API from any PHP 8.1.0+ application.
+This library provides convenient access to the e-invoice REST API from any PHP 8.1.0+ application.
 
-It is generated with [Stainless](https://www.stainless.com/).
+To get an API key, [make a free account](https://app.e-invoice.be/register?ref=php) and register your company.
+
+> [!WARNING]
+> **Alpha Software:** The API of this package will change frequently, **should not be used in production**.
+
+## Alpha Reviewer Guide
+
+Thanks for reviewing the E Invoice PHP SDK Alpha, we're grateful for your feedback!
+
+If you'd find it helpful, here's some direction for your review:
+
+**Known Shortcomings: (fixes in progress)**
+
+- Pagination and some methods may be incomplete
+- Occasionally files have strange names, e.g. both Foo.php and Foo1.php in a directory.
+- Missing documentation for methods and properties.
+- Missing types.
+
+**Topics for Review:**
+
+These are the questions which we're most unsure about, and we'd love specific feedback on:
+
+- How are the ergonomics and naming consistency?
+- How did IDE support compare to your expectations? Autocompletion, hover docs, etc.
+- How do you feel about the named parameters & NOT_GIVEN pattern in model constructors? (grep for `NOT_GIVEN` to find examples)
+- Should request options (in methods) and client options use an
+  object with builder, instead of an associative array?
+- Did anything feel "icky"?
+
+**Contacting us:**
+
+Please reach our PHP Team via Slack or email at jacob@stainless.com and hao@stainless.com
+
+**Getting started:**
+
+The file `examples/example.php` contains a basic sketch of a SDK request,
+which you can edit to test out your SDK.
+
+Run it from the repository root directory with the command
+
+```
+php examples/example.php
+```
+
+**Here's the rest of the real README:**
 
 ## Documentation
 
-The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be).
+The full REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be).
 
 ## Installation
 
 To use this package, install via Composer by adding the following to your application's `composer.json`:
+
+<!-- x-release-please-start-version -->
 
 ```json
 {
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:stainless-sdks/e-invoice-api-php.git"
+      "url": "git@github.com:e-invoice-be/e-invoice-php.git"
     }
   ],
   "require": {
@@ -25,6 +71,8 @@ To use this package, install via Composer by adding the following to your applic
   }
 }
 ```
+
+<!-- x-release-please-end -->
 
 ## Usage
 
@@ -160,7 +208,7 @@ $response = $client->request(
   query: ['dog' => 'woof'],
   headers: ['useful-header' => 'interesting-value'],
   body: ['hello' => 'world']
-)
+);
 ```
 
 ## Versioning
@@ -175,4 +223,4 @@ PHP 8.1.0 or higher.
 
 ## Contributing
 
-See [the contributing documentation](https://github.com/stainless-sdks/e-invoice-api-php/tree/main/CONTRIBUTING.md).
+See [the contributing documentation](https://github.com/e-invoice-be/e-invoice-php/tree/main/CONTRIBUTING.md).

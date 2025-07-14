@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Core\Concerns;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\CoerceState;
 use EInvoiceAPI\Core\Serde\DumpState;
@@ -34,14 +35,14 @@ trait Model
      */
     private array $_data = [];
 
-    private static bool $_metadataLoaded = false;
-
     /**
      * @return array<string, mixed>
      */
     public function __serialize(): array
     {
-        return [...Util::get_object_vars($this), ...$this->_data];
+        $rows = [...Util::get_object_vars($this), ...$this->_data]; // @phpstan-ignore-line
+
+        return array_map(static fn ($v) => self::serialize($v), array: $rows);
     }
 
     /**
@@ -52,6 +53,25 @@ trait Model
         foreach ($data as $key => $value) {
             $this->offsetSet($key, $value);
         }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __debugInfo(): array
+    {
+        return $this->__serialize();
+    }
+
+    public function __toString(): string
+    {
+        return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+    }
+
+    /** @return array<string, mixed> */
+    public function toArray(): array
+    {
+        return $this->__serialize();
     }
 
     public function offsetExists(mixed $offset): bool
@@ -170,7 +190,7 @@ trait Model
             $item = $val[$srcName];
             unset($val[$srcName]);
 
-            if (is_null($item) && ($info->nullable  || $info->optional)) {
+            if (is_null($item) && ($info->nullable || $info->optional)) {
                 if ($info->nullable) {
                     ++$state->yes;
                 } elseif ($info->optional) {
@@ -224,23 +244,8 @@ trait Model
         return Serde::dump($this::class, value: $this->__serialize());
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function __debugInfo(): array
-    {
-        return $this->__serialize();
-    }
-
-    public function __toString(): string
-    {
-        return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
-    }
-
     public static function from(mixed $data): self
     {
-        self::_loadMetadata();
-
         /** @var self $instance */
         $instance = self::$_class->newInstanceWithoutConstructor();
         $instance->__unserialize($data); // @phpstan-ignore-line
@@ -250,10 +255,6 @@ trait Model
 
     public static function _loadMetadata(): void
     {
-        if (self::$_metadataLoaded) {
-            return;
-        }
-
         self::$_class = new \ReflectionClass(static::class);
 
         foreach (self::$_class->getConstructor()?->getParameters() ?? [] as $parameter) {
@@ -266,7 +267,30 @@ trait Model
                 self::$_properties[$name] = new PropertyInfo($property);
             }
         }
+    }
 
-        self::$_metadataLoaded = true;
+    /** @param array<mixed> $args */
+    protected function constructFromArgs(array $args): void
+    {
+        $data = [];
+        for ($i = 0; $i < count($args); ++$i) {
+            if (None::NOT_GIVEN !== $args[$i]) {
+                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
+            }
+        }
+        $this->__unserialize($data);
+    }
+
+    private static function serialize(mixed $value): mixed
+    {
+        if ($value instanceof BaseModel) {
+            return $value->toArray();
+        }
+
+        if (is_array($value) || is_object($value)) {
+            return array_map(static fn ($v) => self::serialize($v), array: (array) $value);
+        }
+
+        return $value;
     }
 }

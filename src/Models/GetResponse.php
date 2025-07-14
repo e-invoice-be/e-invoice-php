@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -16,46 +15,36 @@ class GetResponse implements BaseModel
 
     /**
      * @var array{
-     *
-     *     entities?: list<array{
-     *
-     *         additionalInformation?: list<string>|null,
-     *         countryCode?: string|null,
-     *         name?: string|null,
-     *         registrationDate?: string|null,
-     *
-     * }>,
-     *     queryTimeMs?: float,
-     *     status?: string,
-     *     error?: string|null,
-     *
+     *   entities?: list<array{
+     *     additionalInformation?: list<string>|null,
+     *     countryCode?: string|null,
+     *     name?: string|null,
+     *     registrationDate?: string|null,
+     *   }>,
+     *   queryTimeMs?: float,
+     *   status?: string,
+     *   error?: string|null,
      * } $businessCard
      */
     #[Api]
     public array $businessCard;
 
-    /**
-     * @var list<Certificate> $certificates
-     */
+    /** @var list<Certificate> $certificates */
     #[Api(type: new ListOf(Certificate::class))]
     public array $certificates;
 
     /**
      * @var array{
-     *
-     *     dnsRecords?: list<array{ip?: string}>,
-     *     smlHostname?: string,
-     *     status?: string,
-     *     error?: string|null,
-     *
+     *   dnsRecords?: list<array{ip?: string}>,
+     *   smlHostname?: string,
+     *   status?: string,
+     *   error?: string|null,
      * } $dnsInfo
      */
     #[Api]
     public array $dnsInfo;
 
-    /**
-     * @var list<string> $errors
-     */
+    /** @var list<string> $errors */
     #[Api(type: new ListOf('string'))]
     public array $errors;
 
@@ -64,13 +53,11 @@ class GetResponse implements BaseModel
 
     /**
      * @var array{
-     *
-     *     identifierScheme?: string,
-     *     identifierValue?: string,
-     *     smlDomain?: string,
-     *     timestamp?: string,
-     *     version?: string,
-     *
+     *   identifierScheme?: string,
+     *   identifierValue?: string,
+     *   smlDomain?: string,
+     *   timestamp?: string,
+     *   version?: string,
      * } $queryMetadata
      */
     #[Api]
@@ -78,36 +65,28 @@ class GetResponse implements BaseModel
 
     /**
      * @var array{
-     *
-     *     endpoints?: list<array{
-     *
-     *         documentTypes?: list<array{scheme?: string, value?: string}>,
-     *         status?: string,
-     *         url?: string,
-     *         error?: string|null,
-     *         processes?: list<array{
-     *
-     *             endpoints?: list<array{
-     *
-     *                 address?: string,
-     *                 transportProfile?: string,
-     *                 certificate?: Certificate,
-     *                 serviceActivationDate?: string|null,
-     *                 serviceDescription?: string|null,
-     *                 serviceExpirationDate?: string|null,
-     *                 technicalContactURL?: string|null,
-     *                 technicalInformationURL?: string|null,
-     *
-     * }>,
-     *             processID?: array{scheme?: string, value?: string},
-     *
-     * }>|null,
-     *
-     * }>,
-     *     queryTimeMs?: float,
+     *   endpoints?: list<array{
+     *     documentTypes?: list<array{scheme?: string, value?: string}>,
      *     status?: string,
+     *     url?: string,
      *     error?: string|null,
-     *
+     *     processes?: list<array{
+     *       endpoints?: list<array{
+     *         address?: string,
+     *         transportProfile?: string,
+     *         certificate?: Certificate,
+     *         serviceActivationDate?: string|null,
+     *         serviceDescription?: string|null,
+     *         serviceExpirationDate?: string|null,
+     *         technicalContactURL?: string|null,
+     *         technicalInformationURL?: string|null,
+     *       }>,
+     *       processID?: array{scheme?: string, value?: string},
+     *     }>|null,
+     *   }>,
+     *   queryTimeMs?: float,
+     *   status?: string,
+     *   error?: string|null,
      * } $serviceMetadata
      */
     #[Api]
@@ -117,95 +96,75 @@ class GetResponse implements BaseModel
     public string $status;
 
     /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
      * @param array{
-     *
-     *     entities?: list<array{
-     *
-     *         additionalInformation?: list<string>|null,
-     *         countryCode?: string|null,
-     *         name?: string|null,
-     *         registrationDate?: string|null,
-     *
-     * }>,
-     *     queryTimeMs?: float,
+     *   entities?: list<array{
+     *     additionalInformation?: list<string>|null,
+     *     countryCode?: string|null,
+     *     name?: string|null,
+     *     registrationDate?: string|null,
+     *   }>,
+     *   queryTimeMs?: float,
+     *   status?: string,
+     *   error?: string|null,
+     * } $businessCard `required`
+     * @param list<Certificate> $certificates `required`
+     * @param array{
+     *   dnsRecords?: list<array{ip?: string}>,
+     *   smlHostname?: string,
+     *   status?: string,
+     *   error?: string|null,
+     * } $dnsInfo `required`
+     * @param list<string> $errors          `required`
+     * @param float        $executionTimeMs `required`
+     * @param array{
+     *   identifierScheme?: string,
+     *   identifierValue?: string,
+     *   smlDomain?: string,
+     *   timestamp?: string,
+     *   version?: string,
+     * } $queryMetadata `required`
+     * @param array{
+     *   endpoints?: list<array{
+     *     documentTypes?: list<array{scheme?: string, value?: string}>,
      *     status?: string,
+     *     url?: string,
      *     error?: string|null,
-     *
-     * } $businessCard
-     * @param list<Certificate> $certificates
-     * @param array{
-     *
-     *     dnsRecords?: list<array{ip?: string}>,
-     *     smlHostname?: string,
-     *     status?: string,
-     *     error?: string|null,
-     *
-     * } $dnsInfo
-     * @param list<string> $errors
-     * @param array{
-     *
-     *     identifierScheme?: string,
-     *     identifierValue?: string,
-     *     smlDomain?: string,
-     *     timestamp?: string,
-     *     version?: string,
-     *
-     * } $queryMetadata
-     * @param array{
-     *
-     *     endpoints?: list<array{
-     *
-     *         documentTypes?: list<array{scheme?: string, value?: string}>,
-     *         status?: string,
-     *         url?: string,
-     *         error?: string|null,
-     *         processes?: list<array{
-     *
-     *             endpoints?: list<array{
-     *
-     *                 address?: string,
-     *                 transportProfile?: string,
-     *                 certificate?: Certificate,
-     *                 serviceActivationDate?: string|null,
-     *                 serviceDescription?: string|null,
-     *                 serviceExpirationDate?: string|null,
-     *                 technicalContactURL?: string|null,
-     *                 technicalInformationURL?: string|null,
-     *
-     * }>,
-     *             processID?: array{scheme?: string, value?: string},
-     *
-     * }>|null,
-     *
-     * }>,
-     *     queryTimeMs?: float,
-     *     status?: string,
-     *     error?: string|null,
-     *
-     * } $serviceMetadata
+     *     processes?: list<array{
+     *       endpoints?: list<array{
+     *         address?: string,
+     *         transportProfile?: string,
+     *         certificate?: Certificate,
+     *         serviceActivationDate?: string|null,
+     *         serviceDescription?: string|null,
+     *         serviceExpirationDate?: string|null,
+     *         technicalContactURL?: string|null,
+     *         technicalInformationURL?: string|null,
+     *       }>,
+     *       processID?: array{scheme?: string, value?: string},
+     *     }>|null,
+     *   }>,
+     *   queryTimeMs?: float,
+     *   status?: string,
+     *   error?: string|null,
+     * } $serviceMetadata `required`
+     * @param string $status `required`
      */
     final public function __construct(
-        array $businessCard,
-        array $certificates,
-        array $dnsInfo,
-        array $errors,
-        float $executionTimeMs,
-        array $queryMetadata,
-        array $serviceMetadata,
-        string $status,
+        $businessCard,
+        $certificates,
+        $dnsInfo,
+        $errors,
+        $executionTimeMs,
+        $queryMetadata,
+        $serviceMetadata,
+        $status,
     ) {
-
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
-
+        $this->constructFromArgs(func_get_args());
     }
 }
 
