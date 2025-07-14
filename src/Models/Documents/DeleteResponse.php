@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\Documents;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
 class DeleteResponse implements BaseModel
 {
@@ -16,18 +15,17 @@ class DeleteResponse implements BaseModel
     #[Api('is_deleted')]
     public bool $isDeleted;
 
-    final public function __construct(bool $isDeleted)
+    /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param bool $isDeleted `required`
+     */
+    final public function __construct($isDeleted)
     {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

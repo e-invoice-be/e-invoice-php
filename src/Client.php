@@ -40,8 +40,8 @@ class Client extends BaseClient
             headers: [
                 'Content-Type' => 'application/json', 'Accept' => 'application/json',
             ],
-            options: new RequestOptions(),
             baseUrl: $base,
+            options: new RequestOptions(),
         );
 
         $this->documents = new Documents($this);
@@ -52,9 +52,7 @@ class Client extends BaseClient
         $this->webhooks = new Webhooks($this);
     }
 
-    /**
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function authHeaders(): array
     {
         if (!$this->apiKey) {

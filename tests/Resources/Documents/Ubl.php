@@ -1,6 +1,6 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources\Documents;
+namespace Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -34,6 +34,7 @@ final class UblTest extends TestCase
         }
 
         $result = $this->client->documents->ubl->get('document_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

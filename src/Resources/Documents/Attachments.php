@@ -21,22 +21,11 @@ class Attachments implements AttachmentsContract
 
     /**
      * @param array{documentID?: string, attachmentID?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function retrieve(
         string $attachmentID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
         [$parsed, $options] = RetrieveParams::parseRequest(
             $params,
@@ -56,24 +45,13 @@ class Attachments implements AttachmentsContract
 
     /**
      * @param array{documentID?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      *
      * @return list<DocumentAttachment>
      */
     public function list(
         string $documentID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): array {
         $resp = $this->client->request(
             method: 'get',
@@ -87,22 +65,11 @@ class Attachments implements AttachmentsContract
 
     /**
      * @param array{documentID?: string, attachmentID?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function delete(
         string $attachmentID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): DeleteResponse {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
         $documentID = $parsed['documentID'];
@@ -119,22 +86,11 @@ class Attachments implements AttachmentsContract
 
     /**
      * @param array{documentID?: string, file?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function add(
         string $documentID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
         [$parsed, $options] = AddParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(

@@ -1,6 +1,6 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources\Documents;
+namespace Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -39,6 +39,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve('attachment_id', ['documentID' => 'document_id'])
         ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -55,6 +56,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve('attachment_id', ['documentID' => 'document_id'])
         ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -66,6 +68,7 @@ final class AttachmentsTest extends TestCase
         }
 
         $result = $this->client->documents->attachments->list('document_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -82,6 +85,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete('attachment_id', ['documentID' => 'document_id'])
         ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -98,6 +102,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete('attachment_id', ['documentID' => 'document_id'])
         ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -114,6 +119,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->add('document_id', ['file' => 'file'])
         ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -130,6 +136,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->add('document_id', ['file' => 'file'])
         ;
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

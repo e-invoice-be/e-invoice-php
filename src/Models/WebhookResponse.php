@@ -17,9 +17,7 @@ class WebhookResponse implements BaseModel
     #[Api]
     public string $id;
 
-    /**
-     * @var list<string> $events
-     */
+    /** @var list<string> $events */
     #[Api(type: new ListOf('string'))]
     public array $events;
 
@@ -30,29 +28,28 @@ class WebhookResponse implements BaseModel
     public string $url;
 
     #[Api(optional: true)]
-    public bool $enabled;
+    public ?bool $enabled;
 
     /**
-     * @param list<string> $events
-     * @param bool         $enabled
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string       $id      `required`
+     * @param list<string> $events  `required`
+     * @param string       $secret  `required`
+     * @param string       $url     `required`
+     * @param null|bool    $enabled
      */
     final public function __construct(
-        string $id,
-        array $events,
-        string $secret,
-        string $url,
-        bool|None $enabled = None::NOT_SET
+        $id,
+        $events,
+        $secret,
+        $url,
+        $enabled = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

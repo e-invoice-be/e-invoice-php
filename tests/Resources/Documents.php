@@ -1,6 +1,6 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources;
+namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -34,6 +34,7 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->create([]);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -45,6 +46,7 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->retrieve('document_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -56,6 +58,7 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->delete('document_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -67,6 +70,7 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->send('document_id', []);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Core\Concerns;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\CoerceState;
 use EInvoiceAPI\Core\Serde\DumpState;
@@ -65,6 +66,12 @@ trait Model
     public function __toString(): string
     {
         return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+    }
+
+    /** @return array<string, mixed> */
+    public function toArray(): array
+    {
+        return $this->__serialize();
     }
 
     public function offsetExists(mixed $offset): bool
@@ -262,10 +269,22 @@ trait Model
         }
     }
 
+    /** @param array<mixed> $args */
+    protected function constructFromArgs(array $args): void
+    {
+        $data = [];
+        for ($i = 0; $i < count($args); ++$i) {
+            if (None::NOT_GIVEN !== $args[$i]) {
+                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
+            }
+        }
+        $this->__unserialize($data);
+    }
+
     private static function serialize(mixed $value): mixed
     {
         if ($value instanceof BaseModel) {
-            return $value->__serialize(); // @phpstan-ignore-line
+            return $value->toArray();
         }
 
         if (is_array($value) || is_object($value)) {

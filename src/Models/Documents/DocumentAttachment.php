@@ -20,36 +20,34 @@ class DocumentAttachment implements BaseModel
     public string $fileName;
 
     #[Api('file_size', optional: true)]
-    public int $fileSize;
+    public ?int $fileSize;
 
     #[Api('file_type', optional: true)]
-    public string $fileType;
+    public ?string $fileType;
 
     #[Api('file_url', optional: true)]
     public ?string $fileURL;
 
     /**
-     * @param int         $fileSize
-     * @param string      $fileType
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string      $id       `required`
+     * @param string      $fileName `required`
+     * @param null|int    $fileSize
+     * @param null|string $fileType
      * @param null|string $fileURL
      */
     final public function __construct(
-        string $id,
-        string $fileName,
-        int|None $fileSize = None::NOT_SET,
-        None|string $fileType = None::NOT_SET,
-        null|None|string $fileURL = None::NOT_SET
+        $id,
+        $fileName,
+        $fileSize = None::NOT_GIVEN,
+        $fileType = None::NOT_GIVEN,
+        $fileURL = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

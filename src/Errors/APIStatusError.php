@@ -8,6 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class APIStatusError extends APIError
 {
+    /** @var string */
+    protected const DESC = 'EInvoiceAPI API Status Error';
+
     public ?int $status;
 
     public function __construct(
@@ -15,7 +18,7 @@ class APIStatusError extends APIError
         public RequestInterface $request,
         ResponseInterface $response,
         ?\Throwable $previous = null,
-        string $message = ''
+        string $message = '',
     ) {
         $this->response = $response;
         $this->status = $response->getStatusCode();

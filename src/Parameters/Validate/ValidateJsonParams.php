@@ -18,15 +18,11 @@ class ValidateJsonParams implements BaseModel
     use Model;
     use Params;
 
-    /**
-     * @var null|float|string $amountDue
-     */
+    /** @var null|float|string $amountDue */
     #[Api('amount_due', optional: true)]
     public mixed $amountDue;
 
-    /**
-     * @var null|list<DocumentAttachmentCreate> $attachments
-     */
+    /** @var null|list<DocumentAttachmentCreate> $attachments */
     #[Api(
         type: new UnionOf([new ListOf(DocumentAttachmentCreate::class), 'null']),
         optional: true,
@@ -40,7 +36,7 @@ class ValidateJsonParams implements BaseModel
     public ?string $billingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $currency;
+    public ?string $currency;
 
     #[Api('customer_address', optional: true)]
     public ?string $customerAddress;
@@ -61,10 +57,10 @@ class ValidateJsonParams implements BaseModel
     public ?string $customerTaxID;
 
     #[Api(optional: true)]
-    public string $direction;
+    public ?string $direction;
 
     #[Api('document_type', optional: true)]
-    public string $documentType;
+    public ?string $documentType;
 
     #[Api('due_date', optional: true)]
     public ?\DateTimeInterface $dueDate;
@@ -75,25 +71,21 @@ class ValidateJsonParams implements BaseModel
     #[Api('invoice_id', optional: true)]
     public ?string $invoiceID;
 
-    /**
-     * @var null|float|string $invoiceTotal
-     */
+    /** @var null|float|string $invoiceTotal */
     #[Api('invoice_total', optional: true)]
     public mixed $invoiceTotal;
 
     /**
      * @var list<array{
-     *
-     *     amount?: float|string|null,
-     *     date?: mixed|null,
-     *     description?: string|null,
-     *     productCode?: string|null,
-     *     quantity?: float|string|null,
-     *     tax?: float|string|null,
-     *     taxRate?: string|null,
-     *     unit?: string,
-     *     unitPrice?: float|string|null,
-     *
+     *   amount?: float|string|null,
+     *   date?: mixed|null,
+     *   description?: string|null,
+     *   productCode?: string|null,
+     *   quantity?: float|string|null,
+     *   tax?: float|string|null,
+     *   taxRate?: string|null,
+     *   unit?: string,
+     *   unitPrice?: float|string|null,
      * }>|null $items
      */
     #[Api(
@@ -105,9 +97,7 @@ class ValidateJsonParams implements BaseModel
     #[Api(optional: true)]
     public ?string $note;
 
-    /**
-     * @var null|list<PaymentDetailCreate> $paymentDetails
-     */
+    /** @var null|list<PaymentDetailCreate> $paymentDetails */
     #[Api(
         'payment_details',
         type: new UnionOf([new ListOf(PaymentDetailCreate::class), 'null']),
@@ -118,9 +108,7 @@ class ValidateJsonParams implements BaseModel
     #[Api('payment_term', optional: true)]
     public ?string $paymentTerm;
 
-    /**
-     * @var null|float|string $previousUnpaidBalance
-     */
+    /** @var null|float|string $previousUnpaidBalance */
     #[Api('previous_unpaid_balance', optional: true)]
     public mixed $previousUnpaidBalance;
 
@@ -152,19 +140,15 @@ class ValidateJsonParams implements BaseModel
     public ?string $shippingAddressRecipient;
 
     #[Api(optional: true)]
-    public string $state;
+    public ?string $state;
 
-    /**
-     * @var null|float|string $subtotal
-     */
+    /** @var null|float|string $subtotal */
     #[Api(optional: true)]
     public mixed $subtotal;
 
     /**
      * @var list<array{
-     *
-     * amount?: float|string|null, rate?: string|null
-     *
+     *   amount?: float|string|null, rate?: string|null
      * }>|null $taxDetails
      */
     #[Api(
@@ -174,15 +158,11 @@ class ValidateJsonParams implements BaseModel
     )]
     public ?array $taxDetails;
 
-    /**
-     * @var null|float|string $totalDiscount
-     */
+    /** @var null|float|string $totalDiscount */
     #[Api('total_discount', optional: true)]
     public mixed $totalDiscount;
 
-    /**
-     * @var null|float|string $totalTax
-     */
+    /** @var null|float|string $totalTax */
     #[Api('total_tax', optional: true)]
     public mixed $totalTax;
 

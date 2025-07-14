@@ -1,6 +1,6 @@
 <?php
 
-namespace EInvoiceAPI\Tests\Resources;
+namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -34,6 +34,7 @@ final class LookupTest extends TestCase
         }
 
         $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -45,6 +46,7 @@ final class LookupTest extends TestCase
         }
 
         $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }
