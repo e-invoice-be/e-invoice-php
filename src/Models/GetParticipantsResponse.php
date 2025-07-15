@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Models\GetParticipantsResponse\Participant;
 
 class GetParticipantsResponse implements BaseModel
 {
@@ -26,23 +27,8 @@ class GetParticipantsResponse implements BaseModel
     #[Api('used_count')]
     public int $usedCount;
 
-    /**
-     * @var list<array{
-     *   peppolID?: string,
-     *   peppolScheme?: string,
-     *   documentTypes?: list<array{scheme?: string, value?: string}>,
-     *   entities?: list<array{
-     *     additionalInfo?: string|null,
-     *     countryCode?: string|null,
-     *     geoInfo?: string|null,
-     *     identifiers?: list<array{scheme?: string, value?: string}>,
-     *     name?: string|null,
-     *     registrationDate?: string|null,
-     *     website?: string|null,
-     *   }>,
-     * }>|null $participants
-     */
-    #[Api(type: new ListOf(new ListOf('mixed')), optional: true)]
+    /** @var null|list<Participant> $participants */
+    #[Api(type: new ListOf(Participant::class), optional: true)]
     public ?array $participants;
 
     /**
@@ -51,24 +37,11 @@ class GetParticipantsResponse implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string $queryTerms `required`
-     * @param string $searchDate `required`
-     * @param int    $totalCount `required`
-     * @param int    $usedCount  `required`
-     * @param list<array{
-     *   peppolID?: string,
-     *   peppolScheme?: string,
-     *   documentTypes?: list<array{scheme?: string, value?: string}>,
-     *   entities?: list<array{
-     *     additionalInfo?: string|null,
-     *     countryCode?: string|null,
-     *     geoInfo?: string|null,
-     *     identifiers?: list<array{scheme?: string, value?: string}>,
-     *     name?: string|null,
-     *     registrationDate?: string|null,
-     *     website?: string|null,
-     *   }>,
-     * }>|null $participants
+     * @param string                 $queryTerms   `required`
+     * @param string                 $searchDate   `required`
+     * @param int                    $totalCount   `required`
+     * @param int                    $usedCount    `required`
+     * @param null|list<Participant> $participants
      */
     final public function __construct(
         $queryTerms,

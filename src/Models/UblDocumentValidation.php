@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Models\UblDocumentValidation\Issue;
 
 class UblDocumentValidation implements BaseModel
 {
@@ -23,18 +24,8 @@ class UblDocumentValidation implements BaseModel
     #[Api('is_valid')]
     public bool $isValid;
 
-    /**
-     * @var list<array{
-     *   message?: string,
-     *   schematron?: string,
-     *   type?: string,
-     *   flag?: string|null,
-     *   location?: string|null,
-     *   ruleID?: string|null,
-     *   test?: string|null,
-     * }> $issues
-     */
-    #[Api(type: new ListOf(new ListOf('mixed')))]
+    /** @var list<Issue> $issues */
+    #[Api(type: new ListOf(Issue::class))]
     public array $issues;
 
     #[Api('ubl_document', optional: true)]
@@ -46,18 +37,10 @@ class UblDocumentValidation implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string      $id       `required`
-     * @param null|string $fileName `required`
-     * @param bool        $isValid  `required`
-     * @param list<array{
-     *   message?: string,
-     *   schematron?: string,
-     *   type?: string,
-     *   flag?: string|null,
-     *   location?: string|null,
-     *   ruleID?: string|null,
-     *   test?: string|null,
-     * }> $issues `required`
+     * @param string      $id          `required`
+     * @param null|string $fileName    `required`
+     * @param bool        $isValid     `required`
+     * @param list<Issue> $issues      `required`
      * @param null|string $ublDocument
      */
     final public function __construct(
