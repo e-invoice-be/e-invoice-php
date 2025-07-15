@@ -181,15 +181,15 @@ class DocumentResponse implements BaseModel
      * @param null|list<DocumentAttachment> $attachments
      * @param null|string                   $billingAddress
      * @param null|string                   $billingAddressRecipient
-     * @param null|string                   $currency
+     * @param string                        $currency
      * @param null|string                   $customerAddress
      * @param null|string                   $customerAddressRecipient
      * @param null|string                   $customerEmail
      * @param null|string                   $customerID
      * @param null|string                   $customerName
      * @param null|string                   $customerTaxID
-     * @param null|string                   $direction
-     * @param null|string                   $documentType
+     * @param string                        $direction
+     * @param string                        $documentType
      * @param null|\DateTimeInterface       $dueDate
      * @param null|\DateTimeInterface       $invoiceDate
      * @param null|string                   $invoiceID
@@ -223,7 +223,7 @@ class DocumentResponse implements BaseModel
      * @param null|\DateTimeInterface                                    $serviceStartDate
      * @param null|string                                                $shippingAddress
      * @param null|string                                                $shippingAddressRecipient
-     * @param null|string                                                $state
+     * @param string                                                     $state
      * @param null|string                                                $subtotal
      * @param null|list<array{amount?: null|string, rate?: null|string}> $taxDetails
      * @param null|string                                                $totalDiscount
