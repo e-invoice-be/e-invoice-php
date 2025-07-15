@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Models\DocumentResponse\Item;
+use EInvoiceAPI\Models\DocumentResponse\PaymentDetail;
+use EInvoiceAPI\Models\DocumentResponse\TaxDetail;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
 
 class DocumentResponse implements BaseModel
@@ -70,36 +73,17 @@ class DocumentResponse implements BaseModel
     #[Api('invoice_total', optional: true)]
     public ?string $invoiceTotal;
 
-    /**
-     * @var list<array{
-     *   amount?: string|null,
-     *   date?: mixed|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: string|null,
-     *   tax?: string|null,
-     *   taxRate?: string|null,
-     *   unit?: string,
-     *   unitPrice?: string|null,
-     * }>|null $items
-     */
-    #[Api(type: new ListOf(new ListOf('mixed')), optional: true)]
+    /** @var null|list<Item> $items */
+    #[Api(type: new ListOf(Item::class), optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
     public ?string $note;
 
-    /**
-     * @var list<array{
-     *   bankAccountNumber?: string|null,
-     *   iban?: string|null,
-     *   paymentReference?: string|null,
-     *   swift?: string|null,
-     * }>|null $paymentDetails
-     */
+    /** @var null|list<PaymentDetail> $paymentDetails */
     #[Api(
         'payment_details',
-        type: new ListOf(new ListOf('mixed')),
+        type: new ListOf(PaymentDetail::class),
         optional: true
     )]
     public ?array $paymentDetails;
@@ -143,10 +127,8 @@ class DocumentResponse implements BaseModel
     #[Api(optional: true)]
     public ?string $subtotal;
 
-    /**
-     * @var null|list<array{amount?: null|string, rate?: null|string}> $taxDetails
-     */
-    #[Api('tax_details', type: new ListOf(new ListOf('mixed')), optional: true)]
+    /** @var null|list<TaxDetail> $taxDetails */
+    #[Api('tax_details', type: new ListOf(TaxDetail::class), optional: true)]
     public ?array $taxDetails;
 
     #[Api('total_discount', optional: true)]
@@ -176,7 +158,7 @@ class DocumentResponse implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                        $id                       `required`
+     * @param string                        $id                         `required`
      * @param null|string                   $amountDue
      * @param null|list<DocumentAttachment> $attachments
      * @param null|string                   $billingAddress
@@ -194,45 +176,30 @@ class DocumentResponse implements BaseModel
      * @param null|\DateTimeInterface       $invoiceDate
      * @param null|string                   $invoiceID
      * @param null|string                   $invoiceTotal
-     * @param list<array{
-     *   amount?: string|null,
-     *   date?: mixed|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: string|null,
-     *   tax?: string|null,
-     *   taxRate?: string|null,
-     *   unit?: string,
-     *   unitPrice?: string|null,
-     * }>|null $items
-     * @param null|string $note
-     * @param list<array{
-     *   bankAccountNumber?: string|null,
-     *   iban?: string|null,
-     *   paymentReference?: string|null,
-     *   swift?: string|null,
-     * }>|null $paymentDetails
-     * @param null|string                                                $paymentTerm
-     * @param null|string                                                $previousUnpaidBalance
-     * @param null|string                                                $purchaseOrder
-     * @param null|string                                                $remittanceAddress
-     * @param null|string                                                $remittanceAddressRecipient
-     * @param null|string                                                $serviceAddress
-     * @param null|string                                                $serviceAddressRecipient
-     * @param null|\DateTimeInterface                                    $serviceEndDate
-     * @param null|\DateTimeInterface                                    $serviceStartDate
-     * @param null|string                                                $shippingAddress
-     * @param null|string                                                $shippingAddressRecipient
-     * @param string                                                     $state
-     * @param null|string                                                $subtotal
-     * @param null|list<array{amount?: null|string, rate?: null|string}> $taxDetails
-     * @param null|string                                                $totalDiscount
-     * @param null|string                                                $totalTax
-     * @param null|string                                                $vendorAddress
-     * @param null|string                                                $vendorAddressRecipient
-     * @param null|string                                                $vendorEmail
-     * @param null|string                                                $vendorName
-     * @param null|string                                                $vendorTaxID
+     * @param null|list<Item>               $items
+     * @param null|string                   $note
+     * @param null|list<PaymentDetail>      $paymentDetails
+     * @param null|string                   $paymentTerm
+     * @param null|string                   $previousUnpaidBalance
+     * @param null|string                   $purchaseOrder
+     * @param null|string                   $remittanceAddress
+     * @param null|string                   $remittanceAddressRecipient
+     * @param null|string                   $serviceAddress
+     * @param null|string                   $serviceAddressRecipient
+     * @param null|\DateTimeInterface       $serviceEndDate
+     * @param null|\DateTimeInterface       $serviceStartDate
+     * @param null|string                   $shippingAddress
+     * @param null|string                   $shippingAddressRecipient
+     * @param string                        $state
+     * @param null|string                   $subtotal
+     * @param null|list<TaxDetail>          $taxDetails
+     * @param null|string                   $totalDiscount
+     * @param null|string                   $totalTax
+     * @param null|string                   $vendorAddress
+     * @param null|string                   $vendorAddressRecipient
+     * @param null|string                   $vendorEmail
+     * @param null|string                   $vendorName
+     * @param null|string                   $vendorTaxID
      */
     final public function __construct(
         $id,

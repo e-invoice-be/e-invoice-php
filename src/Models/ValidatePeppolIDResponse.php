@@ -9,20 +9,14 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Models\ValidatePeppolIDResponse\BusinessCard;
 
 class ValidatePeppolIDResponse implements BaseModel
 {
     use Model;
 
-    /**
-     * @var array{
-     *   countryCode?: string|null,
-     *   name?: string|null,
-     *   registrationDate?: \DateTimeInterface|null,
-     * }|null $businessCard
-     */
     #[Api('business_card')]
-    public ?array $businessCard;
+    public ?BusinessCard $businessCard;
 
     #[Api('business_card_valid')]
     public bool $businessCardValid;
@@ -43,11 +37,7 @@ class ValidatePeppolIDResponse implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param array{
-     *   countryCode?: string|null,
-     *   name?: string|null,
-     *   registrationDate?: \DateTimeInterface|null,
-     * }|null $businessCard `required`
+     * @param null|BusinessCard $businessCard           `required`
      * @param bool              $businessCardValid      `required`
      * @param bool              $dnsValid               `required`
      * @param bool              $isValid                `required`

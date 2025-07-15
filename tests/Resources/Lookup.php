@@ -72,9 +72,9 @@ final class LookupTest extends TestCase
         $result = $this
             ->client
             ->lookup
-            ->retrieveParticipants([
-                'query' => 'query', 'countryCode' => 'country_code',
-            ])
+            ->retrieveParticipants(
+                ['query' => 'query', 'countryCode' => 'country_code']
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

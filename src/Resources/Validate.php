@@ -12,6 +12,8 @@ use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Models\ValidatePeppolIDResponse;
 use EInvoiceAPI\Parameters\Validate\ValidateJsonParams;
+use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\Item;
+use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\TaxDetail;
 use EInvoiceAPI\Parameters\Validate\ValidatePeppolIDParams;
 use EInvoiceAPI\Parameters\Validate\ValidateUblParams;
 use EInvoiceAPI\RequestOptions;
@@ -39,17 +41,7 @@ class Validate implements ValidateContract
      *   invoiceDate?: \DateTimeInterface|null,
      *   invoiceID?: string|null,
      *   invoiceTotal?: float|string|null,
-     *   items?: list<array{
-     *     amount?: float|string|null,
-     *     date?: mixed|null,
-     *     description?: string|null,
-     *     productCode?: string|null,
-     *     quantity?: float|string|null,
-     *     tax?: float|string|null,
-     *     taxRate?: string|null,
-     *     unit?: string,
-     *     unitPrice?: float|string|null,
-     *   }>|null,
+     *   items?: list<Item>|null,
      *   note?: string|null,
      *   paymentDetails?: list<PaymentDetailCreate>|null,
      *   paymentTerm?: string|null,
@@ -65,7 +57,7 @@ class Validate implements ValidateContract
      *   shippingAddressRecipient?: string|null,
      *   state?: string,
      *   subtotal?: float|string|null,
-     *   taxDetails?: list<array{amount?: float|string|null, rate?: string|null}>|null,
+     *   taxDetails?: list<TaxDetail>|null,
      *   totalDiscount?: float|string|null,
      *   totalTax?: float|string|null,
      *   vendorAddress?: string|null,

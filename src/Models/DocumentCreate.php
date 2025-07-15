@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Core\Serde\UnionOf;
+use EInvoiceAPI\Models\DocumentCreate\Item;
+use EInvoiceAPI\Models\DocumentCreate\TaxDetail;
 
 class DocumentCreate implements BaseModel
 {
@@ -72,23 +74,8 @@ class DocumentCreate implements BaseModel
     #[Api('invoice_total', optional: true)]
     public mixed $invoiceTotal;
 
-    /**
-     * @var list<array{
-     *   amount?: float|string|null,
-     *   date?: mixed|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: float|string|null,
-     *   tax?: float|string|null,
-     *   taxRate?: string|null,
-     *   unit?: string,
-     *   unitPrice?: float|string|null,
-     * }>|null $items
-     */
-    #[Api(
-        type: new UnionOf([new ListOf(new ListOf('mixed')), 'null']),
-        optional: true
-    )]
+    /** @var null|list<Item> $items */
+    #[Api(type: new UnionOf([new ListOf(Item::class), 'null']), optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
@@ -143,14 +130,10 @@ class DocumentCreate implements BaseModel
     #[Api(optional: true)]
     public mixed $subtotal;
 
-    /**
-     * @var list<array{
-     *   amount?: float|string|null, rate?: string|null
-     * }>|null $taxDetails
-     */
+    /** @var null|list<TaxDetail> $taxDetails */
     #[Api(
         'tax_details',
-        type: new UnionOf([new ListOf(new ListOf('mixed')), 'null']),
+        type: new UnionOf([new ListOf(TaxDetail::class), 'null']),
         optional: true,
     )]
     public ?array $taxDetails;
@@ -201,42 +184,30 @@ class DocumentCreate implements BaseModel
      * @param null|\DateTimeInterface             $invoiceDate
      * @param null|string                         $invoiceID
      * @param null|float|string                   $invoiceTotal
-     * @param list<array{
-     *   amount?: float|string|null,
-     *   date?: mixed|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: float|string|null,
-     *   tax?: float|string|null,
-     *   taxRate?: string|null,
-     *   unit?: string,
-     *   unitPrice?: float|string|null,
-     * }>|null $items
-     * @param null|string                    $note
-     * @param null|list<PaymentDetailCreate> $paymentDetails
-     * @param null|string                    $paymentTerm
-     * @param null|float|string              $previousUnpaidBalance
-     * @param null|string                    $purchaseOrder
-     * @param null|string                    $remittanceAddress
-     * @param null|string                    $remittanceAddressRecipient
-     * @param null|string                    $serviceAddress
-     * @param null|string                    $serviceAddressRecipient
-     * @param null|\DateTimeInterface        $serviceEndDate
-     * @param null|\DateTimeInterface        $serviceStartDate
-     * @param null|string                    $shippingAddress
-     * @param null|string                    $shippingAddressRecipient
-     * @param string                         $state
-     * @param null|float|string              $subtotal
-     * @param list<array{
-     *   amount?: float|string|null, rate?: string|null
-     * }>|null $taxDetails
-     * @param null|float|string $totalDiscount
-     * @param null|float|string $totalTax
-     * @param null|string       $vendorAddress
-     * @param null|string       $vendorAddressRecipient
-     * @param null|string       $vendorEmail
-     * @param null|string       $vendorName
-     * @param null|string       $vendorTaxID
+     * @param null|list<Item>                     $items
+     * @param null|string                         $note
+     * @param null|list<PaymentDetailCreate>      $paymentDetails
+     * @param null|string                         $paymentTerm
+     * @param null|float|string                   $previousUnpaidBalance
+     * @param null|string                         $purchaseOrder
+     * @param null|string                         $remittanceAddress
+     * @param null|string                         $remittanceAddressRecipient
+     * @param null|string                         $serviceAddress
+     * @param null|string                         $serviceAddressRecipient
+     * @param null|\DateTimeInterface             $serviceEndDate
+     * @param null|\DateTimeInterface             $serviceStartDate
+     * @param null|string                         $shippingAddress
+     * @param null|string                         $shippingAddressRecipient
+     * @param string                              $state
+     * @param null|float|string                   $subtotal
+     * @param null|list<TaxDetail>                $taxDetails
+     * @param null|float|string                   $totalDiscount
+     * @param null|float|string                   $totalTax
+     * @param null|string                         $vendorAddress
+     * @param null|string                         $vendorAddressRecipient
+     * @param null|string                         $vendorEmail
+     * @param null|string                         $vendorName
+     * @param null|string                         $vendorTaxID
      */
     final public function __construct(
         $amountDue = None::NOT_GIVEN,

@@ -12,6 +12,8 @@ use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Parameters\Documents\CreateParams;
+use EInvoiceAPI\Parameters\Documents\CreateParams\Item;
+use EInvoiceAPI\Parameters\Documents\CreateParams\TaxDetail;
 use EInvoiceAPI\Parameters\Documents\SendParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Resources\Documents\Attachments;
@@ -48,17 +50,7 @@ class Documents implements DocumentsContract
      *   invoiceDate?: \DateTimeInterface|null,
      *   invoiceID?: string|null,
      *   invoiceTotal?: float|string|null,
-     *   items?: list<array{
-     *     amount?: float|string|null,
-     *     date?: mixed|null,
-     *     description?: string|null,
-     *     productCode?: string|null,
-     *     quantity?: float|string|null,
-     *     tax?: float|string|null,
-     *     taxRate?: string|null,
-     *     unit?: string,
-     *     unitPrice?: float|string|null,
-     *   }>|null,
+     *   items?: list<Item>|null,
      *   note?: string|null,
      *   paymentDetails?: list<PaymentDetailCreate>|null,
      *   paymentTerm?: string|null,
@@ -74,7 +66,7 @@ class Documents implements DocumentsContract
      *   shippingAddressRecipient?: string|null,
      *   state?: string,
      *   subtotal?: float|string|null,
-     *   taxDetails?: list<array{amount?: float|string|null, rate?: string|null}>|null,
+     *   taxDetails?: list<TaxDetail>|null,
      *   totalDiscount?: float|string|null,
      *   totalTax?: float|string|null,
      *   vendorAddress?: string|null,

@@ -12,6 +12,8 @@ use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\PaymentDetailCreate;
+use EInvoiceAPI\Parameters\Documents\CreateParams\Item;
+use EInvoiceAPI\Parameters\Documents\CreateParams\TaxDetail;
 
 class CreateParams implements BaseModel
 {
@@ -75,23 +77,8 @@ class CreateParams implements BaseModel
     #[Api('invoice_total', optional: true)]
     public mixed $invoiceTotal;
 
-    /**
-     * @var list<array{
-     *   amount?: float|string|null,
-     *   date?: mixed|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: float|string|null,
-     *   tax?: float|string|null,
-     *   taxRate?: string|null,
-     *   unit?: string,
-     *   unitPrice?: float|string|null,
-     * }>|null $items
-     */
-    #[Api(
-        type: new UnionOf([new ListOf(new ListOf('mixed')), 'null']),
-        optional: true
-    )]
+    /** @var null|list<Item> $items */
+    #[Api(type: new UnionOf([new ListOf(Item::class), 'null']), optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
@@ -146,14 +133,10 @@ class CreateParams implements BaseModel
     #[Api(optional: true)]
     public mixed $subtotal;
 
-    /**
-     * @var list<array{
-     *   amount?: float|string|null, rate?: string|null
-     * }>|null $taxDetails
-     */
+    /** @var null|list<TaxDetail> $taxDetails */
     #[Api(
         'tax_details',
-        type: new UnionOf([new ListOf(new ListOf('mixed')), 'null']),
+        type: new UnionOf([new ListOf(TaxDetail::class), 'null']),
         optional: true,
     )]
     public ?array $taxDetails;
