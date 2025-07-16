@@ -21,9 +21,8 @@ final class ValidateJsonParams implements BaseModel
     use Model;
     use Params;
 
-    /** @var null|float|string $amountDue */
     #[Api('amount_due', optional: true)]
-    public mixed $amountDue;
+    public null|float|string $amountDue;
 
     /** @var null|list<DocumentAttachmentCreate> $attachments */
     #[Api(
@@ -74,9 +73,8 @@ final class ValidateJsonParams implements BaseModel
     #[Api('invoice_id', optional: true)]
     public ?string $invoiceID;
 
-    /** @var null|float|string $invoiceTotal */
     #[Api('invoice_total', optional: true)]
-    public mixed $invoiceTotal;
+    public null|float|string $invoiceTotal;
 
     /** @var null|list<Item> $items */
     #[Api(type: new UnionOf([new ListOf(Item::class), 'null']), optional: true)]
@@ -96,9 +94,8 @@ final class ValidateJsonParams implements BaseModel
     #[Api('payment_term', optional: true)]
     public ?string $paymentTerm;
 
-    /** @var null|float|string $previousUnpaidBalance */
     #[Api('previous_unpaid_balance', optional: true)]
-    public mixed $previousUnpaidBalance;
+    public null|float|string $previousUnpaidBalance;
 
     #[Api('purchase_order', optional: true)]
     public ?string $purchaseOrder;
@@ -130,9 +127,8 @@ final class ValidateJsonParams implements BaseModel
     #[Api(optional: true)]
     public ?string $state;
 
-    /** @var null|float|string $subtotal */
     #[Api(optional: true)]
-    public mixed $subtotal;
+    public null|float|string $subtotal;
 
     /** @var null|list<TaxDetail> $taxDetails */
     #[Api(
@@ -142,13 +138,11 @@ final class ValidateJsonParams implements BaseModel
     )]
     public ?array $taxDetails;
 
-    /** @var null|float|string $totalDiscount */
     #[Api('total_discount', optional: true)]
-    public mixed $totalDiscount;
+    public null|float|string $totalDiscount;
 
-    /** @var null|float|string $totalTax */
     #[Api('total_tax', optional: true)]
-    public mixed $totalTax;
+    public null|float|string $totalTax;
 
     #[Api('vendor_address', optional: true)]
     public ?string $vendorAddress;

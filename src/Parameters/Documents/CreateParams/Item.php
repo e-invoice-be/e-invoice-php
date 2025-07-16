@@ -13,9 +13,8 @@ final class Item implements BaseModel
 {
     use Model;
 
-    /** @var null|float|string $amount */
     #[Api(optional: true)]
-    public mixed $amount;
+    public null|float|string $amount;
 
     #[Api(optional: true)]
     public ?null $date;
@@ -26,13 +25,11 @@ final class Item implements BaseModel
     #[Api('product_code', optional: true)]
     public ?string $productCode;
 
-    /** @var null|float|string $quantity */
     #[Api(optional: true)]
-    public mixed $quantity;
+    public null|float|string $quantity;
 
-    /** @var null|float|string $tax */
     #[Api(optional: true)]
-    public mixed $tax;
+    public null|float|string $tax;
 
     #[Api('tax_rate', optional: true)]
     public ?string $taxRate;
@@ -40,9 +37,8 @@ final class Item implements BaseModel
     #[Api(optional: true)]
     public ?string $unit;
 
-    /** @var null|float|string $unitPrice */
     #[Api('unit_price', optional: true)]
-    public mixed $unitPrice;
+    public null|float|string $unitPrice;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
