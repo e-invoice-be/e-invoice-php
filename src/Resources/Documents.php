@@ -19,16 +19,16 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Resources\Documents\Attachments;
 use EInvoiceAPI\Resources\Documents\Ubl;
 
-class Documents implements DocumentsContract
+final class Documents implements DocumentsContract
 {
     public Attachments $attachments;
 
     public Ubl $ubl;
 
-    public function __construct(protected Client $client)
+    public function __construct(private Client $client)
     {
-        $this->attachments = new Attachments($client);
-        $this->ubl = new Ubl($client);
+        $this->attachments = new Attachments($this->client);
+        $this->ubl = new Ubl($this->client);
     }
 
     /**

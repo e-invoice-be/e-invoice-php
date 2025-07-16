@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 
-class DocumentAttachmentCreate implements BaseModel
+final class DocumentAttachmentCreate implements BaseModel
 {
     use Model;
 
@@ -20,10 +20,10 @@ class DocumentAttachmentCreate implements BaseModel
     public ?string $fileData;
 
     #[Api('file_size', optional: true)]
-    public ?int $fileSize;
+    public ?int $fileSize = 0;
 
     #[Api('file_type', optional: true)]
-    public ?string $fileType;
+    public ?string $fileType = 'application/pdf';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not

@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetResponse\ServiceMetadata\Endpoint;
 
-class ServiceMetadata implements BaseModel
+final class ServiceMetadata implements BaseModel
 {
     use Model;
 

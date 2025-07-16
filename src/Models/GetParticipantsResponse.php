@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetParticipantsResponse\Participant;
 
-class GetParticipantsResponse implements BaseModel
+final class GetParticipantsResponse implements BaseModel
 {
     use Model;
 

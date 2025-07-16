@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetResponse\BusinessCard\Entity;
 
-class BusinessCard implements BaseModel
+final class BusinessCard implements BaseModel
 {
     use Model;
 

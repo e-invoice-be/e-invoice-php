@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class CurrencyCode
+final class CurrencyCode
 {
     final public const EUR = 'EUR';
 

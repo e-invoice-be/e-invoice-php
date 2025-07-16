@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\ValidatePeppolIDResponse\BusinessCard;
 
-class ValidatePeppolIDResponse implements BaseModel
+final class ValidatePeppolIDResponse implements BaseModel
 {
     use Model;
 

@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 
-class GetResponse implements BaseModel
+final class GetResponse implements BaseModel
 {
     use Model;
 
@@ -23,7 +23,7 @@ class GetResponse implements BaseModel
     public ?string $fileHash;
 
     #[Api('file_size', optional: true)]
-    public ?int $fileSize;
+    public ?int $fileSize = 0;
 
     #[Api('receiver_peppol_id', optional: true)]
     public ?string $receiverPeppolID;

@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 
-class DocumentAttachment implements BaseModel
+final class DocumentAttachment implements BaseModel
 {
     use Model;
 
@@ -20,10 +20,10 @@ class DocumentAttachment implements BaseModel
     public string $fileName;
 
     #[Api('file_size', optional: true)]
-    public ?int $fileSize;
+    public ?int $fileSize = 0;
 
     #[Api('file_type', optional: true)]
-    public ?string $fileType;
+    public ?string $fileType = 'application/pdf';
 
     #[Api('file_url', optional: true)]
     public ?string $fileURL;

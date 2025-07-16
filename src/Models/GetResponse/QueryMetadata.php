@@ -8,7 +8,7 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-class QueryMetadata implements BaseModel
+final class QueryMetadata implements BaseModel
 {
     use Model;
 

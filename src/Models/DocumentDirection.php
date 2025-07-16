@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class DocumentDirection
+final class DocumentDirection
 {
     final public const INBOUND = 'INBOUND';
 

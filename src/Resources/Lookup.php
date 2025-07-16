@@ -13,9 +13,9 @@ use EInvoiceAPI\Parameters\Lookup\RetrieveParams;
 use EInvoiceAPI\Parameters\Lookup\RetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 
-class Lookup implements LookupContract
+final class Lookup implements LookupContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{peppolID?: string} $params

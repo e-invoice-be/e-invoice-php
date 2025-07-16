@@ -13,7 +13,7 @@ use EInvoiceAPI\Models\GetResponse\DNSInfo;
 use EInvoiceAPI\Models\GetResponse\QueryMetadata;
 use EInvoiceAPI\Models\GetResponse\ServiceMetadata;
 
-class GetResponse implements BaseModel
+final class GetResponse implements BaseModel
 {
     use Model;
 

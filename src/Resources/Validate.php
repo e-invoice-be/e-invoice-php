@@ -18,9 +18,9 @@ use EInvoiceAPI\Parameters\Validate\ValidatePeppolIDParams;
 use EInvoiceAPI\Parameters\Validate\ValidateUblParams;
 use EInvoiceAPI\RequestOptions;
 
-class Validate implements ValidateContract
+final class Validate implements ValidateContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{

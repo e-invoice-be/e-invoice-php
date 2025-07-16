@@ -8,10 +8,15 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-class GetParams implements BaseModel
+final class GetParams implements BaseModel
 {
     use Model;
     use Params;
+
+    final public function __construct()
+    {
+        $this->constructFromArgs(func_get_args());
+    }
 }
 
 GetParams::_loadMetadata();

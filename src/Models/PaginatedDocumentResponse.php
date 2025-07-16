@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Serde\ListOf;
 
-class PaginatedDocumentResponse implements BaseModel
+final class PaginatedDocumentResponse implements BaseModel
 {
     use Model;
 

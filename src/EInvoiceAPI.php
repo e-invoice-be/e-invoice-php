@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI;
 
-class EInvoiceAPI {}
+final class EInvoiceAPI {}

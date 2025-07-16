@@ -8,7 +8,7 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-class DeleteResponse implements BaseModel
+final class DeleteResponse implements BaseModel
 {
     use Model;
 

@@ -10,7 +10,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Models\Certificate;
 
-class Endpoint implements BaseModel
+final class Endpoint implements BaseModel
 {
     use Model;
 

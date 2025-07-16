@@ -14,9 +14,9 @@ use EInvoiceAPI\Parameters\Webhooks\CreateParams;
 use EInvoiceAPI\Parameters\Webhooks\UpdateParams;
 use EInvoiceAPI\RequestOptions;
 
-class Webhooks implements WebhooksContract
+final class Webhooks implements WebhooksContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{events?: list<string>, url?: string, enabled?: bool} $params

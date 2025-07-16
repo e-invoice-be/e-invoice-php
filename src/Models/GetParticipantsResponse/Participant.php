@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetParticipantsResponse\Participant\DocumentType;
 use EInvoiceAPI\Models\GetParticipantsResponse\Participant\Entity;
 
-class Participant implements BaseModel
+final class Participant implements BaseModel
 {
     use Model;
 

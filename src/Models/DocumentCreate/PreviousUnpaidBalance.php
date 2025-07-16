@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models\DocumentCreate;
 
-class PreviousUnpaidBalance {}
+final class PreviousUnpaidBalance {}

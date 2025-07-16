@@ -8,7 +8,7 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-class DNSRecord implements BaseModel
+final class DNSRecord implements BaseModel
 {
     use Model;
 

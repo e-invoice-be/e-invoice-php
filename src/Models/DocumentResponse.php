@@ -14,7 +14,7 @@ use EInvoiceAPI\Models\DocumentResponse\PaymentDetail;
 use EInvoiceAPI\Models\DocumentResponse\TaxDetail;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
 
-class DocumentResponse implements BaseModel
+final class DocumentResponse implements BaseModel
 {
     use Model;
 
@@ -26,7 +26,7 @@ class DocumentResponse implements BaseModel
 
     /** @var null|list<DocumentAttachment> $attachments */
     #[Api(type: new ListOf(DocumentAttachment::class), optional: true)]
-    public ?array $attachments;
+    public ?array $attachments = [];
 
     #[Api('billing_address', optional: true)]
     public ?string $billingAddress;
@@ -75,7 +75,7 @@ class DocumentResponse implements BaseModel
 
     /** @var null|list<Item> $items */
     #[Api(type: new ListOf(Item::class), optional: true)]
-    public ?array $items;
+    public ?array $items = [];
 
     #[Api(optional: true)]
     public ?string $note;
@@ -86,7 +86,7 @@ class DocumentResponse implements BaseModel
         type: new ListOf(PaymentDetail::class),
         optional: true
     )]
-    public ?array $paymentDetails;
+    public ?array $paymentDetails = [];
 
     #[Api('payment_term', optional: true)]
     public ?string $paymentTerm;
@@ -129,7 +129,7 @@ class DocumentResponse implements BaseModel
 
     /** @var null|list<TaxDetail> $taxDetails */
     #[Api('tax_details', type: new ListOf(TaxDetail::class), optional: true)]
-    public ?array $taxDetails;
+    public ?array $taxDetails = [];
 
     #[Api('total_discount', optional: true)]
     public ?string $totalDiscount;

@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Parameters\Validate\ValidateJsonParams;
 
-class Subtotal {}
+final class Subtotal {}

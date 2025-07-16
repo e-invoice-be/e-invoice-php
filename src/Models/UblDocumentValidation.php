@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\UblDocumentValidation\Issue;
 
-class UblDocumentValidation implements BaseModel
+final class UblDocumentValidation implements BaseModel
 {
     use Model;
 
