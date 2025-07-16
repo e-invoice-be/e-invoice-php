@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\Documents;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
 final class GetResponse implements BaseModel
 {
@@ -44,35 +43,30 @@ final class GetResponse implements BaseModel
     public ?\DateTimeInterface $validatedAt;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string                  $id                   `required`
-     * @param string                  $fileName             `required`
-     * @param null|string             $fileHash
-     * @param null|int                $fileSize
-     * @param null|string             $receiverPeppolID
-     * @param null|string             $receiverPeppolScheme
-     * @param null|string             $senderPeppolID
-     * @param null|string             $senderPeppolScheme
-     * @param null|string             $signedURL
-     * @param null|\DateTimeInterface $validatedAt
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $id,
-        $fileName,
-        $fileHash = None::NOT_GIVEN,
-        $fileSize = None::NOT_GIVEN,
-        $receiverPeppolID = None::NOT_GIVEN,
-        $receiverPeppolScheme = None::NOT_GIVEN,
-        $senderPeppolID = None::NOT_GIVEN,
-        $senderPeppolScheme = None::NOT_GIVEN,
-        $signedURL = None::NOT_GIVEN,
-        $validatedAt = None::NOT_GIVEN,
+        string $id,
+        string $fileName,
+        ?string $fileHash = null,
+        ?int $fileSize = null,
+        ?string $receiverPeppolID = null,
+        ?string $receiverPeppolScheme = null,
+        ?string $senderPeppolID = null,
+        ?string $senderPeppolScheme = null,
+        ?string $signedURL = null,
+        ?\DateTimeInterface $validatedAt = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->fileName = $fileName;
+        $this->fileHash = $fileHash;
+        $this->fileSize = $fileSize;
+        $this->receiverPeppolID = $receiverPeppolID;
+        $this->receiverPeppolScheme = $receiverPeppolScheme;
+        $this->senderPeppolID = $senderPeppolID;
+        $this->senderPeppolScheme = $senderPeppolScheme;
+        $this->signedURL = $signedURL;
+        $this->validatedAt = $validatedAt;
     }
 }
 

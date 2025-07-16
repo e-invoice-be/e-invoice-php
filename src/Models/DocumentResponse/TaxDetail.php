@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
 final class TaxDetail implements BaseModel
 {
@@ -20,19 +19,14 @@ final class TaxDetail implements BaseModel
     public ?string $rate;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param null|string $amount
-     * @param null|string $rate
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $amount = None::NOT_GIVEN,
-        $rate = None::NOT_GIVEN
+        ?string $amount = null,
+        ?string $rate = null
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->amount = $amount;
+        $this->rate = $rate;
     }
 }
 

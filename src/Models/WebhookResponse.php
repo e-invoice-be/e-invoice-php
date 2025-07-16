@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 final class WebhookResponse implements BaseModel
@@ -31,25 +30,22 @@ final class WebhookResponse implements BaseModel
     public ?bool $enabled = true;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string       $id      `required`
-     * @param list<string> $events  `required`
-     * @param string       $secret  `required`
-     * @param string       $url     `required`
-     * @param null|bool    $enabled
+     * @param list<string> $events
      */
     final public function __construct(
-        $id,
-        $events,
-        $secret,
-        $url,
-        $enabled = None::NOT_GIVEN
+        string $id,
+        array $events,
+        string $secret,
+        string $url,
+        ?bool $enabled = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->events = $events;
+        $this->secret = $secret;
+        $this->url = $url;
+        $this->enabled = $enabled;
     }
 }
 

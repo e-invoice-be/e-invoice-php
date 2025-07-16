@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\UblDocumentValidation\Issue;
 
@@ -32,25 +31,22 @@ final class UblDocumentValidation implements BaseModel
     public ?string $ublDocument;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string      $id          `required`
-     * @param null|string $fileName    `required`
-     * @param bool        $isValid     `required`
-     * @param list<Issue> $issues      `required`
-     * @param null|string $ublDocument
+     * @param list<Issue> $issues
      */
     final public function __construct(
-        $id,
-        $fileName,
-        $isValid,
-        $issues,
-        $ublDocument = None::NOT_GIVEN
+        string $id,
+        ?string $fileName,
+        bool $isValid,
+        array $issues,
+        ?string $ublDocument = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->fileName = $fileName;
+        $this->isValid = $isValid;
+        $this->issues = $issues;
+        $this->ublDocument = $ublDocument;
     }
 }
 

@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetParticipantsResponse\Participant;
 
@@ -32,25 +31,22 @@ final class GetParticipantsResponse implements BaseModel
     public ?array $participants;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string                 $queryTerms   `required`
-     * @param string                 $searchDate   `required`
-     * @param int                    $totalCount   `required`
-     * @param int                    $usedCount    `required`
      * @param null|list<Participant> $participants
      */
     final public function __construct(
-        $queryTerms,
-        $searchDate,
-        $totalCount,
-        $usedCount,
-        $participants = None::NOT_GIVEN,
+        string $queryTerms,
+        string $searchDate,
+        int $totalCount,
+        int $usedCount,
+        ?array $participants = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->queryTerms = $queryTerms;
+        $this->searchDate = $searchDate;
+        $this->totalCount = $totalCount;
+        $this->usedCount = $usedCount;
+        $this->participants = $participants;
     }
 }
 

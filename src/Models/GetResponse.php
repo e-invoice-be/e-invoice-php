@@ -44,31 +44,29 @@ final class GetResponse implements BaseModel
     public string $status;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param BusinessCard      $businessCard    `required`
-     * @param list<Certificate> $certificates    `required`
-     * @param DNSInfo           $dnsInfo         `required`
-     * @param list<string>      $errors          `required`
-     * @param float             $executionTimeMs `required`
-     * @param QueryMetadata     $queryMetadata   `required`
-     * @param ServiceMetadata   $serviceMetadata `required`
-     * @param string            $status          `required`
+     * @param list<Certificate> $certificates
+     * @param list<string>      $errors
      */
     final public function __construct(
-        $businessCard,
-        $certificates,
-        $dnsInfo,
-        $errors,
-        $executionTimeMs,
-        $queryMetadata,
-        $serviceMetadata,
-        $status,
+        BusinessCard $businessCard,
+        array $certificates,
+        DNSInfo $dnsInfo,
+        array $errors,
+        float $executionTimeMs,
+        QueryMetadata $queryMetadata,
+        ServiceMetadata $serviceMetadata,
+        string $status,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->businessCard = $businessCard;
+        $this->certificates = $certificates;
+        $this->dnsInfo = $dnsInfo;
+        $this->errors = $errors;
+        $this->executionTimeMs = $executionTimeMs;
+        $this->queryMetadata = $queryMetadata;
+        $this->serviceMetadata = $serviceMetadata;
+        $this->status = $status;
     }
 }
 

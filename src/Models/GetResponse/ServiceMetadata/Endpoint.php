@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\GetResponse\ServiceMetadata;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\GetResponse\ServiceMetadata\Endpoint\DocumentType;
@@ -38,25 +37,23 @@ final class Endpoint implements BaseModel
     public ?array $processes;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<DocumentType> $documentTypes `required`
-     * @param string             $status        `required`
-     * @param string             $url           `required`
-     * @param null|string        $error
+     * @param list<DocumentType> $documentTypes
      * @param null|list<Process> $processes
      */
     final public function __construct(
-        $documentTypes,
-        $status,
-        $url,
-        $error = None::NOT_GIVEN,
-        $processes = None::NOT_GIVEN,
+        array $documentTypes,
+        string $status,
+        string $url,
+        ?string $error = null,
+        ?array $processes = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->documentTypes = $documentTypes;
+        $this->status = $status;
+        $this->url = $url;
+        $this->error = $error;
+        $this->processes = $processes;
     }
 }
 

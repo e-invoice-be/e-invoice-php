@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\GetResponse\BusinessCard;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Core\Serde\UnionOf;
 
@@ -29,23 +28,20 @@ final class Entity implements BaseModel
     public ?string $registrationDate;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
      * @param null|list<string> $additionalInformation
-     * @param null|string       $countryCode
-     * @param null|string       $name
-     * @param null|string       $registrationDate
      */
     final public function __construct(
-        $additionalInformation = None::NOT_GIVEN,
-        $countryCode = None::NOT_GIVEN,
-        $name = None::NOT_GIVEN,
-        $registrationDate = None::NOT_GIVEN,
+        ?array $additionalInformation = null,
+        ?string $countryCode = null,
+        ?string $name = null,
+        ?string $registrationDate = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->additionalInformation = $additionalInformation;
+        $this->countryCode = $countryCode;
+        $this->name = $name;
+        $this->registrationDate = $registrationDate;
     }
 }
 
