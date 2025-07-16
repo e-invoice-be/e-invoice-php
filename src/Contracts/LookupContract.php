@@ -6,23 +6,27 @@ namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\GetParticipantsResponse;
 use EInvoiceAPI\Models\GetResponse;
+use EInvoiceAPI\Parameters\Lookup\RetrieveParams;
+use EInvoiceAPI\Parameters\Lookup\RetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 
 interface LookupContract
 {
     /**
-     * @param array{peppolID?: string} $params
+     * @param array{peppolID?: string}|RetrieveParams $params
      */
     public function retrieve(
-        array $params,
+        array|RetrieveParams $params,
         ?RequestOptions $requestOptions = null
     ): GetResponse;
 
     /**
-     * @param array{query?: string, countryCode?: null|string} $params
+     * @param RetrieveParticipantsParams|array{
+     *   query?: string, countryCode?: string|null
+     * } $params
      */
     public function retrieveParticipants(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|RetrieveParticipantsParams $params,
+        ?RequestOptions $requestOptions = null,
     ): GetParticipantsResponse;
 }

@@ -18,10 +18,10 @@ final class Lookup implements LookupContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{peppolID?: string} $params
+     * @param array{peppolID?: string}|RetrieveParams $params
      */
     public function retrieve(
-        array $params,
+        array|RetrieveParams $params,
         ?RequestOptions $requestOptions = null
     ): GetResponse {
         [$parsed, $options] = RetrieveParams::parseRequest(
@@ -40,11 +40,13 @@ final class Lookup implements LookupContract
     }
 
     /**
-     * @param array{query?: string, countryCode?: null|string} $params
+     * @param RetrieveParticipantsParams|array{
+     *   query?: string, countryCode?: string|null
+     * } $params
      */
     public function retrieveParticipants(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|RetrieveParticipantsParams $params,
+        ?RequestOptions $requestOptions = null,
     ): GetParticipantsResponse {
         [$parsed, $options] = RetrieveParticipantsParams::parseRequest(
             $params,

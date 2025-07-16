@@ -19,10 +19,12 @@ final class Webhooks implements WebhooksContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{events?: list<string>, url?: string, enabled?: bool} $params
+     * @param CreateParams|array{
+     *   events?: list<string>, url?: string, enabled?: bool
+     * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
@@ -37,12 +39,8 @@ final class Webhooks implements WebhooksContract
         return Serde::coerce(WebhookResponse::class, value: $resp);
     }
 
-    /**
-     * @param array{webhookID?: string} $params
-     */
     public function retrieve(
         string $webhookID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
         $resp = $this->client->request(
@@ -56,17 +54,14 @@ final class Webhooks implements WebhooksContract
     }
 
     /**
-     * @param array{
-     *   webhookID?: string,
-     *   enabled?: bool|null,
-     *   events?: list<string>|null,
-     *   url?: string|null,
+     * @param UpdateParams|array{
+     *   enabled?: bool|null, events?: list<string>|null, url?: string|null
      * } $params
      */
     public function update(
         string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|UpdateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
         [$parsed, $options] = UpdateParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -81,14 +76,10 @@ final class Webhooks implements WebhooksContract
     }
 
     /**
-     * @param array{} $params
-     *
      * @return list<WebhookResponse>
      */
-    public function list(
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): array {
+    public function list(?RequestOptions $requestOptions = null): array
+    {
         $resp = $this->client->request(
             method: 'get',
             path: 'api/webhooks/',
@@ -99,12 +90,8 @@ final class Webhooks implements WebhooksContract
         return Serde::coerce(new ListOf(WebhookResponse::class), value: $resp);
     }
 
-    /**
-     * @param array{webhookID?: string} $params
-     */
     public function delete(
         string $webhookID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): DeleteResponse {
         $resp = $this->client->request(

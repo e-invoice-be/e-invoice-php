@@ -14,12 +14,8 @@ final class Ubl implements UblContract
 {
     public function __construct(private Client $client) {}
 
-    /**
-     * @param array{documentID?: string} $params
-     */
     public function get(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): GetResponse {
         $resp = $this->client->request(

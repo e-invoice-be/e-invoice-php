@@ -32,7 +32,7 @@ final class Documents implements DocumentsContract
     }
 
     /**
-     * @param array{
+     * @param CreateParams|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
@@ -77,7 +77,7 @@ final class Documents implements DocumentsContract
      * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
@@ -92,12 +92,8 @@ final class Documents implements DocumentsContract
         return Serde::coerce(DocumentResponse::class, value: $resp);
     }
 
-    /**
-     * @param array{documentID?: string} $params
-     */
     public function retrieve(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         $resp = $this->client->request(
@@ -110,12 +106,8 @@ final class Documents implements DocumentsContract
         return Serde::coerce(DocumentResponse::class, value: $resp);
     }
 
-    /**
-     * @param array{documentID?: string} $params
-     */
     public function delete(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): DeleteResponse {
         $resp = $this->client->request(
@@ -129,8 +121,7 @@ final class Documents implements DocumentsContract
     }
 
     /**
-     * @param array{
-     *   documentID?: string,
+     * @param SendParams|array{
      *   email?: string|null,
      *   receiverPeppolID?: string|null,
      *   receiverPeppolScheme?: string|null,
@@ -140,8 +131,8 @@ final class Documents implements DocumentsContract
      */
     public function send(
         string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|SendParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
         [$parsed, $options] = SendParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(

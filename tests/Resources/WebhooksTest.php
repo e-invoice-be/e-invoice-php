@@ -71,7 +71,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->webhooks->retrieve('webhook_id', []);
+        $result = $this->client->webhooks->retrieve('webhook_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -95,7 +95,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->webhooks->list([]);
+        $result = $this->client->webhooks->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -107,7 +107,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->webhooks->delete('webhook_id', []);
+        $result = $this->client->webhooks->delete('webhook_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

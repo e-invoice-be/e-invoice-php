@@ -18,7 +18,7 @@ final class Inbox implements InboxContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{
+     * @param ListParams|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
@@ -30,7 +30,7 @@ final class Inbox implements InboxContract
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
@@ -46,10 +46,10 @@ final class Inbox implements InboxContract
     }
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * @param array{page?: int, pageSize?: int}|ListCreditNotesParams $params
      */
     public function listCreditNotes(
-        array $params,
+        array|ListCreditNotesParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         [$parsed, $options] = ListCreditNotesParams::parseRequest(
@@ -68,10 +68,10 @@ final class Inbox implements InboxContract
     }
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * @param array{page?: int, pageSize?: int}|ListInvoicesParams $params
      */
     public function listInvoices(
-        array $params,
+        array|ListInvoicesParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         [$parsed, $options] = ListInvoicesParams::parseRequest(

@@ -5,20 +5,22 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
+use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
 interface OutboxContract
 {
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * @param array{page?: int, pageSize?: int}|ListDraftDocumentsParams $params
      */
     public function listDraftDocuments(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|ListDraftDocumentsParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 
     /**
-     * @param array{
+     * @param ListReceivedDocumentsParams|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
@@ -30,7 +32,7 @@ interface OutboxContract
      * } $params
      */
     public function listReceivedDocuments(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|ListReceivedDocumentsParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }
