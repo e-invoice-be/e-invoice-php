@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Parameters\Inbox\ListCreditNotesParams;
+use EInvoiceAPI\Parameters\Inbox\ListInvoicesParams;
+use EInvoiceAPI\Parameters\Inbox\ListParams;
 use EInvoiceAPI\RequestOptions;
 
 interface InboxContract
 {
     /**
-     * @param array{
+     * @param ListParams|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
@@ -22,23 +25,23 @@ interface InboxContract
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * @param array{page?: int, pageSize?: int}|ListCreditNotesParams $params
      */
     public function listCreditNotes(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|ListCreditNotesParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * @param array{page?: int, pageSize?: int}|ListInvoicesParams $params
      */
     public function listInvoices(
-        array $params,
+        array|ListInvoicesParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 }

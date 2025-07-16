@@ -8,14 +8,17 @@ use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Models\ValidatePeppolIDResponse;
+use EInvoiceAPI\Parameters\Validate\ValidateJsonParams;
 use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\Item;
 use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\TaxDetail;
+use EInvoiceAPI\Parameters\Validate\ValidatePeppolIDParams;
+use EInvoiceAPI\Parameters\Validate\ValidateUblParams;
 use EInvoiceAPI\RequestOptions;
 
 interface ValidateContract
 {
     /**
-     * @param array{
+     * @param ValidateJsonParams|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
@@ -60,23 +63,23 @@ interface ValidateContract
      * } $params
      */
     public function validateJson(
-        array $params,
+        array|ValidateJsonParams $params,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation;
 
     /**
-     * @param array{peppolID?: string} $params
+     * @param array{peppolID?: string}|ValidatePeppolIDParams $params
      */
     public function validatePeppolID(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|ValidatePeppolIDParams $params,
+        ?RequestOptions $requestOptions = null,
     ): ValidatePeppolIDResponse;
 
     /**
-     * @param array{file?: string} $params
+     * @param array{file?: string}|ValidateUblParams $params
      */
     public function validateUbl(
-        array $params,
+        array|ValidateUblParams $params,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation;
 }

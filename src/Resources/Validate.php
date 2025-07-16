@@ -23,7 +23,7 @@ final class Validate implements ValidateContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{
+     * @param ValidateJsonParams|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
@@ -68,7 +68,7 @@ final class Validate implements ValidateContract
      * } $params
      */
     public function validateJson(
-        array $params,
+        array|ValidateJsonParams $params,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
         [$parsed, $options] = ValidateJsonParams::parseRequest(
@@ -87,10 +87,10 @@ final class Validate implements ValidateContract
     }
 
     /**
-     * @param array{peppolID?: string} $params
+     * @param array{peppolID?: string}|ValidatePeppolIDParams $params
      */
     public function validatePeppolID(
-        array $params,
+        array|ValidatePeppolIDParams $params,
         ?RequestOptions $requestOptions = null
     ): ValidatePeppolIDResponse {
         [$parsed, $options] = ValidatePeppolIDParams::parseRequest(
@@ -109,10 +109,10 @@ final class Validate implements ValidateContract
     }
 
     /**
-     * @param array{file?: string} $params
+     * @param array{file?: string}|ValidateUblParams $params
      */
     public function validateUbl(
-        array $params,
+        array|ValidateUblParams $params,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
         [$parsed, $options] = ValidateUblParams::parseRequest(

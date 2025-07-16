@@ -6,45 +6,45 @@ namespace EInvoiceAPI\Contracts\Documents;
 
 use EInvoiceAPI\Models\Documents\DeleteResponse;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
+use EInvoiceAPI\Parameters\Documents\Attachments\AddParams;
+use EInvoiceAPI\Parameters\Documents\Attachments\DeleteParams;
+use EInvoiceAPI\Parameters\Documents\Attachments\RetrieveParams;
 use EInvoiceAPI\RequestOptions;
 
 interface AttachmentsContract
 {
     /**
-     * @param array{documentID?: string, attachmentID?: string} $params
+     * @param array{documentID?: string}|RetrieveParams $params
      */
     public function retrieve(
         string $attachmentID,
-        array $params,
+        array|RetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment;
 
     /**
-     * @param array{documentID?: string} $params
-     *
      * @return list<DocumentAttachment>
      */
     public function list(
         string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): array;
 
     /**
-     * @param array{documentID?: string, attachmentID?: string} $params
+     * @param array{documentID?: string}|DeleteParams $params
      */
     public function delete(
         string $attachmentID,
-        array $params,
+        array|DeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): DeleteResponse;
 
     /**
-     * @param array{documentID?: string, file?: string} $params
+     * @param AddParams|array{file?: string} $params
      */
     public function add(
         string $documentID,
-        array $params,
+        AddParams|array $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment;
 }

@@ -67,7 +67,7 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->documents->attachments->list('document_id', []);
+        $result = $this->client->documents->attachments->list('document_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

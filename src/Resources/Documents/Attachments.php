@@ -20,12 +20,12 @@ final class Attachments implements AttachmentsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{documentID?: string, attachmentID?: string} $params
+     * @param array{documentID?: string}|RetrieveParams $params
      */
     public function retrieve(
         string $attachmentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|RetrieveParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
         [$parsed, $options] = RetrieveParams::parseRequest(
             $params,
@@ -44,13 +44,10 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
-     * @param array{documentID?: string} $params
-     *
      * @return list<DocumentAttachment>
      */
     public function list(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): array {
         $resp = $this->client->request(
@@ -64,12 +61,12 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
-     * @param array{documentID?: string, attachmentID?: string} $params
+     * @param array{documentID?: string}|DeleteParams $params
      */
     public function delete(
         string $attachmentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|DeleteParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DeleteResponse {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
         $documentID = $parsed['documentID'];
@@ -85,12 +82,12 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
-     * @param array{documentID?: string, file?: string} $params
+     * @param AddParams|array{file?: string} $params
      */
     public function add(
         string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        AddParams|array $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
         [$parsed, $options] = AddParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(

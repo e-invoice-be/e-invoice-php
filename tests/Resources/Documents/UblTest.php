@@ -33,7 +33,7 @@ final class UblTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->documents->ubl->get('document_id', []);
+        $result = $this->client->documents->ubl->get('document_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

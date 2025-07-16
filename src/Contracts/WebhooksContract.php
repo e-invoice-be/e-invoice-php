@@ -6,57 +6,47 @@ namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\WebhookResponse;
+use EInvoiceAPI\Parameters\Webhooks\CreateParams;
+use EInvoiceAPI\Parameters\Webhooks\UpdateParams;
 use EInvoiceAPI\RequestOptions;
 
 interface WebhooksContract
 {
     /**
-     * @param array{events?: list<string>, url?: string, enabled?: bool} $params
+     * @param CreateParams|array{
+     *   events?: list<string>, url?: string, enabled?: bool
+     * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
-    /**
-     * @param array{webhookID?: string} $params
-     */
     public function retrieve(
         string $webhookID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
     /**
-     * @param array{
-     *   webhookID?: string,
-     *   enabled?: bool|null,
-     *   events?: list<string>|null,
-     *   url?: string|null,
+     * @param UpdateParams|array{
+     *   enabled?: bool|null, events?: list<string>|null, url?: string|null
      * } $params
      */
     public function update(
         string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|UpdateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 
     /**
-     * @param array{} $params
-     *
      * @return list<WebhookResponse>
      */
     public function list(
-        array $params,
         ?RequestOptions $requestOptions = null
     ): array;
 
-    /**
-     * @param array{webhookID?: string} $params
-     */
     public function delete(
         string $webhookID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): DeleteResponse;
 }

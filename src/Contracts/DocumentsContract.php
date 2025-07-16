@@ -8,14 +8,16 @@ use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\PaymentDetailCreate;
+use EInvoiceAPI\Parameters\Documents\CreateParams;
 use EInvoiceAPI\Parameters\Documents\CreateParams\Item;
 use EInvoiceAPI\Parameters\Documents\CreateParams\TaxDetail;
+use EInvoiceAPI\Parameters\Documents\SendParams;
 use EInvoiceAPI\RequestOptions;
 
 interface DocumentsContract
 {
     /**
-     * @param array{
+     * @param CreateParams|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
@@ -60,31 +62,22 @@ interface DocumentsContract
      * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
-    /**
-     * @param array{documentID?: string} $params
-     */
     public function retrieve(
         string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
-    /**
-     * @param array{documentID?: string} $params
-     */
     public function delete(
         string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): DeleteResponse;
 
     /**
-     * @param array{
-     *   documentID?: string,
+     * @param SendParams|array{
      *   email?: string|null,
      *   receiverPeppolID?: string|null,
      *   receiverPeppolScheme?: string|null,
@@ -94,7 +87,7 @@ interface DocumentsContract
      */
     public function send(
         string $documentID,
-        array $params,
+        array|SendParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }

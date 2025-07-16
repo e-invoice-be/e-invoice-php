@@ -45,7 +45,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->documents->retrieve('document_id', []);
+        $result = $this->client->documents->retrieve('document_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -57,7 +57,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->documents->delete('document_id', []);
+        $result = $this->client->documents->delete('document_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
