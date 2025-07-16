@@ -6,7 +6,6 @@ namespace EInvoiceAPI\Core\Concerns;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\CoerceState;
 use EInvoiceAPI\Core\Serde\DumpState;
@@ -267,18 +266,6 @@ trait Model
                 self::$_properties[$name] = new PropertyInfo($property);
             }
         }
-    }
-
-    /** @param array<mixed> $args */
-    protected function constructFromArgs(array $args): void
-    {
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_GIVEN !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-        $this->__unserialize($data);
     }
 
     private static function serialize(mixed $value): mixed

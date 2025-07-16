@@ -2,7 +2,7 @@
   "$schema": "https://getcomposer.org/schema.json",
   "autoload": {
     "files": [
-      "src/EInvoiceAPI.php"
+      "src/Client.php"
     ],
     "psr-4": {
       "EInvoiceAPI\\": "src/"

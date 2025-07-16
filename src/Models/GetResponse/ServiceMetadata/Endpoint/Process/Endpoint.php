@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\GetResponse\ServiceMetadata\Endpoint\Process;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Models\Certificate;
 
 final class Endpoint implements BaseModel
@@ -39,31 +38,26 @@ final class Endpoint implements BaseModel
     public ?string $technicalInformationURL;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $address                 `required`
-     * @param string      $transportProfile        `required`
-     * @param Certificate $certificate
-     * @param null|string $serviceActivationDate
-     * @param null|string $serviceDescription
-     * @param null|string $serviceExpirationDate
-     * @param null|string $technicalContactURL
-     * @param null|string $technicalInformationURL
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $address,
-        $transportProfile,
-        $certificate = None::NOT_GIVEN,
-        $serviceActivationDate = None::NOT_GIVEN,
-        $serviceDescription = None::NOT_GIVEN,
-        $serviceExpirationDate = None::NOT_GIVEN,
-        $technicalContactURL = None::NOT_GIVEN,
-        $technicalInformationURL = None::NOT_GIVEN,
+        string $address,
+        string $transportProfile,
+        ?Certificate $certificate = null,
+        ?string $serviceActivationDate = null,
+        ?string $serviceDescription = null,
+        ?string $serviceExpirationDate = null,
+        ?string $technicalContactURL = null,
+        ?string $technicalInformationURL = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->address = $address;
+        $this->transportProfile = $transportProfile;
+        $this->certificate = $certificate;
+        $this->serviceActivationDate = $serviceActivationDate;
+        $this->serviceDescription = $serviceDescription;
+        $this->serviceExpirationDate = $serviceExpirationDate;
+        $this->technicalContactURL = $technicalContactURL;
+        $this->technicalInformationURL = $technicalInformationURL;
     }
 }
 

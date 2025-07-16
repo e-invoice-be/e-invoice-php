@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
 final class Issue implements BaseModel
 {
@@ -35,29 +34,24 @@ final class Issue implements BaseModel
     public ?string $test;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $message    `required`
-     * @param string      $schematron `required`
-     * @param string      $type       `required`
-     * @param null|string $flag
-     * @param null|string $location
-     * @param null|string $ruleID
-     * @param null|string $test
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $message,
-        $schematron,
-        $type,
-        $flag = None::NOT_GIVEN,
-        $location = None::NOT_GIVEN,
-        $ruleID = None::NOT_GIVEN,
-        $test = None::NOT_GIVEN,
+        string $message,
+        string $schematron,
+        string $type,
+        ?string $flag = null,
+        ?string $location = null,
+        ?string $ruleID = null,
+        ?string $test = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->message = $message;
+        $this->schematron = $schematron;
+        $this->type = $type;
+        $this->flag = $flag;
+        $this->location = $location;
+        $this->ruleID = $ruleID;
+        $this->test = $test;
     }
 }
 

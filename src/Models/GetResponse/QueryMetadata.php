@@ -28,25 +28,20 @@ final class QueryMetadata implements BaseModel
     public string $version;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string $identifierScheme `required`
-     * @param string $identifierValue  `required`
-     * @param string $smlDomain        `required`
-     * @param string $timestamp        `required`
-     * @param string $version          `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $identifierScheme,
-        $identifierValue,
-        $smlDomain,
-        $timestamp,
-        $version
+        string $identifierScheme,
+        string $identifierValue,
+        string $smlDomain,
+        string $timestamp,
+        string $version,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->identifierScheme = $identifierScheme;
+        $this->identifierValue = $identifierValue;
+        $this->smlDomain = $smlDomain;
+        $this->timestamp = $timestamp;
+        $this->version = $version;
     }
 }
 

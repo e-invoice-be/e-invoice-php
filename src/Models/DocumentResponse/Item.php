@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
 final class Item implements BaseModel
 {
@@ -41,33 +40,28 @@ final class Item implements BaseModel
     public ?string $unitPrice;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param null|string $amount
-     * @param null|null   $date
-     * @param null|string $description
-     * @param null|string $productCode
-     * @param null|string $quantity
-     * @param null|string $tax
-     * @param null|string $taxRate
-     * @param string      $unit
-     * @param null|string $unitPrice
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $amount = None::NOT_GIVEN,
-        $date = None::NOT_GIVEN,
-        $description = None::NOT_GIVEN,
-        $productCode = None::NOT_GIVEN,
-        $quantity = None::NOT_GIVEN,
-        $tax = None::NOT_GIVEN,
-        $taxRate = None::NOT_GIVEN,
-        $unit = None::NOT_GIVEN,
-        $unitPrice = None::NOT_GIVEN,
+        ?string $amount = null,
+        ?null $date = null,
+        ?string $description = null,
+        ?string $productCode = null,
+        ?string $quantity = null,
+        ?string $tax = null,
+        ?string $taxRate = null,
+        ?string $unit = null,
+        ?string $unitPrice = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->amount = $amount;
+        $this->date = $date;
+        $this->description = $description;
+        $this->productCode = $productCode;
+        $this->quantity = $quantity;
+        $this->tax = $tax;
+        $this->taxRate = $taxRate;
+        $this->unit = $unit;
+        $this->unitPrice = $unitPrice;
     }
 }
 

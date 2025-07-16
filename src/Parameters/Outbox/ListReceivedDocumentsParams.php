@@ -8,7 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
 final class ListReceivedDocumentsParams implements BaseModel
 {
@@ -40,31 +39,26 @@ final class ListReceivedDocumentsParams implements BaseModel
     public ?string $type;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param null|\DateTimeInterface $dateFrom
-     * @param null|\DateTimeInterface $dateTo
-     * @param null|int                $page
-     * @param null|int                $pageSize
-     * @param null|string             $search
-     * @param null|string             $sender
-     * @param string                  $state
-     * @param string                  $type
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $dateFrom = None::NOT_GIVEN,
-        $dateTo = None::NOT_GIVEN,
-        $page = None::NOT_GIVEN,
-        $pageSize = None::NOT_GIVEN,
-        $search = None::NOT_GIVEN,
-        $sender = None::NOT_GIVEN,
-        $state = None::NOT_GIVEN,
-        $type = None::NOT_GIVEN,
+        ?\DateTimeInterface $dateFrom = null,
+        ?\DateTimeInterface $dateTo = null,
+        ?int $page = null,
+        ?int $pageSize = null,
+        ?string $search = null,
+        ?string $sender = null,
+        ?string $state = null,
+        ?string $type = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->dateFrom = $dateFrom;
+        $this->dateTo = $dateTo;
+        $this->page = $page;
+        $this->pageSize = $pageSize;
+        $this->search = $search;
+        $this->sender = $sender;
+        $this->state = $state;
+        $this->type = $type;
     }
 }
 

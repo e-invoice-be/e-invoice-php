@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
 final class DocumentAttachmentCreate implements BaseModel
 {
@@ -26,23 +25,18 @@ final class DocumentAttachmentCreate implements BaseModel
     public ?string $fileType = 'application/pdf';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $fileName `required`
-     * @param null|string $fileData
-     * @param null|int    $fileSize
-     * @param null|string $fileType
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $fileName,
-        $fileData = None::NOT_GIVEN,
-        $fileSize = None::NOT_GIVEN,
-        $fileType = None::NOT_GIVEN,
+        string $fileName,
+        ?string $fileData = null,
+        ?int $fileSize = null,
+        ?string $fileType = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->fileName = $fileName;
+        $this->fileData = $fileData;
+        $this->fileSize = $fileSize;
+        $this->fileType = $fileType;
     }
 }
 

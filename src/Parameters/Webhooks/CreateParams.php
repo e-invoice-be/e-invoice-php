@@ -8,7 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
 final class CreateParams implements BaseModel
@@ -27,18 +26,18 @@ final class CreateParams implements BaseModel
     public ?bool $enabled = true;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<string> $events  `required`
-     * @param string       $url     `required`
-     * @param null|bool    $enabled
+     * @param list<string> $events
      */
-    final public function __construct($events, $url, $enabled = None::NOT_GIVEN)
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        array $events,
+        string $url,
+        ?bool $enabled = null
+    ) {
+        $this->events = $events;
+        $this->url = $url;
+        $this->enabled = $enabled;
     }
 }
 

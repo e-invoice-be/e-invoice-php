@@ -30,20 +30,22 @@ final class PaginatedDocumentResponse implements BaseModel
     public int $total;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<DocumentResponse> $items    `required`
-     * @param int                    $page     `required`
-     * @param int                    $pageSize `required`
-     * @param int                    $pages    `required`
-     * @param int                    $total    `required`
+     * @param list<DocumentResponse> $items
      */
-    final public function __construct($items, $page, $pageSize, $pages, $total)
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        array $items,
+        int $page,
+        int $pageSize,
+        int $pages,
+        int $total
+    ) {
+        $this->items = $items;
+        $this->page = $page;
+        $this->pageSize = $pageSize;
+        $this->pages = $pages;
+        $this->total = $total;
     }
 }
 
