@@ -8,6 +8,7 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
@@ -15,7 +16,7 @@ use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\Item;
 use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\TaxDetail;
 
-class ValidateJsonParams implements BaseModel
+final class ValidateJsonParams implements BaseModel
 {
     use Model;
     use Params;
@@ -163,6 +164,100 @@ class ValidateJsonParams implements BaseModel
 
     #[Api('vendor_tax_id', optional: true)]
     public ?string $vendorTaxID;
+
+    /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param null|float|string                   $amountDue
+     * @param null|list<DocumentAttachmentCreate> $attachments
+     * @param null|string                         $billingAddress
+     * @param null|string                         $billingAddressRecipient
+     * @param string                              $currency
+     * @param null|string                         $customerAddress
+     * @param null|string                         $customerAddressRecipient
+     * @param null|string                         $customerEmail
+     * @param null|string                         $customerID
+     * @param null|string                         $customerName
+     * @param null|string                         $customerTaxID
+     * @param string                              $direction
+     * @param string                              $documentType
+     * @param null|\DateTimeInterface             $dueDate
+     * @param null|\DateTimeInterface             $invoiceDate
+     * @param null|string                         $invoiceID
+     * @param null|float|string                   $invoiceTotal
+     * @param null|list<Item>                     $items
+     * @param null|string                         $note
+     * @param null|list<PaymentDetailCreate>      $paymentDetails
+     * @param null|string                         $paymentTerm
+     * @param null|float|string                   $previousUnpaidBalance
+     * @param null|string                         $purchaseOrder
+     * @param null|string                         $remittanceAddress
+     * @param null|string                         $remittanceAddressRecipient
+     * @param null|string                         $serviceAddress
+     * @param null|string                         $serviceAddressRecipient
+     * @param null|\DateTimeInterface             $serviceEndDate
+     * @param null|\DateTimeInterface             $serviceStartDate
+     * @param null|string                         $shippingAddress
+     * @param null|string                         $shippingAddressRecipient
+     * @param string                              $state
+     * @param null|float|string                   $subtotal
+     * @param null|list<TaxDetail>                $taxDetails
+     * @param null|float|string                   $totalDiscount
+     * @param null|float|string                   $totalTax
+     * @param null|string                         $vendorAddress
+     * @param null|string                         $vendorAddressRecipient
+     * @param null|string                         $vendorEmail
+     * @param null|string                         $vendorName
+     * @param null|string                         $vendorTaxID
+     */
+    final public function __construct(
+        $amountDue = None::NOT_GIVEN,
+        $attachments = None::NOT_GIVEN,
+        $billingAddress = None::NOT_GIVEN,
+        $billingAddressRecipient = None::NOT_GIVEN,
+        $currency = None::NOT_GIVEN,
+        $customerAddress = None::NOT_GIVEN,
+        $customerAddressRecipient = None::NOT_GIVEN,
+        $customerEmail = None::NOT_GIVEN,
+        $customerID = None::NOT_GIVEN,
+        $customerName = None::NOT_GIVEN,
+        $customerTaxID = None::NOT_GIVEN,
+        $direction = None::NOT_GIVEN,
+        $documentType = None::NOT_GIVEN,
+        $dueDate = None::NOT_GIVEN,
+        $invoiceDate = None::NOT_GIVEN,
+        $invoiceID = None::NOT_GIVEN,
+        $invoiceTotal = None::NOT_GIVEN,
+        $items = None::NOT_GIVEN,
+        $note = None::NOT_GIVEN,
+        $paymentDetails = None::NOT_GIVEN,
+        $paymentTerm = None::NOT_GIVEN,
+        $previousUnpaidBalance = None::NOT_GIVEN,
+        $purchaseOrder = None::NOT_GIVEN,
+        $remittanceAddress = None::NOT_GIVEN,
+        $remittanceAddressRecipient = None::NOT_GIVEN,
+        $serviceAddress = None::NOT_GIVEN,
+        $serviceAddressRecipient = None::NOT_GIVEN,
+        $serviceEndDate = None::NOT_GIVEN,
+        $serviceStartDate = None::NOT_GIVEN,
+        $shippingAddress = None::NOT_GIVEN,
+        $shippingAddressRecipient = None::NOT_GIVEN,
+        $state = None::NOT_GIVEN,
+        $subtotal = None::NOT_GIVEN,
+        $taxDetails = None::NOT_GIVEN,
+        $totalDiscount = None::NOT_GIVEN,
+        $totalTax = None::NOT_GIVEN,
+        $vendorAddress = None::NOT_GIVEN,
+        $vendorAddressRecipient = None::NOT_GIVEN,
+        $vendorEmail = None::NOT_GIVEN,
+        $vendorName = None::NOT_GIVEN,
+        $vendorTaxID = None::NOT_GIVEN,
+    ) {
+        $this->constructFromArgs(func_get_args());
+    }
 }
 
 ValidateJsonParams::_loadMetadata();

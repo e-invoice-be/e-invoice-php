@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class UnitOfMeasureCode
+final class UnitOfMeasureCode
 {
     final public const UNIT_OF_MEASURE_CODE_10 = '10';
 

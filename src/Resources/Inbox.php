@@ -13,9 +13,9 @@ use EInvoiceAPI\Parameters\Inbox\ListInvoicesParams;
 use EInvoiceAPI\Parameters\Inbox\ListParams;
 use EInvoiceAPI\RequestOptions;
 
-class Inbox implements InboxContract
+final class Inbox implements InboxContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{

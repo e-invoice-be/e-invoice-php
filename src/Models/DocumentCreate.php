@@ -13,7 +13,7 @@ use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\DocumentCreate\Item;
 use EInvoiceAPI\Models\DocumentCreate\TaxDetail;
 
-class DocumentCreate implements BaseModel
+final class DocumentCreate implements BaseModel
 {
     use Model;
 

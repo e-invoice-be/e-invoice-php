@@ -8,7 +8,7 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-class DocumentType implements BaseModel
+final class DocumentType implements BaseModel
 {
     use Model;
 

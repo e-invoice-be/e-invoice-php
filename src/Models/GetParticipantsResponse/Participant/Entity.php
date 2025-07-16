@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetParticipantsResponse\Participant\Entity\Identifier;
 
-class Entity implements BaseModel
+final class Entity implements BaseModel
 {
     use Model;
 

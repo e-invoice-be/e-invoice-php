@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetResponse\ServiceMetadata\Endpoint\Process\Endpoint;
 use EInvoiceAPI\Models\GetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
-class Process implements BaseModel
+final class Process implements BaseModel
 {
     use Model;
 

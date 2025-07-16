@@ -15,9 +15,9 @@ use EInvoiceAPI\Parameters\Documents\Attachments\DeleteParams;
 use EInvoiceAPI\Parameters\Documents\Attachments\RetrieveParams;
 use EInvoiceAPI\RequestOptions;
 
-class Attachments implements AttachmentsContract
+final class Attachments implements AttachmentsContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{documentID?: string, attachmentID?: string} $params

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class DocumentState
+final class DocumentState
 {
     final public const DRAFT = 'DRAFT';
 

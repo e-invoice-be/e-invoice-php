@@ -13,7 +13,7 @@ use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\GetResponse\ServiceMetadata\Endpoint\DocumentType;
 use EInvoiceAPI\Models\GetResponse\ServiceMetadata\Endpoint\Process;
 
-class Endpoint implements BaseModel
+final class Endpoint implements BaseModel
 {
     use Model;
 

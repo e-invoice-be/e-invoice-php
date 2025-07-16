@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 
-class PaymentDetail implements BaseModel
+final class PaymentDetail implements BaseModel
 {
     use Model;
 

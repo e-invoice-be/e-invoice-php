@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\MapOf;
 use EInvoiceAPI\Core\Serde\UnionOf;
 
-class Certificate implements BaseModel
+final class Certificate implements BaseModel
 {
     use Model;
 

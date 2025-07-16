@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\GetResponse\DNSInfo\DNSRecord;
 
-class DNSInfo implements BaseModel
+final class DNSInfo implements BaseModel
 {
     use Model;
 

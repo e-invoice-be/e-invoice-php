@@ -8,7 +8,7 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-class Identifier implements BaseModel
+final class Identifier implements BaseModel
 {
     use Model;
 

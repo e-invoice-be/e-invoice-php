@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class DocumentType
+final class DocumentType
 {
     final public const INVOICE = 'INVOICE';
 

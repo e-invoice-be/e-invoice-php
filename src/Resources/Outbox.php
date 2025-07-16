@@ -12,9 +12,9 @@ use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
 use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
-class Outbox implements OutboxContract
+final class Outbox implements OutboxContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{page?: int, pageSize?: int} $params

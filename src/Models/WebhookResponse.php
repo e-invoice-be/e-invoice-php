@@ -10,7 +10,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\None;
 use EInvoiceAPI\Core\Serde\ListOf;
 
-class WebhookResponse implements BaseModel
+final class WebhookResponse implements BaseModel
 {
     use Model;
 
@@ -28,7 +28,7 @@ class WebhookResponse implements BaseModel
     public string $url;
 
     #[Api(optional: true)]
-    public ?bool $enabled;
+    public ?bool $enabled = true;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not

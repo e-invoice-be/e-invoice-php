@@ -9,13 +9,26 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-class ValidatePeppolIDParams implements BaseModel
+final class ValidatePeppolIDParams implements BaseModel
 {
     use Model;
     use Params;
 
     #[Api]
     public string $peppolID;
+
+    /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string $peppolID `required`
+     */
+    final public function __construct($peppolID)
+    {
+        $this->constructFromArgs(func_get_args());
+    }
 }
 
 ValidatePeppolIDParams::_loadMetadata();
