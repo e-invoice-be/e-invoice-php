@@ -13,9 +13,8 @@ final class TaxDetail implements BaseModel
 {
     use Model;
 
-    /** @var null|float|string $amount */
     #[Api(optional: true)]
-    public mixed $amount;
+    public null|float|string $amount;
 
     #[Api(optional: true)]
     public ?string $rate;
