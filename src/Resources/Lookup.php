@@ -7,11 +7,11 @@ namespace EInvoiceAPI\Resources;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\LookupContract;
 use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Models\GetParticipantsResponse;
-use EInvoiceAPI\Models\GetResponse;
 use EInvoiceAPI\Parameters\LookupRetrieveParam;
 use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\LookupGetParticipantsResponse;
+use EInvoiceAPI\Responses\LookupGetResponse;
 
 final class Lookup implements LookupContract
 {
@@ -23,7 +23,7 @@ final class Lookup implements LookupContract
     public function retrieve(
         array|LookupRetrieveParam $params,
         ?RequestOptions $requestOptions = null
-    ): GetResponse {
+    ): LookupGetResponse {
         [$parsed, $options] = LookupRetrieveParam::parseRequest(
             $params,
             $requestOptions
@@ -36,7 +36,7 @@ final class Lookup implements LookupContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(GetResponse::class, value: $resp);
+        return Serde::coerce(LookupGetResponse::class, value: $resp);
     }
 
     /**
@@ -47,7 +47,7 @@ final class Lookup implements LookupContract
     public function retrieveParticipants(
         array|LookupRetrieveParticipantsParam $params,
         ?RequestOptions $requestOptions = null,
-    ): GetParticipantsResponse {
+    ): LookupGetParticipantsResponse {
         [$parsed, $options] = LookupRetrieveParticipantsParam::parseRequest(
             $params,
             $requestOptions
@@ -60,6 +60,6 @@ final class Lookup implements LookupContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(GetParticipantsResponse::class, value: $resp);
+        return Serde::coerce(LookupGetParticipantsResponse::class, value: $resp);
     }
 }

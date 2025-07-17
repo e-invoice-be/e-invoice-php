@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts\Documents;
 
-use EInvoiceAPI\Models\Documents\DeleteResponse;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
 use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
 use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
 use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
 
 interface AttachmentsContract
 {
@@ -37,7 +37,7 @@ interface AttachmentsContract
         string $attachmentID,
         array|AttachmentDeleteParam $params,
         ?RequestOptions $requestOptions = null,
-    ): DeleteResponse;
+    ): AttachmentDeleteResponse;
 
     /**
      * @param array{file?: string}|AttachmentAddParam $params

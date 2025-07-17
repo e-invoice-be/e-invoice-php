@@ -8,7 +8,6 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\DocumentsContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\CurrencyCode;
-use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\DocumentDirection;
 use EInvoiceAPI\Models\DocumentResponse;
@@ -22,6 +21,7 @@ use EInvoiceAPI\Parameters\DocumentSendParam;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Resources\Documents\Attachments;
 use EInvoiceAPI\Resources\Documents\Ubl;
+use EInvoiceAPI\Responses\DocumentDeleteResponse;
 
 final class Documents implements DocumentsContract
 {
@@ -116,7 +116,7 @@ final class Documents implements DocumentsContract
     public function delete(
         string $documentID,
         ?RequestOptions $requestOptions = null
-    ): DeleteResponse {
+    ): DocumentDeleteResponse {
         $resp = $this->client->request(
             method: 'delete',
             path: ['api/documents/%1$s', $documentID],
@@ -124,7 +124,7 @@ final class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeleteResponse::class, value: $resp);
+        return Serde::coerce(DocumentDeleteResponse::class, value: $resp);
     }
 
     /**

@@ -11,13 +11,13 @@ use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
-use EInvoiceAPI\Models\ValidatePeppolIDResponse;
 use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
 use EInvoiceAPI\Parameters\ValidateValidateJsonParam\Item;
 use EInvoiceAPI\Parameters\ValidateValidateJsonParam\TaxDetail;
 use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
 use EInvoiceAPI\Parameters\ValidateValidateUblParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\ValidateValidatePeppolIDResponse;
 
 interface ValidateContract
 {
@@ -77,7 +77,7 @@ interface ValidateContract
     public function validatePeppolID(
         array|ValidateValidatePeppolIDParam $params,
         ?RequestOptions $requestOptions = null,
-    ): ValidatePeppolIDResponse;
+    ): ValidateValidatePeppolIDResponse;
 
     /**
      * @param array{file?: string}|ValidateValidateUblParam $params

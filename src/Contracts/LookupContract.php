@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\GetParticipantsResponse;
-use EInvoiceAPI\Models\GetResponse;
 use EInvoiceAPI\Parameters\LookupRetrieveParam;
 use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\LookupGetParticipantsResponse;
+use EInvoiceAPI\Responses\LookupGetResponse;
 
 interface LookupContract
 {
@@ -18,7 +18,7 @@ interface LookupContract
     public function retrieve(
         array|LookupRetrieveParam $params,
         ?RequestOptions $requestOptions = null,
-    ): GetResponse;
+    ): LookupGetResponse;
 
     /**
      * @param LookupRetrieveParticipantsParam|array{
@@ -28,5 +28,5 @@ interface LookupContract
     public function retrieveParticipants(
         array|LookupRetrieveParticipantsParam $params,
         ?RequestOptions $requestOptions = null,
-    ): GetParticipantsResponse;
+    ): LookupGetParticipantsResponse;
 }

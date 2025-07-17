@@ -8,11 +8,11 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\WebhooksContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\WebhookResponse;
 use EInvoiceAPI\Parameters\WebhookCreateParam;
 use EInvoiceAPI\Parameters\WebhookUpdateParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\WebhookDeleteResponse;
 
 final class Webhooks implements WebhooksContract
 {
@@ -99,7 +99,7 @@ final class Webhooks implements WebhooksContract
     public function delete(
         string $webhookID,
         ?RequestOptions $requestOptions = null
-    ): DeleteResponse {
+    ): WebhookDeleteResponse {
         $resp = $this->client->request(
             method: 'delete',
             path: ['api/webhooks/%1$s', $webhookID],
@@ -107,6 +107,6 @@ final class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeleteResponse::class, value: $resp);
+        return Serde::coerce(WebhookDeleteResponse::class, value: $resp);
     }
 }
