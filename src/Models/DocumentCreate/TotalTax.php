@@ -11,5 +11,3 @@ final class TotalTax implements StaticConverter
 {
     use Union;
 }
-
-TotalTax::__introspect();

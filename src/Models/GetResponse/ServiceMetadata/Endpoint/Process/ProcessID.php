@@ -25,7 +25,7 @@ final class ProcessID implements BaseModel
     {
         $this->scheme = $scheme;
         $this->value = $value;
+
+        self::_introspect();
     }
 }
-
-ProcessID::__introspect();

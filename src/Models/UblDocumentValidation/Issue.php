@@ -52,11 +52,13 @@ final class Issue implements BaseModel
         $this->message = $message;
         $this->schematron = $schematron;
         $this->type = $type;
-        $this->flag = $flag;
-        $this->location = $location;
-        $this->ruleID = $ruleID;
-        $this->test = $test;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $flag && $this->flag = $flag;
+        null != $location && $this->location = $location;
+        null != $ruleID && $this->ruleID = $ruleID;
+        null != $test && $this->test = $test;
     }
 }
-
-Issue::__introspect();

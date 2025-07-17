@@ -11,5 +11,3 @@ final class Quantity implements StaticConverter
 {
     use Union;
 }
-
-Quantity::__introspect();

@@ -26,8 +26,10 @@ final class LookupRetrieveParticipantsParam implements BaseModel
     final public function __construct(string $query, ?string $countryCode = null)
     {
         $this->query = $query;
-        $this->countryCode = $countryCode;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $countryCode && $this->countryCode = $countryCode;
     }
 }
-
-LookupRetrieveParticipantsParam::__introspect();

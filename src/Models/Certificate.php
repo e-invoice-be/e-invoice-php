@@ -35,9 +35,11 @@ final class Certificate implements BaseModel
         ?string $error = null
     ) {
         $this->status = $status;
-        $this->details = $details;
-        $this->error = $error;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $details && $this->details = $details;
+        null != $error && $this->error = $error;
     }
 }
-
-Certificate::__introspect();

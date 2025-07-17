@@ -11,5 +11,3 @@ final class UnitPrice implements StaticConverter
 {
     use Union;
 }
-
-UnitPrice::__introspect();

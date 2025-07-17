@@ -17,5 +17,3 @@ final class DocumentType implements StaticConverter
 
     final public const DEBIT_NOTE = 'DEBIT_NOTE';
 }
-
-DocumentType::__introspect();

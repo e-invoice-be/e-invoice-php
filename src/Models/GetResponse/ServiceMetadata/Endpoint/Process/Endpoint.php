@@ -52,13 +52,15 @@ final class Endpoint implements BaseModel
     ) {
         $this->address = $address;
         $this->transportProfile = $transportProfile;
-        $this->certificate = $certificate;
-        $this->serviceActivationDate = $serviceActivationDate;
-        $this->serviceDescription = $serviceDescription;
-        $this->serviceExpirationDate = $serviceExpirationDate;
-        $this->technicalContactURL = $technicalContactURL;
-        $this->technicalInformationURL = $technicalInformationURL;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $certificate && $this->certificate = $certificate;
+        null != $serviceActivationDate && $this->serviceActivationDate = $serviceActivationDate;
+        null != $serviceDescription && $this->serviceDescription = $serviceDescription;
+        null != $serviceExpirationDate && $this->serviceExpirationDate = $serviceExpirationDate;
+        null != $technicalContactURL && $this->technicalContactURL = $technicalContactURL;
+        null != $technicalInformationURL && $this->technicalInformationURL = $technicalInformationURL;
     }
 }
-
-Endpoint::__introspect();

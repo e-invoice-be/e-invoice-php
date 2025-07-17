@@ -21,7 +21,7 @@ final class DeleteResponse implements BaseModel
     final public function __construct(bool $isDeleted)
     {
         $this->isDeleted = $isDeleted;
+
+        self::_introspect();
     }
 }
-
-DeleteResponse::__introspect();

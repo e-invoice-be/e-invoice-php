@@ -11,5 +11,3 @@ final class Subtotal implements StaticConverter
 {
     use Union;
 }
-
-Subtotal::__introspect();

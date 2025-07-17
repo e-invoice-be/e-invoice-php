@@ -15,5 +15,3 @@ final class DocumentDirection implements StaticConverter
 
     final public const OUTBOUND = 'OUTBOUND';
 }
-
-DocumentDirection::__introspect();

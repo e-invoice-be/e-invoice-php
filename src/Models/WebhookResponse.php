@@ -45,8 +45,10 @@ final class WebhookResponse implements BaseModel
         $this->events = $events;
         $this->secret = $secret;
         $this->url = $url;
-        $this->enabled = $enabled;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $enabled && $this->enabled = $enabled;
     }
 }
-
-WebhookResponse::__introspect();

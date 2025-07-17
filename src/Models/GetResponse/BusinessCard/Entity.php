@@ -38,11 +38,12 @@ final class Entity implements BaseModel
         ?string $name = null,
         ?string $registrationDate = null,
     ) {
-        $this->additionalInformation = $additionalInformation;
-        $this->countryCode = $countryCode;
-        $this->name = $name;
-        $this->registrationDate = $registrationDate;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $additionalInformation && $this->additionalInformation = $additionalInformation;
+        null != $countryCode && $this->countryCode = $countryCode;
+        null != $name && $this->name = $name;
+        null != $registrationDate && $this->registrationDate = $registrationDate;
     }
 }
-
-Entity::__introspect();

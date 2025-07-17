@@ -11,5 +11,3 @@ final class InvoiceTotal implements StaticConverter
 {
     use Union;
 }
-
-InvoiceTotal::__introspect();

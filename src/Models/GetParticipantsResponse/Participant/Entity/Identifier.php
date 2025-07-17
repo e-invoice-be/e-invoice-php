@@ -25,7 +25,7 @@ final class Identifier implements BaseModel
     {
         $this->scheme = $scheme;
         $this->value = $value;
+
+        self::_introspect();
     }
 }
-
-Identifier::__introspect();

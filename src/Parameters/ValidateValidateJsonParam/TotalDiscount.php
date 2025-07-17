@@ -11,5 +11,3 @@ final class TotalDiscount implements StaticConverter
 {
     use Union;
 }
-
-TotalDiscount::__introspect();

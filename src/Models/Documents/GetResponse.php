@@ -59,15 +59,17 @@ final class GetResponse implements BaseModel
     ) {
         $this->id = $id;
         $this->fileName = $fileName;
-        $this->fileHash = $fileHash;
-        $this->fileSize = $fileSize;
-        $this->receiverPeppolID = $receiverPeppolID;
-        $this->receiverPeppolScheme = $receiverPeppolScheme;
-        $this->senderPeppolID = $senderPeppolID;
-        $this->senderPeppolScheme = $senderPeppolScheme;
-        $this->signedURL = $signedURL;
-        $this->validatedAt = $validatedAt;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $fileHash && $this->fileHash = $fileHash;
+        null != $fileSize && $this->fileSize = $fileSize;
+        null != $receiverPeppolID && $this->receiverPeppolID = $receiverPeppolID;
+        null != $receiverPeppolScheme && $this->receiverPeppolScheme = $receiverPeppolScheme;
+        null != $senderPeppolID && $this->senderPeppolID = $senderPeppolID;
+        null != $senderPeppolScheme && $this->senderPeppolScheme = $senderPeppolScheme;
+        null != $signedURL && $this->signedURL = $signedURL;
+        null != $validatedAt && $this->validatedAt = $validatedAt;
     }
 }
-
-GetResponse::__introspect();

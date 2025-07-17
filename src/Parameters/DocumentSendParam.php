@@ -39,12 +39,13 @@ final class DocumentSendParam implements BaseModel
         ?string $senderPeppolID = null,
         ?string $senderPeppolScheme = null,
     ) {
-        $this->email = $email;
-        $this->receiverPeppolID = $receiverPeppolID;
-        $this->receiverPeppolScheme = $receiverPeppolScheme;
-        $this->senderPeppolID = $senderPeppolID;
-        $this->senderPeppolScheme = $senderPeppolScheme;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $email && $this->email = $email;
+        null != $receiverPeppolID && $this->receiverPeppolID = $receiverPeppolID;
+        null != $receiverPeppolScheme && $this->receiverPeppolScheme = $receiverPeppolScheme;
+        null != $senderPeppolID && $this->senderPeppolID = $senderPeppolID;
+        null != $senderPeppolScheme && $this->senderPeppolScheme = $senderPeppolScheme;
     }
 }
-
-DocumentSendParam::__introspect();

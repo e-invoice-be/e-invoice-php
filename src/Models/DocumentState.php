@@ -21,5 +21,3 @@ final class DocumentState implements StaticConverter
 
     final public const RECEIVED = 'RECEIVED';
 }
-
-DocumentState::__introspect();

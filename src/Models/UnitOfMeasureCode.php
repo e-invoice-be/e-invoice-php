@@ -191,5 +191,3 @@ final class UnitOfMeasureCode implements StaticConverter
 
     final public const C62 = 'C62';
 }
-
-UnitOfMeasureCode::__introspect();

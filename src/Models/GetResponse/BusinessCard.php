@@ -41,8 +41,10 @@ final class BusinessCard implements BaseModel
         $this->entities = $entities;
         $this->queryTimeMs = $queryTimeMs;
         $this->status = $status;
-        $this->error = $error;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $error && $this->error = $error;
     }
 }
-
-BusinessCard::__introspect();

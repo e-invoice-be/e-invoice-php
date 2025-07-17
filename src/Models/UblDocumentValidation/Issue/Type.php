@@ -15,5 +15,3 @@ final class Type implements StaticConverter
 
     final public const WARNING = 'warning';
 }
-
-Type::__introspect();

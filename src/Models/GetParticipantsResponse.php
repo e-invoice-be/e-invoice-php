@@ -46,8 +46,10 @@ final class GetParticipantsResponse implements BaseModel
         $this->searchDate = $searchDate;
         $this->totalCount = $totalCount;
         $this->usedCount = $usedCount;
-        $this->participants = $participants;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $participants && $this->participants = $participants;
     }
 }
-
-GetParticipantsResponse::__introspect();
