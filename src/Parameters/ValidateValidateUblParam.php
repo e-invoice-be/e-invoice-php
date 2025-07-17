@@ -23,7 +23,7 @@ final class ValidateValidateUblParam implements BaseModel
     final public function __construct(string $file)
     {
         $this->file = $file;
+
+        self::_introspect();
     }
 }
-
-ValidateValidateUblParam::__introspect();

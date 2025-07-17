@@ -46,8 +46,10 @@ final class UblDocumentValidation implements BaseModel
         $this->fileName = $fileName;
         $this->isValid = $isValid;
         $this->issues = $issues;
-        $this->ublDocument = $ublDocument;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $ublDocument && $this->ublDocument = $ublDocument;
     }
 }
-
-UblDocumentValidation::__introspect();

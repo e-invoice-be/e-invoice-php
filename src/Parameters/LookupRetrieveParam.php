@@ -23,7 +23,7 @@ final class LookupRetrieveParam implements BaseModel
     final public function __construct(string $peppolID)
     {
         $this->peppolID = $peppolID;
+
+        self::_introspect();
     }
 }
-
-LookupRetrieveParam::__introspect();

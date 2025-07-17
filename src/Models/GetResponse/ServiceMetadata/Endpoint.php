@@ -52,9 +52,11 @@ final class Endpoint implements BaseModel
         $this->documentTypes = $documentTypes;
         $this->status = $status;
         $this->url = $url;
-        $this->error = $error;
-        $this->processes = $processes;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $error && $this->error = $error;
+        null != $processes && $this->processes = $processes;
     }
 }
-
-Endpoint::__introspect();

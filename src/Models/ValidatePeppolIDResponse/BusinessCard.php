@@ -29,10 +29,11 @@ final class BusinessCard implements BaseModel
         ?string $name = null,
         ?\DateTimeInterface $registrationDate = null,
     ) {
-        $this->countryCode = $countryCode;
-        $this->name = $name;
-        $this->registrationDate = $registrationDate;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $countryCode && $this->countryCode = $countryCode;
+        null != $name && $this->name = $name;
+        null != $registrationDate && $this->registrationDate = $registrationDate;
     }
 }
-
-BusinessCard::__introspect();

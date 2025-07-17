@@ -42,7 +42,7 @@ final class QueryMetadata implements BaseModel
         $this->smlDomain = $smlDomain;
         $this->timestamp = $timestamp;
         $this->version = $version;
+
+        self::_introspect();
     }
 }
-
-QueryMetadata::__introspect();

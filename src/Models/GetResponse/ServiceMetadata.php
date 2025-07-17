@@ -41,8 +41,10 @@ final class ServiceMetadata implements BaseModel
         $this->endpoints = $endpoints;
         $this->queryTimeMs = $queryTimeMs;
         $this->status = $status;
-        $this->error = $error;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $error && $this->error = $error;
     }
 }
-
-ServiceMetadata::__introspect();

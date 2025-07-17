@@ -11,5 +11,3 @@ final class Amount implements StaticConverter
 {
     use Union;
 }
-
-Amount::__introspect();

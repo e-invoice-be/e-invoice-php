@@ -50,14 +50,15 @@ final class Entity implements BaseModel
         ?string $registrationDate = null,
         ?string $website = null,
     ) {
-        $this->additionalInfo = $additionalInfo;
-        $this->countryCode = $countryCode;
-        $this->geoInfo = $geoInfo;
-        $this->identifiers = $identifiers;
-        $this->name = $name;
-        $this->registrationDate = $registrationDate;
-        $this->website = $website;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $additionalInfo && $this->additionalInfo = $additionalInfo;
+        null != $countryCode && $this->countryCode = $countryCode;
+        null != $geoInfo && $this->geoInfo = $geoInfo;
+        null != $identifiers && $this->identifiers = $identifiers;
+        null != $name && $this->name = $name;
+        null != $registrationDate && $this->registrationDate = $registrationDate;
+        null != $website && $this->website = $website;
     }
 }
-
-Entity::__introspect();

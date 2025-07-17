@@ -39,10 +39,12 @@ final class DocumentAttachment implements BaseModel
     ) {
         $this->id = $id;
         $this->fileName = $fileName;
-        $this->fileSize = $fileSize;
-        $this->fileType = $fileType;
-        $this->fileURL = $fileURL;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $fileSize && $this->fileSize = $fileSize;
+        null != $fileType && $this->fileType = $fileType;
+        null != $fileURL && $this->fileURL = $fileURL;
     }
 }
-
-DocumentAttachment::__introspect();

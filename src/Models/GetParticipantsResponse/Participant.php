@@ -47,9 +47,11 @@ final class Participant implements BaseModel
     ) {
         $this->peppolID = $peppolID;
         $this->peppolScheme = $peppolScheme;
-        $this->documentTypes = $documentTypes;
-        $this->entities = $entities;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $documentTypes && $this->documentTypes = $documentTypes;
+        null != $entities && $this->entities = $entities;
     }
 }
-
-Participant::__introspect();

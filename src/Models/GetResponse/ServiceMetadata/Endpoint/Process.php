@@ -31,7 +31,7 @@ final class Process implements BaseModel
     {
         $this->endpoints = $endpoints;
         $this->processID = $processID;
+
+        self::_introspect();
     }
 }
-
-Process::__introspect();

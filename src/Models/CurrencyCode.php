@@ -41,5 +41,3 @@ final class CurrencyCode implements StaticConverter
 
     final public const HKD = 'HKD';
 }
-
-CurrencyCode::__introspect();

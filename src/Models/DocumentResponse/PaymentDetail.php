@@ -33,11 +33,12 @@ final class PaymentDetail implements BaseModel
         ?string $paymentReference = null,
         ?string $swift = null,
     ) {
-        $this->bankAccountNumber = $bankAccountNumber;
-        $this->iban = $iban;
-        $this->paymentReference = $paymentReference;
-        $this->swift = $swift;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $bankAccountNumber && $this->bankAccountNumber = $bankAccountNumber;
+        null != $iban && $this->iban = $iban;
+        null != $paymentReference && $this->paymentReference = $paymentReference;
+        null != $swift && $this->swift = $swift;
     }
 }
-
-PaymentDetail::__introspect();

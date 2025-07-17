@@ -67,7 +67,7 @@ final class GetResponse implements BaseModel
         $this->queryMetadata = $queryMetadata;
         $this->serviceMetadata = $serviceMetadata;
         $this->status = $status;
+
+        self::_introspect();
     }
 }
-
-GetResponse::__introspect();

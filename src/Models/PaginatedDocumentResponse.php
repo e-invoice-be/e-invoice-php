@@ -46,7 +46,7 @@ final class PaginatedDocumentResponse implements BaseModel
         $this->pageSize = $pageSize;
         $this->pages = $pages;
         $this->total = $total;
+
+        self::_introspect();
     }
 }
-
-PaginatedDocumentResponse::__introspect();

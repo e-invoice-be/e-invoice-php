@@ -11,5 +11,3 @@ final class PreviousUnpaidBalance implements StaticConverter
 {
     use Union;
 }
-
-PreviousUnpaidBalance::__introspect();

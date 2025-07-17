@@ -37,8 +37,10 @@ final class WebhookCreateParam implements BaseModel
     ) {
         $this->events = $events;
         $this->url = $url;
-        $this->enabled = $enabled;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $enabled && $this->enabled = $enabled;
     }
 }
-
-WebhookCreateParam::__introspect();

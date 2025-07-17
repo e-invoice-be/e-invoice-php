@@ -46,8 +46,10 @@ final class ValidatePeppolIDResponse implements BaseModel
         $this->businessCardValid = $businessCardValid;
         $this->dnsValid = $dnsValid;
         $this->isValid = $isValid;
-        $this->supportedDocumentTypes = $supportedDocumentTypes;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $supportedDocumentTypes && $this->supportedDocumentTypes = $supportedDocumentTypes;
     }
 }
-
-ValidatePeppolIDResponse::__introspect();
