@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
+use EInvoiceAPI\Models\CurrencyCode;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
+use EInvoiceAPI\Models\DocumentDirection;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Models\ValidatePeppolIDResponse;
@@ -23,15 +27,15 @@ interface ValidateContract
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
      *   billingAddressRecipient?: string|null,
-     *   currency?: string,
+     *   currency?: CurrencyCode::*,
      *   customerAddress?: string|null,
      *   customerAddressRecipient?: string|null,
      *   customerEmail?: string|null,
      *   customerID?: string|null,
      *   customerName?: string|null,
      *   customerTaxID?: string|null,
-     *   direction?: string,
-     *   documentType?: string,
+     *   direction?: DocumentDirection::*,
+     *   documentType?: DocumentType::*,
      *   dueDate?: \DateTimeInterface|null,
      *   invoiceDate?: \DateTimeInterface|null,
      *   invoiceID?: string|null,
@@ -50,7 +54,7 @@ interface ValidateContract
      *   serviceStartDate?: \DateTimeInterface|null,
      *   shippingAddress?: string|null,
      *   shippingAddressRecipient?: string|null,
-     *   state?: string,
+     *   state?: DocumentState::*,
      *   subtotal?: float|string|null,
      *   taxDetails?: list<TaxDetail>|null,
      *   totalDiscount?: float|string|null,

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Parameters\Inbox\ListCreditNotesParams;
 use EInvoiceAPI\Parameters\Inbox\ListInvoicesParams;
 use EInvoiceAPI\Parameters\Inbox\ListParams;
@@ -20,8 +22,8 @@ interface InboxContract
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: string,
-     *   type?: string,
+     *   state?: DocumentState::*,
+     *   type?: DocumentType::*,
      * } $params
      */
     public function list(

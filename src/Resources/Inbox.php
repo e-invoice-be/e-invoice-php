@@ -8,6 +8,8 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\InboxContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Parameters\Inbox\ListCreditNotesParams;
 use EInvoiceAPI\Parameters\Inbox\ListInvoicesParams;
 use EInvoiceAPI\Parameters\Inbox\ListParams;
@@ -25,8 +27,8 @@ final class Inbox implements InboxContract
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: string,
-     *   type?: string,
+     *   state?: DocumentState::*,
+     *   type?: DocumentType::*,
      * } $params
      */
     public function list(

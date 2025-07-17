@@ -8,6 +8,8 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 
 final class ListParams implements BaseModel
 {
@@ -32,14 +34,19 @@ final class ListParams implements BaseModel
     #[Api(optional: true)]
     public ?string $sender;
 
+    /** @var null|DocumentState::* $state */
     #[Api(optional: true)]
     public ?string $state;
 
+    /** @var null|DocumentType::* $type */
     #[Api(optional: true)]
     public ?string $type;
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param DocumentState::* $state
+     * @param DocumentType::*  $type
      */
     final public function __construct(
         ?\DateTimeInterface $dateFrom = null,

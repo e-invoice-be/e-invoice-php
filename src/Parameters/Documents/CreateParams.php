@@ -10,7 +10,11 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Core\Serde\UnionOf;
+use EInvoiceAPI\Models\CurrencyCode;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
+use EInvoiceAPI\Models\DocumentDirection;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Parameters\Documents\CreateParams\Item;
 use EInvoiceAPI\Parameters\Documents\CreateParams\TaxDetail;
@@ -36,6 +40,7 @@ final class CreateParams implements BaseModel
     #[Api('billing_address_recipient', optional: true)]
     public ?string $billingAddressRecipient;
 
+    /** @var null|CurrencyCode::* $currency */
     #[Api(optional: true)]
     public ?string $currency;
 
@@ -57,9 +62,11 @@ final class CreateParams implements BaseModel
     #[Api('customer_tax_id', optional: true)]
     public ?string $customerTaxID;
 
+    /** @var null|DocumentDirection::* $direction */
     #[Api(optional: true)]
     public ?string $direction;
 
+    /** @var null|DocumentType::* $documentType */
     #[Api('document_type', optional: true)]
     public ?string $documentType;
 
@@ -123,6 +130,7 @@ final class CreateParams implements BaseModel
     #[Api('shipping_address_recipient', optional: true)]
     public ?string $shippingAddressRecipient;
 
+    /** @var null|DocumentState::* $state */
     #[Api(optional: true)]
     public ?string $state;
 
@@ -162,8 +170,12 @@ final class CreateParams implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param null|list<DocumentAttachmentCreate> $attachments
+     * @param CurrencyCode::*                     $currency
+     * @param DocumentDirection::*                $direction
+     * @param DocumentType::*                     $documentType
      * @param null|list<Item>                     $items
      * @param null|list<PaymentDetailCreate>      $paymentDetails
+     * @param DocumentState::*                    $state
      * @param null|list<TaxDetail>                $taxDetails
      */
     final public function __construct(
