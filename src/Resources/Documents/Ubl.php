@@ -7,8 +7,8 @@ namespace EInvoiceAPI\Resources\Documents;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\UblContract;
 use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Models\Documents\GetResponse;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\Documents\UblGetResponse;
 
 final class Ubl implements UblContract
 {
@@ -17,7 +17,7 @@ final class Ubl implements UblContract
     public function get(
         string $documentID,
         ?RequestOptions $requestOptions = null
-    ): GetResponse {
+    ): UblGetResponse {
         $resp = $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/ubl', $documentID],
@@ -25,6 +25,6 @@ final class Ubl implements UblContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(GetResponse::class, value: $resp);
+        return Serde::coerce(UblGetResponse::class, value: $resp);
     }
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\CurrencyCode;
-use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\DocumentDirection;
 use EInvoiceAPI\Models\DocumentResponse;
@@ -17,6 +16,7 @@ use EInvoiceAPI\Parameters\DocumentCreateParam\Item;
 use EInvoiceAPI\Parameters\DocumentCreateParam\TaxDetail;
 use EInvoiceAPI\Parameters\DocumentSendParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\DocumentDeleteResponse;
 
 interface DocumentsContract
 {
@@ -78,7 +78,7 @@ interface DocumentsContract
     public function delete(
         string $documentID,
         ?RequestOptions $requestOptions = null
-    ): DeleteResponse;
+    ): DocumentDeleteResponse;
 
     /**
      * @param DocumentSendParam|array{

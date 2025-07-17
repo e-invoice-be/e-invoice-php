@@ -14,13 +14,13 @@ use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
-use EInvoiceAPI\Models\ValidatePeppolIDResponse;
 use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
 use EInvoiceAPI\Parameters\ValidateValidateJsonParam\Item;
 use EInvoiceAPI\Parameters\ValidateValidateJsonParam\TaxDetail;
 use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
 use EInvoiceAPI\Parameters\ValidateValidateUblParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\ValidateValidatePeppolIDResponse;
 
 final class Validate implements ValidateContract
 {
@@ -96,7 +96,7 @@ final class Validate implements ValidateContract
     public function validatePeppolID(
         array|ValidateValidatePeppolIDParam $params,
         ?RequestOptions $requestOptions = null,
-    ): ValidatePeppolIDResponse {
+    ): ValidateValidatePeppolIDResponse {
         [$parsed, $options] = ValidateValidatePeppolIDParam::parseRequest(
             $params,
             $requestOptions
@@ -109,7 +109,7 @@ final class Validate implements ValidateContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(ValidatePeppolIDResponse::class, value: $resp);
+        return Serde::coerce(ValidateValidatePeppolIDResponse::class, value: $resp);
     }
 
     /**

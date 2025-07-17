@@ -8,12 +8,12 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\AttachmentsContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Models\Documents\DeleteResponse;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
 use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
 use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
 use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
 
 final class Attachments implements AttachmentsContract
 {
@@ -67,7 +67,7 @@ final class Attachments implements AttachmentsContract
         string $attachmentID,
         array|AttachmentDeleteParam $params,
         ?RequestOptions $requestOptions = null,
-    ): DeleteResponse {
+    ): AttachmentDeleteResponse {
         [$parsed, $options] = AttachmentDeleteParam::parseRequest(
             $params,
             $requestOptions
@@ -81,7 +81,7 @@ final class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeleteResponse::class, value: $resp);
+        return Serde::coerce(AttachmentDeleteResponse::class, value: $resp);
     }
 
     /**

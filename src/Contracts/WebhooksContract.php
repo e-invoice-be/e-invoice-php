@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\WebhookResponse;
 use EInvoiceAPI\Parameters\WebhookCreateParam;
 use EInvoiceAPI\Parameters\WebhookUpdateParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\WebhookDeleteResponse;
 
 interface WebhooksContract
 {
@@ -48,5 +48,5 @@ interface WebhooksContract
     public function delete(
         string $webhookID,
         ?RequestOptions $requestOptions = null
-    ): DeleteResponse;
+    ): WebhookDeleteResponse;
 }
