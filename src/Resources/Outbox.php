@@ -10,8 +10,8 @@ use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
-use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
+use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
+use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
 use EInvoiceAPI\RequestOptions;
 
 final class Outbox implements OutboxContract
@@ -19,13 +19,13 @@ final class Outbox implements OutboxContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{page?: int, pageSize?: int}|ListDraftDocumentsParams $params
+     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParam $params
      */
     public function listDraftDocuments(
-        array|ListDraftDocumentsParams $params,
+        array|OutboxListDraftDocumentsParam $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = ListDraftDocumentsParams::parseRequest(
+        [$parsed, $options] = OutboxListDraftDocumentsParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -41,7 +41,7 @@ final class Outbox implements OutboxContract
     }
 
     /**
-     * @param ListReceivedDocumentsParams|array{
+     * @param OutboxListReceivedDocumentsParam|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
@@ -53,10 +53,10 @@ final class Outbox implements OutboxContract
      * } $params
      */
     public function listReceivedDocuments(
-        array|ListReceivedDocumentsParams $params,
+        array|OutboxListReceivedDocumentsParam $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = ListReceivedDocumentsParams::parseRequest(
+        [$parsed, $options] = OutboxListReceivedDocumentsParam::parseRequest(
             $params,
             $requestOptions
         );

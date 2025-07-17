@@ -10,9 +10,9 @@ use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\Inbox\ListCreditNotesParams;
-use EInvoiceAPI\Parameters\Inbox\ListInvoicesParams;
-use EInvoiceAPI\Parameters\Inbox\ListParams;
+use EInvoiceAPI\Parameters\InboxListCreditNotesParam;
+use EInvoiceAPI\Parameters\InboxListInvoicesParam;
+use EInvoiceAPI\Parameters\InboxListParam;
 use EInvoiceAPI\RequestOptions;
 
 final class Inbox implements InboxContract
@@ -20,7 +20,7 @@ final class Inbox implements InboxContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param ListParams|array{
+     * @param InboxListParam|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
@@ -32,10 +32,13 @@ final class Inbox implements InboxContract
      * } $params
      */
     public function list(
-        array|ListParams $params,
+        array|InboxListParam $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = InboxListParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'get',
             path: 'api/inbox/',
@@ -48,13 +51,13 @@ final class Inbox implements InboxContract
     }
 
     /**
-     * @param array{page?: int, pageSize?: int}|ListCreditNotesParams $params
+     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParam $params
      */
     public function listCreditNotes(
-        array|ListCreditNotesParams $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListCreditNotesParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = ListCreditNotesParams::parseRequest(
+        [$parsed, $options] = InboxListCreditNotesParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -70,13 +73,13 @@ final class Inbox implements InboxContract
     }
 
     /**
-     * @param array{page?: int, pageSize?: int}|ListInvoicesParams $params
+     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParam $params
      */
     public function listInvoices(
-        array|ListInvoicesParams $params,
+        array|InboxListInvoicesParam $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = ListInvoicesParams::parseRequest(
+        [$parsed, $options] = InboxListInvoicesParam::parseRequest(
             $params,
             $requestOptions
         );

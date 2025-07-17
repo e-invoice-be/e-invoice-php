@@ -10,9 +10,9 @@ use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\Documents\DeleteResponse;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
-use EInvoiceAPI\Parameters\Documents\Attachments\AddParams;
-use EInvoiceAPI\Parameters\Documents\Attachments\DeleteParams;
-use EInvoiceAPI\Parameters\Documents\Attachments\RetrieveParams;
+use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
+use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
+use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
 use EInvoiceAPI\RequestOptions;
 
 final class Attachments implements AttachmentsContract
@@ -20,14 +20,14 @@ final class Attachments implements AttachmentsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{documentID?: string}|RetrieveParams $params
+     * @param array{documentID?: string}|AttachmentRetrieveParam $params
      */
     public function retrieve(
         string $attachmentID,
-        array|RetrieveParams $params,
+        array|AttachmentRetrieveParam $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        [$parsed, $options] = RetrieveParams::parseRequest(
+        [$parsed, $options] = AttachmentRetrieveParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -61,14 +61,17 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
-     * @param array{documentID?: string}|DeleteParams $params
+     * @param array{documentID?: string}|AttachmentDeleteParam $params
      */
     public function delete(
         string $attachmentID,
-        array|DeleteParams $params,
+        array|AttachmentDeleteParam $params,
         ?RequestOptions $requestOptions = null,
     ): DeleteResponse {
-        [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = AttachmentDeleteParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $documentID = $parsed['documentID'];
         unset($parsed['documentID']);
         $resp = $this->client->request(
@@ -82,14 +85,17 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
-     * @param AddParams|array{file?: string} $params
+     * @param array{file?: string}|AttachmentAddParam $params
      */
     public function add(
         string $documentID,
-        AddParams|array $params,
+        array|AttachmentAddParam $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        [$parsed, $options] = AddParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = AttachmentAddParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/attachments', $documentID],

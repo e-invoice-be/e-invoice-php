@@ -12,17 +12,17 @@ use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Models\ValidatePeppolIDResponse;
-use EInvoiceAPI\Parameters\Validate\ValidateJsonParams;
-use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\Item;
-use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\TaxDetail;
-use EInvoiceAPI\Parameters\Validate\ValidatePeppolIDParams;
-use EInvoiceAPI\Parameters\Validate\ValidateUblParams;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParam\Item;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParam\TaxDetail;
+use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
+use EInvoiceAPI\Parameters\ValidateValidateUblParam;
 use EInvoiceAPI\RequestOptions;
 
 interface ValidateContract
 {
     /**
-     * @param ValidateJsonParams|array{
+     * @param ValidateValidateJsonParam|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
@@ -67,23 +67,23 @@ interface ValidateContract
      * } $params
      */
     public function validateJson(
-        array|ValidateJsonParams $params,
-        ?RequestOptions $requestOptions = null
+        array|ValidateValidateJsonParam $params,
+        ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation;
 
     /**
-     * @param array{peppolID?: string}|ValidatePeppolIDParams $params
+     * @param array{peppolID?: string}|ValidateValidatePeppolIDParam $params
      */
     public function validatePeppolID(
-        array|ValidatePeppolIDParams $params,
+        array|ValidateValidatePeppolIDParam $params,
         ?RequestOptions $requestOptions = null,
     ): ValidatePeppolIDResponse;
 
     /**
-     * @param array{file?: string}|ValidateUblParams $params
+     * @param array{file?: string}|ValidateValidateUblParam $params
      */
     public function validateUbl(
-        array|ValidateUblParams $params,
-        ?RequestOptions $requestOptions = null
+        array|ValidateValidateUblParam $params,
+        ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation;
 }

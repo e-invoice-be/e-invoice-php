@@ -7,22 +7,22 @@ namespace EInvoiceAPI\Contracts;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
-use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
+use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
+use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
 use EInvoiceAPI\RequestOptions;
 
 interface OutboxContract
 {
     /**
-     * @param array{page?: int, pageSize?: int}|ListDraftDocumentsParams $params
+     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParam $params
      */
     public function listDraftDocuments(
-        array|ListDraftDocumentsParams $params,
+        array|OutboxListDraftDocumentsParam $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 
     /**
-     * @param ListReceivedDocumentsParams|array{
+     * @param OutboxListReceivedDocumentsParam|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
@@ -34,7 +34,7 @@ interface OutboxContract
      * } $params
      */
     public function listReceivedDocuments(
-        array|ListReceivedDocumentsParams $params,
+        array|OutboxListReceivedDocumentsParam $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }
