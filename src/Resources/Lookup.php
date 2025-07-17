@@ -9,8 +9,8 @@ use EInvoiceAPI\Contracts\LookupContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\GetParticipantsResponse;
 use EInvoiceAPI\Models\GetResponse;
-use EInvoiceAPI\Parameters\Lookup\RetrieveParams;
-use EInvoiceAPI\Parameters\Lookup\RetrieveParticipantsParams;
+use EInvoiceAPI\Parameters\LookupRetrieveParam;
+use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
 use EInvoiceAPI\RequestOptions;
 
 final class Lookup implements LookupContract
@@ -18,13 +18,13 @@ final class Lookup implements LookupContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{peppolID?: string}|RetrieveParams $params
+     * @param array{peppolID?: string}|LookupRetrieveParam $params
      */
     public function retrieve(
-        array|RetrieveParams $params,
+        array|LookupRetrieveParam $params,
         ?RequestOptions $requestOptions = null
     ): GetResponse {
-        [$parsed, $options] = RetrieveParams::parseRequest(
+        [$parsed, $options] = LookupRetrieveParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -40,15 +40,15 @@ final class Lookup implements LookupContract
     }
 
     /**
-     * @param RetrieveParticipantsParams|array{
+     * @param LookupRetrieveParticipantsParam|array{
      *   query?: string, countryCode?: string|null
      * } $params
      */
     public function retrieveParticipants(
-        array|RetrieveParticipantsParams $params,
+        array|LookupRetrieveParticipantsParam $params,
         ?RequestOptions $requestOptions = null,
     ): GetParticipantsResponse {
-        [$parsed, $options] = RetrieveParticipantsParams::parseRequest(
+        [$parsed, $options] = LookupRetrieveParticipantsParam::parseRequest(
             $params,
             $requestOptions
         );

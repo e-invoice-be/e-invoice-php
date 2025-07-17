@@ -15,10 +15,10 @@ use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
-use EInvoiceAPI\Parameters\Documents\CreateParams;
-use EInvoiceAPI\Parameters\Documents\CreateParams\Item;
-use EInvoiceAPI\Parameters\Documents\CreateParams\TaxDetail;
-use EInvoiceAPI\Parameters\Documents\SendParams;
+use EInvoiceAPI\Parameters\DocumentCreateParam;
+use EInvoiceAPI\Parameters\DocumentCreateParam\Item;
+use EInvoiceAPI\Parameters\DocumentCreateParam\TaxDetail;
+use EInvoiceAPI\Parameters\DocumentSendParam;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Resources\Documents\Attachments;
 use EInvoiceAPI\Resources\Documents\Ubl;
@@ -36,7 +36,7 @@ final class Documents implements DocumentsContract
     }
 
     /**
-     * @param CreateParams|array{
+     * @param DocumentCreateParam|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
@@ -81,10 +81,13 @@ final class Documents implements DocumentsContract
      * } $params
      */
     public function create(
-        array|CreateParams $params,
+        array|DocumentCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = DocumentCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: 'api/documents/',
@@ -125,7 +128,7 @@ final class Documents implements DocumentsContract
     }
 
     /**
-     * @param SendParams|array{
+     * @param DocumentSendParam|array{
      *   email?: string|null,
      *   receiverPeppolID?: string|null,
      *   receiverPeppolScheme?: string|null,
@@ -135,10 +138,13 @@ final class Documents implements DocumentsContract
      */
     public function send(
         string $documentID,
-        array|SendParams $params,
+        array|DocumentSendParam $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = SendParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = DocumentSendParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/send', $documentID],

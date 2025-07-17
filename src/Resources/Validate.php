@@ -15,11 +15,11 @@ use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Models\ValidatePeppolIDResponse;
-use EInvoiceAPI\Parameters\Validate\ValidateJsonParams;
-use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\Item;
-use EInvoiceAPI\Parameters\Validate\ValidateJsonParams\TaxDetail;
-use EInvoiceAPI\Parameters\Validate\ValidatePeppolIDParams;
-use EInvoiceAPI\Parameters\Validate\ValidateUblParams;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParam\Item;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParam\TaxDetail;
+use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
+use EInvoiceAPI\Parameters\ValidateValidateUblParam;
 use EInvoiceAPI\RequestOptions;
 
 final class Validate implements ValidateContract
@@ -27,7 +27,7 @@ final class Validate implements ValidateContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param ValidateJsonParams|array{
+     * @param ValidateValidateJsonParam|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
@@ -72,10 +72,10 @@ final class Validate implements ValidateContract
      * } $params
      */
     public function validateJson(
-        array|ValidateJsonParams $params,
-        ?RequestOptions $requestOptions = null
+        array|ValidateValidateJsonParam $params,
+        ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation {
-        [$parsed, $options] = ValidateJsonParams::parseRequest(
+        [$parsed, $options] = ValidateValidateJsonParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -91,13 +91,13 @@ final class Validate implements ValidateContract
     }
 
     /**
-     * @param array{peppolID?: string}|ValidatePeppolIDParams $params
+     * @param array{peppolID?: string}|ValidateValidatePeppolIDParam $params
      */
     public function validatePeppolID(
-        array|ValidatePeppolIDParams $params,
-        ?RequestOptions $requestOptions = null
+        array|ValidateValidatePeppolIDParam $params,
+        ?RequestOptions $requestOptions = null,
     ): ValidatePeppolIDResponse {
-        [$parsed, $options] = ValidatePeppolIDParams::parseRequest(
+        [$parsed, $options] = ValidateValidatePeppolIDParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -113,13 +113,13 @@ final class Validate implements ValidateContract
     }
 
     /**
-     * @param array{file?: string}|ValidateUblParams $params
+     * @param array{file?: string}|ValidateValidateUblParam $params
      */
     public function validateUbl(
-        array|ValidateUblParams $params,
-        ?RequestOptions $requestOptions = null
+        array|ValidateValidateUblParam $params,
+        ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation {
-        [$parsed, $options] = ValidateUblParams::parseRequest(
+        [$parsed, $options] = ValidateValidateUblParam::parseRequest(
             $params,
             $requestOptions
         );

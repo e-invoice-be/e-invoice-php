@@ -10,8 +10,8 @@ use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\ListOf;
 use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\WebhookResponse;
-use EInvoiceAPI\Parameters\Webhooks\CreateParams;
-use EInvoiceAPI\Parameters\Webhooks\UpdateParams;
+use EInvoiceAPI\Parameters\WebhookCreateParam;
+use EInvoiceAPI\Parameters\WebhookUpdateParam;
 use EInvoiceAPI\RequestOptions;
 
 final class Webhooks implements WebhooksContract
@@ -19,15 +19,18 @@ final class Webhooks implements WebhooksContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param CreateParams|array{
+     * @param WebhookCreateParam|array{
      *   events?: list<string>, url?: string, enabled?: bool
      * } $params
      */
     public function create(
-        array|CreateParams $params,
+        array|WebhookCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = WebhookCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: 'api/webhooks/',
@@ -54,16 +57,19 @@ final class Webhooks implements WebhooksContract
     }
 
     /**
-     * @param UpdateParams|array{
+     * @param WebhookUpdateParam|array{
      *   enabled?: bool|null, events?: list<string>|null, url?: string|null
      * } $params
      */
     public function update(
         string $webhookID,
-        array|UpdateParams $params,
+        array|WebhookUpdateParam $params,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        [$parsed, $options] = UpdateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = WebhookUpdateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'put',
             path: ['api/webhooks/%1$s', $webhookID],
