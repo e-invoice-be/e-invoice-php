@@ -59,4 +59,4 @@ final class Issue implements BaseModel
     }
 }
 
-Issue::_loadMetadata();
+Issue::__introspect();

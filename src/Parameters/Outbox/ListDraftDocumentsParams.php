@@ -30,4 +30,4 @@ final class ListDraftDocumentsParams implements BaseModel
     }
 }
 
-ListDraftDocumentsParams::_loadMetadata();
+ListDraftDocumentsParams::__introspect();

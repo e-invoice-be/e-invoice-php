@@ -45,4 +45,4 @@ final class BusinessCard implements BaseModel
     }
 }
 
-BusinessCard::_loadMetadata();
+BusinessCard::__introspect();

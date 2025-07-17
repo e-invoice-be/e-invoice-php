@@ -30,4 +30,4 @@ final class ListCreditNotesParams implements BaseModel
     }
 }
 
-ListCreditNotesParams::_loadMetadata();
+ListCreditNotesParams::__introspect();

@@ -26,4 +26,4 @@ final class ValidateUblParams implements BaseModel
     }
 }
 
-ValidateUblParams::_loadMetadata();
+ValidateUblParams::__introspect();

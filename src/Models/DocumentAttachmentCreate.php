@@ -40,4 +40,4 @@ final class DocumentAttachmentCreate implements BaseModel
     }
 }
 
-DocumentAttachmentCreate::_loadMetadata();
+DocumentAttachmentCreate::__introspect();

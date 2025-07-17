@@ -61,4 +61,4 @@ final class Endpoint implements BaseModel
     }
 }
 
-Endpoint::_loadMetadata();
+Endpoint::__introspect();

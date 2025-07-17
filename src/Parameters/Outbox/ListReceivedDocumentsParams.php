@@ -69,4 +69,4 @@ final class ListReceivedDocumentsParams implements BaseModel
     }
 }
 
-ListReceivedDocumentsParams::_loadMetadata();
+ListReceivedDocumentsParams::__introspect();

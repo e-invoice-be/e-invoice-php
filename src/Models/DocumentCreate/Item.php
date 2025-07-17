@@ -69,4 +69,4 @@ final class Item implements BaseModel
     }
 }
 
-Item::_loadMetadata();
+Item::__introspect();

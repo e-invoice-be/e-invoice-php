@@ -256,4 +256,4 @@ final class DocumentResponse implements BaseModel
     }
 }
 
-DocumentResponse::_loadMetadata();
+DocumentResponse::__introspect();

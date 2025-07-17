@@ -47,4 +47,4 @@ final class SendParams implements BaseModel
     }
 }
 
-SendParams::_loadMetadata();
+SendParams::__introspect();

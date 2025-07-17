@@ -28,4 +28,4 @@ final class Identifier implements BaseModel
     }
 }
 
-Identifier::_loadMetadata();
+Identifier::__introspect();

@@ -50,4 +50,4 @@ final class GetParticipantsResponse implements BaseModel
     }
 }
 
-GetParticipantsResponse::_loadMetadata();
+GetParticipantsResponse::__introspect();

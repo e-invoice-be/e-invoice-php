@@ -102,26 +102,6 @@ $client = new Client(max_retries: 0);
 $client->documents->create([], requestOptions: ["max_retries" => 5]);
 ```
 
-### Timeouts
-
-By default, requests will time out after 60 seconds. You can use the timeout option to configure or disable this:
-
-```php
-<?php
-
-use EInvoiceAPI\Client;
-
-// Configure the default for all requests:
-$client = new Client(timeout: nil);
-
-// Or, configure per-request:
-$client->documents->create([], requestOptions: ["timeout" => 5]);
-```
-
-On timeout, `EInvoiceAPI\Errors\APITimeoutError` is raised.
-
-Note that requests that time out are retried by default.
-
 ## Advanced concepts
 
 ### Making custom or undocumented requests

@@ -49,4 +49,4 @@ final class WebhookResponse implements BaseModel
     }
 }
 
-WebhookResponse::_loadMetadata();
+WebhookResponse::__introspect();

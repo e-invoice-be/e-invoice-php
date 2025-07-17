@@ -265,4 +265,4 @@ final class ValidateJsonParams implements BaseModel
     }
 }
 
-ValidateJsonParams::_loadMetadata();
+ValidateJsonParams::__introspect();

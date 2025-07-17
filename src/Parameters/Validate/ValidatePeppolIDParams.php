@@ -26,4 +26,4 @@ final class ValidatePeppolIDParams implements BaseModel
     }
 }
 
-ValidatePeppolIDParams::_loadMetadata();
+ValidatePeppolIDParams::__introspect();

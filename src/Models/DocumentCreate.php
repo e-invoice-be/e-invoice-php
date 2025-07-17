@@ -257,4 +257,4 @@ final class DocumentCreate implements BaseModel
     }
 }
 
-DocumentCreate::_loadMetadata();
+DocumentCreate::__introspect();

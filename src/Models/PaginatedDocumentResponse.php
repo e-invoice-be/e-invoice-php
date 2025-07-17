@@ -49,4 +49,4 @@ final class PaginatedDocumentResponse implements BaseModel
     }
 }
 
-PaginatedDocumentResponse::_loadMetadata();
+PaginatedDocumentResponse::__introspect();

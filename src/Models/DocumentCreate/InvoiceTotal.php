@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models\DocumentCreate;
 
-final class InvoiceTotal {}
+use EInvoiceAPI\Core\Concerns\Union;
+use EInvoiceAPI\Core\Contracts\StaticConverter;
+
+final class InvoiceTotal implements StaticConverter
+{
+    use Union;
+}
+
+InvoiceTotal::__introspect();

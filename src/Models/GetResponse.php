@@ -70,4 +70,4 @@ final class GetResponse implements BaseModel
     }
 }
 
-GetResponse::_loadMetadata();
+GetResponse::__introspect();

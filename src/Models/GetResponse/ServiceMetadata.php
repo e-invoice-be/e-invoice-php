@@ -45,4 +45,4 @@ final class ServiceMetadata implements BaseModel
     }
 }
 
-ServiceMetadata::_loadMetadata();
+ServiceMetadata::__introspect();

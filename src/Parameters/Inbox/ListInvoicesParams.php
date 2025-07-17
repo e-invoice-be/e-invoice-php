@@ -30,4 +30,4 @@ final class ListInvoicesParams implements BaseModel
     }
 }
 
-ListInvoicesParams::_loadMetadata();
+ListInvoicesParams::__introspect();

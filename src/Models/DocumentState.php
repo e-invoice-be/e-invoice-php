@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-final class DocumentState
+use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Contracts\StaticConverter;
+
+final class DocumentState implements StaticConverter
 {
+    use Enum;
+
     final public const DRAFT = 'DRAFT';
 
     final public const TRANSIT = 'TRANSIT';
@@ -16,3 +21,5 @@ final class DocumentState
 
     final public const RECEIVED = 'RECEIVED';
 }
+
+DocumentState::__introspect();

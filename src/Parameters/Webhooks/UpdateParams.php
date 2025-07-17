@@ -42,4 +42,4 @@ final class UpdateParams implements BaseModel
     }
 }
 
-UpdateParams::_loadMetadata();
+UpdateParams::__introspect();
