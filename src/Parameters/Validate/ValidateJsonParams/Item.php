@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Parameters\Validate\ValidateJsonParams;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Models\UnitOfMeasureCode;
 
 final class Item implements BaseModel
 {
@@ -33,6 +34,7 @@ final class Item implements BaseModel
     #[Api('tax_rate', optional: true)]
     public ?string $taxRate;
 
+    /** @var null|UnitOfMeasureCode::* $unit */
     #[Api(optional: true)]
     public ?string $unit;
 
@@ -41,6 +43,8 @@ final class Item implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param UnitOfMeasureCode::* $unit
      */
     final public function __construct(
         null|float|string $amount = null,

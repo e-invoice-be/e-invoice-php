@@ -32,6 +32,7 @@ final class DocumentCreate implements BaseModel
     #[Api('billing_address_recipient', optional: true)]
     public ?string $billingAddressRecipient;
 
+    /** @var null|CurrencyCode::* $currency */
     #[Api(optional: true)]
     public ?string $currency;
 
@@ -53,9 +54,11 @@ final class DocumentCreate implements BaseModel
     #[Api('customer_tax_id', optional: true)]
     public ?string $customerTaxID;
 
+    /** @var null|DocumentDirection::* $direction */
     #[Api(optional: true)]
     public ?string $direction;
 
+    /** @var null|DocumentType::* $documentType */
     #[Api('document_type', optional: true)]
     public ?string $documentType;
 
@@ -119,6 +122,7 @@ final class DocumentCreate implements BaseModel
     #[Api('shipping_address_recipient', optional: true)]
     public ?string $shippingAddressRecipient;
 
+    /** @var null|DocumentState::* $state */
     #[Api(optional: true)]
     public ?string $state;
 
@@ -158,8 +162,12 @@ final class DocumentCreate implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param null|list<DocumentAttachmentCreate> $attachments
+     * @param CurrencyCode::*                     $currency
+     * @param DocumentDirection::*                $direction
+     * @param DocumentType::*                     $documentType
      * @param null|list<Item>                     $items
      * @param null|list<PaymentDetailCreate>      $paymentDetails
+     * @param DocumentState::*                    $state
      * @param null|list<TaxDetail>                $taxDetails
      */
     final public function __construct(

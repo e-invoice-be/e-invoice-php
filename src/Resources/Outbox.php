@@ -8,6 +8,8 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\OutboxContract;
 use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
 use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
@@ -46,8 +48,8 @@ final class Outbox implements OutboxContract
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: string,
-     *   type?: string,
+     *   state?: DocumentState::*,
+     *   type?: DocumentType::*,
      * } $params
      */
     public function listReceivedDocuments(

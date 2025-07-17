@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
 use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
@@ -27,8 +29,8 @@ interface OutboxContract
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: string,
-     *   type?: string,
+     *   state?: DocumentState::*,
+     *   type?: DocumentType::*,
      * } $params
      */
     public function listReceivedDocuments(

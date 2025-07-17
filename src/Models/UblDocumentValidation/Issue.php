@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Models\UblDocumentValidation;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Models\UblDocumentValidation\Issue\Type;
 
 final class Issue implements BaseModel
 {
@@ -18,6 +19,7 @@ final class Issue implements BaseModel
     #[Api]
     public string $schematron;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -35,6 +37,8 @@ final class Issue implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $message,

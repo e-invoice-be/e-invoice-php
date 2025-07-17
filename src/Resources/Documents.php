@@ -7,9 +7,13 @@ namespace EInvoiceAPI\Resources;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\DocumentsContract;
 use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Models\CurrencyCode;
 use EInvoiceAPI\Models\DeleteResponse;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
+use EInvoiceAPI\Models\DocumentDirection;
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Parameters\Documents\CreateParams;
 use EInvoiceAPI\Parameters\Documents\CreateParams\Item;
@@ -37,15 +41,15 @@ final class Documents implements DocumentsContract
      *   attachments?: list<DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
      *   billingAddressRecipient?: string|null,
-     *   currency?: string,
+     *   currency?: CurrencyCode::*,
      *   customerAddress?: string|null,
      *   customerAddressRecipient?: string|null,
      *   customerEmail?: string|null,
      *   customerID?: string|null,
      *   customerName?: string|null,
      *   customerTaxID?: string|null,
-     *   direction?: string,
-     *   documentType?: string,
+     *   direction?: DocumentDirection::*,
+     *   documentType?: DocumentType::*,
      *   dueDate?: \DateTimeInterface|null,
      *   invoiceDate?: \DateTimeInterface|null,
      *   invoiceID?: string|null,
@@ -64,7 +68,7 @@ final class Documents implements DocumentsContract
      *   serviceStartDate?: \DateTimeInterface|null,
      *   shippingAddress?: string|null,
      *   shippingAddressRecipient?: string|null,
-     *   state?: string,
+     *   state?: DocumentState::*,
      *   subtotal?: float|string|null,
      *   taxDetails?: list<TaxDetail>|null,
      *   totalDiscount?: float|string|null,
