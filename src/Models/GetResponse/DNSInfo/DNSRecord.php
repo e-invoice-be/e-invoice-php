@@ -24,4 +24,4 @@ final class DNSRecord implements BaseModel
     }
 }
 
-DNSRecord::_loadMetadata();
+DNSRecord::__introspect();

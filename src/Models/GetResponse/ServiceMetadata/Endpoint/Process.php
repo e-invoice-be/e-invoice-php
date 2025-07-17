@@ -34,4 +34,4 @@ final class Process implements BaseModel
     }
 }
 
-Process::_loadMetadata();
+Process::__introspect();

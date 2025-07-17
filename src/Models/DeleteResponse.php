@@ -24,4 +24,4 @@ final class DeleteResponse implements BaseModel
     }
 }
 
-DeleteResponse::_loadMetadata();
+DeleteResponse::__introspect();

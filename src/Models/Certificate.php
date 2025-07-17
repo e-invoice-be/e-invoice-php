@@ -40,4 +40,4 @@ final class Certificate implements BaseModel
     }
 }
 
-Certificate::_loadMetadata();
+Certificate::__introspect();

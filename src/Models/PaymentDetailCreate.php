@@ -40,4 +40,4 @@ final class PaymentDetailCreate implements BaseModel
     }
 }
 
-PaymentDetailCreate::_loadMetadata();
+PaymentDetailCreate::__introspect();

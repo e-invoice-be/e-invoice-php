@@ -28,4 +28,4 @@ final class ProcessID implements BaseModel
     }
 }
 
-ProcessID::_loadMetadata();
+ProcessID::__introspect();

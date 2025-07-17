@@ -30,4 +30,4 @@ final class RetrieveParticipantsParams implements BaseModel
     }
 }
 
-RetrieveParticipantsParams::_loadMetadata();
+RetrieveParticipantsParams::__introspect();

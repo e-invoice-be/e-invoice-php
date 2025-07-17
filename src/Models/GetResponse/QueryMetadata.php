@@ -45,4 +45,4 @@ final class QueryMetadata implements BaseModel
     }
 }
 
-QueryMetadata::_loadMetadata();
+QueryMetadata::__introspect();

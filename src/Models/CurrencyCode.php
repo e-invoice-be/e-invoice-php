@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-final class CurrencyCode
+use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Contracts\StaticConverter;
+
+final class CurrencyCode implements StaticConverter
 {
+    use Enum;
+
     final public const EUR = 'EUR';
 
     final public const USD = 'USD';
@@ -36,3 +41,5 @@ final class CurrencyCode
 
     final public const HKD = 'HKD';
 }
+
+CurrencyCode::__introspect();

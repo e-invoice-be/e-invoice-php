@@ -52,4 +52,4 @@ final class Participant implements BaseModel
     }
 }
 
-Participant::_loadMetadata();
+Participant::__introspect();

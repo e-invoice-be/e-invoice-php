@@ -45,4 +45,4 @@ final class Entity implements BaseModel
     }
 }
 
-Entity::_loadMetadata();
+Entity::__introspect();

@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-final class UnitOfMeasureCode
+use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Contracts\StaticConverter;
+
+final class UnitOfMeasureCode implements StaticConverter
 {
+    use Enum;
+
     final public const UNIT_OF_MEASURE_CODE_10 = '10';
 
     final public const UNIT_OF_MEASURE_CODE_11 = '11';
@@ -186,3 +191,5 @@ final class UnitOfMeasureCode
 
     final public const C62 = 'C62';
 }
+
+UnitOfMeasureCode::__introspect();

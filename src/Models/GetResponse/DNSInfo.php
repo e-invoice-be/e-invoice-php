@@ -45,4 +45,4 @@ final class DNSInfo implements BaseModel
     }
 }
 
-DNSInfo::_loadMetadata();
+DNSInfo::__introspect();

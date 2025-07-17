@@ -50,4 +50,4 @@ final class UblDocumentValidation implements BaseModel
     }
 }
 
-UblDocumentValidation::_loadMetadata();
+UblDocumentValidation::__introspect();

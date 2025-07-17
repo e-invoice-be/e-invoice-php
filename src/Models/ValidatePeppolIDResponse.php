@@ -50,4 +50,4 @@ final class ValidatePeppolIDResponse implements BaseModel
     }
 }
 
-ValidatePeppolIDResponse::_loadMetadata();
+ValidatePeppolIDResponse::__introspect();

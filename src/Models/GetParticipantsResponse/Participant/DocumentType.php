@@ -28,4 +28,4 @@ final class DocumentType implements BaseModel
     }
 }
 
-DocumentType::_loadMetadata();
+DocumentType::__introspect();

@@ -30,4 +30,4 @@ final class TaxDetail implements BaseModel
     }
 }
 
-TaxDetail::_loadMetadata();
+TaxDetail::__introspect();

@@ -26,4 +26,4 @@ final class AddParams implements BaseModel
     }
 }
 
-AddParams::_loadMetadata();
+AddParams::__introspect();
