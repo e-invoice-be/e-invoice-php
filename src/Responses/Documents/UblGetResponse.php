@@ -63,13 +63,17 @@ final class UblGetResponse implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $fileHash && $this->fileHash = $fileHash;
-        null != $fileSize && $this->fileSize = $fileSize;
-        null != $receiverPeppolID && $this->receiverPeppolID = $receiverPeppolID;
-        null != $receiverPeppolScheme && $this->receiverPeppolScheme = $receiverPeppolScheme;
-        null != $senderPeppolID && $this->senderPeppolID = $senderPeppolID;
-        null != $senderPeppolScheme && $this->senderPeppolScheme = $senderPeppolScheme;
-        null != $signedURL && $this->signedURL = $signedURL;
-        null != $validatedAt && $this->validatedAt = $validatedAt;
+        null !== $fileHash && $this->fileHash = $fileHash;
+        null !== $fileSize && $this->fileSize = $fileSize;
+        null !== $receiverPeppolID && $this->receiverPeppolID = $receiverPeppolID;
+        null !== $receiverPeppolScheme && $this
+            ->receiverPeppolScheme = $receiverPeppolScheme
+        ;
+        null !== $senderPeppolID && $this->senderPeppolID = $senderPeppolID;
+        null !== $senderPeppolScheme && $this
+            ->senderPeppolScheme = $senderPeppolScheme
+        ;
+        null !== $signedURL && $this->signedURL = $signedURL;
+        null !== $validatedAt && $this->validatedAt = $validatedAt;
     }
 }

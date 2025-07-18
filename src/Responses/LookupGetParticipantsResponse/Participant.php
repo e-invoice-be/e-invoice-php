@@ -51,7 +51,7 @@ final class Participant implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $documentTypes && $this->documentTypes = $documentTypes;
-        null != $entities && $this->entities = $entities;
+        null !== $documentTypes && $this->documentTypes = $documentTypes;
+        null !== $entities && $this->entities = $entities;
     }
 }

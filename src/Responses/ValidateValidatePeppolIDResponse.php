@@ -50,6 +50,8 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $supportedDocumentTypes && $this->supportedDocumentTypes = $supportedDocumentTypes;
+        null !== $supportedDocumentTypes && $this
+            ->supportedDocumentTypes = $supportedDocumentTypes
+        ;
     }
 }

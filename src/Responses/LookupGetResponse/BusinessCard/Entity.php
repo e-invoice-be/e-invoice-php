@@ -8,14 +8,13 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Core\Serde\UnionOf;
 
 final class Entity implements BaseModel
 {
     use Model;
 
     /** @var null|list<string> $additionalInformation */
-    #[Api(type: new UnionOf([new ListOf('string'), 'null']), optional: true)]
+    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $additionalInformation;
 
     #[Api(optional: true)]
@@ -41,9 +40,11 @@ final class Entity implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $additionalInformation && $this->additionalInformation = $additionalInformation;
-        null != $countryCode && $this->countryCode = $countryCode;
-        null != $name && $this->name = $name;
-        null != $registrationDate && $this->registrationDate = $registrationDate;
+        null !== $additionalInformation && $this
+            ->additionalInformation = $additionalInformation
+        ;
+        null !== $countryCode && $this->countryCode = $countryCode;
+        null !== $name && $this->name = $name;
+        null !== $registrationDate && $this->registrationDate = $registrationDate;
     }
 }

@@ -56,9 +56,9 @@ final class Issue implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $flag && $this->flag = $flag;
-        null != $location && $this->location = $location;
-        null != $ruleID && $this->ruleID = $ruleID;
-        null != $test && $this->test = $test;
+        null !== $flag && $this->flag = $flag;
+        null !== $location && $this->location = $location;
+        null !== $ruleID && $this->ruleID = $ruleID;
+        null !== $test && $this->test = $test;
     }
 }

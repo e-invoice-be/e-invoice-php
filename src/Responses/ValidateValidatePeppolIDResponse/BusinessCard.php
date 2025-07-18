@@ -32,8 +32,8 @@ final class BusinessCard implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $countryCode && $this->countryCode = $countryCode;
-        null != $name && $this->name = $name;
-        null != $registrationDate && $this->registrationDate = $registrationDate;
+        null !== $countryCode && $this->countryCode = $countryCode;
+        null !== $name && $this->name = $name;
+        null !== $registrationDate && $this->registrationDate = $registrationDate;
     }
 }

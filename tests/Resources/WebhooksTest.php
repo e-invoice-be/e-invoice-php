@@ -3,6 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Parameters\WebhookCreateParam;
+use EInvoiceAPI\Parameters\WebhookUpdateParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +38,9 @@ final class WebhooksTest extends TestCase
         $result = $this
             ->client
             ->webhooks
-            ->create(['events' => ['string'], 'url' => 'https://example.com'])
+            ->create(
+                new WebhookCreateParam(events: ['string'], url: 'https://example.com')
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -53,11 +57,11 @@ final class WebhooksTest extends TestCase
             ->client
             ->webhooks
             ->create(
-                [
-                    'events' => ['string'],
-                    'url' => 'https://example.com',
-                    'enabled' => true,
-                ]
+                new WebhookCreateParam(
+                    events: ['string'],
+                    url: 'https://example.com',
+                    enabled: true
+                )
             )
         ;
 
@@ -83,7 +87,11 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->webhooks->update('webhook_id', []);
+        $result = $this
+            ->client
+            ->webhooks
+            ->update('webhook_id', new WebhookUpdateParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

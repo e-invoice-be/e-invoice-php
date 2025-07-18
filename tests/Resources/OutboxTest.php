@@ -3,6 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
+use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +35,11 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->outbox->listDraftDocuments([]);
+        $result = $this
+            ->client
+            ->outbox
+            ->listDraftDocuments(new OutboxListDraftDocumentsParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -45,7 +51,11 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->outbox->listReceivedDocuments([]);
+        $result = $this
+            ->client
+            ->outbox
+            ->listReceivedDocuments(new OutboxListReceivedDocumentsParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

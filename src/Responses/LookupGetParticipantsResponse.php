@@ -50,6 +50,6 @@ final class LookupGetParticipantsResponse implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $participants && $this->participants = $participants;
+        null !== $participants && $this->participants = $participants;
     }
 }
