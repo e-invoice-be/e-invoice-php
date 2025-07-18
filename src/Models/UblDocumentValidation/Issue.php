@@ -49,12 +49,12 @@ final class Issue implements BaseModel
         ?string $ruleID = null,
         ?string $test = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->message = $message;
         $this->schematron = $schematron;
         $this->type = $type;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $flag && $this->flag = $flag;
         null !== $location && $this->location = $location;

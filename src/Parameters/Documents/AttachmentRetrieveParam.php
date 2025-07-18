@@ -22,8 +22,8 @@ final class AttachmentRetrieveParam implements BaseModel
      */
     final public function __construct(string $documentID)
     {
-        $this->documentID = $documentID;
+        self::introspect();
 
-        self::_introspect();
+        $this->documentID = $documentID;
     }
 }

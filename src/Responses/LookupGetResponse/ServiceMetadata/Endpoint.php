@@ -45,12 +45,12 @@ final class Endpoint implements BaseModel
         ?string $error = null,
         ?array $processes = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->documentTypes = $documentTypes;
         $this->status = $status;
         $this->url = $url;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $error && $this->error = $error;
         null !== $processes && $this->processes = $processes;

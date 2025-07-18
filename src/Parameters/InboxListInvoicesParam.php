@@ -25,7 +25,7 @@ final class InboxListInvoicesParam implements BaseModel
      */
     final public function __construct(?int $page = null, ?int $pageSize = null)
     {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $page && $this->page = $page;

@@ -20,8 +20,8 @@ final class AttachmentDeleteResponse implements BaseModel
      */
     final public function __construct(bool $isDeleted)
     {
-        $this->isDeleted = $isDeleted;
+        self::introspect();
 
-        self::_introspect();
+        $this->isDeleted = $isDeleted;
     }
 }

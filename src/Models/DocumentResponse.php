@@ -211,10 +211,10 @@ final class DocumentResponse implements BaseModel
         ?string $vendorName = null,
         ?string $vendorTaxID = null,
     ) {
-        $this->id = $id;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->id = $id;
 
         null !== $amountDue && $this->amountDue = $amountDue;
         null !== $attachments && $this->attachments = $attachments;

@@ -41,13 +41,13 @@ final class WebhookResponse implements BaseModel
         string $url,
         ?bool $enabled = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->id = $id;
         $this->events = $events;
         $this->secret = $secret;
         $this->url = $url;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $enabled && $this->enabled = $enabled;
     }

@@ -38,12 +38,12 @@ final class DNSInfo implements BaseModel
         string $status,
         ?string $error = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->dnsRecords = $dnsRecords;
         $this->smlHostname = $smlHostname;
         $this->status = $status;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $error && $this->error = $error;
     }

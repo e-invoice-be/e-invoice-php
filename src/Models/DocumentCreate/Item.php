@@ -57,7 +57,7 @@ final class Item implements BaseModel
         ?string $unit = null,
         null|float|string $unitPrice = null,
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $amount && $this->amount = $amount;

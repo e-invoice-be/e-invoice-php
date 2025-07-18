@@ -23,9 +23,9 @@ final class DocumentType implements BaseModel
      */
     final public function __construct(string $scheme, string $value)
     {
+        self::introspect();
+
         $this->scheme = $scheme;
         $this->value = $value;
-
-        self::_introspect();
     }
 }

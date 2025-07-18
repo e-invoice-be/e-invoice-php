@@ -20,8 +20,8 @@ final class DNSRecord implements BaseModel
      */
     final public function __construct(string $ip)
     {
-        $this->ip = $ip;
+        self::introspect();
 
-        self::_introspect();
+        $this->ip = $ip;
     }
 }

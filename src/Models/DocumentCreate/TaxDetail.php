@@ -25,7 +25,7 @@ final class TaxDetail implements BaseModel
         null|float|string $amount = null,
         ?string $rate = null
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $amount && $this->amount = $amount;

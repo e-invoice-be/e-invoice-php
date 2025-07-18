@@ -42,13 +42,13 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
         bool $isValid,
         ?array $supportedDocumentTypes = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->businessCard = $businessCard;
         $this->businessCardValid = $businessCardValid;
         $this->dnsValid = $dnsValid;
         $this->isValid = $isValid;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $supportedDocumentTypes && $this
             ->supportedDocumentTypes = $supportedDocumentTypes
