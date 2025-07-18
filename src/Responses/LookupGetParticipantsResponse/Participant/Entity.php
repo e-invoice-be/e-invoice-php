@@ -53,12 +53,12 @@ final class Entity implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $additionalInfo && $this->additionalInfo = $additionalInfo;
-        null != $countryCode && $this->countryCode = $countryCode;
-        null != $geoInfo && $this->geoInfo = $geoInfo;
-        null != $identifiers && $this->identifiers = $identifiers;
-        null != $name && $this->name = $name;
-        null != $registrationDate && $this->registrationDate = $registrationDate;
-        null != $website && $this->website = $website;
+        null !== $additionalInfo && $this->additionalInfo = $additionalInfo;
+        null !== $countryCode && $this->countryCode = $countryCode;
+        null !== $geoInfo && $this->geoInfo = $geoInfo;
+        null !== $identifiers && $this->identifiers = $identifiers;
+        null !== $name && $this->name = $name;
+        null !== $registrationDate && $this->registrationDate = $registrationDate;
+        null !== $website && $this->website = $website;
     }
 }

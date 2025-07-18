@@ -61,13 +61,13 @@ final class InboxListParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $dateFrom && $this->dateFrom = $dateFrom;
-        null != $dateTo && $this->dateTo = $dateTo;
-        null != $page && $this->page = $page;
-        null != $pageSize && $this->pageSize = $pageSize;
-        null != $search && $this->search = $search;
-        null != $sender && $this->sender = $sender;
-        null != $state && $this->state = $state;
-        null != $type && $this->type = $type;
+        null !== $dateFrom && $this->dateFrom = $dateFrom;
+        null !== $dateTo && $this->dateTo = $dateTo;
+        null !== $page && $this->page = $page;
+        null !== $pageSize && $this->pageSize = $pageSize;
+        null !== $search && $this->search = $search;
+        null !== $sender && $this->sender = $sender;
+        null !== $state && $this->state = $state;
+        null !== $type && $this->type = $type;
     }
 }

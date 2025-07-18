@@ -45,6 +45,6 @@ final class BusinessCard implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $error && $this->error = $error;
+        null !== $error && $this->error = $error;
     }
 }

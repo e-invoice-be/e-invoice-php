@@ -3,6 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Parameters\LookupRetrieveParam;
+use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +35,11 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+        $result = $this
+            ->client
+            ->lookup
+            ->retrieve(new LookupRetrieveParam(peppolID: 'peppol_id'))
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -45,7 +51,11 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+        $result = $this
+            ->client
+            ->lookup
+            ->retrieve(new LookupRetrieveParam(peppolID: 'peppol_id'))
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -57,7 +67,13 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
+        $result = $this
+            ->client
+            ->lookup
+            ->retrieveParticipants(
+                new LookupRetrieveParticipantsParam(query: 'query')
+            )
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -73,7 +89,10 @@ final class LookupTest extends TestCase
             ->client
             ->lookup
             ->retrieveParticipants(
-                ['query' => 'query', 'countryCode' => 'country_code']
+                new LookupRetrieveParticipantsParam(
+                    query: 'query',
+                    countryCode: 'country_code'
+                )
             )
         ;
 

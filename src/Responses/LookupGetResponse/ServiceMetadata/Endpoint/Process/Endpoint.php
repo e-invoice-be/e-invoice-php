@@ -56,11 +56,20 @@ final class Endpoint implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $certificate && $this->certificate = $certificate;
-        null != $serviceActivationDate && $this->serviceActivationDate = $serviceActivationDate;
-        null != $serviceDescription && $this->serviceDescription = $serviceDescription;
-        null != $serviceExpirationDate && $this->serviceExpirationDate = $serviceExpirationDate;
-        null != $technicalContactURL && $this->technicalContactURL = $technicalContactURL;
-        null != $technicalInformationURL && $this->technicalInformationURL = $technicalInformationURL;
+        null !== $certificate && $this->certificate = $certificate;
+        null !== $serviceActivationDate && $this
+            ->serviceActivationDate = $serviceActivationDate
+        ;
+        null !== $serviceDescription && $this
+            ->serviceDescription = $serviceDescription
+        ;
+        null !== $serviceExpirationDate && $this
+            ->serviceExpirationDate = $serviceExpirationDate
+        ;
+        null !== $technicalContactURL && $this
+            ->technicalContactURL = $technicalContactURL
+        ;
+        null !== $technicalInformationURL && $this
+            ->technicalInformationURL = $technicalInformationURL;
     }
 }

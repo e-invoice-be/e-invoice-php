@@ -8,7 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Serde\MapOf;
-use EInvoiceAPI\Core\Serde\UnionOf;
 
 final class Certificate implements BaseModel
 {
@@ -18,7 +17,7 @@ final class Certificate implements BaseModel
     public string $status;
 
     /** @var null|array<string, mixed> $details */
-    #[Api(type: new UnionOf([new MapOf('mixed'), 'null']), optional: true)]
+    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $details;
 
     #[Api(optional: true)]
@@ -39,7 +38,7 @@ final class Certificate implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $details && $this->details = $details;
-        null != $error && $this->error = $error;
+        null !== $details && $this->details = $details;
+        null !== $error && $this->error = $error;
     }
 }

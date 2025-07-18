@@ -30,6 +30,6 @@ final class LookupRetrieveParticipantsParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $countryCode && $this->countryCode = $countryCode;
+        null !== $countryCode && $this->countryCode = $countryCode;
     }
 }

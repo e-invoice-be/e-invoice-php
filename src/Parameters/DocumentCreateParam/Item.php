@@ -60,14 +60,14 @@ final class Item implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $amount && $this->amount = $amount;
-        null != $date && $this->date = $date;
-        null != $description && $this->description = $description;
-        null != $productCode && $this->productCode = $productCode;
-        null != $quantity && $this->quantity = $quantity;
-        null != $tax && $this->tax = $tax;
-        null != $taxRate && $this->taxRate = $taxRate;
-        null != $unit && $this->unit = $unit;
-        null != $unitPrice && $this->unitPrice = $unitPrice;
+        null !== $amount && $this->amount = $amount;
+        null !== $date && $this->date = $date;
+        null !== $description && $this->description = $description;
+        null !== $productCode && $this->productCode = $productCode;
+        null !== $quantity && $this->quantity = $quantity;
+        null !== $tax && $this->tax = $tax;
+        null !== $taxRate && $this->taxRate = $taxRate;
+        null !== $unit && $this->unit = $unit;
+        null !== $unitPrice && $this->unitPrice = $unitPrice;
     }
 }

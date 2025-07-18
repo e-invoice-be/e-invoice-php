@@ -3,6 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Parameters\DocumentCreateParam;
+use EInvoiceAPI\Parameters\DocumentSendParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +35,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->documents->create([]);
+        $result = $this->client->documents->create(new DocumentCreateParam());
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -69,7 +71,11 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->documents->send('document_id', []);
+        $result = $this
+            ->client
+            ->documents
+            ->send('document_id', new DocumentSendParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

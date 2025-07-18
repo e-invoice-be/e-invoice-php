@@ -28,7 +28,7 @@ final class OutboxListDraftDocumentsParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $page && $this->page = $page;
-        null != $pageSize && $this->pageSize = $pageSize;
+        null !== $page && $this->page = $page;
+        null !== $pageSize && $this->pageSize = $pageSize;
     }
 }

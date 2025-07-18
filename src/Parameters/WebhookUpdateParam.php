@@ -9,7 +9,6 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Core\Serde\UnionOf;
 
 final class WebhookUpdateParam implements BaseModel
 {
@@ -20,7 +19,7 @@ final class WebhookUpdateParam implements BaseModel
     public ?bool $enabled;
 
     /** @var null|list<string> $events */
-    #[Api(type: new UnionOf([new ListOf('string'), 'null']), optional: true)]
+    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $events;
 
     #[Api(optional: true)]
@@ -39,8 +38,8 @@ final class WebhookUpdateParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $enabled && $this->enabled = $enabled;
-        null != $events && $this->events = $events;
-        null != $url && $this->url = $url;
+        null !== $enabled && $this->enabled = $enabled;
+        null !== $events && $this->events = $events;
+        null !== $url && $this->url = $url;
     }
 }

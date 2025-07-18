@@ -50,6 +50,6 @@ final class UblDocumentValidation implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $ublDocument && $this->ublDocument = $ublDocument;
+        null !== $ublDocument && $this->ublDocument = $ublDocument;
     }
 }

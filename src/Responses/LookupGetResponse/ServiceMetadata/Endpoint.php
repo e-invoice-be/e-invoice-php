@@ -8,7 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
@@ -30,10 +29,7 @@ final class Endpoint implements BaseModel
     public ?string $error;
 
     /** @var null|list<Process> $processes */
-    #[Api(
-        type: new UnionOf([new ListOf(Process::class), 'null']),
-        optional: true
-    )]
+    #[Api(type: new ListOf(Process::class), nullable: true, optional: true)]
     public ?array $processes;
 
     /**
@@ -56,7 +52,7 @@ final class Endpoint implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $error && $this->error = $error;
-        null != $processes && $this->processes = $processes;
+        null !== $error && $this->error = $error;
+        null !== $processes && $this->processes = $processes;
     }
 }

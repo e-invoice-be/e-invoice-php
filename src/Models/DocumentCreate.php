@@ -8,7 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Core\Serde\UnionOf;
 use EInvoiceAPI\Models\DocumentCreate\Item;
 use EInvoiceAPI\Models\DocumentCreate\TaxDetail;
 
@@ -21,7 +20,8 @@ final class DocumentCreate implements BaseModel
 
     /** @var null|list<DocumentAttachmentCreate> $attachments */
     #[Api(
-        type: new UnionOf([new ListOf(DocumentAttachmentCreate::class), 'null']),
+        type: new ListOf(DocumentAttachmentCreate::class),
+        nullable: true,
         optional: true,
     )]
     public ?array $attachments;
@@ -75,7 +75,7 @@ final class DocumentCreate implements BaseModel
     public null|float|string $invoiceTotal;
 
     /** @var null|list<Item> $items */
-    #[Api(type: new UnionOf([new ListOf(Item::class), 'null']), optional: true)]
+    #[Api(type: new ListOf(Item::class), nullable: true, optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
@@ -84,7 +84,8 @@ final class DocumentCreate implements BaseModel
     /** @var null|list<PaymentDetailCreate> $paymentDetails */
     #[Api(
         'payment_details',
-        type: new UnionOf([new ListOf(PaymentDetailCreate::class), 'null']),
+        type: new ListOf(PaymentDetailCreate::class),
+        nullable: true,
         optional: true,
     )]
     public ?array $paymentDetails;
@@ -132,7 +133,8 @@ final class DocumentCreate implements BaseModel
     /** @var null|list<TaxDetail> $taxDetails */
     #[Api(
         'tax_details',
-        type: new UnionOf([new ListOf(TaxDetail::class), 'null']),
+        type: new ListOf(TaxDetail::class),
+        nullable: true,
         optional: true,
     )]
     public ?array $taxDetails;
@@ -216,46 +218,62 @@ final class DocumentCreate implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $amountDue && $this->amountDue = $amountDue;
-        null != $attachments && $this->attachments = $attachments;
-        null != $billingAddress && $this->billingAddress = $billingAddress;
-        null != $billingAddressRecipient && $this->billingAddressRecipient = $billingAddressRecipient;
-        null != $currency && $this->currency = $currency;
-        null != $customerAddress && $this->customerAddress = $customerAddress;
-        null != $customerAddressRecipient && $this->customerAddressRecipient = $customerAddressRecipient;
-        null != $customerEmail && $this->customerEmail = $customerEmail;
-        null != $customerID && $this->customerID = $customerID;
-        null != $customerName && $this->customerName = $customerName;
-        null != $customerTaxID && $this->customerTaxID = $customerTaxID;
-        null != $direction && $this->direction = $direction;
-        null != $documentType && $this->documentType = $documentType;
-        null != $dueDate && $this->dueDate = $dueDate;
-        null != $invoiceDate && $this->invoiceDate = $invoiceDate;
-        null != $invoiceID && $this->invoiceID = $invoiceID;
-        null != $invoiceTotal && $this->invoiceTotal = $invoiceTotal;
-        null != $items && $this->items = $items;
-        null != $note && $this->note = $note;
-        null != $paymentDetails && $this->paymentDetails = $paymentDetails;
-        null != $paymentTerm && $this->paymentTerm = $paymentTerm;
-        null != $previousUnpaidBalance && $this->previousUnpaidBalance = $previousUnpaidBalance;
-        null != $purchaseOrder && $this->purchaseOrder = $purchaseOrder;
-        null != $remittanceAddress && $this->remittanceAddress = $remittanceAddress;
-        null != $remittanceAddressRecipient && $this->remittanceAddressRecipient = $remittanceAddressRecipient;
-        null != $serviceAddress && $this->serviceAddress = $serviceAddress;
-        null != $serviceAddressRecipient && $this->serviceAddressRecipient = $serviceAddressRecipient;
-        null != $serviceEndDate && $this->serviceEndDate = $serviceEndDate;
-        null != $serviceStartDate && $this->serviceStartDate = $serviceStartDate;
-        null != $shippingAddress && $this->shippingAddress = $shippingAddress;
-        null != $shippingAddressRecipient && $this->shippingAddressRecipient = $shippingAddressRecipient;
-        null != $state && $this->state = $state;
-        null != $subtotal && $this->subtotal = $subtotal;
-        null != $taxDetails && $this->taxDetails = $taxDetails;
-        null != $totalDiscount && $this->totalDiscount = $totalDiscount;
-        null != $totalTax && $this->totalTax = $totalTax;
-        null != $vendorAddress && $this->vendorAddress = $vendorAddress;
-        null != $vendorAddressRecipient && $this->vendorAddressRecipient = $vendorAddressRecipient;
-        null != $vendorEmail && $this->vendorEmail = $vendorEmail;
-        null != $vendorName && $this->vendorName = $vendorName;
-        null != $vendorTaxID && $this->vendorTaxID = $vendorTaxID;
+        null !== $amountDue && $this->amountDue = $amountDue;
+        null !== $attachments && $this->attachments = $attachments;
+        null !== $billingAddress && $this->billingAddress = $billingAddress;
+        null !== $billingAddressRecipient && $this
+            ->billingAddressRecipient = $billingAddressRecipient
+        ;
+        null !== $currency && $this->currency = $currency;
+        null !== $customerAddress && $this->customerAddress = $customerAddress;
+        null !== $customerAddressRecipient && $this
+            ->customerAddressRecipient = $customerAddressRecipient
+        ;
+        null !== $customerEmail && $this->customerEmail = $customerEmail;
+        null !== $customerID && $this->customerID = $customerID;
+        null !== $customerName && $this->customerName = $customerName;
+        null !== $customerTaxID && $this->customerTaxID = $customerTaxID;
+        null !== $direction && $this->direction = $direction;
+        null !== $documentType && $this->documentType = $documentType;
+        null !== $dueDate && $this->dueDate = $dueDate;
+        null !== $invoiceDate && $this->invoiceDate = $invoiceDate;
+        null !== $invoiceID && $this->invoiceID = $invoiceID;
+        null !== $invoiceTotal && $this->invoiceTotal = $invoiceTotal;
+        null !== $items && $this->items = $items;
+        null !== $note && $this->note = $note;
+        null !== $paymentDetails && $this->paymentDetails = $paymentDetails;
+        null !== $paymentTerm && $this->paymentTerm = $paymentTerm;
+        null !== $previousUnpaidBalance && $this
+            ->previousUnpaidBalance = $previousUnpaidBalance
+        ;
+        null !== $purchaseOrder && $this->purchaseOrder = $purchaseOrder;
+        null !== $remittanceAddress && $this
+            ->remittanceAddress = $remittanceAddress
+        ;
+        null !== $remittanceAddressRecipient && $this
+            ->remittanceAddressRecipient = $remittanceAddressRecipient
+        ;
+        null !== $serviceAddress && $this->serviceAddress = $serviceAddress;
+        null !== $serviceAddressRecipient && $this
+            ->serviceAddressRecipient = $serviceAddressRecipient
+        ;
+        null !== $serviceEndDate && $this->serviceEndDate = $serviceEndDate;
+        null !== $serviceStartDate && $this->serviceStartDate = $serviceStartDate;
+        null !== $shippingAddress && $this->shippingAddress = $shippingAddress;
+        null !== $shippingAddressRecipient && $this
+            ->shippingAddressRecipient = $shippingAddressRecipient
+        ;
+        null !== $state && $this->state = $state;
+        null !== $subtotal && $this->subtotal = $subtotal;
+        null !== $taxDetails && $this->taxDetails = $taxDetails;
+        null !== $totalDiscount && $this->totalDiscount = $totalDiscount;
+        null !== $totalTax && $this->totalTax = $totalTax;
+        null !== $vendorAddress && $this->vendorAddress = $vendorAddress;
+        null !== $vendorAddressRecipient && $this
+            ->vendorAddressRecipient = $vendorAddressRecipient
+        ;
+        null !== $vendorEmail && $this->vendorEmail = $vendorEmail;
+        null !== $vendorName && $this->vendorName = $vendorName;
+        null !== $vendorTaxID && $this->vendorTaxID = $vendorTaxID;
     }
 }

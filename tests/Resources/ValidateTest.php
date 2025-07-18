@@ -3,6 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
+use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
+use EInvoiceAPI\Parameters\ValidateValidateUblParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +36,11 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->validate->validateJson([]);
+        $result = $this
+            ->client
+            ->validate
+            ->validateJson(new ValidateValidateJsonParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,7 +55,9 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validatePeppolID(['peppolID' => 'peppol_id'])
+            ->validatePeppolID(
+                new ValidateValidatePeppolIDParam(peppolID: 'peppol_id')
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -64,7 +73,9 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validatePeppolID(['peppolID' => 'peppol_id'])
+            ->validatePeppolID(
+                new ValidateValidatePeppolIDParam(peppolID: 'peppol_id')
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -77,7 +88,11 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->validate->validateUbl(['file' => 'file']);
+        $result = $this
+            ->client
+            ->validate
+            ->validateUbl(new ValidateValidateUblParam(file: 'file'))
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -89,7 +104,11 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->validate->validateUbl(['file' => 'file']);
+        $result = $this
+            ->client
+            ->validate
+            ->validateUbl(new ValidateValidateUblParam(file: 'file'))
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
