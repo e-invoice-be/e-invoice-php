@@ -81,7 +81,7 @@ To use this package, install via Composer by adding the following to your applic
 
 use EInvoiceAPI\Client;
 
-$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: null);
+$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
 $documentResponse = $client->documents->create([]);
 
