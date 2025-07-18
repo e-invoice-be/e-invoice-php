@@ -50,7 +50,7 @@ final class Entity implements BaseModel
         ?string $registrationDate = null,
         ?string $website = null,
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $additionalInfo && $this->additionalInfo = $additionalInfo;

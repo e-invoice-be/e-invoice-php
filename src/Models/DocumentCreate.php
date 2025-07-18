@@ -215,7 +215,7 @@ final class DocumentCreate implements BaseModel
         ?string $vendorName = null,
         ?string $vendorTaxID = null,
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $amountDue && $this->amountDue = $amountDue;

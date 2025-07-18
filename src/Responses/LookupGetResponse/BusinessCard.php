@@ -38,12 +38,12 @@ final class BusinessCard implements BaseModel
         string $status,
         ?string $error = null
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->entities = $entities;
         $this->queryTimeMs = $queryTimeMs;
         $this->status = $status;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $error && $this->error = $error;
     }

@@ -50,11 +50,11 @@ final class Endpoint implements BaseModel
         ?string $technicalContactURL = null,
         ?string $technicalInformationURL = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->address = $address;
         $this->transportProfile = $transportProfile;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $certificate && $this->certificate = $certificate;
         null !== $serviceActivationDate && $this

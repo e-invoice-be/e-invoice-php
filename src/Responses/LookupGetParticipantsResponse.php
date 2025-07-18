@@ -42,13 +42,13 @@ final class LookupGetParticipantsResponse implements BaseModel
         int $usedCount,
         ?array $participants = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->queryTerms = $queryTerms;
         $this->searchDate = $searchDate;
         $this->totalCount = $totalCount;
         $this->usedCount = $usedCount;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $participants && $this->participants = $participants;
     }

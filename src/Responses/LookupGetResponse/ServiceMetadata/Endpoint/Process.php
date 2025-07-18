@@ -29,9 +29,9 @@ final class Process implements BaseModel
      */
     final public function __construct(array $endpoints, ProcessID $processID)
     {
+        self::introspect();
+
         $this->endpoints = $endpoints;
         $this->processID = $processID;
-
-        self::_introspect();
     }
 }

@@ -60,6 +60,8 @@ final class LookupGetResponse implements BaseModel
         ServiceMetadata $serviceMetadata,
         string $status,
     ) {
+        self::introspect();
+
         $this->businessCard = $businessCard;
         $this->certificates = $certificates;
         $this->dnsInfo = $dnsInfo;
@@ -68,7 +70,5 @@ final class LookupGetResponse implements BaseModel
         $this->queryMetadata = $queryMetadata;
         $this->serviceMetadata = $serviceMetadata;
         $this->status = $status;
-
-        self::_introspect();
     }
 }

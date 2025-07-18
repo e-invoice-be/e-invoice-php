@@ -22,8 +22,8 @@ final class AttachmentAddParam implements BaseModel
      */
     final public function __construct(string $file)
     {
-        $this->file = $file;
+        self::introspect();
 
-        self::_introspect();
+        $this->file = $file;
     }
 }

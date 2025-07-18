@@ -35,7 +35,7 @@ final class WebhookUpdateParam implements BaseModel
         ?array $events = null,
         ?string $url = null
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $enabled && $this->enabled = $enabled;

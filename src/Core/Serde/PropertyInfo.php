@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Contracts\Converter;
 use EInvoiceAPI\Core\Contracts\StaticConverter;
 
+/**
+ * @internal
+ */
 final class PropertyInfo
 {
     public readonly string $apiName;
@@ -20,7 +23,7 @@ final class PropertyInfo
 
     public function __construct(public readonly \ReflectionProperty $property)
     {
-        $this->nullable = $property->getType()?->allowsNull() ?? true;
+        $nullable = $property->getType()?->allowsNull() ?? false;
 
         $apiName = $property->getName();
         $type = $property->getType();
@@ -32,11 +35,13 @@ final class PropertyInfo
 
             $apiName = $attribute->apiName ?? $apiName;
             $optional = $attribute->optional;
-            $type = $attribute->type ?? $attribute->enum ?? $attribute->union ?? $type;
+            $nullable |= $attribute->nullable;
+            $type = $attribute->type ?? $type;
         }
 
         $this->apiName = $apiName;
         $this->type = self::parse($type);
+        $this->nullable = (bool) $nullable;
         $this->optional = $optional;
     }
 

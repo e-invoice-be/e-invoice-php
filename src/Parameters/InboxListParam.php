@@ -58,7 +58,7 @@ final class InboxListParam implements BaseModel
         ?string $state = null,
         ?string $type = null,
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $dateFrom && $this->dateFrom = $dateFrom;

@@ -7,12 +7,14 @@ namespace EInvoiceAPI\Core\Concerns;
 use EInvoiceAPI\Core\Serde\CoerceState;
 use EInvoiceAPI\Core\Serde\DumpState;
 
+/**
+ * @internal
+ */
 trait Union
 {
-    public static function _introspect(): void {}
+    public static function introspect(): void {}
 
-    // @phpstan-ignore-next-line
-    public static function discriminator(): ?string
+    public static function discriminator(): ?string // @phpstan-ignore-line
     {
         return null;
     }

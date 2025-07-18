@@ -22,8 +22,8 @@ final class ValidateValidatePeppolIDParam implements BaseModel
      */
     final public function __construct(string $peppolID)
     {
-        $this->peppolID = $peppolID;
+        self::introspect();
 
-        self::_introspect();
+        $this->peppolID = $peppolID;
     }
 }

@@ -42,13 +42,13 @@ final class UblDocumentValidation implements BaseModel
         array $issues,
         ?string $ublDocument = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->id = $id;
         $this->fileName = $fileName;
         $this->isValid = $isValid;
         $this->issues = $issues;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $ublDocument && $this->ublDocument = $ublDocument;
     }

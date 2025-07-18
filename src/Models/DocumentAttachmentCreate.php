@@ -33,10 +33,10 @@ final class DocumentAttachmentCreate implements BaseModel
         ?int $fileSize = null,
         ?string $fileType = null,
     ) {
-        $this->fileName = $fileName;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->fileName = $fileName;
 
         null !== $fileData && $this->fileData = $fileData;
         null !== $fileSize && $this->fileSize = $fileSize;

@@ -33,7 +33,7 @@ final class PaymentDetailCreate implements BaseModel
         ?string $paymentReference = null,
         ?string $swift = null,
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $bankAccountNumber && $this

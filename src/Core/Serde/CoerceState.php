@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Serde;
 
+/**
+ * @internal
+ */
 final class CoerceState
 {
     public function __construct(

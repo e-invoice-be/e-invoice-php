@@ -7,12 +7,14 @@ namespace EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Concerns\ArrayOf;
 use EInvoiceAPI\Core\Contracts\Converter;
 
+/**
+ * @internal
+ */
 final class ListOf implements Converter
 {
     use ArrayOf;
 
-    // @phpstan-ignore-next-line
-    private function empty(): array|object
+    private function empty(): array|object // @phpstan-ignore-line
     {
         return [];
     }

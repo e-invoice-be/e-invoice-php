@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Serde;
 use EInvoiceAPI\Core\Serde\DumpState;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @internal
+ */
 trait Params
 {
     /**
@@ -26,7 +29,7 @@ trait Params
      */
     public static function parseRequest(null|array|self $params, null|array|RequestOptions $options): array
     {
-        self::_introspect(); // @phpstan-ignore-line
+        static::introspect();
 
         $state = new DumpState();
         $dumped = (array) Serde::dump(self::class, value: $params, state: $state);

@@ -57,11 +57,11 @@ final class UblGetResponse implements BaseModel
         ?string $signedURL = null,
         ?\DateTimeInterface $validatedAt = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->id = $id;
         $this->fileName = $fileName;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $fileHash && $this->fileHash = $fileHash;
         null !== $fileSize && $this->fileSize = $fileSize;

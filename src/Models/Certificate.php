@@ -33,10 +33,10 @@ final class Certificate implements BaseModel
         ?array $details = null,
         ?string $error = null
     ) {
-        $this->status = $status;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->status = $status;
 
         null !== $details && $this->details = $details;
         null !== $error && $this->error = $error;
