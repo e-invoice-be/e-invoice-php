@@ -6,8 +6,8 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\WebhooksContract;
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\WebhookResponse;
 use EInvoiceAPI\Parameters\WebhookCreateParam;
 use EInvoiceAPI\Parameters\WebhookUpdateParam;
@@ -39,7 +39,7 @@ final class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(WebhookResponse::class, value: $resp);
+        return Conversion::coerce(WebhookResponse::class, value: $resp);
     }
 
     public function retrieve(
@@ -53,7 +53,7 @@ final class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(WebhookResponse::class, value: $resp);
+        return Conversion::coerce(WebhookResponse::class, value: $resp);
     }
 
     /**
@@ -78,7 +78,7 @@ final class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(WebhookResponse::class, value: $resp);
+        return Conversion::coerce(WebhookResponse::class, value: $resp);
     }
 
     /**
@@ -93,7 +93,7 @@ final class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(new ListOf(WebhookResponse::class), value: $resp);
+        return Conversion::coerce(new ListOf(WebhookResponse::class), value: $resp);
     }
 
     public function delete(
@@ -107,6 +107,6 @@ final class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(WebhookDeleteResponse::class, value: $resp);
+        return Conversion::coerce(WebhookDeleteResponse::class, value: $resp);
     }
 }

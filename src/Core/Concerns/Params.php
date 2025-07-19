@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Concerns;
 
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Core\Serde\DumpState;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\DumpState;
 use EInvoiceAPI\RequestOptions;
 
 /**
@@ -32,7 +32,7 @@ trait Params
         static::introspect();
 
         $state = new DumpState();
-        $dumped = (array) Serde::dump(self::class, value: $params, state: $state);
+        $dumped = (array) Conversion::dump(self::class, value: $params, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line
 
         if (!$state->canRetry) {

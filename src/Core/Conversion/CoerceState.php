@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Serde;
+namespace EInvoiceAPI\Core\Conversion;
 
 /**
  * @internal

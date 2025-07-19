@@ -6,7 +6,7 @@ namespace EInvoiceAPI\Resources\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\UblContract;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Documents\UblGetResponse;
 
@@ -25,6 +25,6 @@ final class Ubl implements UblContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(UblGetResponse::class, value: $resp);
+        return Conversion::coerce(UblGetResponse::class, value: $resp);
     }
 }

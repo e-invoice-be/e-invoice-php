@@ -7,7 +7,7 @@ namespace EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process\Endpoint;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 

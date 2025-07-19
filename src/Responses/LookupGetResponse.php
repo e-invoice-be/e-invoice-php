@@ -7,7 +7,7 @@ namespace EInvoiceAPI\Responses;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\Certificate;
 use EInvoiceAPI\Responses\LookupGetResponse\BusinessCard;
 use EInvoiceAPI\Responses\LookupGetResponse\DNSInfo;

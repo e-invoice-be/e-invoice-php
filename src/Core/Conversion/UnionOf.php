@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Serde;
+namespace EInvoiceAPI\Core\Conversion;
 
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Contracts\Converter;
 use EInvoiceAPI\Core\Contracts\StaticConverter;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 
 final class UnionOf implements Converter
 {
@@ -22,7 +22,7 @@ final class UnionOf implements Converter
     public function coerce(mixed $value, CoerceState $state): mixed
     {
         if (!is_null($target = $this->resolveVariant(value: $value))) {
-            return Serde::coerce($target, value: $value, state: $state);
+            return Conversion::coerce($target, value: $value, state: $state);
         }
 
         $alternatives = [];
@@ -30,7 +30,7 @@ final class UnionOf implements Converter
             ++$state->branched;
             $newState = new CoerceState();
 
-            $coerced = Serde::coerce($variant, value: $value, state: $newState);
+            $coerced = Conversion::coerce($variant, value: $value, state: $newState);
             if (($newState->no + $newState->maybe) === 0) {
                 $state->yes += $newState->yes;
 
@@ -63,16 +63,16 @@ final class UnionOf implements Converter
     public function dump(mixed $value, DumpState $state): mixed
     {
         if (!is_null($target = $this->resolveVariant(value: $value))) {
-            return Serde::dump($target, value: $value, state: $state);
+            return Conversion::dump($target, value: $value, state: $state);
         }
 
         foreach ($this->variants as $variant) {
             if ($value instanceof $variant) {
-                return Serde::dump($variant, value: $value, state: $state);
+                return Conversion::dump($variant, value: $value, state: $state);
             }
         }
 
-        return Serde::dump_unknown($value, state: $state);
+        return Conversion::dump_unknown($value, state: $state);
     }
 
     private function resolveVariant(

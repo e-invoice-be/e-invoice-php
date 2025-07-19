@@ -6,8 +6,8 @@ namespace EInvoiceAPI\Resources\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\AttachmentsContract;
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
 use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
 use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
@@ -40,7 +40,7 @@ final class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentAttachment::class, value: $resp);
+        return Conversion::coerce(DocumentAttachment::class, value: $resp);
     }
 
     /**
@@ -57,7 +57,10 @@ final class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(new ListOf(DocumentAttachment::class), value: $resp);
+        return Conversion::coerce(
+            new ListOf(DocumentAttachment::class),
+            value: $resp
+        );
     }
 
     /**
@@ -81,7 +84,7 @@ final class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(AttachmentDeleteResponse::class, value: $resp);
+        return Conversion::coerce(AttachmentDeleteResponse::class, value: $resp);
     }
 
     /**
@@ -105,6 +108,6 @@ final class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentAttachment::class, value: $resp);
+        return Conversion::coerce(DocumentAttachment::class, value: $resp);
     }
 }
