@@ -140,10 +140,10 @@ You can use the `max_retries` option to configure or disable this:
 use EInvoiceAPI\Client;
 
 // Configure the default for all requests:
-$client = new Client(max_retries: 0);
+$client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
-$client->documents->create([], requestOptions: ["max_retries" => 5]);
+$client->documents->create([], requestOptions: ["maxRetries" => 5]);
 ```
 
 ## Advanced concepts
