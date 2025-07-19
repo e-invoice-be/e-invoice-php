@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Conversion;
 
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Contracts\Converter;
-use EInvoiceAPI\Core\Contracts\StaticConverter;
 use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 final class UnionOf implements Converter
 {
     /**
-     * @param array<int|string, Converter|StaticConverter|string> $variants
+     * @param array<string, Converter|ConverterSource|string>|list<Converter|ConverterSource|string> $variants
      */
     public function __construct(
         private readonly array $variants,
@@ -77,7 +77,7 @@ final class UnionOf implements Converter
 
     private function resolveVariant(
         mixed $value,
-    ): null|Converter|StaticConverter|string {
+    ): null|Converter|ConverterSource|string {
         if ($value instanceof BaseModel) {
             return $value::class;
         }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Attributes;
 
-use EInvoiceAPI\Core\Contracts\Converter;
-use EInvoiceAPI\Core\Contracts\StaticConverter;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @internal
@@ -13,13 +13,13 @@ use EInvoiceAPI\Core\Contracts\StaticConverter;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 final class Api
 {
-    public readonly null|Converter|StaticConverter|string $type;
+    public readonly null|Converter|ConverterSource|string $type;
 
     public function __construct(
         public readonly ?string $apiName = null,
-        null|Converter|StaticConverter|string $type = null,
-        null|Converter|StaticConverter $enum = null,
-        null|Converter|StaticConverter|string $union = null,
+        null|Converter|ConverterSource|string $type = null,
+        null|Converter|ConverterSource $enum = null,
+        null|Converter|ConverterSource|string $union = null,
         public readonly bool $nullable = false,
         public readonly bool $optional = false,
     ) {

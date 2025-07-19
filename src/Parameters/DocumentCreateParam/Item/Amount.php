@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Parameters\DocumentCreateParam\Item;
 
 use EInvoiceAPI\Core\Concerns\Union;
-use EInvoiceAPI\Core\Contracts\Converter;
-use EInvoiceAPI\Core\Contracts\StaticConverter;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-final class Amount implements StaticConverter
+final class Amount implements ConverterSource
 {
     use Union;
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
+     * @return list<string|Converter|ConverterSource>|array<
+     *   string, string|Converter|ConverterSource
      * >
      */
     public static function variants(): array

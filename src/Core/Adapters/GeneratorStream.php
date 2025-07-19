@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core;
+namespace EInvoiceAPI\Core;
 
 use Psr\Http\Message\StreamInterface;
 

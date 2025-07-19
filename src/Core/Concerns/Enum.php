@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Concerns;
 
-use EInvoiceAPI\Core\Conversion\CoerceState;
-use EInvoiceAPI\Core\Conversion\DumpState;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\EnumOf;
 
 trait Enum
 {
-    public static function introspect(): void {}
+    private static Converter $converter;
 
-    public static function coerce(mixed $value, CoerceState $state): mixed
+    public static function converter(): Converter
     {
-        return $value;
-    }
+        if (isset(static::$converter)) {
+            return static::$converter;
+        }
 
-    public static function dump(mixed $value, DumpState $state): mixed
-    {
-        return $value;
+        $class = new \ReflectionClass(static::class);
+        $acc = [];
+        foreach ($class->getReflectionConstants() as $constant) {
+            if ($constant->isPublic()) {
+                array_push($acc, $constant->getValue());
+            }
+        }
+
+        return static::$converter = new EnumOf($acc); // @phpstan-ignore-line
     }
 }

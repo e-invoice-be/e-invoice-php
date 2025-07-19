@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Models;
 
 use EInvoiceAPI\Core\Concerns\Enum;
-use EInvoiceAPI\Core\Contracts\StaticConverter;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-final class UnitOfMeasureCode implements StaticConverter
+final class UnitOfMeasureCode implements ConverterSource
 {
     use Enum;
 
