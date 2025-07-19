@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Concerns;
 
-use EInvoiceAPI\Core\Conversion\CoerceState;
-use EInvoiceAPI\Core\Conversion\DumpState;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
+use EInvoiceAPI\Core\Conversion\UnionOf;
 
 /**
  * @internal
  */
 trait Union
 {
-    public static function introspect(): void {}
+    private static Converter $converter;
 
     public static function discriminator(): ?string // @phpstan-ignore-line
     {
@@ -20,22 +21,20 @@ trait Union
     }
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
-     * >
+     * @return array<string, Converter|ConverterSource|string>|list<Converter|ConverterSource|string>
      */
     public static function variants(): array
     {
         return [];
     }
 
-    public static function coerce(mixed $value, CoerceState $state): mixed
+    public static function converter(): Converter
     {
-        return $value;
-    }
+        if (isset(static::$converter)) {
+            return static::$converter;
+        }
 
-    public static function dump(mixed $value, DumpState $state): mixed
-    {
-        return $value;
+        // @phpstan-ignore-next-line
+        return static::$converter = new UnionOf($this->discriminator(), variants: $this->variants());
     }
 }

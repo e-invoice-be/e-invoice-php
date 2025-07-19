@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Conversion;
 
-use EInvoiceAPI\Core\Concerns\ArrayOf;
-use EInvoiceAPI\Core\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\Concerns\ArrayOf;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 
 /**
  * @internal

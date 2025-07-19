@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Contracts;
+namespace EInvoiceAPI\Core\Conversion\Contracts;
 
 use EInvoiceAPI\Core\Conversion\CoerceState;
 use EInvoiceAPI\Core\Conversion\DumpState;

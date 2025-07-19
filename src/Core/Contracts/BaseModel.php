@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Contracts;
 
-use JsonSerializable;
-use Stringable;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @internal
  *
  * @extends \ArrayAccess<string, mixed>
  */
-interface BaseModel extends \ArrayAccess, JsonSerializable, Stringable, StaticConverter
+interface BaseModel extends \ArrayAccess, \JsonSerializable, \Stringable, ConverterSource
 {
     /** @return array<string, mixed> */
     public function toArray(): array;

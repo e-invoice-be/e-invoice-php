@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Concerns;
+namespace EInvoiceAPI\Core\Conversion\Concerns;
 
-use EInvoiceAPI\Core\Contracts\Converter;
-use EInvoiceAPI\Core\Contracts\StaticConverter;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\CoerceState;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\DumpState;
 
 /**
@@ -15,12 +15,12 @@ use EInvoiceAPI\Core\Conversion\DumpState;
  */
 trait ArrayOf
 {
-    private readonly null|Converter|StaticConverter|string $type;
+    private readonly null|Converter|ConverterSource|string $type;
 
     public function __construct(
-        null|Converter|StaticConverter|string $type = null,
-        null|Converter|StaticConverter|string $enum = null,
-        null|Converter|StaticConverter|string $union = null,
+        null|Converter|ConverterSource|string $type = null,
+        null|Converter|ConverterSource|string $enum = null,
+        null|Converter|ConverterSource|string $union = null,
         private readonly bool $nullable = false,
     ) {
         $this->type = $type ?? $enum ?? $union;
