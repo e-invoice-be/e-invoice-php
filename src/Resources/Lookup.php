@@ -6,7 +6,7 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\LookupContract;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Parameters\LookupRetrieveParam;
 use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
 use EInvoiceAPI\RequestOptions;
@@ -36,7 +36,7 @@ final class Lookup implements LookupContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(LookupGetResponse::class, value: $resp);
+        return Conversion::coerce(LookupGetResponse::class, value: $resp);
     }
 
     /**
@@ -60,6 +60,9 @@ final class Lookup implements LookupContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(LookupGetParticipantsResponse::class, value: $resp);
+        return Conversion::coerce(
+            LookupGetParticipantsResponse::class,
+            value: $resp
+        );
     }
 }

@@ -7,7 +7,7 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\DocumentCreate\Item;
 use EInvoiceAPI\Models\DocumentCreate\TaxDetail;
 

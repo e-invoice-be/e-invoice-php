@@ -7,7 +7,7 @@ namespace EInvoiceAPI\Responses\LookupGetParticipantsResponse;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Serde\ListOf;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant\DocumentType;
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant\Entity;
 

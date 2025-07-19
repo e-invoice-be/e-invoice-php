@@ -6,7 +6,7 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\ValidateContract;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\CurrencyCode;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\DocumentDirection;
@@ -87,7 +87,7 @@ final class Validate implements ValidateContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(UblDocumentValidation::class, value: $resp);
+        return Conversion::coerce(UblDocumentValidation::class, value: $resp);
     }
 
     /**
@@ -109,7 +109,10 @@ final class Validate implements ValidateContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(ValidateValidatePeppolIDResponse::class, value: $resp);
+        return Conversion::coerce(
+            ValidateValidatePeppolIDResponse::class,
+            value: $resp
+        );
     }
 
     /**
@@ -132,6 +135,6 @@ final class Validate implements ValidateContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(UblDocumentValidation::class, value: $resp);
+        return Conversion::coerce(UblDocumentValidation::class, value: $resp);
     }
 }

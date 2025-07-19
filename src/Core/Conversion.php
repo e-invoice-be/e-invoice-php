@@ -6,10 +6,10 @@ namespace EInvoiceAPI\Core;
 
 use EInvoiceAPI\Core\Contracts\Converter;
 use EInvoiceAPI\Core\Contracts\StaticConverter;
-use EInvoiceAPI\Core\Serde\CoerceState;
-use EInvoiceAPI\Core\Serde\DumpState;
+use EInvoiceAPI\Core\Conversion\CoerceState;
+use EInvoiceAPI\Core\Conversion\DumpState;
 
-final class Serde
+final class Conversion
 {
     public static function dump_unknown(mixed $value, DumpState $state): mixed
     {

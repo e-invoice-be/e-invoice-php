@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Concerns;
 
-use EInvoiceAPI\Core\Serde\CoerceState;
-use EInvoiceAPI\Core\Serde\DumpState;
+use EInvoiceAPI\Core\Conversion\CoerceState;
+use EInvoiceAPI\Core\Conversion\DumpState;
 
 /**
  * @internal

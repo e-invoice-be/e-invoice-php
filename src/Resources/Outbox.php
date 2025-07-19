@@ -6,7 +6,7 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\OutboxContract;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
@@ -37,7 +37,7 @@ final class Outbox implements OutboxContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
@@ -68,6 +68,6 @@ final class Outbox implements OutboxContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }

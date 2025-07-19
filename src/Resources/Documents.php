@@ -6,7 +6,7 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\DocumentsContract;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\CurrencyCode;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
 use EInvoiceAPI\Models\DocumentDirection;
@@ -96,7 +96,7 @@ final class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     public function retrieve(
@@ -110,7 +110,7 @@ final class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     public function delete(
@@ -124,7 +124,7 @@ final class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentDeleteResponse::class, value: $resp);
+        return Conversion::coerce(DocumentDeleteResponse::class, value: $resp);
     }
 
     /**
@@ -153,6 +153,6 @@ final class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }
