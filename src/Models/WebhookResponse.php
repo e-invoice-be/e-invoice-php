@@ -27,7 +27,7 @@ final class WebhookResponse implements BaseModel
     public string $url;
 
     #[Api(optional: true)]
-    public ?bool $enabled = true;
+    public ?bool $enabled;
 
     /**
      * You must use named parameters to construct this object.

@@ -23,10 +23,10 @@ final class OutboxListReceivedDocumentsParam implements BaseModel
     public ?\DateTimeInterface $dateTo;
 
     #[Api(optional: true)]
-    public ?int $page = 1;
+    public ?int $page;
 
     #[Api(optional: true)]
-    public ?int $pageSize = 20;
+    public ?int $pageSize;
 
     #[Api(optional: true)]
     public ?string $search;
