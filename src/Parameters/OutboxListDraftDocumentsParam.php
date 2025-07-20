@@ -15,10 +15,10 @@ final class OutboxListDraftDocumentsParam implements BaseModel
     use Params;
 
     #[Api(optional: true)]
-    public ?int $page = 1;
+    public ?int $page;
 
     #[Api(optional: true)]
-    public ?int $pageSize = 20;
+    public ?int $pageSize;
 
     /**
      * You must use named parameters to construct this object.

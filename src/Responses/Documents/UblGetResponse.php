@@ -22,7 +22,7 @@ final class UblGetResponse implements BaseModel
     public ?string $fileHash;
 
     #[Api('file_size', optional: true)]
-    public ?int $fileSize = 0;
+    public ?int $fileSize;
 
     #[Api('receiver_peppol_id', optional: true)]
     public ?string $receiverPeppolID;

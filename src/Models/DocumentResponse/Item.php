@@ -16,8 +16,9 @@ final class Item implements BaseModel
     #[Api(optional: true)]
     public ?string $amount;
 
+    /** @var null|null $date */
     #[Api(optional: true)]
-    public ?null $date;
+    public null $date;
 
     #[Api(optional: true)]
     public ?string $description;
@@ -48,7 +49,7 @@ final class Item implements BaseModel
      */
     final public function __construct(
         ?string $amount = null,
-        ?null $date = null,
+        null $date = null,
         ?string $description = null,
         ?string $productCode = null,
         ?string $quantity = null,

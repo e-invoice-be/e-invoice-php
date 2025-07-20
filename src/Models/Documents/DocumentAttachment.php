@@ -19,10 +19,10 @@ final class DocumentAttachment implements BaseModel
     public string $fileName;
 
     #[Api('file_size', optional: true)]
-    public ?int $fileSize = 0;
+    public ?int $fileSize;
 
     #[Api('file_type', optional: true)]
-    public ?string $fileType = 'application/pdf';
+    public ?string $fileType;
 
     #[Api('file_url', optional: true)]
     public ?string $fileURL;

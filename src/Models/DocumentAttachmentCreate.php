@@ -19,10 +19,10 @@ final class DocumentAttachmentCreate implements BaseModel
     public ?string $fileData;
 
     #[Api('file_size', optional: true)]
-    public ?int $fileSize = 0;
+    public ?int $fileSize;
 
     #[Api('file_type', optional: true)]
-    public ?string $fileType = 'application/pdf';
+    public ?string $fileType;
 
     /**
      * You must use named parameters to construct this object.
