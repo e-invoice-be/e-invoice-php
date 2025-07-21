@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type validate_peppol_id_params = array{peppolID: string}
+ */
 final class ValidateValidatePeppolIDParam implements BaseModel
 {
     use Model;

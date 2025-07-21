@@ -91,7 +91,7 @@ final class Validate implements ValidateContract
     }
 
     /**
-     * @param array{peppolID?: string}|ValidateValidatePeppolIDParam $params
+     * @param array{peppolID: string}|ValidateValidatePeppolIDParam $params
      */
     public function validatePeppolID(
         array|ValidateValidatePeppolIDParam $params,
@@ -116,7 +116,7 @@ final class Validate implements ValidateContract
     }
 
     /**
-     * @param array{file?: string}|ValidateValidateUblParam $params
+     * @param array{file: string}|ValidateValidateUblParam $params
      */
     public function validateUbl(
         array|ValidateValidateUblParam $params,

@@ -8,6 +8,15 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type query_metadata_alias = array{
+ *   identifierScheme: string,
+ *   identifierValue: string,
+ *   smlDomain: string,
+ *   timestamp: string,
+ *   version: string,
+ * }
+ */
 final class QueryMetadata implements BaseModel
 {
     use Model;

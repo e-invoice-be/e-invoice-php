@@ -10,6 +10,15 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\ValidateValidatePeppolIDResponse\BusinessCard;
 
+/**
+ * @phpstan-type validate_validate_peppol_id_response_alias = array{
+ *   businessCard: BusinessCard|null,
+ *   businessCardValid: bool,
+ *   dnsValid: bool,
+ *   isValid: bool,
+ *   supportedDocumentTypes?: list<string>,
+ * }
+ */
 final class ValidateValidatePeppolIDResponse implements BaseModel
 {
     use Model;

@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type document_delete_response_alias = array{isDeleted: bool}
+ */
 final class DocumentDeleteResponse implements BaseModel
 {
     use Model;

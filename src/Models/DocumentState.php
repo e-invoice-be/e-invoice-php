@@ -7,6 +7,9 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Concerns\Enum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type document_state_alias = DocumentState::*
+ */
 final class DocumentState implements ConverterSource
 {
     use Enum;

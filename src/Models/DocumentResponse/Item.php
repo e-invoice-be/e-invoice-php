@@ -9,6 +9,19 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Models\UnitOfMeasureCode;
 
+/**
+ * @phpstan-type item_alias = array{
+ *   amount?: string|null,
+ *   date?: null|null,
+ *   description?: string|null,
+ *   productCode?: string|null,
+ *   quantity?: string|null,
+ *   tax?: string|null,
+ *   taxRate?: string|null,
+ *   unit?: UnitOfMeasureCode::*,
+ *   unitPrice?: string|null,
+ * }
+ */
 final class Item implements BaseModel
 {
     use Model;

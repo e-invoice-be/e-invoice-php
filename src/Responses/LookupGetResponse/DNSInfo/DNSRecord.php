@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type dns_record_alias = array{ip: string}
+ */
 final class DNSRecord implements BaseModel
 {
     use Model;

@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type identifier_alias = array{scheme: string, value: string}
+ */
 final class Identifier implements BaseModel
 {
     use Model;

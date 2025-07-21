@@ -11,6 +11,15 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
+/**
+ * @phpstan-type endpoint_alias = array{
+ *   documentTypes: list<DocumentType>,
+ *   status: string,
+ *   url: string,
+ *   error?: string|null,
+ *   processes?: list<Process>|null,
+ * }
+ */
 final class Endpoint implements BaseModel
 {
     use Model;

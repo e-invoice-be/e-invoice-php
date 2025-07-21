@@ -72,7 +72,7 @@ interface ValidateContract
     ): UblDocumentValidation;
 
     /**
-     * @param array{peppolID?: string}|ValidateValidatePeppolIDParam $params
+     * @param array{peppolID: string}|ValidateValidatePeppolIDParam $params
      */
     public function validatePeppolID(
         array|ValidateValidatePeppolIDParam $params,
@@ -80,7 +80,7 @@ interface ValidateContract
     ): ValidateValidatePeppolIDResponse;
 
     /**
-     * @param array{file?: string}|ValidateValidateUblParam $params
+     * @param array{file: string}|ValidateValidateUblParam $params
      */
     public function validateUbl(
         array|ValidateValidateUblParam $params,

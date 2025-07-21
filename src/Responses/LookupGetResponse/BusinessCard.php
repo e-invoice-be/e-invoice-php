@@ -10,6 +10,14 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\BusinessCard\Entity;
 
+/**
+ * @phpstan-type business_card_alias = array{
+ *   entities: list<Entity>,
+ *   queryTimeMs: float,
+ *   status: string,
+ *   error?: string|null,
+ * }
+ */
 final class BusinessCard implements BaseModel
 {
     use Model;

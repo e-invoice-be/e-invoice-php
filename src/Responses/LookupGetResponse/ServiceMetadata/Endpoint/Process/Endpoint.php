@@ -9,6 +9,18 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Models\Certificate;
 
+/**
+ * @phpstan-type endpoint_alias = array{
+ *   address: string,
+ *   transportProfile: string,
+ *   certificate?: Certificate,
+ *   serviceActivationDate?: string|null,
+ *   serviceDescription?: string|null,
+ *   serviceExpirationDate?: string|null,
+ *   technicalContactURL?: string|null,
+ *   technicalInformationURL?: string|null,
+ * }
+ */
 final class Endpoint implements BaseModel
 {
     use Model;

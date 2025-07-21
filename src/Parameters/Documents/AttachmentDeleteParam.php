@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type delete_params = array{documentID: string}
+ */
 final class AttachmentDeleteParam implements BaseModel
 {
     use Model;

@@ -8,6 +8,13 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type business_card_alias = array{
+ *   countryCode?: string|null,
+ *   name?: string|null,
+ *   registrationDate?: \DateTimeInterface|null,
+ * }
+ */
 final class BusinessCard implements BaseModel
 {
     use Model;

@@ -14,7 +14,7 @@ use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
 interface AttachmentsContract
 {
     /**
-     * @param array{documentID?: string}|AttachmentRetrieveParam $params
+     * @param array{documentID: string}|AttachmentRetrieveParam $params
      */
     public function retrieve(
         string $attachmentID,
@@ -31,7 +31,7 @@ interface AttachmentsContract
     ): array;
 
     /**
-     * @param array{documentID?: string}|AttachmentDeleteParam $params
+     * @param array{documentID: string}|AttachmentDeleteParam $params
      */
     public function delete(
         string $attachmentID,
@@ -40,7 +40,7 @@ interface AttachmentsContract
     ): AttachmentDeleteResponse;
 
     /**
-     * @param array{file?: string}|AttachmentAddParam $params
+     * @param array{file: string}|AttachmentAddParam $params
      */
     public function add(
         string $documentID,

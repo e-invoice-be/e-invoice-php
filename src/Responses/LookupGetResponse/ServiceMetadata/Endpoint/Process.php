@@ -11,6 +11,11 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process\Endpoint;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
+/**
+ * @phpstan-type process_alias = array{
+ *   endpoints: list<Endpoint>, processID: ProcessID
+ * }
+ */
 final class Process implements BaseModel
 {
     use Model;
