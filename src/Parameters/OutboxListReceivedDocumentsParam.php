@@ -11,6 +11,18 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 
+/**
+ * @phpstan-type list_received_documents_params = array{
+ *   dateFrom?: \DateTimeInterface|null,
+ *   dateTo?: \DateTimeInterface|null,
+ *   page?: int,
+ *   pageSize?: int,
+ *   search?: string|null,
+ *   sender?: string|null,
+ *   state?: DocumentState::*,
+ *   type?: DocumentType::*,
+ * }
+ */
 final class OutboxListReceivedDocumentsParam implements BaseModel
 {
     use Model;

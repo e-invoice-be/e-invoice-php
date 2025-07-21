@@ -10,6 +10,15 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant;
 
+/**
+ * @phpstan-type lookup_get_participants_response_alias = array{
+ *   queryTerms: string,
+ *   searchDate: string,
+ *   totalCount: int,
+ *   usedCount: int,
+ *   participants?: list<Participant>,
+ * }
+ */
 final class LookupGetParticipantsResponse implements BaseModel
 {
     use Model;

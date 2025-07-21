@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type list_credit_notes_params = array{page?: int, pageSize?: int}
+ */
 final class InboxListCreditNotesParam implements BaseModel
 {
     use Model;

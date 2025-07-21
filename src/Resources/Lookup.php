@@ -18,7 +18,7 @@ final class Lookup implements LookupContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{peppolID?: string}|LookupRetrieveParam $params
+     * @param array{peppolID: string}|LookupRetrieveParam $params
      */
     public function retrieve(
         array|LookupRetrieveParam $params,
@@ -41,7 +41,7 @@ final class Lookup implements LookupContract
 
     /**
      * @param LookupRetrieveParticipantsParam|array{
-     *   query?: string, countryCode?: string|null
+     *   query: string, countryCode?: string|null
      * } $params
      */
     public function retrieveParticipants(

@@ -7,6 +7,9 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Concerns\Enum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type unit_of_measure_code_alias = UnitOfMeasureCode::*
+ */
 final class UnitOfMeasureCode implements ConverterSource
 {
     use Enum;

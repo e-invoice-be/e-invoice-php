@@ -14,7 +14,7 @@ interface WebhooksContract
 {
     /**
      * @param WebhookCreateParam|array{
-     *   events?: list<string>, url?: string, enabled?: bool
+     *   events: list<string>, url: string, enabled?: bool
      * } $params
      */
     public function create(

@@ -13,7 +13,7 @@ use EInvoiceAPI\Responses\LookupGetResponse;
 interface LookupContract
 {
     /**
-     * @param array{peppolID?: string}|LookupRetrieveParam $params
+     * @param array{peppolID: string}|LookupRetrieveParam $params
      */
     public function retrieve(
         array|LookupRetrieveParam $params,
@@ -22,7 +22,7 @@ interface LookupContract
 
     /**
      * @param LookupRetrieveParticipantsParam|array{
-     *   query?: string, countryCode?: string|null
+     *   query: string, countryCode?: string|null
      * } $params
      */
     public function retrieveParticipants(

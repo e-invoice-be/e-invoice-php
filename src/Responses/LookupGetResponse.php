@@ -14,6 +14,18 @@ use EInvoiceAPI\Responses\LookupGetResponse\DNSInfo;
 use EInvoiceAPI\Responses\LookupGetResponse\QueryMetadata;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata;
 
+/**
+ * @phpstan-type lookup_get_response_alias = array{
+ *   businessCard: BusinessCard,
+ *   certificates: list<Certificate>,
+ *   dnsInfo: DNSInfo,
+ *   errors: list<string>,
+ *   executionTimeMs: float,
+ *   queryMetadata: QueryMetadata,
+ *   serviceMetadata: ServiceMetadata,
+ *   status: string,
+ * }
+ */
 final class LookupGetResponse implements BaseModel
 {
     use Model;

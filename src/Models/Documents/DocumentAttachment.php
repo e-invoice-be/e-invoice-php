@@ -8,6 +8,15 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type document_attachment_alias = array{
+ *   id: string,
+ *   fileName: string,
+ *   fileSize?: int,
+ *   fileType?: string,
+ *   fileURL?: string|null,
+ * }
+ */
 final class DocumentAttachment implements BaseModel
 {
     use Model;

@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type list_draft_documents_params = array{page?: int, pageSize?: int}
+ */
 final class OutboxListDraftDocumentsParam implements BaseModel
 {
     use Model;

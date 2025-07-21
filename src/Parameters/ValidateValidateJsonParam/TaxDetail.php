@@ -8,6 +8,11 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type tax_detail_alias = array{
+ *   amount?: float|string|null, rate?: string|null
+ * }
+ */
 final class TaxDetail implements BaseModel
 {
     use Model;

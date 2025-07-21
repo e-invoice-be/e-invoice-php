@@ -10,6 +10,11 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-type update_params = array{
+ *   enabled?: bool|null, events?: list<string>|null, url?: string|null
+ * }
+ */
 final class WebhookUpdateParam implements BaseModel
 {
     use Model;

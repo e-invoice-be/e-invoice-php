@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type add_params = array{file: string}
+ */
 final class AttachmentAddParam implements BaseModel
 {
     use Model;

@@ -9,6 +9,11 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-type webhook_response_alias = array{
+ *   id: string, events: list<string>, secret: string, url: string, enabled?: bool
+ * }
+ */
 final class WebhookResponse implements BaseModel
 {
     use Model;

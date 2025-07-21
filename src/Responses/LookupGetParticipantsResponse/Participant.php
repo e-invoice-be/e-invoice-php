@@ -11,6 +11,14 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant\DocumentType;
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant\Entity;
 
+/**
+ * @phpstan-type participant_alias = array{
+ *   peppolID: string,
+ *   peppolScheme: string,
+ *   documentTypes?: list<DocumentType>,
+ *   entities?: list<Entity>,
+ * }
+ */
 final class Participant implements BaseModel
 {
     use Model;

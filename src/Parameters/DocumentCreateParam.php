@@ -18,6 +18,51 @@ use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Parameters\DocumentCreateParam\Item;
 use EInvoiceAPI\Parameters\DocumentCreateParam\TaxDetail;
 
+/**
+ * @phpstan-type create_params = array{
+ *   amountDue?: float|string|null,
+ *   attachments?: list<DocumentAttachmentCreate>|null,
+ *   billingAddress?: string|null,
+ *   billingAddressRecipient?: string|null,
+ *   currency?: CurrencyCode::*,
+ *   customerAddress?: string|null,
+ *   customerAddressRecipient?: string|null,
+ *   customerEmail?: string|null,
+ *   customerID?: string|null,
+ *   customerName?: string|null,
+ *   customerTaxID?: string|null,
+ *   direction?: DocumentDirection::*,
+ *   documentType?: DocumentType::*,
+ *   dueDate?: \DateTimeInterface|null,
+ *   invoiceDate?: \DateTimeInterface|null,
+ *   invoiceID?: string|null,
+ *   invoiceTotal?: float|string|null,
+ *   items?: list<Item>|null,
+ *   note?: string|null,
+ *   paymentDetails?: list<PaymentDetailCreate>|null,
+ *   paymentTerm?: string|null,
+ *   previousUnpaidBalance?: float|string|null,
+ *   purchaseOrder?: string|null,
+ *   remittanceAddress?: string|null,
+ *   remittanceAddressRecipient?: string|null,
+ *   serviceAddress?: string|null,
+ *   serviceAddressRecipient?: string|null,
+ *   serviceEndDate?: \DateTimeInterface|null,
+ *   serviceStartDate?: \DateTimeInterface|null,
+ *   shippingAddress?: string|null,
+ *   shippingAddressRecipient?: string|null,
+ *   state?: DocumentState::*,
+ *   subtotal?: float|string|null,
+ *   taxDetails?: list<TaxDetail>|null,
+ *   totalDiscount?: float|string|null,
+ *   totalTax?: float|string|null,
+ *   vendorAddress?: string|null,
+ *   vendorAddressRecipient?: string|null,
+ *   vendorEmail?: string|null,
+ *   vendorName?: string|null,
+ *   vendorTaxID?: string|null,
+ * }
+ */
 final class DocumentCreateParam implements BaseModel
 {
     use Model;

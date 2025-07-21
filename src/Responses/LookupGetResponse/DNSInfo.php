@@ -10,6 +10,14 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\DNSInfo\DNSRecord;
 
+/**
+ * @phpstan-type dns_info_alias = array{
+ *   dnsRecords: list<DNSRecord>,
+ *   smlHostname: string,
+ *   status: string,
+ *   error?: string|null,
+ * }
+ */
 final class DNSInfo implements BaseModel
 {
     use Model;

@@ -9,6 +9,11 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\MapOf;
 
+/**
+ * @phpstan-type certificate_alias = array{
+ *   status: string, details?: array<string, mixed>|null, error?: string|null
+ * }
+ */
 final class Certificate implements BaseModel
 {
     use Model;

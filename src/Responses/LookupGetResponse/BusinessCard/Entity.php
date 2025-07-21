@@ -9,6 +9,14 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-type entity_alias = array{
+ *   additionalInformation?: list<string>|null,
+ *   countryCode?: string|null,
+ *   name?: string|null,
+ *   registrationDate?: string|null,
+ * }
+ */
 final class Entity implements BaseModel
 {
     use Model;

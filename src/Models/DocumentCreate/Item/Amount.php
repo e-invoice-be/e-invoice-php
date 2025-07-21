@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Concerns\Union;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type amount_alias = float|string|null
+ */
 final class Amount implements ConverterSource
 {
     use Union;

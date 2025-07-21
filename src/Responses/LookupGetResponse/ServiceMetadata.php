@@ -10,6 +10,14 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint;
 
+/**
+ * @phpstan-type service_metadata_alias = array{
+ *   endpoints: list<Endpoint>,
+ *   queryTimeMs: float,
+ *   status: string,
+ *   error?: string|null,
+ * }
+ */
 final class ServiceMetadata implements BaseModel
 {
     use Model;

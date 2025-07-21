@@ -9,6 +9,11 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type retrieve_participants_params = array{
+ *   query: string, countryCode?: string|null
+ * }
+ */
 final class LookupRetrieveParticipantsParam implements BaseModel
 {
     use Model;
