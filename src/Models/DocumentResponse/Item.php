@@ -53,7 +53,7 @@ final class Item implements BaseModel
      *
      * @var null|UnitOfMeasureCode::* $unit
      */
-    #[Api(optional: true)]
+    #[Api(enum: UnitOfMeasureCode::class, optional: true)]
     public ?string $unit;
 
     #[Api('unit_price', optional: true)]
