@@ -82,7 +82,7 @@ final class DocumentCreate implements BaseModel
      *
      * @var null|CurrencyCode::* $currency
      */
-    #[Api(optional: true)]
+    #[Api(enum: CurrencyCode::class, optional: true)]
     public ?string $currency;
 
     #[Api('customer_address', optional: true)]
@@ -104,11 +104,11 @@ final class DocumentCreate implements BaseModel
     public ?string $customerTaxID;
 
     /** @var null|DocumentDirection::* $direction */
-    #[Api(optional: true)]
+    #[Api(enum: DocumentDirection::class, optional: true)]
     public ?string $direction;
 
     /** @var null|DocumentType::* $documentType */
-    #[Api('document_type', optional: true)]
+    #[Api('document_type', enum: DocumentType::class, optional: true)]
     public ?string $documentType;
 
     #[Api('due_date', optional: true)]
@@ -173,7 +173,7 @@ final class DocumentCreate implements BaseModel
     public ?string $shippingAddressRecipient;
 
     /** @var null|DocumentState::* $state */
-    #[Api(optional: true)]
+    #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
     #[Api(optional: true)]

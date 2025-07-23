@@ -31,7 +31,7 @@ final class Issue implements BaseModel
     public string $schematron;
 
     /** @var Type::* $type */
-    #[Api]
+    #[Api(enum: Type::class)]
     public string $type;
 
     #[Api(optional: true)]

@@ -71,7 +71,7 @@ final class OutboxListReceivedDocumentsParam implements BaseModel
      *
      * @var null|DocumentState::* $state
      */
-    #[Api(optional: true)]
+    #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
     /**
@@ -79,7 +79,7 @@ final class OutboxListReceivedDocumentsParam implements BaseModel
      *
      * @var null|DocumentType::* $type
      */
-    #[Api(optional: true)]
+    #[Api(enum: DocumentType::class, optional: true)]
     public ?string $type;
 
     /**
