@@ -20,6 +20,8 @@ final class Attachments implements AttachmentsContract
     public function __construct(private Client $client) {}
 
     /**
+     * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
+     *
      * @param array{documentID: string}|AttachmentRetrieveParam $params
      */
     public function retrieve(
@@ -44,6 +46,8 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
+     * Get all attachments for an invoice or credit note.
+     *
      * @return list<DocumentAttachment>
      */
     public function list(
@@ -64,6 +68,8 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
+     * Delete an attachment from an invoice or credit note.
+     *
      * @param array{documentID: string}|AttachmentDeleteParam $params
      */
     public function delete(
@@ -88,6 +94,8 @@ final class Attachments implements AttachmentsContract
     }
 
     /**
+     * Add a new attachment to an invoice or credit note.
+     *
      * @param array{file: string}|AttachmentAddParam $params
      */
     public function add(

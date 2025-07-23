@@ -12,6 +12,8 @@ use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process\End
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
 /**
+ * Process information in the Peppol network.
+ *
  * @phpstan-type process_alias = array{
  *   endpoints: list<Endpoint>, processID: ProcessID
  * }
@@ -20,10 +22,17 @@ final class Process implements BaseModel
 {
     use Model;
 
-    /** @var list<Endpoint> $endpoints */
+    /**
+     * List of endpoints supporting this process.
+     *
+     * @var list<Endpoint> $endpoints
+     */
     #[Api(type: new ListOf(Endpoint::class))]
     public array $endpoints;
 
+    /**
+     * Identifier of the process.
+     */
     #[Api('processId')]
     public ProcessID $processID;
 

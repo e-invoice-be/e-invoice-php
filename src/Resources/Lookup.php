@@ -18,6 +18,8 @@ final class Lookup implements LookupContract
     public function __construct(private Client $client) {}
 
     /**
+     * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
+     *
      * @param array{peppolID: string}|LookupRetrieveParam $params
      */
     public function retrieve(
@@ -40,6 +42,8 @@ final class Lookup implements LookupContract
     }
 
     /**
+     * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
+     *
      * @param LookupRetrieveParticipantsParam|array{
      *   query: string, countryCode?: string|null
      * } $params

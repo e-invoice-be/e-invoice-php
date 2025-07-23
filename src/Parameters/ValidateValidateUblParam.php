@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Validate the correctness of a UBL document.
+ *
  * @phpstan-type validate_ubl_params = array{file: string}
  */
 final class ValidateValidateUblParam implements BaseModel

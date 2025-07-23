@@ -11,6 +11,8 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant;
 
 /**
+ * Represents the result of a Peppol directory search.
+ *
  * @phpstan-type lookup_get_participants_response_alias = array{
  *   queryTerms: string,
  *   searchDate: string,
@@ -23,19 +25,35 @@ final class LookupGetParticipantsResponse implements BaseModel
 {
     use Model;
 
+    /**
+     * Query terms used for search.
+     */
     #[Api('query_terms')]
     public string $queryTerms;
 
+    /**
+     * Search date of the result.
+     */
     #[Api('search_date')]
     public string $searchDate;
 
+    /**
+     * Total number of results.
+     */
     #[Api('total_count')]
     public int $totalCount;
 
+    /**
+     * Number of results returned by the API.
+     */
     #[Api('used_count')]
     public int $usedCount;
 
-    /** @var null|list<Participant> $participants */
+    /**
+     * List of participants.
+     *
+     * @var null|list<Participant> $participants
+     */
     #[Api(type: new ListOf(Participant::class), optional: true)]
     public ?array $participants;
 

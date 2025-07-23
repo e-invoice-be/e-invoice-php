@@ -19,6 +19,8 @@ use EInvoiceAPI\Parameters\ValidateValidateJsonParam\Item;
 use EInvoiceAPI\Parameters\ValidateValidateJsonParam\TaxDetail;
 
 /**
+ * Validate if the JSON document can be converted to a valid UBL document.
+ *
  * @phpstan-type validate_json_params = array{
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
@@ -85,7 +87,11 @@ final class ValidateValidateJsonParam implements BaseModel
     #[Api('billing_address_recipient', optional: true)]
     public ?string $billingAddressRecipient;
 
-    /** @var null|CurrencyCode::* $currency */
+    /**
+     * Currency of the invoice.
+     *
+     * @var null|CurrencyCode::* $currency
+     */
     #[Api(optional: true)]
     public ?string $currency;
 

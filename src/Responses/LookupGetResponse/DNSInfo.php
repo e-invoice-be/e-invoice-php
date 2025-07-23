@@ -11,6 +11,8 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\DNSInfo\DNSRecord;
 
 /**
+ * Information about the DNS lookup performed.
+ *
  * @phpstan-type dns_info_alias = array{
  *   dnsRecords: list<DNSRecord>,
  *   smlHostname: string,
@@ -22,16 +24,29 @@ final class DNSInfo implements BaseModel
 {
     use Model;
 
-    /** @var list<DNSRecord> $dnsRecords */
+    /**
+     * List of DNS records found for the Peppol participant.
+     *
+     * @var list<DNSRecord> $dnsRecords
+     */
     #[Api(type: new ListOf(DNSRecord::class))]
     public array $dnsRecords;
 
+    /**
+     * Hostname of the SML used for the query.
+     */
     #[Api]
     public string $smlHostname;
 
+    /**
+     * Status of the DNS lookup: 'success', 'error', or 'pending'.
+     */
     #[Api]
     public string $status;
 
+    /**
+     * Error message if the DNS lookup failed.
+     */
     #[Api(optional: true)]
     public ?string $error;
 

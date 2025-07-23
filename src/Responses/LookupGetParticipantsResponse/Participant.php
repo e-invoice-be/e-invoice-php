@@ -12,6 +12,8 @@ use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant\DocumentType
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse\Participant\Entity;
 
 /**
+ * Represents a Peppol participant with their details.
+ *
  * @phpstan-type participant_alias = array{
  *   peppolID: string,
  *   peppolScheme: string,
@@ -23,13 +25,23 @@ final class Participant implements BaseModel
 {
     use Model;
 
+    /**
+     * Peppol ID of the participant.
+     */
     #[Api('peppol_id')]
     public string $peppolID;
 
+    /**
+     * Peppol scheme of the participant.
+     */
     #[Api('peppol_scheme')]
     public string $peppolScheme;
 
-    /** @var null|list<DocumentType> $documentTypes */
+    /**
+     * List of supported document types.
+     *
+     * @var null|list<DocumentType> $documentTypes
+     */
     #[Api(
         'document_types',
         type: new ListOf(DocumentType::class),
@@ -37,7 +49,11 @@ final class Participant implements BaseModel
     )]
     public ?array $documentTypes;
 
-    /** @var null|list<Entity> $entities */
+    /**
+     * List of business entities.
+     *
+     * @var null|list<Entity> $entities
+     */
     #[Api(type: new ListOf(Entity::class), optional: true)]
     public ?array $entities;
 

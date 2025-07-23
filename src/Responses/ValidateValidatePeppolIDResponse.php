@@ -11,6 +11,11 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\ValidateValidatePeppolIDResponse\BusinessCard;
 
 /**
+ * Response for a Peppol ID validation request.
+ *
+ * This model represents the validation result of a Peppol ID in the Peppol network,
+ * including whether the ID is valid and what document types it supports.
+ *
  * @phpstan-type validate_validate_peppol_id_response_alias = array{
  *   businessCard: BusinessCard|null,
  *   businessCardValid: bool,
@@ -23,15 +28,27 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
 {
     use Model;
 
+    /**
+     * Business card information for the Peppol ID.
+     */
     #[Api('business_card')]
     public ?BusinessCard $businessCard;
 
+    /**
+     * Whether a business card is set at the SMP.
+     */
     #[Api('business_card_valid')]
     public bool $businessCardValid;
 
+    /**
+     * Whether the DNS resolves to a valid SMP.
+     */
     #[Api('dns_valid')]
     public bool $dnsValid;
 
+    /**
+     * Whether the Peppol ID is valid and registered in the Peppol network.
+     */
     #[Api('is_valid')]
     public bool $isValid;
 

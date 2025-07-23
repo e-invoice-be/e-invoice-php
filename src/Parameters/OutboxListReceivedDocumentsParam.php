@@ -12,6 +12,8 @@ use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 
 /**
+ * Retrieve a paginated list of received documents with filtering options.
+ *
  * @phpstan-type list_received_documents_params = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,
@@ -28,29 +30,55 @@ final class OutboxListReceivedDocumentsParam implements BaseModel
     use Model;
     use Params;
 
+    /**
+     * Filter by issue date (from).
+     */
     #[Api(optional: true)]
     public ?\DateTimeInterface $dateFrom;
 
+    /**
+     * Filter by issue date (to).
+     */
     #[Api(optional: true)]
     public ?\DateTimeInterface $dateTo;
 
+    /**
+     * Page number.
+     */
     #[Api(optional: true)]
     public ?int $page;
 
+    /**
+     * Number of items per page.
+     */
     #[Api(optional: true)]
     public ?int $pageSize;
 
+    /**
+     * Search in invoice number, seller/buyer names.
+     */
     #[Api(optional: true)]
     public ?string $search;
 
+    /**
+     * Filter by sender ID.
+     */
     #[Api(optional: true)]
     public ?string $sender;
 
-    /** @var null|DocumentState::* $state */
+    /**
+     * Filter by document state.
+     *
+     * @var null|DocumentState::* $state
+     */
     #[Api(optional: true)]
     public ?string $state;
 
-    /** @var null|DocumentType::* $type */
+    /**
+     * Filter by document type.
+     *
+     * @var null|DocumentType::* $type
+     */
     #[Api(optional: true)]
     public ?string $type;
 

@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
+ *
  * @phpstan-type retrieve_participants_params = array{
  *   query: string, countryCode?: string|null
  * }
@@ -19,9 +21,15 @@ final class LookupRetrieveParticipantsParam implements BaseModel
     use Model;
     use Params;
 
+    /**
+     * Query to lookup.
+     */
     #[Api]
     public string $query;
 
+    /**
+     * Country code of the company to lookup. If not provided, the search will be global.
+     */
     #[Api(optional: true)]
     public ?string $countryCode;
 

@@ -9,15 +9,23 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Document type supported by a Peppol participant.
+ *
  * @phpstan-type document_type_alias = array{scheme: string, value: string}
  */
 final class DocumentType implements BaseModel
 {
     use Model;
 
+    /**
+     * Scheme of the document type identifier.
+     */
     #[Api]
     public string $scheme;
 
+    /**
+     * Value of the document type identifier.
+     */
     #[Api]
     public string $value;
 

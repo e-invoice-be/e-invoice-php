@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Delete an attachment from an invoice or credit note.
+ *
  * @phpstan-type delete_params = array{documentID: string}
  */
 final class AttachmentDeleteParam implements BaseModel

@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
+ * Business entity information in the Peppol network.
+ *
  * @phpstan-type entity_alias = array{
  *   additionalInformation?: list<string>|null,
  *   countryCode?: string|null,
@@ -21,16 +23,29 @@ final class Entity implements BaseModel
 {
     use Model;
 
-    /** @var null|list<string> $additionalInformation */
+    /**
+     * Additional information about the business entity.
+     *
+     * @var null|list<string> $additionalInformation
+     */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $additionalInformation;
 
+    /**
+     * ISO 3166-1 alpha-2 country code of the business entity.
+     */
     #[Api(optional: true)]
     public ?string $countryCode;
 
+    /**
+     * Name of the business entity.
+     */
     #[Api(optional: true)]
     public ?string $name;
 
+    /**
+     * ISO 8601 date of when the entity was registered in Peppol.
+     */
     #[Api(optional: true)]
     public ?string $registrationDate;
 

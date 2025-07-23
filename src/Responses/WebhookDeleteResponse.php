@@ -9,6 +9,8 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Model for webhook deletion.
+ *
  * @phpstan-type webhook_delete_response_alias = array{isDeleted: bool}
  */
 final class WebhookDeleteResponse implements BaseModel
