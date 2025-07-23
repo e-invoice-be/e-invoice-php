@@ -19,6 +19,8 @@ final class Outbox implements OutboxContract
     public function __construct(private Client $client) {}
 
     /**
+     * Retrieve a paginated list of draft documents with filtering options.
+     *
      * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParam $params
      */
     public function listDraftDocuments(
@@ -41,6 +43,8 @@ final class Outbox implements OutboxContract
     }
 
     /**
+     * Retrieve a paginated list of received documents with filtering options.
+     *
      * @param OutboxListReceivedDocumentsParam|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,

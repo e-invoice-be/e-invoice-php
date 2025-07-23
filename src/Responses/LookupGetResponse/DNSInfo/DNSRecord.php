@@ -9,12 +9,17 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * DNS record information for a Peppol participant.
+ *
  * @phpstan-type dns_record_alias = array{ip: string}
  */
 final class DNSRecord implements BaseModel
 {
     use Model;
 
+    /**
+     * IP address found in the DNS record.
+     */
     #[Api]
     public string $ip;
 

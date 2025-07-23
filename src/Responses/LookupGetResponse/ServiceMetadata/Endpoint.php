@@ -12,6 +12,8 @@ use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\DocumentTyp
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
 /**
+ * Information about a Peppol participant's endpoint.
+ *
  * @phpstan-type endpoint_alias = array{
  *   documentTypes: list<DocumentType>,
  *   status: string,
@@ -24,20 +26,37 @@ final class Endpoint implements BaseModel
 {
     use Model;
 
-    /** @var list<DocumentType> $documentTypes */
+    /**
+     * List of document types supported by this endpoint.
+     *
+     * @var list<DocumentType> $documentTypes
+     */
     #[Api(type: new ListOf(DocumentType::class))]
     public array $documentTypes;
 
+    /**
+     * Status of the endpoint lookup: 'success', 'error', or 'pending'.
+     */
     #[Api]
     public string $status;
 
+    /**
+     * URL of the endpoint.
+     */
     #[Api]
     public string $url;
 
+    /**
+     * Error message if endpoint lookup failed.
+     */
     #[Api(optional: true)]
     public ?string $error;
 
-    /** @var null|list<Process> $processes */
+    /**
+     * List of processes supported by this endpoint.
+     *
+     * @var null|list<Process> $processes
+     */
     #[Api(type: new ListOf(Process::class), nullable: true, optional: true)]
     public ?array $processes;
 

@@ -9,15 +9,23 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Represents a supported document type.
+ *
  * @phpstan-type document_type_alias = array{scheme: string, value: string}
  */
 final class DocumentType implements BaseModel
 {
     use Model;
 
+    /**
+     * Document type scheme.
+     */
     #[Api]
     public string $scheme;
 
+    /**
+     * Document type value.
+     */
     #[Api]
     public string $value;
 

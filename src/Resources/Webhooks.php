@@ -19,6 +19,8 @@ final class Webhooks implements WebhooksContract
     public function __construct(private Client $client) {}
 
     /**
+     * Create a new webhook.
+     *
      * @param WebhookCreateParam|array{
      *   events: list<string>, url: string, enabled?: bool
      * } $params
@@ -42,6 +44,9 @@ final class Webhooks implements WebhooksContract
         return Conversion::coerce(WebhookResponse::class, value: $resp);
     }
 
+    /**
+     * Get a webhook by ID.
+     */
     public function retrieve(
         string $webhookID,
         ?RequestOptions $requestOptions = null
@@ -57,6 +62,8 @@ final class Webhooks implements WebhooksContract
     }
 
     /**
+     * Update a webhook by ID.
+     *
      * @param WebhookUpdateParam|array{
      *   enabled?: bool|null, events?: list<string>|null, url?: string|null
      * } $params
@@ -82,6 +89,8 @@ final class Webhooks implements WebhooksContract
     }
 
     /**
+     * Get all webhooks for the current tenant.
+     *
      * @return list<WebhookResponse>
      */
     public function list(?RequestOptions $requestOptions = null): array
@@ -96,6 +105,9 @@ final class Webhooks implements WebhooksContract
         return Conversion::coerce(new ListOf(WebhookResponse::class), value: $resp);
     }
 
+    /**
+     * Delete a webhook.
+     */
     public function delete(
         string $webhookID,
         ?RequestOptions $requestOptions = null

@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Retrieve a paginated list of draft documents with filtering options.
+ *
  * @phpstan-type list_draft_documents_params = array{page?: int, pageSize?: int}
  */
 final class OutboxListDraftDocumentsParam implements BaseModel
@@ -17,9 +19,15 @@ final class OutboxListDraftDocumentsParam implements BaseModel
     use Model;
     use Params;
 
+    /**
+     * Page number.
+     */
     #[Api(optional: true)]
     public ?int $page;
 
+    /**
+     * Number of items per page.
+     */
     #[Api(optional: true)]
     public ?int $pageSize;
 

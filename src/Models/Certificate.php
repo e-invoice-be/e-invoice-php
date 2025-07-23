@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\MapOf;
 
 /**
+ * Certificate information for a Peppol endpoint.
+ *
  * @phpstan-type certificate_alias = array{
  *   status: string, details?: array<string, mixed>|null, error?: string|null
  * }
@@ -18,13 +20,23 @@ final class Certificate implements BaseModel
 {
     use Model;
 
+    /**
+     * Status of the certificate validation: 'success', 'error', or 'pending'.
+     */
     #[Api]
     public string $status;
 
-    /** @var null|array<string, mixed> $details */
+    /**
+     * Details about the certificate including subject, issuer, validity dates, etc.
+     *
+     * @var null|array<string, mixed> $details
+     */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $details;
 
+    /**
+     * Error message if certificate validation failed.
+     */
     #[Api(optional: true)]
     public ?string $error;
 

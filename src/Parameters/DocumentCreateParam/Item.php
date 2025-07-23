@@ -48,7 +48,11 @@ final class Item implements BaseModel
     #[Api('tax_rate', optional: true)]
     public ?string $taxRate;
 
-    /** @var null|UnitOfMeasureCode::* $unit */
+    /**
+     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
+     *
+     * @var null|UnitOfMeasureCode::* $unit
+     */
     #[Api(optional: true)]
     public ?string $unit;
 

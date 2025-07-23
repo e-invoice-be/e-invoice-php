@@ -11,6 +11,8 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata\Endpoint;
 
 /**
+ * Service metadata information for the Peppol participant.
+ *
  * @phpstan-type service_metadata_alias = array{
  *   endpoints: list<Endpoint>,
  *   queryTimeMs: float,
@@ -22,16 +24,29 @@ final class ServiceMetadata implements BaseModel
 {
     use Model;
 
-    /** @var list<Endpoint> $endpoints */
+    /**
+     * List of endpoints found for the Peppol participant.
+     *
+     * @var list<Endpoint> $endpoints
+     */
     #[Api(type: new ListOf(Endpoint::class))]
     public array $endpoints;
 
+    /**
+     * Time taken to query the service metadata in milliseconds.
+     */
     #[Api]
     public float $queryTimeMs;
 
+    /**
+     * Status of the service metadata lookup: 'success', 'error', or 'pending'.
+     */
     #[Api]
     public string $status;
 
+    /**
+     * Error message if service metadata lookup failed.
+     */
     #[Api(optional: true)]
     public ?string $error;
 

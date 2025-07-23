@@ -11,6 +11,8 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\LookupGetResponse\BusinessCard\Entity;
 
 /**
+ * Business card information for the Peppol participant.
+ *
  * @phpstan-type business_card_alias = array{
  *   entities: list<Entity>,
  *   queryTimeMs: float,
@@ -22,16 +24,29 @@ final class BusinessCard implements BaseModel
 {
     use Model;
 
-    /** @var list<Entity> $entities */
+    /**
+     * List of business entities associated with the Peppol ID.
+     *
+     * @var list<Entity> $entities
+     */
     #[Api(type: new ListOf(Entity::class))]
     public array $entities;
 
+    /**
+     * Time taken to query the business card in milliseconds.
+     */
     #[Api]
     public float $queryTimeMs;
 
+    /**
+     * Status of the business card lookup: 'success', 'error', or 'pending'.
+     */
     #[Api]
     public string $status;
 
+    /**
+     * Error message if business card lookup failed.
+     */
     #[Api(optional: true)]
     public ?string $error;
 

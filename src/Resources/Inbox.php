@@ -20,6 +20,8 @@ final class Inbox implements InboxContract
     public function __construct(private Client $client) {}
 
     /**
+     * Retrieve a paginated list of received documents with filtering options.
+     *
      * @param InboxListParam|array{
      *   dateFrom?: \DateTimeInterface|null,
      *   dateTo?: \DateTimeInterface|null,
@@ -51,6 +53,8 @@ final class Inbox implements InboxContract
     }
 
     /**
+     * Retrieve a paginated list of received credit notes with filtering options.
+     *
      * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParam $params
      */
     public function listCreditNotes(
@@ -73,6 +77,8 @@ final class Inbox implements InboxContract
     }
 
     /**
+     * Retrieve a paginated list of received invoices with filtering options.
+     *
      * @param array{page?: int, pageSize?: int}|InboxListInvoicesParam $params
      */
     public function listInvoices(

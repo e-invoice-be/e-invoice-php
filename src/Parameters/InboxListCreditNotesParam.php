@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Retrieve a paginated list of received credit notes with filtering options.
+ *
  * @phpstan-type list_credit_notes_params = array{page?: int, pageSize?: int}
  */
 final class InboxListCreditNotesParam implements BaseModel
@@ -17,9 +19,15 @@ final class InboxListCreditNotesParam implements BaseModel
     use Model;
     use Params;
 
+    /**
+     * Page number.
+     */
     #[Api(optional: true)]
     public ?int $page;
 
+    /**
+     * Number of items per page.
+     */
     #[Api(optional: true)]
     public ?int $pageSize;
 

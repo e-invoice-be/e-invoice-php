@@ -9,15 +9,23 @@ use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Identifier of the process.
+ *
  * @phpstan-type process_id_alias = array{scheme: string, value: string}
  */
 final class ProcessID implements BaseModel
 {
     use Model;
 
+    /**
+     * Scheme of the process identifier.
+     */
     #[Api]
     public string $scheme;
 
+    /**
+     * Value of the process identifier.
+     */
     #[Api]
     public string $value;
 

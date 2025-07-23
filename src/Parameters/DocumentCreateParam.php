@@ -19,6 +19,8 @@ use EInvoiceAPI\Parameters\DocumentCreateParam\Item;
 use EInvoiceAPI\Parameters\DocumentCreateParam\TaxDetail;
 
 /**
+ * Create a new invoice or credit note.
+ *
  * @phpstan-type create_params = array{
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
@@ -85,7 +87,11 @@ final class DocumentCreateParam implements BaseModel
     #[Api('billing_address_recipient', optional: true)]
     public ?string $billingAddressRecipient;
 
-    /** @var null|CurrencyCode::* $currency */
+    /**
+     * Currency of the invoice.
+     *
+     * @var null|CurrencyCode::* $currency
+     */
     #[Api(optional: true)]
     public ?string $currency;
 

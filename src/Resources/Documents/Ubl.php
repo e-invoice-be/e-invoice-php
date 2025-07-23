@@ -14,6 +14,9 @@ final class Ubl implements UblContract
 {
     public function __construct(private Client $client) {}
 
+    /**
+     * Get the UBL for an invoice or credit note.
+     */
     public function get(
         string $documentID,
         ?RequestOptions $requestOptions = null

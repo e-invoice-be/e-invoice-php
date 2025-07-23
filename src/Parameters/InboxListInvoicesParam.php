@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\Params;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * Retrieve a paginated list of received invoices with filtering options.
+ *
  * @phpstan-type list_invoices_params = array{page?: int, pageSize?: int}
  */
 final class InboxListInvoicesParam implements BaseModel
@@ -17,9 +19,15 @@ final class InboxListInvoicesParam implements BaseModel
     use Model;
     use Params;
 
+    /**
+     * Page number.
+     */
     #[Api(optional: true)]
     public ?int $page;
 
+    /**
+     * Number of items per page.
+     */
     #[Api(optional: true)]
     public ?int $pageSize;
 

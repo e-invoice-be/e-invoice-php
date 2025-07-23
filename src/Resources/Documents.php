@@ -36,6 +36,8 @@ final class Documents implements DocumentsContract
     }
 
     /**
+     * Create a new invoice or credit note.
+     *
      * @param DocumentCreateParam|array{
      *   amountDue?: float|string|null,
      *   attachments?: list<DocumentAttachmentCreate>|null,
@@ -99,6 +101,9 @@ final class Documents implements DocumentsContract
         return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
+    /**
+     * Get an invoice or credit note by ID.
+     */
     public function retrieve(
         string $documentID,
         ?RequestOptions $requestOptions = null
@@ -113,6 +118,9 @@ final class Documents implements DocumentsContract
         return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
+    /**
+     * Delete an invoice or credit note.
+     */
     public function delete(
         string $documentID,
         ?RequestOptions $requestOptions = null
@@ -128,6 +136,8 @@ final class Documents implements DocumentsContract
     }
 
     /**
+     * Send an invoice or credit note via Peppol.
+     *
      * @param DocumentSendParam|array{
      *   email?: string|null,
      *   receiverPeppolID?: string|null,
