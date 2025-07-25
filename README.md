@@ -1,5 +1,10 @@
 # e-invoice.be PHP API library
 
+> [!NOTE]
+> The E Invoice PHP API Library is currently in alpha.
+>
+> There may be frequent breaking changes.
+
 This library provides convenient access to the e-invoice REST API from any PHP 8.1.0+ application.
 
 To get an API key, [make a free account](https://app.e-invoice.be/register?ref=php) and register your company.
