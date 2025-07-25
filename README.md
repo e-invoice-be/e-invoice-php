@@ -1,5 +1,10 @@
 # E Invoice PHP API library
 
+> [!NOTE]
+> The E Invoice PHP API Library is currently in alpha.
+>
+> There may be frequent breaking changes.
+
 The E Invoice PHP library provides convenient access to the E Invoice REST API from any PHP 8.1.0+ application.
 
 It is generated with [Stainless](https://www.stainless.com/).
