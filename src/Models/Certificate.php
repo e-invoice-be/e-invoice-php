@@ -40,22 +40,63 @@ final class Certificate implements BaseModel
     #[Api(optional: true)]
     public ?string $error;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|array<string, mixed> $details
      */
-    final public function __construct(
+    public static function new(
         string $status,
         ?array $details = null,
         ?string $error = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->status = $status;
+
+        null !== $details && $obj->details = $details;
+        null !== $error && $obj->error = $error;
+
+        return $obj;
+    }
+
+    /**
+     * Status of the certificate validation: 'success', 'error', or 'pending'.
+     */
+    public function setStatus(string $status): self
+    {
         $this->status = $status;
 
-        null !== $details && $this->details = $details;
-        null !== $error && $this->error = $error;
+        return $this;
+    }
+
+    /**
+     * Details about the certificate including subject, issuer, validity dates, etc.
+     *
+     * @param null|array<string, mixed> $details
+     */
+    public function setDetails(?array $details): self
+    {
+        $this->details = $details;
+
+        return $this;
+    }
+
+    /**
+     * Error message if certificate validation failed.
+     */
+    public function setError(?string $error): self
+    {
+        $this->error = $error;
+
+        return $this;
     }
 }

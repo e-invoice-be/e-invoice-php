@@ -59,12 +59,20 @@ final class Item implements BaseModel
     #[Api('unit_price', optional: true)]
     public ?string $unitPrice;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param UnitOfMeasureCode::* $unit
      */
-    final public function __construct(
+    public static function new(
         ?string $amount = null,
         null $date = null,
         ?string $description = null,
@@ -74,18 +82,90 @@ final class Item implements BaseModel
         ?string $taxRate = null,
         ?string $unit = null,
         ?string $unitPrice = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $amount && $this->amount = $amount;
-        null !== $date && $this->date = $date;
-        null !== $description && $this->description = $description;
-        null !== $productCode && $this->productCode = $productCode;
-        null !== $quantity && $this->quantity = $quantity;
-        null !== $tax && $this->tax = $tax;
-        null !== $taxRate && $this->taxRate = $taxRate;
-        null !== $unit && $this->unit = $unit;
-        null !== $unitPrice && $this->unitPrice = $unitPrice;
+        null !== $amount && $obj->amount = $amount;
+        null !== $date && $obj->date = $date;
+        null !== $description && $obj->description = $description;
+        null !== $productCode && $obj->productCode = $productCode;
+        null !== $quantity && $obj->quantity = $quantity;
+        null !== $tax && $obj->tax = $tax;
+        null !== $taxRate && $obj->taxRate = $taxRate;
+        null !== $unit && $obj->unit = $unit;
+        null !== $unitPrice && $obj->unitPrice = $unitPrice;
+
+        return $obj;
+    }
+
+    public function setAmount(?string $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * @param null|null $date
+     */
+    public function setDate(null $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function setProductCode(?string $productCode): self
+    {
+        $this->productCode = $productCode;
+
+        return $this;
+    }
+
+    public function setQuantity(?string $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function setTax(?string $tax): self
+    {
+        $this->tax = $tax;
+
+        return $this;
+    }
+
+    public function setTaxRate(?string $taxRate): self
+    {
+        $this->taxRate = $taxRate;
+
+        return $this;
+    }
+
+    /**
+     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
+     *
+     * @param UnitOfMeasureCode::* $unit
+     */
+    public function setUnit(string $unit): self
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function setUnitPrice(?string $unitPrice): self
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
     }
 }

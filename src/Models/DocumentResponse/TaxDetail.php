@@ -21,17 +21,40 @@ final class TaxDetail implements BaseModel
     #[Api(optional: true)]
     public ?string $rate;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(
-        ?string $amount = null,
-        ?string $rate = null
-    ) {
+    public function __construct()
+    {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $amount && $this->amount = $amount;
-        null !== $rate && $this->rate = $rate;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        ?string $amount = null,
+        ?string $rate = null
+    ): self {
+        $obj = new self;
+
+        null !== $amount && $obj->amount = $amount;
+        null !== $rate && $obj->rate = $rate;
+
+        return $obj;
+    }
+
+    public function setAmount(?string $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function setRate(?string $rate): self
+    {
+        $this->rate = $rate;
+
+        return $this;
     }
 }

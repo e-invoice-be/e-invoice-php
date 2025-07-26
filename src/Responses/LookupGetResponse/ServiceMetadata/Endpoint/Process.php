@@ -36,16 +36,48 @@ final class Process implements BaseModel
     #[Api('processId')]
     public ProcessID $processID;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Endpoint> $endpoints
      */
-    final public function __construct(array $endpoints, ProcessID $processID)
+    public static function new(array $endpoints, ProcessID $processID): self
     {
-        self::introspect();
+        $obj = new self;
 
+        $obj->endpoints = $endpoints;
+        $obj->processID = $processID;
+
+        return $obj;
+    }
+
+    /**
+     * List of endpoints supporting this process.
+     *
+     * @param list<Endpoint> $endpoints
+     */
+    public function setEndpoints(array $endpoints): self
+    {
         $this->endpoints = $endpoints;
+
+        return $this;
+    }
+
+    /**
+     * Identifier of the process.
+     */
+    public function setProcessID(ProcessID $processID): self
+    {
         $this->processID = $processID;
+
+        return $this;
     }
 }

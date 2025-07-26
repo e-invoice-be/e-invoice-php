@@ -22,13 +22,23 @@ final class AttachmentAddParam implements BaseModel
     #[Api]
     public string $file;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $file)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
-        $this->file = $file;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $file): self
+    {
+        $obj = new self;
+
+        $obj->file = $file;
+
+        return $obj;
     }
 }

@@ -38,7 +38,7 @@ final class LookupTest extends TestCase
         $result = $this
             ->client
             ->lookup
-            ->retrieve(new LookupRetrieveParam(peppolID: 'peppol_id'))
+            ->retrieve(LookupRetrieveParam::new(peppolID: 'peppol_id'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -54,7 +54,7 @@ final class LookupTest extends TestCase
         $result = $this
             ->client
             ->lookup
-            ->retrieve(new LookupRetrieveParam(peppolID: 'peppol_id'))
+            ->retrieve(LookupRetrieveParam::new(peppolID: 'peppol_id'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -71,7 +71,7 @@ final class LookupTest extends TestCase
             ->client
             ->lookup
             ->retrieveParticipants(
-                new LookupRetrieveParticipantsParam(query: 'query')
+                LookupRetrieveParticipantsParam::new(query: 'query')
             )
         ;
 
@@ -89,7 +89,7 @@ final class LookupTest extends TestCase
             ->client
             ->lookup
             ->retrieveParticipants(
-                new LookupRetrieveParticipantsParam(
+                LookupRetrieveParticipantsParam::new(
                     query: 'query',
                     countryCode: 'country_code'
                 )

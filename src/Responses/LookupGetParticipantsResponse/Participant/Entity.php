@@ -71,12 +71,20 @@ final class Entity implements BaseModel
     #[Api(optional: true)]
     public ?string $website;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<Identifier> $identifiers
      */
-    final public function __construct(
+    public static function new(
         ?string $additionalInfo = null,
         ?string $countryCode = null,
         ?string $geoInfo = null,
@@ -84,16 +92,89 @@ final class Entity implements BaseModel
         ?string $name = null,
         ?string $registrationDate = null,
         ?string $website = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $additionalInfo && $this->additionalInfo = $additionalInfo;
-        null !== $countryCode && $this->countryCode = $countryCode;
-        null !== $geoInfo && $this->geoInfo = $geoInfo;
-        null !== $identifiers && $this->identifiers = $identifiers;
-        null !== $name && $this->name = $name;
-        null !== $registrationDate && $this->registrationDate = $registrationDate;
-        null !== $website && $this->website = $website;
+        null !== $additionalInfo && $obj->additionalInfo = $additionalInfo;
+        null !== $countryCode && $obj->countryCode = $countryCode;
+        null !== $geoInfo && $obj->geoInfo = $geoInfo;
+        null !== $identifiers && $obj->identifiers = $identifiers;
+        null !== $name && $obj->name = $name;
+        null !== $registrationDate && $obj->registrationDate = $registrationDate;
+        null !== $website && $obj->website = $website;
+
+        return $obj;
+    }
+
+    /**
+     * Additional information.
+     */
+    public function setAdditionalInfo(?string $additionalInfo): self
+    {
+        $this->additionalInfo = $additionalInfo;
+
+        return $this;
+    }
+
+    /**
+     * Country code.
+     */
+    public function setCountryCode(?string $countryCode): self
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Geographic information.
+     */
+    public function setGeoInfo(?string $geoInfo): self
+    {
+        $this->geoInfo = $geoInfo;
+
+        return $this;
+    }
+
+    /**
+     * List of business identifiers.
+     *
+     * @param list<Identifier> $identifiers
+     */
+    public function setIdentifiers(array $identifiers): self
+    {
+        $this->identifiers = $identifiers;
+
+        return $this;
+    }
+
+    /**
+     * Business entity name.
+     */
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Registration date.
+     */
+    public function setRegistrationDate(?string $registrationDate): self
+    {
+        $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+    /**
+     * Website URL.
+     */
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
     }
 }

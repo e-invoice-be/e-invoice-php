@@ -25,13 +25,23 @@ final class ValidateValidatePeppolIDParam implements BaseModel
     #[Api]
     public string $peppolID;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $peppolID)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
-        $this->peppolID = $peppolID;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $peppolID): self
+    {
+        $obj = new self;
+
+        $obj->peppolID = $peppolID;
+
+        return $obj;
     }
 }

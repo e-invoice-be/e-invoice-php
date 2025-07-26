@@ -56,28 +56,86 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     #[Api('supported_document_types', type: new ListOf('string'), optional: true)]
     public ?array $supportedDocumentTypes;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<string> $supportedDocumentTypes
      */
-    final public function __construct(
+    public static function new(
         ?BusinessCard $businessCard,
         bool $businessCardValid,
         bool $dnsValid,
         bool $isValid,
         ?array $supportedDocumentTypes = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->businessCard = $businessCard;
+        $obj->businessCardValid = $businessCardValid;
+        $obj->dnsValid = $dnsValid;
+        $obj->isValid = $isValid;
+
+        null !== $supportedDocumentTypes && $obj->supportedDocumentTypes = $supportedDocumentTypes;
+
+        return $obj;
+    }
+
+    /**
+     * Business card information for the Peppol ID.
+     */
+    public function setBusinessCard(?BusinessCard $businessCard): self
+    {
         $this->businessCard = $businessCard;
+
+        return $this;
+    }
+
+    /**
+     * Whether a business card is set at the SMP.
+     */
+    public function setBusinessCardValid(bool $businessCardValid): self
+    {
         $this->businessCardValid = $businessCardValid;
+
+        return $this;
+    }
+
+    /**
+     * Whether the DNS resolves to a valid SMP.
+     */
+    public function setDNSValid(bool $dnsValid): self
+    {
         $this->dnsValid = $dnsValid;
+
+        return $this;
+    }
+
+    /**
+     * Whether the Peppol ID is valid and registered in the Peppol network.
+     */
+    public function setIsValid(bool $isValid): self
+    {
         $this->isValid = $isValid;
 
-        null !== $supportedDocumentTypes && $this
-            ->supportedDocumentTypes = $supportedDocumentTypes
-        ;
+        return $this;
+    }
+
+    /**
+     * @param list<string> $supportedDocumentTypes
+     */
+    public function setSupportedDocumentTypes(
+        array $supportedDocumentTypes
+    ): self {
+        $this->supportedDocumentTypes = $supportedDocumentTypes;
+
+        return $this;
     }
 }

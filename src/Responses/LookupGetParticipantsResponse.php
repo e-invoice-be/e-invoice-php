@@ -57,26 +57,87 @@ final class LookupGetParticipantsResponse implements BaseModel
     #[Api(type: new ListOf(Participant::class), optional: true)]
     public ?array $participants;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<Participant> $participants
      */
-    final public function __construct(
+    public static function new(
         string $queryTerms,
         string $searchDate,
         int $totalCount,
         int $usedCount,
         ?array $participants = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->queryTerms = $queryTerms;
+        $obj->searchDate = $searchDate;
+        $obj->totalCount = $totalCount;
+        $obj->usedCount = $usedCount;
+
+        null !== $participants && $obj->participants = $participants;
+
+        return $obj;
+    }
+
+    /**
+     * Query terms used for search.
+     */
+    public function setQueryTerms(string $queryTerms): self
+    {
         $this->queryTerms = $queryTerms;
+
+        return $this;
+    }
+
+    /**
+     * Search date of the result.
+     */
+    public function setSearchDate(string $searchDate): self
+    {
         $this->searchDate = $searchDate;
+
+        return $this;
+    }
+
+    /**
+     * Total number of results.
+     */
+    public function setTotalCount(int $totalCount): self
+    {
         $this->totalCount = $totalCount;
+
+        return $this;
+    }
+
+    /**
+     * Number of results returned by the API.
+     */
+    public function setUsedCount(int $usedCount): self
+    {
         $this->usedCount = $usedCount;
 
-        null !== $participants && $this->participants = $participants;
+        return $this;
+    }
+
+    /**
+     * List of participants.
+     *
+     * @param list<Participant> $participants
+     */
+    public function setParticipants(array $participants): self
+    {
+        $this->participants = $participants;
+
+        return $this;
     }
 }

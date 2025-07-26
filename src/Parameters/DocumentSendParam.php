@@ -40,27 +40,32 @@ final class DocumentSendParam implements BaseModel
     #[Api(optional: true)]
     public ?string $senderPeppolScheme;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         ?string $email = null,
         ?string $receiverPeppolID = null,
         ?string $receiverPeppolScheme = null,
         ?string $senderPeppolID = null,
         ?string $senderPeppolScheme = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $email && $this->email = $email;
-        null !== $receiverPeppolID && $this->receiverPeppolID = $receiverPeppolID;
-        null !== $receiverPeppolScheme && $this
-            ->receiverPeppolScheme = $receiverPeppolScheme
-        ;
-        null !== $senderPeppolID && $this->senderPeppolID = $senderPeppolID;
-        null !== $senderPeppolScheme && $this
-            ->senderPeppolScheme = $senderPeppolScheme
-        ;
+        null !== $email && $obj->email = $email;
+        null !== $receiverPeppolID && $obj->receiverPeppolID = $receiverPeppolID;
+        null !== $receiverPeppolScheme && $obj->receiverPeppolScheme = $receiverPeppolScheme;
+        null !== $senderPeppolID && $obj->senderPeppolID = $senderPeppolID;
+        null !== $senderPeppolScheme && $obj->senderPeppolScheme = $senderPeppolScheme;
+
+        return $obj;
     }
 }

@@ -60,27 +60,90 @@ final class Endpoint implements BaseModel
     #[Api(type: new ListOf(Process::class), nullable: true, optional: true)]
     public ?array $processes;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<DocumentType> $documentTypes
      * @param null|list<Process> $processes
      */
-    final public function __construct(
+    public static function new(
         array $documentTypes,
         string $status,
         string $url,
         ?string $error = null,
         ?array $processes = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->documentTypes = $documentTypes;
+        $obj->status = $status;
+        $obj->url = $url;
+
+        null !== $error && $obj->error = $error;
+        null !== $processes && $obj->processes = $processes;
+
+        return $obj;
+    }
+
+    /**
+     * List of document types supported by this endpoint.
+     *
+     * @param list<DocumentType> $documentTypes
+     */
+    public function setDocumentTypes(array $documentTypes): self
+    {
         $this->documentTypes = $documentTypes;
+
+        return $this;
+    }
+
+    /**
+     * Status of the endpoint lookup: 'success', 'error', or 'pending'.
+     */
+    public function setStatus(string $status): self
+    {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * URL of the endpoint.
+     */
+    public function setURL(string $url): self
+    {
         $this->url = $url;
 
-        null !== $error && $this->error = $error;
-        null !== $processes && $this->processes = $processes;
+        return $this;
+    }
+
+    /**
+     * Error message if endpoint lookup failed.
+     */
+    public function setError(?string $error): self
+    {
+        $this->error = $error;
+
+        return $this;
+    }
+
+    /**
+     * List of processes supported by this endpoint.
+     *
+     * @param null|list<Process> $processes
+     */
+    public function setProcesses(?array $processes): self
+    {
+        $this->processes = $processes;
+
+        return $this;
     }
 }

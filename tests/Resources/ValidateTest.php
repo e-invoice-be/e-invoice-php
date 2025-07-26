@@ -39,7 +39,7 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validateJson(new ValidateValidateJsonParam())
+            ->validateJson(new ValidateValidateJsonParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -56,7 +56,7 @@ final class ValidateTest extends TestCase
             ->client
             ->validate
             ->validatePeppolID(
-                new ValidateValidatePeppolIDParam(peppolID: 'peppol_id')
+                ValidateValidatePeppolIDParam::new(peppolID: 'peppol_id')
             )
         ;
 
@@ -74,7 +74,7 @@ final class ValidateTest extends TestCase
             ->client
             ->validate
             ->validatePeppolID(
-                new ValidateValidatePeppolIDParam(peppolID: 'peppol_id')
+                ValidateValidatePeppolIDParam::new(peppolID: 'peppol_id')
             )
         ;
 
@@ -91,7 +91,7 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validateUbl(new ValidateValidateUblParam(file: 'file'))
+            ->validateUbl(ValidateValidateUblParam::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -107,7 +107,7 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validateUbl(new ValidateValidateUblParam(file: 'file'))
+            ->validateUbl(ValidateValidateUblParam::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

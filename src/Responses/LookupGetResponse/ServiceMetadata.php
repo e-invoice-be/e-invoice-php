@@ -50,24 +50,75 @@ final class ServiceMetadata implements BaseModel
     #[Api(optional: true)]
     public ?string $error;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Endpoint> $endpoints
      */
-    final public function __construct(
+    public static function new(
         array $endpoints,
         float $queryTimeMs,
         string $status,
         ?string $error = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->endpoints = $endpoints;
+        $obj->queryTimeMs = $queryTimeMs;
+        $obj->status = $status;
+
+        null !== $error && $obj->error = $error;
+
+        return $obj;
+    }
+
+    /**
+     * List of endpoints found for the Peppol participant.
+     *
+     * @param list<Endpoint> $endpoints
+     */
+    public function setEndpoints(array $endpoints): self
+    {
         $this->endpoints = $endpoints;
+
+        return $this;
+    }
+
+    /**
+     * Time taken to query the service metadata in milliseconds.
+     */
+    public function setQueryTimeMs(float $queryTimeMs): self
+    {
         $this->queryTimeMs = $queryTimeMs;
+
+        return $this;
+    }
+
+    /**
+     * Status of the service metadata lookup: 'success', 'error', or 'pending'.
+     */
+    public function setStatus(string $status): self
+    {
         $this->status = $status;
 
-        null !== $error && $this->error = $error;
+        return $this;
+    }
+
+    /**
+     * Error message if service metadata lookup failed.
+     */
+    public function setError(?string $error): self
+    {
+        $this->error = $error;
+
+        return $this;
     }
 }

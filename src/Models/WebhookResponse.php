@@ -36,26 +36,73 @@ final class WebhookResponse implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $events
      */
-    final public function __construct(
+    public static function new(
         string $id,
         array $events,
         string $secret,
         string $url,
         ?bool $enabled = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->id = $id;
+        $obj->events = $events;
+        $obj->secret = $secret;
+        $obj->url = $url;
+
+        null !== $enabled && $obj->enabled = $enabled;
+
+        return $obj;
+    }
+
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param list<string> $events
+     */
+    public function setEvents(array $events): self
+    {
         $this->events = $events;
+
+        return $this;
+    }
+
+    public function setSecret(string $secret): self
+    {
         $this->secret = $secret;
+
+        return $this;
+    }
+
+    public function setURL(string $url): self
+    {
         $this->url = $url;
 
-        null !== $enabled && $this->enabled = $enabled;
+        return $this;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 }
