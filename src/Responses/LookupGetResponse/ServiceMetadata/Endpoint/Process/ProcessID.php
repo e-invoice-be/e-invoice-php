@@ -29,14 +29,44 @@ final class ProcessID implements BaseModel
     #[Api]
     public string $value;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $scheme, string $value)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $scheme, string $value): self
+    {
+        $obj = new self;
+
+        $obj->scheme = $scheme;
+        $obj->value = $value;
+
+        return $obj;
+    }
+
+    /**
+     * Scheme of the process identifier.
+     */
+    public function setScheme(string $scheme): self
+    {
         $this->scheme = $scheme;
+
+        return $this;
+    }
+
+    /**
+     * Value of the process identifier.
+     */
+    public function setValue(string $value): self
+    {
         $this->value = $value;
+
+        return $this;
     }
 }

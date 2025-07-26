@@ -32,23 +32,58 @@ final class PaymentDetailCreate implements BaseModel
     #[Api(optional: true)]
     public ?string $swift;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         ?string $bankAccountNumber = null,
         ?string $iban = null,
         ?string $paymentReference = null,
         ?string $swift = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $bankAccountNumber && $this
-            ->bankAccountNumber = $bankAccountNumber
-        ;
-        null !== $iban && $this->iban = $iban;
-        null !== $paymentReference && $this->paymentReference = $paymentReference;
-        null !== $swift && $this->swift = $swift;
+        null !== $bankAccountNumber && $obj->bankAccountNumber = $bankAccountNumber;
+        null !== $iban && $obj->iban = $iban;
+        null !== $paymentReference && $obj->paymentReference = $paymentReference;
+        null !== $swift && $obj->swift = $swift;
+
+        return $obj;
+    }
+
+    public function setBankAccountNumber(?string $bankAccountNumber): self
+    {
+        $this->bankAccountNumber = $bankAccountNumber;
+
+        return $this;
+    }
+
+    public function setIban(?string $iban): self
+    {
+        $this->iban = $iban;
+
+        return $this;
+    }
+
+    public function setPaymentReference(?string $paymentReference): self
+    {
+        $this->paymentReference = $paymentReference;
+
+        return $this;
+    }
+
+    public function setSwift(?string $swift): self
+    {
+        $this->swift = $swift;
+
+        return $this;
     }
 }

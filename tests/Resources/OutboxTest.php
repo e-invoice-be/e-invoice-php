@@ -38,7 +38,7 @@ final class OutboxTest extends TestCase
         $result = $this
             ->client
             ->outbox
-            ->listDraftDocuments(new OutboxListDraftDocumentsParam())
+            ->listDraftDocuments(new OutboxListDraftDocumentsParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -54,7 +54,7 @@ final class OutboxTest extends TestCase
         $result = $this
             ->client
             ->outbox
-            ->listReceivedDocuments(new OutboxListReceivedDocumentsParam())
+            ->listReceivedDocuments(new OutboxListReceivedDocumentsParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

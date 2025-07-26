@@ -219,19 +219,27 @@ final class DocumentCreateParam implements BaseModel
     #[Api('vendor_tax_id', optional: true)]
     public ?string $vendorTaxID;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<DocumentAttachmentCreate> $attachments
-     * @param CurrencyCode::*                     $currency
-     * @param DocumentDirection::*                $direction
-     * @param DocumentType::*                     $documentType
-     * @param null|list<Item>                     $items
-     * @param null|list<PaymentDetailCreate>      $paymentDetails
-     * @param DocumentState::*                    $state
-     * @param null|list<TaxDetail>                $taxDetails
+     * @param CurrencyCode::* $currency
+     * @param DocumentDirection::* $direction
+     * @param DocumentType::* $documentType
+     * @param null|list<Item> $items
+     * @param null|list<PaymentDetailCreate> $paymentDetails
+     * @param DocumentState::* $state
+     * @param null|list<TaxDetail> $taxDetails
      */
-    final public function __construct(
+    public static function new(
         null|float|string $amountDue = null,
         ?array $attachments = null,
         ?string $billingAddress = null,
@@ -273,66 +281,51 @@ final class DocumentCreateParam implements BaseModel
         ?string $vendorEmail = null,
         ?string $vendorName = null,
         ?string $vendorTaxID = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $amountDue && $this->amountDue = $amountDue;
-        null !== $attachments && $this->attachments = $attachments;
-        null !== $billingAddress && $this->billingAddress = $billingAddress;
-        null !== $billingAddressRecipient && $this
-            ->billingAddressRecipient = $billingAddressRecipient
-        ;
-        null !== $currency && $this->currency = $currency;
-        null !== $customerAddress && $this->customerAddress = $customerAddress;
-        null !== $customerAddressRecipient && $this
-            ->customerAddressRecipient = $customerAddressRecipient
-        ;
-        null !== $customerEmail && $this->customerEmail = $customerEmail;
-        null !== $customerID && $this->customerID = $customerID;
-        null !== $customerName && $this->customerName = $customerName;
-        null !== $customerTaxID && $this->customerTaxID = $customerTaxID;
-        null !== $direction && $this->direction = $direction;
-        null !== $documentType && $this->documentType = $documentType;
-        null !== $dueDate && $this->dueDate = $dueDate;
-        null !== $invoiceDate && $this->invoiceDate = $invoiceDate;
-        null !== $invoiceID && $this->invoiceID = $invoiceID;
-        null !== $invoiceTotal && $this->invoiceTotal = $invoiceTotal;
-        null !== $items && $this->items = $items;
-        null !== $note && $this->note = $note;
-        null !== $paymentDetails && $this->paymentDetails = $paymentDetails;
-        null !== $paymentTerm && $this->paymentTerm = $paymentTerm;
-        null !== $previousUnpaidBalance && $this
-            ->previousUnpaidBalance = $previousUnpaidBalance
-        ;
-        null !== $purchaseOrder && $this->purchaseOrder = $purchaseOrder;
-        null !== $remittanceAddress && $this
-            ->remittanceAddress = $remittanceAddress
-        ;
-        null !== $remittanceAddressRecipient && $this
-            ->remittanceAddressRecipient = $remittanceAddressRecipient
-        ;
-        null !== $serviceAddress && $this->serviceAddress = $serviceAddress;
-        null !== $serviceAddressRecipient && $this
-            ->serviceAddressRecipient = $serviceAddressRecipient
-        ;
-        null !== $serviceEndDate && $this->serviceEndDate = $serviceEndDate;
-        null !== $serviceStartDate && $this->serviceStartDate = $serviceStartDate;
-        null !== $shippingAddress && $this->shippingAddress = $shippingAddress;
-        null !== $shippingAddressRecipient && $this
-            ->shippingAddressRecipient = $shippingAddressRecipient
-        ;
-        null !== $state && $this->state = $state;
-        null !== $subtotal && $this->subtotal = $subtotal;
-        null !== $taxDetails && $this->taxDetails = $taxDetails;
-        null !== $totalDiscount && $this->totalDiscount = $totalDiscount;
-        null !== $totalTax && $this->totalTax = $totalTax;
-        null !== $vendorAddress && $this->vendorAddress = $vendorAddress;
-        null !== $vendorAddressRecipient && $this
-            ->vendorAddressRecipient = $vendorAddressRecipient
-        ;
-        null !== $vendorEmail && $this->vendorEmail = $vendorEmail;
-        null !== $vendorName && $this->vendorName = $vendorName;
-        null !== $vendorTaxID && $this->vendorTaxID = $vendorTaxID;
+        null !== $amountDue && $obj->amountDue = $amountDue;
+        null !== $attachments && $obj->attachments = $attachments;
+        null !== $billingAddress && $obj->billingAddress = $billingAddress;
+        null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
+        null !== $currency && $obj->currency = $currency;
+        null !== $customerAddress && $obj->customerAddress = $customerAddress;
+        null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
+        null !== $customerEmail && $obj->customerEmail = $customerEmail;
+        null !== $customerID && $obj->customerID = $customerID;
+        null !== $customerName && $obj->customerName = $customerName;
+        null !== $customerTaxID && $obj->customerTaxID = $customerTaxID;
+        null !== $direction && $obj->direction = $direction;
+        null !== $documentType && $obj->documentType = $documentType;
+        null !== $dueDate && $obj->dueDate = $dueDate;
+        null !== $invoiceDate && $obj->invoiceDate = $invoiceDate;
+        null !== $invoiceID && $obj->invoiceID = $invoiceID;
+        null !== $invoiceTotal && $obj->invoiceTotal = $invoiceTotal;
+        null !== $items && $obj->items = $items;
+        null !== $note && $obj->note = $note;
+        null !== $paymentDetails && $obj->paymentDetails = $paymentDetails;
+        null !== $paymentTerm && $obj->paymentTerm = $paymentTerm;
+        null !== $previousUnpaidBalance && $obj->previousUnpaidBalance = $previousUnpaidBalance;
+        null !== $purchaseOrder && $obj->purchaseOrder = $purchaseOrder;
+        null !== $remittanceAddress && $obj->remittanceAddress = $remittanceAddress;
+        null !== $remittanceAddressRecipient && $obj->remittanceAddressRecipient = $remittanceAddressRecipient;
+        null !== $serviceAddress && $obj->serviceAddress = $serviceAddress;
+        null !== $serviceAddressRecipient && $obj->serviceAddressRecipient = $serviceAddressRecipient;
+        null !== $serviceEndDate && $obj->serviceEndDate = $serviceEndDate;
+        null !== $serviceStartDate && $obj->serviceStartDate = $serviceStartDate;
+        null !== $shippingAddress && $obj->shippingAddress = $shippingAddress;
+        null !== $shippingAddressRecipient && $obj->shippingAddressRecipient = $shippingAddressRecipient;
+        null !== $state && $obj->state = $state;
+        null !== $subtotal && $obj->subtotal = $subtotal;
+        null !== $taxDetails && $obj->taxDetails = $taxDetails;
+        null !== $totalDiscount && $obj->totalDiscount = $totalDiscount;
+        null !== $totalTax && $obj->totalTax = $totalTax;
+        null !== $vendorAddress && $obj->vendorAddress = $vendorAddress;
+        null !== $vendorAddressRecipient && $obj->vendorAddressRecipient = $vendorAddressRecipient;
+        null !== $vendorEmail && $obj->vendorEmail = $vendorEmail;
+        null !== $vendorName && $obj->vendorName = $vendorName;
+        null !== $vendorTaxID && $obj->vendorTaxID = $vendorTaxID;
+
+        return $obj;
     }
 }

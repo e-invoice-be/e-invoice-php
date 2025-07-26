@@ -22,13 +22,23 @@ final class AttachmentDeleteParam implements BaseModel
     #[Api]
     public string $documentID;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $documentID)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
-        $this->documentID = $documentID;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $documentID): self
+    {
+        $obj = new self;
+
+        $obj->documentID = $documentID;
+
+        return $obj;
     }
 }

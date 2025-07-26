@@ -33,16 +33,25 @@ final class LookupRetrieveParticipantsParam implements BaseModel
     #[Api(optional: true)]
     public ?string $countryCode;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $query, ?string $countryCode = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        $this->query = $query;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $query, ?string $countryCode = null): self
+    {
+        $obj = new self;
 
-        null !== $countryCode && $this->countryCode = $countryCode;
+        $obj->query = $query;
+
+        null !== $countryCode && $obj->countryCode = $countryCode;
+
+        return $obj;
     }
 }

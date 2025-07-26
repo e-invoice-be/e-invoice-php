@@ -38,24 +38,72 @@ final class PaginatedDocumentResponse implements BaseModel
     #[Api]
     public int $total;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<DocumentResponse> $items
      */
-    final public function __construct(
+    public static function new(
         array $items,
         int $page,
         int $pageSize,
         int $pages,
         int $total
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->items = $items;
+        $obj->page = $page;
+        $obj->pageSize = $pageSize;
+        $obj->pages = $pages;
+        $obj->total = $total;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<DocumentResponse> $items
+     */
+    public function setItems(array $items): self
+    {
         $this->items = $items;
+
+        return $this;
+    }
+
+    public function setPage(int $page): self
+    {
         $this->page = $page;
+
+        return $this;
+    }
+
+    public function setPageSize(int $pageSize): self
+    {
         $this->pageSize = $pageSize;
+
+        return $this;
+    }
+
+    public function setPages(int $pages): self
+    {
         $this->pages = $pages;
+
+        return $this;
+    }
+
+    public function setTotal(int $total): self
+    {
         $this->total = $total;
+
+        return $this;
     }
 }

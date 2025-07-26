@@ -13,7 +13,7 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 /**
  * Create a new webhook.
  *
- * @phpstan-type create_params = array{
+ * @phpstan-type create_params1 = array{
  *   events: list<string>, url: string, enabled?: bool
  * }
  */
@@ -32,22 +32,31 @@ final class WebhookCreateParam implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $events
      */
-    final public function __construct(
+    public static function new(
         array $events,
         string $url,
         ?bool $enabled = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        $this->events = $events;
-        $this->url = $url;
+        $obj->events = $events;
+        $obj->url = $url;
 
-        null !== $enabled && $this->enabled = $enabled;
+        null !== $enabled && $obj->enabled = $enabled;
+
+        return $obj;
     }
 }

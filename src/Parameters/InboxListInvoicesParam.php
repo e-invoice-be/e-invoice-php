@@ -31,15 +31,24 @@ final class InboxListInvoicesParam implements BaseModel
     #[Api(optional: true)]
     public ?int $pageSize;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(?int $page = null, ?int $pageSize = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $page && $this->page = $page;
-        null !== $pageSize && $this->pageSize = $pageSize;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(?int $page = null, ?int $pageSize = null): self
+    {
+        $obj = new self;
+
+        null !== $page && $obj->page = $page;
+        null !== $pageSize && $obj->pageSize = $pageSize;
+
+        return $obj;
     }
 }

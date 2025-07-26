@@ -23,13 +23,33 @@ final class DNSRecord implements BaseModel
     #[Api]
     public string $ip;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $ip)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $ip): self
+    {
+        $obj = new self;
+
+        $obj->ip = $ip;
+
+        return $obj;
+    }
+
+    /**
+     * IP address found in the DNS record.
+     */
+    public function setIP(string $ip): self
+    {
         $this->ip = $ip;
+
+        return $this;
     }
 }

@@ -93,13 +93,21 @@ final class LookupGetResponse implements BaseModel
     #[Api]
     public string $status;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Certificate> $certificates
-     * @param list<string>      $errors
+     * @param list<string> $errors
      */
-    final public function __construct(
+    public static function new(
         BusinessCard $businessCard,
         array $certificates,
         DNSInfo $dnsInfo,
@@ -108,16 +116,102 @@ final class LookupGetResponse implements BaseModel
         QueryMetadata $queryMetadata,
         ServiceMetadata $serviceMetadata,
         string $status,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->businessCard = $businessCard;
+        $obj->certificates = $certificates;
+        $obj->dnsInfo = $dnsInfo;
+        $obj->errors = $errors;
+        $obj->executionTimeMs = $executionTimeMs;
+        $obj->queryMetadata = $queryMetadata;
+        $obj->serviceMetadata = $serviceMetadata;
+        $obj->status = $status;
+
+        return $obj;
+    }
+
+    /**
+     * Business card information for the Peppol participant.
+     */
+    public function setBusinessCard(BusinessCard $businessCard): self
+    {
         $this->businessCard = $businessCard;
+
+        return $this;
+    }
+
+    /**
+     * List of certificates found for the Peppol participant.
+     *
+     * @param list<Certificate> $certificates
+     */
+    public function setCertificates(array $certificates): self
+    {
         $this->certificates = $certificates;
+
+        return $this;
+    }
+
+    /**
+     * Information about the DNS lookup performed.
+     */
+    public function setDNSInfo(DNSInfo $dnsInfo): self
+    {
         $this->dnsInfo = $dnsInfo;
+
+        return $this;
+    }
+
+    /**
+     * List of error messages if any errors occurred during the lookup.
+     *
+     * @param list<string> $errors
+     */
+    public function setErrors(array $errors): self
+    {
         $this->errors = $errors;
+
+        return $this;
+    }
+
+    /**
+     * Total execution time of the lookup operation in milliseconds.
+     */
+    public function setExecutionTimeMs(float $executionTimeMs): self
+    {
         $this->executionTimeMs = $executionTimeMs;
+
+        return $this;
+    }
+
+    /**
+     * Metadata about the query that was performed.
+     */
+    public function setQueryMetadata(QueryMetadata $queryMetadata): self
+    {
         $this->queryMetadata = $queryMetadata;
+
+        return $this;
+    }
+
+    /**
+     * Service metadata information for the Peppol participant.
+     */
+    public function setServiceMetadata(ServiceMetadata $serviceMetadata): self
+    {
         $this->serviceMetadata = $serviceMetadata;
+
+        return $this;
+    }
+
+    /**
+     * Overall status of the lookup: 'success' or 'error'.
+     */
+    public function setStatus(string $status): self
+    {
         $this->status = $status;
+
+        return $this;
     }
 }

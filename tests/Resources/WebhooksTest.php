@@ -39,7 +39,7 @@ final class WebhooksTest extends TestCase
             ->client
             ->webhooks
             ->create(
-                new WebhookCreateParam(events: ['string'], url: 'https://example.com')
+                WebhookCreateParam::new(events: ['string'], url: 'https://example.com')
             )
         ;
 
@@ -57,7 +57,7 @@ final class WebhooksTest extends TestCase
             ->client
             ->webhooks
             ->create(
-                new WebhookCreateParam(
+                WebhookCreateParam::new(
                     events: ['string'],
                     url: 'https://example.com',
                     enabled: true
@@ -90,7 +90,7 @@ final class WebhooksTest extends TestCase
         $result = $this
             ->client
             ->webhooks
-            ->update('webhook_id', new WebhookUpdateParam())
+            ->update('webhook_id', new WebhookUpdateParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

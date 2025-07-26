@@ -50,24 +50,75 @@ final class DNSInfo implements BaseModel
     #[Api(optional: true)]
     public ?string $error;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<DNSRecord> $dnsRecords
      */
-    final public function __construct(
+    public static function new(
         array $dnsRecords,
         string $smlHostname,
         string $status,
         ?string $error = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->dnsRecords = $dnsRecords;
+        $obj->smlHostname = $smlHostname;
+        $obj->status = $status;
+
+        null !== $error && $obj->error = $error;
+
+        return $obj;
+    }
+
+    /**
+     * List of DNS records found for the Peppol participant.
+     *
+     * @param list<DNSRecord> $dnsRecords
+     */
+    public function setDNSRecords(array $dnsRecords): self
+    {
         $this->dnsRecords = $dnsRecords;
+
+        return $this;
+    }
+
+    /**
+     * Hostname of the SML used for the query.
+     */
+    public function setSmlHostname(string $smlHostname): self
+    {
         $this->smlHostname = $smlHostname;
+
+        return $this;
+    }
+
+    /**
+     * Status of the DNS lookup: 'success', 'error', or 'pending'.
+     */
+    public function setStatus(string $status): self
+    {
         $this->status = $status;
 
-        null !== $error && $this->error = $error;
+        return $this;
+    }
+
+    /**
+     * Error message if the DNS lookup failed.
+     */
+    public function setError(?string $error): self
+    {
+        $this->error = $error;
+
+        return $this;
     }
 }

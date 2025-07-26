@@ -36,7 +36,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->inbox->list(new InboxListParam());
+        $result = $this->client->inbox->list(new InboxListParam);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -51,7 +51,7 @@ final class InboxTest extends TestCase
         $result = $this
             ->client
             ->inbox
-            ->listCreditNotes(new InboxListCreditNotesParam())
+            ->listCreditNotes(new InboxListCreditNotesParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -64,7 +64,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->inbox->listInvoices(new InboxListInvoicesParam());
+        $result = $this->client->inbox->listInvoices(new InboxListInvoicesParam);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

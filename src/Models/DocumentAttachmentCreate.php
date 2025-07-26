@@ -29,22 +29,59 @@ final class DocumentAttachmentCreate implements BaseModel
     #[Api('file_type', optional: true)]
     public ?string $fileType;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $fileName,
         ?string $fileData = null,
         ?int $fileSize = null,
         ?string $fileType = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->fileName = $fileName;
+
+        null !== $fileData && $obj->fileData = $fileData;
+        null !== $fileSize && $obj->fileSize = $fileSize;
+        null !== $fileType && $obj->fileType = $fileType;
+
+        return $obj;
+    }
+
+    public function setFileName(string $fileName): self
+    {
         $this->fileName = $fileName;
 
-        null !== $fileData && $this->fileData = $fileData;
-        null !== $fileSize && $this->fileSize = $fileSize;
-        null !== $fileType && $this->fileType = $fileType;
+        return $this;
+    }
+
+    public function setFileData(?string $fileData): self
+    {
+        $this->fileData = $fileData;
+
+        return $this;
+    }
+
+    public function setFileSize(int $fileSize): self
+    {
+        $this->fileSize = $fileSize;
+
+        return $this;
+    }
+
+    public function setFileType(string $fileType): self
+    {
+        $this->fileType = $fileType;
+
+        return $this;
     }
 }

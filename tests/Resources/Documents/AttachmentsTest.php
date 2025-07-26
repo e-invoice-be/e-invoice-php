@@ -42,7 +42,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve(
                 'attachment_id',
-                new AttachmentRetrieveParam(documentID: 'document_id')
+                AttachmentRetrieveParam::new(documentID: 'document_id')
             )
         ;
 
@@ -62,7 +62,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve(
                 'attachment_id',
-                new AttachmentRetrieveParam(documentID: 'document_id')
+                AttachmentRetrieveParam::new(documentID: 'document_id')
             )
         ;
 
@@ -94,7 +94,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete(
                 'attachment_id',
-                new AttachmentDeleteParam(documentID: 'document_id')
+                AttachmentDeleteParam::new(documentID: 'document_id')
             )
         ;
 
@@ -114,7 +114,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete(
                 'attachment_id',
-                new AttachmentDeleteParam(documentID: 'document_id')
+                AttachmentDeleteParam::new(documentID: 'document_id')
             )
         ;
 
@@ -132,7 +132,7 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->add('document_id', new AttachmentAddParam(file: 'file'))
+            ->add('document_id', AttachmentAddParam::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -149,7 +149,7 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->add('document_id', new AttachmentAddParam(file: 'file'))
+            ->add('document_id', AttachmentAddParam::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

@@ -36,24 +36,68 @@ final class DocumentAttachment implements BaseModel
     #[Api('file_url', optional: true)]
     public ?string $fileURL;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $id,
         string $fileName,
         ?int $fileSize = null,
         ?string $fileType = null,
         ?string $fileURL = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->id = $id;
+        $obj->fileName = $fileName;
+
+        null !== $fileSize && $obj->fileSize = $fileSize;
+        null !== $fileType && $obj->fileType = $fileType;
+        null !== $fileURL && $obj->fileURL = $fileURL;
+
+        return $obj;
+    }
+
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function setFileName(string $fileName): self
+    {
         $this->fileName = $fileName;
 
-        null !== $fileSize && $this->fileSize = $fileSize;
-        null !== $fileType && $this->fileType = $fileType;
-        null !== $fileURL && $this->fileURL = $fileURL;
+        return $this;
+    }
+
+    public function setFileSize(int $fileSize): self
+    {
+        $this->fileSize = $fileSize;
+
+        return $this;
+    }
+
+    public function setFileType(string $fileType): self
+    {
+        $this->fileType = $fileType;
+
+        return $this;
+    }
+
+    public function setFileURL(?string $fileURL): self
+    {
+        $this->fileURL = $fileURL;
+
+        return $this;
     }
 }

@@ -35,7 +35,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->documents->create(new DocumentCreateParam());
+        $result = $this->client->documents->create(new DocumentCreateParam);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -74,7 +74,7 @@ final class DocumentsTest extends TestCase
         $result = $this
             ->client
             ->documents
-            ->send('document_id', new DocumentSendParam())
+            ->send('document_id', new DocumentSendParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

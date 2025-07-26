@@ -82,13 +82,21 @@ final class OutboxListReceivedDocumentsParam implements BaseModel
     #[Api(enum: DocumentType::class, optional: true)]
     public ?string $type;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param DocumentState::* $state
-     * @param DocumentType::*  $type
+     * @param DocumentType::* $type
      */
-    final public function __construct(
+    public static function new(
         ?\DateTimeInterface $dateFrom = null,
         ?\DateTimeInterface $dateTo = null,
         ?int $page = null,
@@ -97,17 +105,18 @@ final class OutboxListReceivedDocumentsParam implements BaseModel
         ?string $sender = null,
         ?string $state = null,
         ?string $type = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $dateFrom && $this->dateFrom = $dateFrom;
-        null !== $dateTo && $this->dateTo = $dateTo;
-        null !== $page && $this->page = $page;
-        null !== $pageSize && $this->pageSize = $pageSize;
-        null !== $search && $this->search = $search;
-        null !== $sender && $this->sender = $sender;
-        null !== $state && $this->state = $state;
-        null !== $type && $this->type = $type;
+        null !== $dateFrom && $obj->dateFrom = $dateFrom;
+        null !== $dateTo && $obj->dateTo = $dateTo;
+        null !== $page && $obj->page = $page;
+        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $search && $obj->search = $search;
+        null !== $sender && $obj->sender = $sender;
+        null !== $state && $obj->state = $state;
+        null !== $type && $obj->type = $type;
+
+        return $obj;
     }
 }

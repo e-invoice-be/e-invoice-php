@@ -49,25 +49,75 @@ final class Entity implements BaseModel
     #[Api(optional: true)]
     public ?string $registrationDate;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<string> $additionalInformation
      */
-    final public function __construct(
+    public static function new(
         ?array $additionalInformation = null,
         ?string $countryCode = null,
         ?string $name = null,
         ?string $registrationDate = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $additionalInformation && $this
-            ->additionalInformation = $additionalInformation
-        ;
-        null !== $countryCode && $this->countryCode = $countryCode;
-        null !== $name && $this->name = $name;
-        null !== $registrationDate && $this->registrationDate = $registrationDate;
+        null !== $additionalInformation && $obj->additionalInformation = $additionalInformation;
+        null !== $countryCode && $obj->countryCode = $countryCode;
+        null !== $name && $obj->name = $name;
+        null !== $registrationDate && $obj->registrationDate = $registrationDate;
+
+        return $obj;
+    }
+
+    /**
+     * Additional information about the business entity.
+     *
+     * @param null|list<string> $additionalInformation
+     */
+    public function setAdditionalInformation(
+        ?array $additionalInformation
+    ): self {
+        $this->additionalInformation = $additionalInformation;
+
+        return $this;
+    }
+
+    /**
+     * ISO 3166-1 alpha-2 country code of the business entity.
+     */
+    public function setCountryCode(?string $countryCode): self
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Name of the business entity.
+     */
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * ISO 8601 date of when the entity was registered in Peppol.
+     */
+    public function setRegistrationDate(?string $registrationDate): self
+    {
+        $this->registrationDate = $registrationDate;
+
+        return $this;
     }
 }

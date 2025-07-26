@@ -209,19 +209,27 @@ final class DocumentCreate implements BaseModel
     #[Api('vendor_tax_id', optional: true)]
     public ?string $vendorTaxID;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<DocumentAttachmentCreate> $attachments
-     * @param CurrencyCode::*                     $currency
-     * @param DocumentDirection::*                $direction
-     * @param DocumentType::*                     $documentType
-     * @param null|list<Item>                     $items
-     * @param null|list<PaymentDetailCreate>      $paymentDetails
-     * @param DocumentState::*                    $state
-     * @param null|list<TaxDetail>                $taxDetails
+     * @param CurrencyCode::* $currency
+     * @param DocumentDirection::* $direction
+     * @param DocumentType::* $documentType
+     * @param null|list<Item> $items
+     * @param null|list<PaymentDetailCreate> $paymentDetails
+     * @param DocumentState::* $state
+     * @param null|list<TaxDetail> $taxDetails
      */
-    final public function __construct(
+    public static function new(
         null|float|string $amountDue = null,
         ?array $attachments = null,
         ?string $billingAddress = null,
@@ -263,66 +271,372 @@ final class DocumentCreate implements BaseModel
         ?string $vendorEmail = null,
         ?string $vendorName = null,
         ?string $vendorTaxID = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $amountDue && $this->amountDue = $amountDue;
-        null !== $attachments && $this->attachments = $attachments;
-        null !== $billingAddress && $this->billingAddress = $billingAddress;
-        null !== $billingAddressRecipient && $this
-            ->billingAddressRecipient = $billingAddressRecipient
-        ;
-        null !== $currency && $this->currency = $currency;
-        null !== $customerAddress && $this->customerAddress = $customerAddress;
-        null !== $customerAddressRecipient && $this
-            ->customerAddressRecipient = $customerAddressRecipient
-        ;
-        null !== $customerEmail && $this->customerEmail = $customerEmail;
-        null !== $customerID && $this->customerID = $customerID;
-        null !== $customerName && $this->customerName = $customerName;
-        null !== $customerTaxID && $this->customerTaxID = $customerTaxID;
-        null !== $direction && $this->direction = $direction;
-        null !== $documentType && $this->documentType = $documentType;
-        null !== $dueDate && $this->dueDate = $dueDate;
-        null !== $invoiceDate && $this->invoiceDate = $invoiceDate;
-        null !== $invoiceID && $this->invoiceID = $invoiceID;
-        null !== $invoiceTotal && $this->invoiceTotal = $invoiceTotal;
-        null !== $items && $this->items = $items;
-        null !== $note && $this->note = $note;
-        null !== $paymentDetails && $this->paymentDetails = $paymentDetails;
-        null !== $paymentTerm && $this->paymentTerm = $paymentTerm;
-        null !== $previousUnpaidBalance && $this
-            ->previousUnpaidBalance = $previousUnpaidBalance
-        ;
-        null !== $purchaseOrder && $this->purchaseOrder = $purchaseOrder;
-        null !== $remittanceAddress && $this
-            ->remittanceAddress = $remittanceAddress
-        ;
-        null !== $remittanceAddressRecipient && $this
-            ->remittanceAddressRecipient = $remittanceAddressRecipient
-        ;
-        null !== $serviceAddress && $this->serviceAddress = $serviceAddress;
-        null !== $serviceAddressRecipient && $this
-            ->serviceAddressRecipient = $serviceAddressRecipient
-        ;
-        null !== $serviceEndDate && $this->serviceEndDate = $serviceEndDate;
-        null !== $serviceStartDate && $this->serviceStartDate = $serviceStartDate;
-        null !== $shippingAddress && $this->shippingAddress = $shippingAddress;
-        null !== $shippingAddressRecipient && $this
-            ->shippingAddressRecipient = $shippingAddressRecipient
-        ;
-        null !== $state && $this->state = $state;
-        null !== $subtotal && $this->subtotal = $subtotal;
-        null !== $taxDetails && $this->taxDetails = $taxDetails;
-        null !== $totalDiscount && $this->totalDiscount = $totalDiscount;
-        null !== $totalTax && $this->totalTax = $totalTax;
-        null !== $vendorAddress && $this->vendorAddress = $vendorAddress;
-        null !== $vendorAddressRecipient && $this
-            ->vendorAddressRecipient = $vendorAddressRecipient
-        ;
-        null !== $vendorEmail && $this->vendorEmail = $vendorEmail;
-        null !== $vendorName && $this->vendorName = $vendorName;
-        null !== $vendorTaxID && $this->vendorTaxID = $vendorTaxID;
+        null !== $amountDue && $obj->amountDue = $amountDue;
+        null !== $attachments && $obj->attachments = $attachments;
+        null !== $billingAddress && $obj->billingAddress = $billingAddress;
+        null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
+        null !== $currency && $obj->currency = $currency;
+        null !== $customerAddress && $obj->customerAddress = $customerAddress;
+        null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
+        null !== $customerEmail && $obj->customerEmail = $customerEmail;
+        null !== $customerID && $obj->customerID = $customerID;
+        null !== $customerName && $obj->customerName = $customerName;
+        null !== $customerTaxID && $obj->customerTaxID = $customerTaxID;
+        null !== $direction && $obj->direction = $direction;
+        null !== $documentType && $obj->documentType = $documentType;
+        null !== $dueDate && $obj->dueDate = $dueDate;
+        null !== $invoiceDate && $obj->invoiceDate = $invoiceDate;
+        null !== $invoiceID && $obj->invoiceID = $invoiceID;
+        null !== $invoiceTotal && $obj->invoiceTotal = $invoiceTotal;
+        null !== $items && $obj->items = $items;
+        null !== $note && $obj->note = $note;
+        null !== $paymentDetails && $obj->paymentDetails = $paymentDetails;
+        null !== $paymentTerm && $obj->paymentTerm = $paymentTerm;
+        null !== $previousUnpaidBalance && $obj->previousUnpaidBalance = $previousUnpaidBalance;
+        null !== $purchaseOrder && $obj->purchaseOrder = $purchaseOrder;
+        null !== $remittanceAddress && $obj->remittanceAddress = $remittanceAddress;
+        null !== $remittanceAddressRecipient && $obj->remittanceAddressRecipient = $remittanceAddressRecipient;
+        null !== $serviceAddress && $obj->serviceAddress = $serviceAddress;
+        null !== $serviceAddressRecipient && $obj->serviceAddressRecipient = $serviceAddressRecipient;
+        null !== $serviceEndDate && $obj->serviceEndDate = $serviceEndDate;
+        null !== $serviceStartDate && $obj->serviceStartDate = $serviceStartDate;
+        null !== $shippingAddress && $obj->shippingAddress = $shippingAddress;
+        null !== $shippingAddressRecipient && $obj->shippingAddressRecipient = $shippingAddressRecipient;
+        null !== $state && $obj->state = $state;
+        null !== $subtotal && $obj->subtotal = $subtotal;
+        null !== $taxDetails && $obj->taxDetails = $taxDetails;
+        null !== $totalDiscount && $obj->totalDiscount = $totalDiscount;
+        null !== $totalTax && $obj->totalTax = $totalTax;
+        null !== $vendorAddress && $obj->vendorAddress = $vendorAddress;
+        null !== $vendorAddressRecipient && $obj->vendorAddressRecipient = $vendorAddressRecipient;
+        null !== $vendorEmail && $obj->vendorEmail = $vendorEmail;
+        null !== $vendorName && $obj->vendorName = $vendorName;
+        null !== $vendorTaxID && $obj->vendorTaxID = $vendorTaxID;
+
+        return $obj;
+    }
+
+    public function setAmountDue(null|float|string $amountDue): self
+    {
+        $this->amountDue = $amountDue;
+
+        return $this;
+    }
+
+    /**
+     * @param null|list<DocumentAttachmentCreate> $attachments
+     */
+    public function setAttachments(?array $attachments): self
+    {
+        $this->attachments = $attachments;
+
+        return $this;
+    }
+
+    public function setBillingAddress(?string $billingAddress): self
+    {
+        $this->billingAddress = $billingAddress;
+
+        return $this;
+    }
+
+    public function setBillingAddressRecipient(
+        ?string $billingAddressRecipient
+    ): self {
+        $this->billingAddressRecipient = $billingAddressRecipient;
+
+        return $this;
+    }
+
+    /**
+     * Currency of the invoice.
+     *
+     * @param CurrencyCode::* $currency
+     */
+    public function setCurrency(string $currency): self
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function setCustomerAddress(?string $customerAddress): self
+    {
+        $this->customerAddress = $customerAddress;
+
+        return $this;
+    }
+
+    public function setCustomerAddressRecipient(
+        ?string $customerAddressRecipient
+    ): self {
+        $this->customerAddressRecipient = $customerAddressRecipient;
+
+        return $this;
+    }
+
+    public function setCustomerEmail(?string $customerEmail): self
+    {
+        $this->customerEmail = $customerEmail;
+
+        return $this;
+    }
+
+    public function setCustomerID(?string $customerID): self
+    {
+        $this->customerID = $customerID;
+
+        return $this;
+    }
+
+    public function setCustomerName(?string $customerName): self
+    {
+        $this->customerName = $customerName;
+
+        return $this;
+    }
+
+    public function setCustomerTaxID(?string $customerTaxID): self
+    {
+        $this->customerTaxID = $customerTaxID;
+
+        return $this;
+    }
+
+    /**
+     * @param DocumentDirection::* $direction
+     */
+    public function setDirection(string $direction): self
+    {
+        $this->direction = $direction;
+
+        return $this;
+    }
+
+    /**
+     * @param DocumentType::* $documentType
+     */
+    public function setDocumentType(string $documentType): self
+    {
+        $this->documentType = $documentType;
+
+        return $this;
+    }
+
+    public function setDueDate(?\DateTimeInterface $dueDate): self
+    {
+        $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    public function setInvoiceDate(?\DateTimeInterface $invoiceDate): self
+    {
+        $this->invoiceDate = $invoiceDate;
+
+        return $this;
+    }
+
+    public function setInvoiceID(?string $invoiceID): self
+    {
+        $this->invoiceID = $invoiceID;
+
+        return $this;
+    }
+
+    public function setInvoiceTotal(null|float|string $invoiceTotal): self
+    {
+        $this->invoiceTotal = $invoiceTotal;
+
+        return $this;
+    }
+
+    /**
+     * @param null|list<Item> $items
+     */
+    public function setItems(?array $items): self
+    {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    public function setNote(?string $note): self
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @param null|list<PaymentDetailCreate> $paymentDetails
+     */
+    public function setPaymentDetails(?array $paymentDetails): self
+    {
+        $this->paymentDetails = $paymentDetails;
+
+        return $this;
+    }
+
+    public function setPaymentTerm(?string $paymentTerm): self
+    {
+        $this->paymentTerm = $paymentTerm;
+
+        return $this;
+    }
+
+    public function setPreviousUnpaidBalance(
+        null|float|string $previousUnpaidBalance
+    ): self {
+        $this->previousUnpaidBalance = $previousUnpaidBalance;
+
+        return $this;
+    }
+
+    public function setPurchaseOrder(?string $purchaseOrder): self
+    {
+        $this->purchaseOrder = $purchaseOrder;
+
+        return $this;
+    }
+
+    public function setRemittanceAddress(?string $remittanceAddress): self
+    {
+        $this->remittanceAddress = $remittanceAddress;
+
+        return $this;
+    }
+
+    public function setRemittanceAddressRecipient(
+        ?string $remittanceAddressRecipient
+    ): self {
+        $this->remittanceAddressRecipient = $remittanceAddressRecipient;
+
+        return $this;
+    }
+
+    public function setServiceAddress(?string $serviceAddress): self
+    {
+        $this->serviceAddress = $serviceAddress;
+
+        return $this;
+    }
+
+    public function setServiceAddressRecipient(
+        ?string $serviceAddressRecipient
+    ): self {
+        $this->serviceAddressRecipient = $serviceAddressRecipient;
+
+        return $this;
+    }
+
+    public function setServiceEndDate(?\DateTimeInterface $serviceEndDate): self
+    {
+        $this->serviceEndDate = $serviceEndDate;
+
+        return $this;
+    }
+
+    public function setServiceStartDate(
+        ?\DateTimeInterface $serviceStartDate
+    ): self {
+        $this->serviceStartDate = $serviceStartDate;
+
+        return $this;
+    }
+
+    public function setShippingAddress(?string $shippingAddress): self
+    {
+        $this->shippingAddress = $shippingAddress;
+
+        return $this;
+    }
+
+    public function setShippingAddressRecipient(
+        ?string $shippingAddressRecipient
+    ): self {
+        $this->shippingAddressRecipient = $shippingAddressRecipient;
+
+        return $this;
+    }
+
+    /**
+     * @param DocumentState::* $state
+     */
+    public function setState(string $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function setSubtotal(null|float|string $subtotal): self
+    {
+        $this->subtotal = $subtotal;
+
+        return $this;
+    }
+
+    /**
+     * @param null|list<TaxDetail> $taxDetails
+     */
+    public function setTaxDetails(?array $taxDetails): self
+    {
+        $this->taxDetails = $taxDetails;
+
+        return $this;
+    }
+
+    public function setTotalDiscount(null|float|string $totalDiscount): self
+    {
+        $this->totalDiscount = $totalDiscount;
+
+        return $this;
+    }
+
+    public function setTotalTax(null|float|string $totalTax): self
+    {
+        $this->totalTax = $totalTax;
+
+        return $this;
+    }
+
+    public function setVendorAddress(?string $vendorAddress): self
+    {
+        $this->vendorAddress = $vendorAddress;
+
+        return $this;
+    }
+
+    public function setVendorAddressRecipient(
+        ?string $vendorAddressRecipient
+    ): self {
+        $this->vendorAddressRecipient = $vendorAddressRecipient;
+
+        return $this;
+    }
+
+    public function setVendorEmail(?string $vendorEmail): self
+    {
+        $this->vendorEmail = $vendorEmail;
+
+        return $this;
+    }
+
+    public function setVendorName(?string $vendorName): self
+    {
+        $this->vendorName = $vendorName;
+
+        return $this;
+    }
+
+    public function setVendorTaxID(?string $vendorTaxID): self
+    {
+        $this->vendorTaxID = $vendorTaxID;
+
+        return $this;
     }
 }

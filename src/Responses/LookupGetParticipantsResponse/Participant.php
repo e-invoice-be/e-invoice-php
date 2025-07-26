@@ -57,25 +57,78 @@ final class Participant implements BaseModel
     #[Api(type: new ListOf(Entity::class), optional: true)]
     public ?array $entities;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<DocumentType> $documentTypes
-     * @param null|list<Entity>       $entities
+     * @param null|list<Entity> $entities
      */
-    final public function __construct(
+    public static function new(
         string $peppolID,
         string $peppolScheme,
         ?array $documentTypes = null,
         ?array $entities = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->peppolID = $peppolID;
+        $obj->peppolScheme = $peppolScheme;
+
+        null !== $documentTypes && $obj->documentTypes = $documentTypes;
+        null !== $entities && $obj->entities = $entities;
+
+        return $obj;
+    }
+
+    /**
+     * Peppol ID of the participant.
+     */
+    public function setPeppolID(string $peppolID): self
+    {
         $this->peppolID = $peppolID;
+
+        return $this;
+    }
+
+    /**
+     * Peppol scheme of the participant.
+     */
+    public function setPeppolScheme(string $peppolScheme): self
+    {
         $this->peppolScheme = $peppolScheme;
 
-        null !== $documentTypes && $this->documentTypes = $documentTypes;
-        null !== $entities && $this->entities = $entities;
+        return $this;
+    }
+
+    /**
+     * List of supported document types.
+     *
+     * @param list<DocumentType> $documentTypes
+     */
+    public function setDocumentTypes(array $documentTypes): self
+    {
+        $this->documentTypes = $documentTypes;
+
+        return $this;
+    }
+
+    /**
+     * List of business entities.
+     *
+     * @param list<Entity> $entities
+     */
+    public function setEntities(array $entities): self
+    {
+        $this->entities = $entities;
+
+        return $this;
     }
 }

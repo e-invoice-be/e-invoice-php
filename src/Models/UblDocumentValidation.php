@@ -39,26 +39,73 @@ final class UblDocumentValidation implements BaseModel
     #[Api('ubl_document', optional: true)]
     public ?string $ublDocument;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Issue> $issues
      */
-    final public function __construct(
+    public static function new(
         string $id,
         ?string $fileName,
         bool $isValid,
         array $issues,
         ?string $ublDocument = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->id = $id;
+        $obj->fileName = $fileName;
+        $obj->isValid = $isValid;
+        $obj->issues = $issues;
+
+        null !== $ublDocument && $obj->ublDocument = $ublDocument;
+
+        return $obj;
+    }
+
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function setFileName(?string $fileName): self
+    {
         $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    public function setIsValid(bool $isValid): self
+    {
         $this->isValid = $isValid;
+
+        return $this;
+    }
+
+    /**
+     * @param list<Issue> $issues
+     */
+    public function setIssues(array $issues): self
+    {
         $this->issues = $issues;
 
-        null !== $ublDocument && $this->ublDocument = $ublDocument;
+        return $this;
+    }
+
+    public function setUblDocument(?string $ublDocument): self
+    {
+        $this->ublDocument = $ublDocument;
+
+        return $this;
     }
 }

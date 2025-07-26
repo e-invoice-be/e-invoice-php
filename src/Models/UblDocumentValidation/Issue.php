@@ -46,12 +46,20 @@ final class Issue implements BaseModel
     #[Api(optional: true)]
     public ?string $test;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param Type::* $type
      */
-    final public function __construct(
+    public static function new(
         string $message,
         string $schematron,
         string $type,
@@ -59,17 +67,70 @@ final class Issue implements BaseModel
         ?string $location = null,
         ?string $ruleID = null,
         ?string $test = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->message = $message;
+        $obj->schematron = $schematron;
+        $obj->type = $type;
+
+        null !== $flag && $obj->flag = $flag;
+        null !== $location && $obj->location = $location;
+        null !== $ruleID && $obj->ruleID = $ruleID;
+        null !== $test && $obj->test = $test;
+
+        return $obj;
+    }
+
+    public function setMessage(string $message): self
+    {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function setSchematron(string $schematron): self
+    {
         $this->schematron = $schematron;
+
+        return $this;
+    }
+
+    /**
+     * @param Type::* $type
+     */
+    public function setType(string $type): self
+    {
         $this->type = $type;
 
-        null !== $flag && $this->flag = $flag;
-        null !== $location && $this->location = $location;
-        null !== $ruleID && $this->ruleID = $ruleID;
-        null !== $test && $this->test = $test;
+        return $this;
+    }
+
+    public function setFlag(?string $flag): self
+    {
+        $this->flag = $flag;
+
+        return $this;
+    }
+
+    public function setLocation(?string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function setRuleID(?string $ruleID): self
+    {
+        $this->ruleID = $ruleID;
+
+        return $this;
+    }
+
+    public function setTest(?string $test): self
+    {
+        $this->test = $test;
+
+        return $this;
     }
 }

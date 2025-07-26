@@ -30,19 +30,50 @@ final class BusinessCard implements BaseModel
     #[Api('registration_date', optional: true)]
     public ?\DateTimeInterface $registrationDate;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         ?string $countryCode = null,
         ?string $name = null,
         ?\DateTimeInterface $registrationDate = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $countryCode && $this->countryCode = $countryCode;
-        null !== $name && $this->name = $name;
-        null !== $registrationDate && $this->registrationDate = $registrationDate;
+        null !== $countryCode && $obj->countryCode = $countryCode;
+        null !== $name && $obj->name = $name;
+        null !== $registrationDate && $obj->registrationDate = $registrationDate;
+
+        return $obj;
+    }
+
+    public function setCountryCode(?string $countryCode): self
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function setRegistrationDate(
+        ?\DateTimeInterface $registrationDate
+    ): self {
+        $this->registrationDate = $registrationDate;
+
+        return $this;
     }
 }

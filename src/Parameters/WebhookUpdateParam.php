@@ -32,21 +32,30 @@ final class WebhookUpdateParam implements BaseModel
     #[Api(optional: true)]
     public ?string $url;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<string> $events
      */
-    final public function __construct(
+    public static function new(
         ?bool $enabled = null,
         ?array $events = null,
         ?string $url = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $enabled && $this->enabled = $enabled;
-        null !== $events && $this->events = $events;
-        null !== $url && $this->url = $url;
+        null !== $enabled && $obj->enabled = $enabled;
+        null !== $events && $obj->events = $events;
+        null !== $url && $obj->url = $url;
+
+        return $obj;
     }
 }
