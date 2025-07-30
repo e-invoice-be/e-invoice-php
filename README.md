@@ -1,9 +1,9 @@
 # e-invoice.be PHP API library
 
 > [!NOTE]
-> The E Invoice PHP API Library is currently in alpha.
+> The E Invoice PHP API Library is currently in beta, and there will be a number of breaking changes.
 >
-> There may be frequent breaking changes.
+> A more comprehensive testing suite and language service support features are coming soon.
 
 This library provides convenient access to the e-invoice REST API from any PHP 8.1.0+ application.
 
