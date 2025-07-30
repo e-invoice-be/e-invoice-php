@@ -13,9 +13,9 @@ use EInvoiceAPI\Responses\WebhookDeleteResponse;
 interface WebhooksContract
 {
     /**
-     * @param WebhookCreateParam|array{
+     * @param array{
      *   events: list<string>, url: string, enabled?: bool
-     * } $params
+     * }|WebhookCreateParam $params
      */
     public function create(
         array|WebhookCreateParam $params,
@@ -28,9 +28,9 @@ interface WebhooksContract
     ): WebhookResponse;
 
     /**
-     * @param WebhookUpdateParam|array{
-     *   enabled?: bool|null, events?: list<string>|null, url?: string|null
-     * } $params
+     * @param array{
+     *   enabled?: null|bool, events?: null|list<string>, url?: null|string
+     * }|WebhookUpdateParam $params
      */
     public function update(
         string $webhookID,

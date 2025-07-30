@@ -21,9 +21,9 @@ interface LookupContract
     ): LookupGetResponse;
 
     /**
-     * @param LookupRetrieveParticipantsParam|array{
-     *   query: string, countryCode?: string|null
-     * } $params
+     * @param array{
+     *   query: string, countryCode?: null|string
+     * }|LookupRetrieveParticipantsParam $params
      */
     public function retrieveParticipants(
         array|LookupRetrieveParticipantsParam $params,
