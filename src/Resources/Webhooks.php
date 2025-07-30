@@ -21,9 +21,9 @@ final class Webhooks implements WebhooksContract
     /**
      * Create a new webhook.
      *
-     * @param WebhookCreateParam|array{
+     * @param array{
      *   events: list<string>, url: string, enabled?: bool
-     * } $params
+     * }|WebhookCreateParam $params
      */
     public function create(
         array|WebhookCreateParam $params,
@@ -64,9 +64,9 @@ final class Webhooks implements WebhooksContract
     /**
      * Update a webhook by ID.
      *
-     * @param WebhookUpdateParam|array{
-     *   enabled?: bool|null, events?: list<string>|null, url?: string|null
-     * } $params
+     * @param array{
+     *   enabled?: null|bool, events?: null|list<string>, url?: null|string
+     * }|WebhookUpdateParam $params
      */
     public function update(
         string $webhookID,

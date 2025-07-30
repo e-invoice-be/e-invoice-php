@@ -22,16 +22,16 @@ interface OutboxContract
     ): DocumentResponse;
 
     /**
-     * @param OutboxListReceivedDocumentsParam|array{
-     *   dateFrom?: \DateTimeInterface|null,
-     *   dateTo?: \DateTimeInterface|null,
+     * @param array{
+     *   dateFrom?: null|\DateTimeInterface,
+     *   dateTo?: null|\DateTimeInterface,
      *   page?: int,
      *   pageSize?: int,
-     *   search?: string|null,
-     *   sender?: string|null,
+     *   search?: null|string,
+     *   sender?: null|string,
      *   state?: DocumentState::*,
      *   type?: DocumentType::*,
-     * } $params
+     * }|OutboxListReceivedDocumentsParam $params
      */
     public function listReceivedDocuments(
         array|OutboxListReceivedDocumentsParam $params,

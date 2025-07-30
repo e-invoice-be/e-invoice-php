@@ -15,16 +15,16 @@ use EInvoiceAPI\RequestOptions;
 interface InboxContract
 {
     /**
-     * @param InboxListParam|array{
-     *   dateFrom?: \DateTimeInterface|null,
-     *   dateTo?: \DateTimeInterface|null,
+     * @param array{
+     *   dateFrom?: null|\DateTimeInterface,
+     *   dateTo?: null|\DateTimeInterface,
      *   page?: int,
      *   pageSize?: int,
-     *   search?: string|null,
-     *   sender?: string|null,
+     *   search?: null|string,
+     *   sender?: null|string,
      *   state?: DocumentState::*,
      *   type?: DocumentType::*,
-     * } $params
+     * }|InboxListParam $params
      */
     public function list(
         array|InboxListParam $params,
