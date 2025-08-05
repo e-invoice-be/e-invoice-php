@@ -14,33 +14,33 @@ final class CurrencyCode implements ConverterSource
 {
     use Enum;
 
-    final public const EUR = 'EUR';
+    public const EUR = 'EUR';
 
-    final public const USD = 'USD';
+    public const USD = 'USD';
 
-    final public const GBP = 'GBP';
+    public const GBP = 'GBP';
 
-    final public const JPY = 'JPY';
+    public const JPY = 'JPY';
 
-    final public const CHF = 'CHF';
+    public const CHF = 'CHF';
 
-    final public const CAD = 'CAD';
+    public const CAD = 'CAD';
 
-    final public const AUD = 'AUD';
+    public const AUD = 'AUD';
 
-    final public const NZD = 'NZD';
+    public const NZD = 'NZD';
 
-    final public const CNY = 'CNY';
+    public const CNY = 'CNY';
 
-    final public const INR = 'INR';
+    public const INR = 'INR';
 
-    final public const SEK = 'SEK';
+    public const SEK = 'SEK';
 
-    final public const NOK = 'NOK';
+    public const NOK = 'NOK';
 
-    final public const DKK = 'DKK';
+    public const DKK = 'DKK';
 
-    final public const SGD = 'SGD';
+    public const SGD = 'SGD';
 
-    final public const HKD = 'HKD';
+    public const HKD = 'HKD';
 }

@@ -14,7 +14,7 @@ final class Type implements ConverterSource
 {
     use Enum;
 
-    final public const ERROR = 'error';
+    public const ERROR = 'error';
 
-    final public const WARNING = 'warning';
+    public const WARNING = 'warning';
 }
