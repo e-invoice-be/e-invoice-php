@@ -14,13 +14,13 @@ final class DocumentState implements ConverterSource
 {
     use Enum;
 
-    final public const DRAFT = 'DRAFT';
+    public const DRAFT = 'DRAFT';
 
-    final public const TRANSIT = 'TRANSIT';
+    public const TRANSIT = 'TRANSIT';
 
-    final public const FAILED = 'FAILED';
+    public const FAILED = 'FAILED';
 
-    final public const SENT = 'SENT';
+    public const SENT = 'SENT';
 
-    final public const RECEIVED = 'RECEIVED';
+    public const RECEIVED = 'RECEIVED';
 }

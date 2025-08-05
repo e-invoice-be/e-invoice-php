@@ -14,9 +14,9 @@ final class DocumentType implements ConverterSource
 {
     use Enum;
 
-    final public const INVOICE = 'INVOICE';
+    public const INVOICE = 'INVOICE';
 
-    final public const CREDIT_NOTE = 'CREDIT_NOTE';
+    public const CREDIT_NOTE = 'CREDIT_NOTE';
 
-    final public const DEBIT_NOTE = 'DEBIT_NOTE';
+    public const DEBIT_NOTE = 'DEBIT_NOTE';
 }

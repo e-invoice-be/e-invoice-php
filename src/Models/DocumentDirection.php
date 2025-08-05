@@ -14,7 +14,7 @@ final class DocumentDirection implements ConverterSource
 {
     use Enum;
 
-    final public const INBOUND = 'INBOUND';
+    public const INBOUND = 'INBOUND';
 
-    final public const OUTBOUND = 'OUTBOUND';
+    public const OUTBOUND = 'OUTBOUND';
 }
