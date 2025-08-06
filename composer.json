@@ -28,7 +28,6 @@
   "license": "APACHE-2.0",
   "description": "E Invoice PHP SDK",
   "name": "e-invoice/e-invoice-api",
-  "version": "0.0.1",
   "require": {
     "php": "^8.1",
     "php-http/discovery": "^1",
