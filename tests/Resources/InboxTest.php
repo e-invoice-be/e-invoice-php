@@ -3,9 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\InboxListCreditNotesParam;
-use EInvoiceAPI\Parameters\InboxListInvoicesParam;
-use EInvoiceAPI\Parameters\InboxListParam;
+use EInvoiceAPI\Parameters\InboxListCreditNotesParams;
+use EInvoiceAPI\Parameters\InboxListInvoicesParams;
+use EInvoiceAPI\Parameters\InboxListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +36,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->inbox->list(new InboxListParam);
+        $result = $this->client->inbox->list(new InboxListParams);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -51,7 +51,7 @@ final class InboxTest extends TestCase
         $result = $this
             ->client
             ->inbox
-            ->listCreditNotes(new InboxListCreditNotesParam)
+            ->listCreditNotes(new InboxListCreditNotesParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -64,7 +64,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('skipped: tests are disabled for the time being');
         }
 
-        $result = $this->client->inbox->listInvoices(new InboxListInvoicesParam);
+        $result = $this->client->inbox->listInvoices(new InboxListInvoicesParams);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

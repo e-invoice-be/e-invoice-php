@@ -9,8 +9,8 @@ use EInvoiceAPI\Contracts\WebhooksContract;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\WebhookResponse;
-use EInvoiceAPI\Parameters\WebhookCreateParam;
-use EInvoiceAPI\Parameters\WebhookUpdateParam;
+use EInvoiceAPI\Parameters\WebhookCreateParams;
+use EInvoiceAPI\Parameters\WebhookUpdateParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\WebhookDeleteResponse;
 
@@ -23,13 +23,13 @@ final class Webhooks implements WebhooksContract
      *
      * @param array{
      *   events: list<string>, url: string, enabled?: bool
-     * }|WebhookCreateParam $params
+     * }|WebhookCreateParams $params
      */
     public function create(
-        array|WebhookCreateParam $params,
+        array|WebhookCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
-        [$parsed, $options] = WebhookCreateParam::parseRequest(
+        [$parsed, $options] = WebhookCreateParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -66,14 +66,14 @@ final class Webhooks implements WebhooksContract
      *
      * @param array{
      *   enabled?: null|bool, events?: null|list<string>, url?: null|string
-     * }|WebhookUpdateParam $params
+     * }|WebhookUpdateParams $params
      */
     public function update(
         string $webhookID,
-        array|WebhookUpdateParam $params,
+        array|WebhookUpdateParams $params,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        [$parsed, $options] = WebhookUpdateParam::parseRequest(
+        [$parsed, $options] = WebhookUpdateParams::parseRequest(
             $params,
             $requestOptions
         );

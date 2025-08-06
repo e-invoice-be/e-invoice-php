@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\LookupRetrieveParam;
-use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
+use EInvoiceAPI\Parameters\LookupRetrieveParams;
+use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +38,7 @@ final class LookupTest extends TestCase
         $result = $this
             ->client
             ->lookup
-            ->retrieve(LookupRetrieveParam::new(peppolID: 'peppol_id'))
+            ->retrieve(LookupRetrieveParams::new(peppolID: 'peppol_id'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -54,7 +54,7 @@ final class LookupTest extends TestCase
         $result = $this
             ->client
             ->lookup
-            ->retrieve(LookupRetrieveParam::new(peppolID: 'peppol_id'))
+            ->retrieve(LookupRetrieveParams::new(peppolID: 'peppol_id'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -71,7 +71,7 @@ final class LookupTest extends TestCase
             ->client
             ->lookup
             ->retrieveParticipants(
-                LookupRetrieveParticipantsParam::new(query: 'query')
+                LookupRetrieveParticipantsParams::new(query: 'query')
             )
         ;
 
@@ -89,7 +89,7 @@ final class LookupTest extends TestCase
             ->client
             ->lookup
             ->retrieveParticipants(
-                LookupRetrieveParticipantsParam::new(
+                LookupRetrieveParticipantsParams::new(
                     query: 'query',
                     countryCode: 'country_code'
                 )

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\WebhookResponse;
-use EInvoiceAPI\Parameters\WebhookCreateParam;
-use EInvoiceAPI\Parameters\WebhookUpdateParam;
+use EInvoiceAPI\Parameters\WebhookCreateParams;
+use EInvoiceAPI\Parameters\WebhookUpdateParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\WebhookDeleteResponse;
 
@@ -15,11 +15,11 @@ interface WebhooksContract
     /**
      * @param array{
      *   events: list<string>, url: string, enabled?: bool
-     * }|WebhookCreateParam $params
+     * }|WebhookCreateParams $params
      */
     public function create(
-        array|WebhookCreateParam $params,
-        ?RequestOptions $requestOptions = null
+        array|WebhookCreateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 
     public function retrieve(
@@ -30,11 +30,11 @@ interface WebhooksContract
     /**
      * @param array{
      *   enabled?: null|bool, events?: null|list<string>, url?: null|string
-     * }|WebhookUpdateParam $params
+     * }|WebhookUpdateParams $params
      */
     public function update(
         string $webhookID,
-        array|WebhookUpdateParam $params,
+        array|WebhookUpdateParams $params,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 

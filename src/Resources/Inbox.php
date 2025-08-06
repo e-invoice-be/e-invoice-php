@@ -10,9 +10,9 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\InboxListCreditNotesParam;
-use EInvoiceAPI\Parameters\InboxListInvoicesParam;
-use EInvoiceAPI\Parameters\InboxListParam;
+use EInvoiceAPI\Parameters\InboxListCreditNotesParams;
+use EInvoiceAPI\Parameters\InboxListInvoicesParams;
+use EInvoiceAPI\Parameters\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 
 final class Inbox implements InboxContract
@@ -31,13 +31,13 @@ final class Inbox implements InboxContract
      *   sender?: null|string,
      *   state?: DocumentState::*,
      *   type?: DocumentType::*,
-     * }|InboxListParam $params
+     * }|InboxListParams $params
      */
     public function list(
-        array|InboxListParam $params,
+        array|InboxListParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = InboxListParam::parseRequest(
+        [$parsed, $options] = InboxListParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -55,13 +55,13 @@ final class Inbox implements InboxContract
     /**
      * Retrieve a paginated list of received credit notes with filtering options.
      *
-     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParam $params
+     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParams $params
      */
     public function listCreditNotes(
-        array|InboxListCreditNotesParam $params,
+        array|InboxListCreditNotesParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = InboxListCreditNotesParam::parseRequest(
+        [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -79,13 +79,13 @@ final class Inbox implements InboxContract
     /**
      * Retrieve a paginated list of received invoices with filtering options.
      *
-     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParam $params
+     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParams $params
      */
     public function listInvoices(
-        array|InboxListInvoicesParam $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListInvoicesParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = InboxListInvoicesParam::parseRequest(
+        [$parsed, $options] = InboxListInvoicesParams::parseRequest(
             $params,
             $requestOptions
         );

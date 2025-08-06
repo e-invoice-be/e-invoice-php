@@ -11,11 +11,11 @@ use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParam\Item;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParam\TaxDetail;
-use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
-use EInvoiceAPI\Parameters\ValidateValidateUblParam;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParams;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParams\Item;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParams\TaxDetail;
+use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Parameters\ValidateValidateUblParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\ValidateValidatePeppolIDResponse;
 
@@ -64,26 +64,26 @@ interface ValidateContract
      *   vendorEmail?: null|string,
      *   vendorName?: null|string,
      *   vendorTaxID?: null|string,
-     * }|ValidateValidateJsonParam $params
+     * }|ValidateValidateJsonParams $params
      */
     public function validateJson(
-        array|ValidateValidateJsonParam $params,
+        array|ValidateValidateJsonParams $params,
         ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation;
 
     /**
-     * @param array{peppolID: string}|ValidateValidatePeppolIDParam $params
+     * @param array{peppolID: string}|ValidateValidatePeppolIDParams $params
      */
     public function validatePeppolID(
-        array|ValidateValidatePeppolIDParam $params,
+        array|ValidateValidatePeppolIDParams $params,
         ?RequestOptions $requestOptions = null,
     ): ValidateValidatePeppolIDResponse;
 
     /**
-     * @param array{file: string}|ValidateValidateUblParam $params
+     * @param array{file: string}|ValidateValidateUblParams $params
      */
     public function validateUbl(
-        array|ValidateValidateUblParam $params,
+        array|ValidateValidateUblParams $params,
         ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation;
 }

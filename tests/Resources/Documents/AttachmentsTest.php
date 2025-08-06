@@ -3,9 +3,9 @@
 namespace Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
+use EInvoiceAPI\Parameters\Documents\AttachmentAddParams;
+use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParams;
+use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -42,7 +42,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve(
                 'attachment_id',
-                AttachmentRetrieveParam::new(documentID: 'document_id')
+                AttachmentRetrieveParams::new(documentID: 'document_id')
             )
         ;
 
@@ -62,7 +62,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->retrieve(
                 'attachment_id',
-                AttachmentRetrieveParam::new(documentID: 'document_id')
+                AttachmentRetrieveParams::new(documentID: 'document_id')
             )
         ;
 
@@ -94,7 +94,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete(
                 'attachment_id',
-                AttachmentDeleteParam::new(documentID: 'document_id')
+                AttachmentDeleteParams::new(documentID: 'document_id')
             )
         ;
 
@@ -114,7 +114,7 @@ final class AttachmentsTest extends TestCase
             ->attachments
             ->delete(
                 'attachment_id',
-                AttachmentDeleteParam::new(documentID: 'document_id')
+                AttachmentDeleteParams::new(documentID: 'document_id')
             )
         ;
 
@@ -132,7 +132,7 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->add('document_id', AttachmentAddParam::new(file: 'file'))
+            ->add('document_id', AttachmentAddParams::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -149,7 +149,7 @@ final class AttachmentsTest extends TestCase
             ->client
             ->documents
             ->attachments
-            ->add('document_id', AttachmentAddParam::new(file: 'file'))
+            ->add('document_id', AttachmentAddParams::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

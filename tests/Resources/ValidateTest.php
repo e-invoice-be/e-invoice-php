@@ -3,9 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
-use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
-use EInvoiceAPI\Parameters\ValidateValidateUblParam;
+use EInvoiceAPI\Parameters\ValidateValidateJsonParams;
+use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Parameters\ValidateValidateUblParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -39,7 +39,7 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validateJson(new ValidateValidateJsonParam)
+            ->validateJson(new ValidateValidateJsonParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -56,7 +56,7 @@ final class ValidateTest extends TestCase
             ->client
             ->validate
             ->validatePeppolID(
-                ValidateValidatePeppolIDParam::new(peppolID: 'peppol_id')
+                ValidateValidatePeppolIDParams::new(peppolID: 'peppol_id')
             )
         ;
 
@@ -74,7 +74,7 @@ final class ValidateTest extends TestCase
             ->client
             ->validate
             ->validatePeppolID(
-                ValidateValidatePeppolIDParam::new(peppolID: 'peppol_id')
+                ValidateValidatePeppolIDParams::new(peppolID: 'peppol_id')
             )
         ;
 
@@ -91,7 +91,7 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validateUbl(ValidateValidateUblParam::new(file: 'file'))
+            ->validateUbl(ValidateValidateUblParams::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -107,7 +107,7 @@ final class ValidateTest extends TestCase
         $result = $this
             ->client
             ->validate
-            ->validateUbl(ValidateValidateUblParam::new(file: 'file'))
+            ->validateUbl(ValidateValidateUblParams::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

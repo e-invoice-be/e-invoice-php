@@ -10,8 +10,8 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
-use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
+use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
 final class Outbox implements OutboxContract
@@ -21,13 +21,13 @@ final class Outbox implements OutboxContract
     /**
      * Retrieve a paginated list of draft documents with filtering options.
      *
-     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParam $params
+     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParams $params
      */
     public function listDraftDocuments(
-        array|OutboxListDraftDocumentsParam $params,
+        array|OutboxListDraftDocumentsParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = OutboxListDraftDocumentsParam::parseRequest(
+        [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -54,13 +54,13 @@ final class Outbox implements OutboxContract
      *   sender?: null|string,
      *   state?: DocumentState::*,
      *   type?: DocumentType::*,
-     * }|OutboxListReceivedDocumentsParam $params
+     * }|OutboxListReceivedDocumentsParams $params
      */
     public function listReceivedDocuments(
-        array|OutboxListReceivedDocumentsParam $params,
+        array|OutboxListReceivedDocumentsParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = OutboxListReceivedDocumentsParam::parseRequest(
+        [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
             $params,
             $requestOptions
         );
