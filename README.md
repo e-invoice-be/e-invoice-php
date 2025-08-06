@@ -30,7 +30,7 @@ To use this package, install via Composer by adding the following to your applic
     }
   ],
   "require": {
-    "e-invoice/e-invoice-api": "dev-main"
+    "e-invoice-be/e-invoice": "dev-main"
   }
 }
 ```
