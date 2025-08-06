@@ -9,9 +9,9 @@ use EInvoiceAPI\Contracts\Documents\AttachmentsContract;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
-use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
+use EInvoiceAPI\Parameters\Documents\AttachmentAddParams;
+use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParams;
+use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
 
@@ -22,14 +22,14 @@ final class Attachments implements AttachmentsContract
     /**
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
      *
-     * @param array{documentID: string}|AttachmentRetrieveParam $params
+     * @param array{documentID: string}|AttachmentRetrieveParams $params
      */
     public function retrieve(
         string $attachmentID,
-        array|AttachmentRetrieveParam $params,
+        array|AttachmentRetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        [$parsed, $options] = AttachmentRetrieveParam::parseRequest(
+        [$parsed, $options] = AttachmentRetrieveParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -70,14 +70,14 @@ final class Attachments implements AttachmentsContract
     /**
      * Delete an attachment from an invoice or credit note.
      *
-     * @param array{documentID: string}|AttachmentDeleteParam $params
+     * @param array{documentID: string}|AttachmentDeleteParams $params
      */
     public function delete(
         string $attachmentID,
-        array|AttachmentDeleteParam $params,
+        array|AttachmentDeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): AttachmentDeleteResponse {
-        [$parsed, $options] = AttachmentDeleteParam::parseRequest(
+        [$parsed, $options] = AttachmentDeleteParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -96,14 +96,14 @@ final class Attachments implements AttachmentsContract
     /**
      * Add a new attachment to an invoice or credit note.
      *
-     * @param array{file: string}|AttachmentAddParam $params
+     * @param array{file: string}|AttachmentAddParams $params
      */
     public function add(
         string $documentID,
-        array|AttachmentAddParam $params,
+        array|AttachmentAddParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        [$parsed, $options] = AttachmentAddParam::parseRequest(
+        [$parsed, $options] = AttachmentAddParams::parseRequest(
             $params,
             $requestOptions
         );

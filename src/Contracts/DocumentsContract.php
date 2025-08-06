@@ -11,10 +11,10 @@ use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
-use EInvoiceAPI\Parameters\DocumentCreateParam;
-use EInvoiceAPI\Parameters\DocumentCreateParam\Item;
-use EInvoiceAPI\Parameters\DocumentCreateParam\TaxDetail;
-use EInvoiceAPI\Parameters\DocumentSendParam;
+use EInvoiceAPI\Parameters\DocumentCreateParams;
+use EInvoiceAPI\Parameters\DocumentCreateParams\Item;
+use EInvoiceAPI\Parameters\DocumentCreateParams\TaxDetail;
+use EInvoiceAPI\Parameters\DocumentSendParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\DocumentDeleteResponse;
 
@@ -63,10 +63,10 @@ interface DocumentsContract
      *   vendorEmail?: null|string,
      *   vendorName?: null|string,
      *   vendorTaxID?: null|string,
-     * }|DocumentCreateParam $params
+     * }|DocumentCreateParams $params
      */
     public function create(
-        array|DocumentCreateParam $params,
+        array|DocumentCreateParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 
@@ -87,11 +87,11 @@ interface DocumentsContract
      *   receiverPeppolScheme?: null|string,
      *   senderPeppolID?: null|string,
      *   senderPeppolScheme?: null|string,
-     * }|DocumentSendParam $params
+     * }|DocumentSendParams $params
      */
     public function send(
         string $documentID,
-        array|DocumentSendParam $params,
+        array|DocumentSendParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }

@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
-use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
+use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +38,7 @@ final class OutboxTest extends TestCase
         $result = $this
             ->client
             ->outbox
-            ->listDraftDocuments(new OutboxListDraftDocumentsParam)
+            ->listDraftDocuments(new OutboxListDraftDocumentsParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -54,7 +54,7 @@ final class OutboxTest extends TestCase
         $result = $this
             ->client
             ->outbox
-            ->listReceivedDocuments(new OutboxListReceivedDocumentsParam)
+            ->listReceivedDocuments(new OutboxListReceivedDocumentsParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

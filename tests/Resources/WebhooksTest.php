@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\WebhookCreateParam;
-use EInvoiceAPI\Parameters\WebhookUpdateParam;
+use EInvoiceAPI\Parameters\WebhookCreateParams;
+use EInvoiceAPI\Parameters\WebhookUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -39,7 +39,7 @@ final class WebhooksTest extends TestCase
             ->client
             ->webhooks
             ->create(
-                WebhookCreateParam::new(events: ['string'], url: 'https://example.com')
+                WebhookCreateParams::new(events: ['string'], url: 'https://example.com')
             )
         ;
 
@@ -57,7 +57,7 @@ final class WebhooksTest extends TestCase
             ->client
             ->webhooks
             ->create(
-                WebhookCreateParam::new(
+                WebhookCreateParams::new(
                     events: ['string'],
                     url: 'https://example.com',
                     enabled: true
@@ -90,7 +90,7 @@ final class WebhooksTest extends TestCase
         $result = $this
             ->client
             ->webhooks
-            ->update('webhook_id', new WebhookUpdateParam)
+            ->update('webhook_id', new WebhookUpdateParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
