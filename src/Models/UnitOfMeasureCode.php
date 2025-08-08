@@ -195,4 +195,6 @@ final class UnitOfMeasureCode implements ConverterSource
     public const NAR = 'NAR';
 
     public const C62 = 'C62';
+
+    public const LTR = 'LTR';
 }
