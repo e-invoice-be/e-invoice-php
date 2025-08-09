@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\DocumentCreateParams;
-use EInvoiceAPI\Parameters\DocumentSendParams;
+use EInvoiceAPI\Models\DocumentCreateParams;
+use EInvoiceAPI\Models\DocumentSendParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

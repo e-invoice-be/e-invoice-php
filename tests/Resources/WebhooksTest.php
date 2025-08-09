@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\WebhookCreateParams;
-use EInvoiceAPI\Parameters\WebhookUpdateParams;
+use EInvoiceAPI\Models\WebhookCreateParams;
+use EInvoiceAPI\Models\WebhookUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

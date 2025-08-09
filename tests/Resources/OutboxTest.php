@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParams;
-use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParams;
+use EInvoiceAPI\Models\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Models\OutboxListReceivedDocumentsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

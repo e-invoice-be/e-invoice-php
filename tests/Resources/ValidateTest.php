@@ -3,9 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParams;
-use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParams;
-use EInvoiceAPI\Parameters\ValidateValidateUblParams;
+use EInvoiceAPI\Models\ValidateValidateJsonParams;
+use EInvoiceAPI\Models\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Models\ValidateValidateUblParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

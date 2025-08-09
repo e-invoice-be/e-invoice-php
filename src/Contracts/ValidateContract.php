@@ -11,11 +11,11 @@ use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
 use EInvoiceAPI\Models\UblDocumentValidation;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParams;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParams\Item;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParams\TaxDetail;
-use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParams;
-use EInvoiceAPI\Parameters\ValidateValidateUblParams;
+use EInvoiceAPI\Models\ValidateValidateJsonParams;
+use EInvoiceAPI\Models\ValidateValidateJsonParams\Item;
+use EInvoiceAPI\Models\ValidateValidateJsonParams\TaxDetail;
+use EInvoiceAPI\Models\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Models\ValidateValidateUblParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\ValidateValidatePeppolIDResponse;
 
