@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
+use EInvoiceAPI\Models\WebhookCreateParams;
 use EInvoiceAPI\Models\WebhookResponse;
-use EInvoiceAPI\Parameters\WebhookCreateParams;
-use EInvoiceAPI\Parameters\WebhookUpdateParams;
+use EInvoiceAPI\Models\WebhookUpdateParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\WebhookDeleteResponse;
 

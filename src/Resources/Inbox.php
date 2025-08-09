@@ -10,9 +10,9 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\InboxListCreditNotesParams;
-use EInvoiceAPI\Parameters\InboxListInvoicesParams;
-use EInvoiceAPI\Parameters\InboxListParams;
+use EInvoiceAPI\Models\InboxListCreditNotesParams;
+use EInvoiceAPI\Models\InboxListInvoicesParams;
+use EInvoiceAPI\Models\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 
 final class Inbox implements InboxContract

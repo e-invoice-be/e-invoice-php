@@ -3,9 +3,9 @@
 namespace Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\Documents\AttachmentAddParams;
-use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParams;
-use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParams;
+use EInvoiceAPI\Models\Documents\AttachmentAddParams;
+use EInvoiceAPI\Models\Documents\AttachmentDeleteParams;
+use EInvoiceAPI\Models\Documents\AttachmentRetrieveParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

@@ -8,10 +8,10 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\AttachmentsContract;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Models\Documents\AttachmentAddParams;
+use EInvoiceAPI\Models\Documents\AttachmentDeleteParams;
+use EInvoiceAPI\Models\Documents\AttachmentRetrieveParams;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
-use EInvoiceAPI\Parameters\Documents\AttachmentAddParams;
-use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParams;
-use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
 

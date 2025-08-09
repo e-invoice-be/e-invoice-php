@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\LookupRetrieveParams;
-use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParams;
+use EInvoiceAPI\Models\LookupRetrieveParams;
+use EInvoiceAPI\Models\LookupRetrieveParticipantsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

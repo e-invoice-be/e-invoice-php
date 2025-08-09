@@ -7,8 +7,8 @@ namespace EInvoiceAPI\Contracts;
 use EInvoiceAPI\Models\DocumentResponse;
 use EInvoiceAPI\Models\DocumentState;
 use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParams;
-use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParams;
+use EInvoiceAPI\Models\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Models\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
 interface OutboxContract

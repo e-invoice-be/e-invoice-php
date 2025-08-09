@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Parameters\LookupRetrieveParams;
-use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParams;
+use EInvoiceAPI\Models\LookupRetrieveParams;
+use EInvoiceAPI\Models\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\LookupGetParticipantsResponse;
 use EInvoiceAPI\Responses\LookupGetResponse;

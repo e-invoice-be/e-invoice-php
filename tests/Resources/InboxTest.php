@@ -3,9 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\InboxListCreditNotesParams;
-use EInvoiceAPI\Parameters\InboxListInvoicesParams;
-use EInvoiceAPI\Parameters\InboxListParams;
+use EInvoiceAPI\Models\InboxListCreditNotesParams;
+use EInvoiceAPI\Models\InboxListInvoicesParams;
+use EInvoiceAPI\Models\InboxListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

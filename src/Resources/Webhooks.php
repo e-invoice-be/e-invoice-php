@@ -8,9 +8,9 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\WebhooksContract;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Models\WebhookCreateParams;
 use EInvoiceAPI\Models\WebhookResponse;
-use EInvoiceAPI\Parameters\WebhookCreateParams;
-use EInvoiceAPI\Parameters\WebhookUpdateParams;
+use EInvoiceAPI\Models\WebhookUpdateParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\WebhookDeleteResponse;
 
