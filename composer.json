@@ -26,6 +26,7 @@
     "sort-packages": true
   },
   "license": "APACHE-2.0",
+  "description": "E-Invoice PHP SDK",
   "name": "e-invoice/e-invoice-api",
   "description": "PHP library for the e-invoice.be Peppol API",
   "require": {
