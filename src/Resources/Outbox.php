@@ -6,24 +6,28 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\OutboxContract;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\DocumentResponse;
-use EInvoiceAPI\Parameters\Outbox\ListDraftDocumentsParams;
-use EInvoiceAPI\Parameters\Outbox\ListReceivedDocumentsParams;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
+use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
+use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
 use EInvoiceAPI\RequestOptions;
 
-class Outbox implements OutboxContract
+final class Outbox implements OutboxContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * Retrieve a paginated list of draft documents with filtering options.
+     *
+     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParam $params
      */
     public function listDraftDocuments(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|OutboxListDraftDocumentsParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = ListDraftDocumentsParams::parseRequest(
+        [$parsed, $options] = OutboxListDraftDocumentsParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -35,26 +39,28 @@ class Outbox implements OutboxContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
+     * Retrieve a paginated list of received documents with filtering options.
+     *
      * @param array{
-     *   dateFrom?: \DateTimeInterface|null,
-     *   dateTo?: \DateTimeInterface|null,
+     *   dateFrom?: null|\DateTimeInterface,
+     *   dateTo?: null|\DateTimeInterface,
      *   page?: int,
      *   pageSize?: int,
-     *   search?: string|null,
-     *   sender?: string|null,
-     *   state?: string,
-     *   type?: string,
-     * } $params
+     *   search?: null|string,
+     *   sender?: null|string,
+     *   state?: DocumentState::*,
+     *   type?: DocumentType::*,
+     * }|OutboxListReceivedDocumentsParam $params
      */
     public function listReceivedDocuments(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|OutboxListReceivedDocumentsParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = ListReceivedDocumentsParams::parseRequest(
+        [$parsed, $options] = OutboxListReceivedDocumentsParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -66,6 +72,6 @@ class Outbox implements OutboxContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }

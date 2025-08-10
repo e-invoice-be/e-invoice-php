@@ -6,34 +6,41 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\InboxContract;
-use EInvoiceAPI\Core\Serde;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Models\DocumentResponse;
-use EInvoiceAPI\Parameters\Inbox\ListCreditNotesParams;
-use EInvoiceAPI\Parameters\Inbox\ListInvoicesParams;
-use EInvoiceAPI\Parameters\Inbox\ListParams;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
+use EInvoiceAPI\Parameters\InboxListCreditNotesParam;
+use EInvoiceAPI\Parameters\InboxListInvoicesParam;
+use EInvoiceAPI\Parameters\InboxListParam;
 use EInvoiceAPI\RequestOptions;
 
-class Inbox implements InboxContract
+final class Inbox implements InboxContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
+     * Retrieve a paginated list of received documents with filtering options.
+     *
      * @param array{
-     *   dateFrom?: \DateTimeInterface|null,
-     *   dateTo?: \DateTimeInterface|null,
+     *   dateFrom?: null|\DateTimeInterface,
+     *   dateTo?: null|\DateTimeInterface,
      *   page?: int,
      *   pageSize?: int,
-     *   search?: string|null,
-     *   sender?: string|null,
-     *   state?: string,
-     *   type?: string,
-     * } $params
+     *   search?: null|string,
+     *   sender?: null|string,
+     *   state?: DocumentState::*,
+     *   type?: DocumentType::*,
+     * }|InboxListParam $params
      */
     public function list(
-        array $params,
+        array|InboxListParam $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = InboxListParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'get',
             path: 'api/inbox/',
@@ -42,17 +49,19 @@ class Inbox implements InboxContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * Retrieve a paginated list of received credit notes with filtering options.
+     *
+     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParam $params
      */
     public function listCreditNotes(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListCreditNotesParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = ListCreditNotesParams::parseRequest(
+        [$parsed, $options] = InboxListCreditNotesParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -64,17 +73,19 @@ class Inbox implements InboxContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * Retrieve a paginated list of received invoices with filtering options.
+     *
+     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParam $params
      */
     public function listInvoices(
-        array $params,
+        array|InboxListInvoicesParam $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = ListInvoicesParams::parseRequest(
+        [$parsed, $options] = InboxListInvoicesParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -86,6 +97,6 @@ class Inbox implements InboxContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }

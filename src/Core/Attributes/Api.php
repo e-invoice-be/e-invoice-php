@@ -4,20 +4,33 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Attributes;
 
-use EInvoiceAPI\Core\Contracts\Converter;
-use EInvoiceAPI\Core\Contracts\StaticConverter;
+use EInvoiceAPI\Core\Conversion\Contracts\Converter;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @internal
+ */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-class Api
+final class Api
 {
     /**
-     * @param ?array<int|string,Converter|StaticConverter|string> $union
+     * @var null|class-string<ConverterSource>|Converter|string
+     */
+    public readonly null|Converter|string $type;
+
+    /**
+     * @param null|class-string<ConverterSource>|Converter|string $type
+     * @param null|class-string<ConverterSource>|Converter        $enum
+     * @param null|class-string<ConverterSource>|Converter|string $union
      */
     public function __construct(
-        public ?string $apiName = null,
-        public null|Converter|StaticConverter|string $type = null,
-        public bool $optional = false,
-        public ?string $discriminator = null,
-        public ?array $union = null,
-    ) {}
+        public readonly ?string $apiName = null,
+        null|Converter|string $type = null,
+        null|Converter|string $enum = null,
+        null|Converter|string $union = null,
+        public readonly bool $nullable = false,
+        public readonly bool $optional = false,
+    ) {
+        $this->type = $type ?? $enum ?? $union;
+    }
 }

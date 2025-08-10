@@ -9,7 +9,6 @@ class APIError extends Error
 {
     public ?int $status = null;
 
-    /** @var null|mixed */
     public mixed $body = null;
 
     public ?ResponseInterface $response = null;
@@ -19,6 +18,6 @@ class APIError extends Error
         ?\Throwable $previous = null,
         string $message = '',
     ) {
-        parent::__construct(message: $message, previous: $previous);
+        parent::__construct(message: 'response: '.$message.PHP_EOL.'request: '.$request->getBody()->__toString(), previous: $previous);
     }
 }

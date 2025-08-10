@@ -6,26 +6,33 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\WebhooksContract;
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\WebhookResponse;
-use EInvoiceAPI\Parameters\Webhooks\CreateParams;
-use EInvoiceAPI\Parameters\Webhooks\UpdateParams;
+use EInvoiceAPI\Parameters\WebhookCreateParam;
+use EInvoiceAPI\Parameters\WebhookUpdateParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\WebhookDeleteResponse;
 
-class Webhooks implements WebhooksContract
+final class Webhooks implements WebhooksContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
-     * @param array{events?: list<string>, url?: string, enabled?: bool} $params
+     * Create a new webhook.
+     *
+     * @param array{
+     *   events: list<string>, url: string, enabled?: bool
+     * }|WebhookCreateParam $params
      */
     public function create(
-        array $params,
+        array|WebhookCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = WebhookCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: 'api/webhooks/',
@@ -34,15 +41,14 @@ class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(WebhookResponse::class, value: $resp);
+        return Conversion::coerce(WebhookResponse::class, value: $resp);
     }
 
     /**
-     * @param array{webhookID?: string} $params
+     * Get a webhook by ID.
      */
     public function retrieve(
         string $webhookID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
         $resp = $this->client->request(
@@ -52,23 +58,25 @@ class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(WebhookResponse::class, value: $resp);
+        return Conversion::coerce(WebhookResponse::class, value: $resp);
     }
 
     /**
+     * Update a webhook by ID.
+     *
      * @param array{
-     *   webhookID?: string,
-     *   enabled?: bool|null,
-     *   events?: list<string>|null,
-     *   url?: string|null,
-     * } $params
+     *   enabled?: null|bool, events?: null|list<string>, url?: null|string
+     * }|WebhookUpdateParam $params
      */
     public function update(
         string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|WebhookUpdateParam $params,
+        ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        [$parsed, $options] = UpdateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = WebhookUpdateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'put',
             path: ['api/webhooks/%1$s', $webhookID],
@@ -77,18 +85,16 @@ class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(WebhookResponse::class, value: $resp);
+        return Conversion::coerce(WebhookResponse::class, value: $resp);
     }
 
     /**
-     * @param array{} $params
+     * Get all webhooks for the current tenant.
      *
      * @return list<WebhookResponse>
      */
-    public function list(
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): array {
+    public function list(?RequestOptions $requestOptions = null): array
+    {
         $resp = $this->client->request(
             method: 'get',
             path: 'api/webhooks/',
@@ -96,17 +102,16 @@ class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(new ListOf(WebhookResponse::class), value: $resp);
+        return Conversion::coerce(new ListOf(WebhookResponse::class), value: $resp);
     }
 
     /**
-     * @param array{webhookID?: string} $params
+     * Delete a webhook.
      */
     public function delete(
         string $webhookID,
-        array $params,
         ?RequestOptions $requestOptions = null
-    ): DeleteResponse {
+    ): WebhookDeleteResponse {
         $resp = $this->client->request(
             method: 'delete',
             path: ['api/webhooks/%1$s', $webhookID],
@@ -114,6 +119,6 @@ class Webhooks implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeleteResponse::class, value: $resp);
+        return Conversion::coerce(WebhookDeleteResponse::class, value: $resp);
     }
 }

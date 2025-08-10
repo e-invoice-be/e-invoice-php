@@ -1,5 +1,12 @@
 # e-invoice.be PHP API library
 
+> [!NOTE]
+> The E Invoice PHP API Library is currently in **beta** and we're excited for you to experiment with it!
+>
+> This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
+>
+> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/e-invoice-be/e-invoice-php/issues/new).
+
 This library provides convenient access to the e-invoice REST API from any PHP 8.1.0+ application.
 
 To get an API key, [make a free account](https://app.e-invoice.be/register?ref=php) and register your company.
@@ -37,7 +44,7 @@ To use this package, install via Composer by adding the following to your applic
 
 use EInvoiceAPI\Client;
 
-$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: null);
+$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
 $documentResponse = $client->documents->create([]);
 
@@ -96,31 +103,11 @@ You can use the `max_retries` option to configure or disable this:
 use EInvoiceAPI\Client;
 
 // Configure the default for all requests:
-$client = new Client(max_retries: 0);
+$client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
-$client->documents->create([], requestOptions: ["max_retries" => 5]);
+$client->documents->create([], requestOptions: ["maxRetries" => 5]);
 ```
-
-### Timeouts
-
-By default, requests will time out after 60 seconds. You can use the timeout option to configure or disable this:
-
-```php
-<?php
-
-use EInvoiceAPI\Client;
-
-// Configure the default for all requests:
-$client = new Client(timeout: nil);
-
-// Or, configure per-request:
-$client->documents->create([], requestOptions: ["timeout" => 5]);
-```
-
-On timeout, `EInvoiceAPI\Errors\APITimeoutError` is raised.
-
-Note that requests that time out are retried by default.
 
 ## Advanced concepts
 

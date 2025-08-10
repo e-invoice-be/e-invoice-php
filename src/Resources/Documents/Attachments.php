@@ -6,28 +6,30 @@ namespace EInvoiceAPI\Resources\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\AttachmentsContract;
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Core\Serde\ListOf;
-use EInvoiceAPI\Models\Documents\DeleteResponse;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Models\Documents\DocumentAttachment;
-use EInvoiceAPI\Parameters\Documents\Attachments\AddParams;
-use EInvoiceAPI\Parameters\Documents\Attachments\DeleteParams;
-use EInvoiceAPI\Parameters\Documents\Attachments\RetrieveParams;
+use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
+use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
+use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
 
-class Attachments implements AttachmentsContract
+final class Attachments implements AttachmentsContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
-     * @param array{documentID?: string, attachmentID?: string} $params
+     * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
+     *
+     * @param array{documentID: string}|AttachmentRetrieveParam $params
      */
     public function retrieve(
         string $attachmentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|AttachmentRetrieveParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        [$parsed, $options] = RetrieveParams::parseRequest(
+        [$parsed, $options] = AttachmentRetrieveParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -40,17 +42,16 @@ class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentAttachment::class, value: $resp);
+        return Conversion::coerce(DocumentAttachment::class, value: $resp);
     }
 
     /**
-     * @param array{documentID?: string} $params
+     * Get all attachments for an invoice or credit note.
      *
      * @return list<DocumentAttachment>
      */
     public function list(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): array {
         $resp = $this->client->request(
@@ -60,18 +61,26 @@ class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(new ListOf(DocumentAttachment::class), value: $resp);
+        return Conversion::coerce(
+            new ListOf(DocumentAttachment::class),
+            value: $resp
+        );
     }
 
     /**
-     * @param array{documentID?: string, attachmentID?: string} $params
+     * Delete an attachment from an invoice or credit note.
+     *
+     * @param array{documentID: string}|AttachmentDeleteParam $params
      */
     public function delete(
         string $attachmentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): DeleteResponse {
-        [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
+        array|AttachmentDeleteParam $params,
+        ?RequestOptions $requestOptions = null,
+    ): AttachmentDeleteResponse {
+        [$parsed, $options] = AttachmentDeleteParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $documentID = $parsed['documentID'];
         unset($parsed['documentID']);
         $resp = $this->client->request(
@@ -81,18 +90,23 @@ class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeleteResponse::class, value: $resp);
+        return Conversion::coerce(AttachmentDeleteResponse::class, value: $resp);
     }
 
     /**
-     * @param array{documentID?: string, file?: string} $params
+     * Add a new attachment to an invoice or credit note.
+     *
+     * @param array{file: string}|AttachmentAddParam $params
      */
     public function add(
         string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|AttachmentAddParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        [$parsed, $options] = AddParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = AttachmentAddParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/attachments', $documentID],
@@ -102,6 +116,6 @@ class Attachments implements AttachmentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentAttachment::class, value: $resp);
+        return Conversion::coerce(DocumentAttachment::class, value: $resp);
     }
 }

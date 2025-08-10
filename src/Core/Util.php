@@ -21,15 +21,15 @@ final class Util
     /**
      * @return array<string, mixed>
      */
-    public static function get_object_vars(object $object): array
+    public static function get_object_vars(object $object1): array
     {
-        return get_object_vars($object);
+        return get_object_vars($object1);
     }
 
     /**
      * @template T
      *
-     * @param array<string, T>      $array
+     * @param array<string, T> $array
      * @param array<string, string> $map
      *
      * @return array<string, T>
@@ -47,8 +47,10 @@ final class Util
     /**
      * @param callable|int|list<int|string>|string $key
      */
-    public static function dig(mixed $array, mixed $key): mixed
-    {
+    public static function dig(
+        mixed $array,
+        array|callable|int|string $key
+    ): mixed {
         if (is_callable($key)) {
             return $key($array);
         }
@@ -71,7 +73,7 @@ final class Util
     /**
      * @param list<string>|string $path
      */
-    public static function parsePath(mixed $path): string
+    public static function parsePath(array|string $path): string
     {
         if (is_string($path)) {
             return $path;
@@ -163,9 +165,9 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
      *   mixed
-     * >|null $body
+     * > $body
      *
      * @return array{string, \Generator<string>}
      */
@@ -200,9 +202,9 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
      *   mixed
-     * >|null $body
+     * > $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -265,7 +267,7 @@ final class Util
      *
      * @return \Iterator<
      *   array{
-     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
+     *     event?: null|string, data?: null|string, id?: null|string, retry?: null|int
      *   },
      * >
      */

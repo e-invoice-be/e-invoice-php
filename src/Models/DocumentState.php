@@ -4,15 +4,23 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class DocumentState
+use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
+
+/**
+ * @phpstan-type document_state_alias = DocumentState::*
+ */
+final class DocumentState implements ConverterSource
 {
-    final public const DRAFT = 'DRAFT';
+    use Enum;
 
-    final public const TRANSIT = 'TRANSIT';
+    public const DRAFT = 'DRAFT';
 
-    final public const FAILED = 'FAILED';
+    public const TRANSIT = 'TRANSIT';
 
-    final public const SENT = 'SENT';
+    public const FAILED = 'FAILED';
 
-    final public const RECEIVED = 'RECEIVED';
+    public const SENT = 'SENT';
+
+    public const RECEIVED = 'RECEIVED';
 }

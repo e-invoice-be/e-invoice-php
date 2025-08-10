@@ -31,13 +31,13 @@ class RequestOptions
 
     /**
      * @return array{
-     *   timeout?: float,
-     *   maxRetries?: int,
-     *   initialRetryDelay?: float,
-     *   maxRetryDelay?: float,
-     *   extraHeaders?: list<string>,
-     *   extraQueryParams?: list<string>,
-     *   extraBodyParams?: list<string>,
+     *   timeout: float,
+     *   maxRetries: int,
+     *   initialRetryDelay: float,
+     *   maxRetryDelay: float,
+     *   extraHeaders: list<string>,
+     *   extraQueryParams: list<string>,
+     *   extraBodyParams: list<string>,
      * }
      */
     public function __serialize(): array
@@ -55,13 +55,13 @@ class RequestOptions
 
     /**
      * @param array{
-     *   timeout?: float|null,
-     *   maxRetries?: int|null,
-     *   initialRetryDelay?: float|null,
-     *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
+     *   timeout?: null|float,
+     *   maxRetries?: null|int,
+     *   initialRetryDelay?: null|float,
+     *   maxRetryDelay?: null|float,
+     *   extraHeaders?: null|list<string>,
+     *   extraQueryParams?: null|list<string>,
+     *   extraBodyParams?: null|list<string>,
      * } $data
      */
     public function __unserialize(array $data): void
@@ -88,27 +88,27 @@ class RequestOptions
     }
 
     /**
-     * @param RequestOptions|array{
-     *   timeout?: float|null,
-     *   maxRetries?: int|null,
-     *   initialRetryDelay?: float|null,
-     *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
-     * }|null $options
+     * @param null|array{
+     *   timeout?: null|float,
+     *   maxRetries?: null|int,
+     *   initialRetryDelay?: null|float,
+     *   maxRetryDelay?: null|float,
+     *   extraHeaders?: null|list<string>,
+     *   extraQueryParams?: null|list<string>,
+     *   extraBodyParams?: null|list<string>,
+     * }|RequestOptions $options
      */
-    public static function parse(mixed $options): self
+    public static function parse(null|array|RequestOptions $options): self
     {
         if (is_null($options)) {
-            return new self();
+            return new self;
         }
 
         if ($options instanceof self) {
             return $options;
         }
 
-        $opts = new self();
+        $opts = new self;
         $opts->__unserialize($options);
 
         return $opts;

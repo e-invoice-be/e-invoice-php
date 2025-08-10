@@ -7,9 +7,16 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
-class PaymentDetailCreate implements BaseModel
+/**
+ * @phpstan-type payment_detail_create_alias = array{
+ *   bankAccountNumber?: string|null,
+ *   iban?: string|null,
+ *   paymentReference?: string|null,
+ *   swift?: string|null,
+ * }
+ */
+final class PaymentDetailCreate implements BaseModel
 {
     use Model;
 
@@ -25,25 +32,58 @@ class PaymentDetailCreate implements BaseModel
     #[Api(optional: true)]
     public ?string $swift;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * Construct an instance from the required parameters.
      *
-     * @param null|string $bankAccountNumber
-     * @param null|string $iban
-     * @param null|string $paymentReference
-     * @param null|string $swift
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
-        $bankAccountNumber = None::NOT_GIVEN,
-        $iban = None::NOT_GIVEN,
-        $paymentReference = None::NOT_GIVEN,
-        $swift = None::NOT_GIVEN,
-    ) {
-        $this->constructFromArgs(func_get_args());
+    public static function new(
+        ?string $bankAccountNumber = null,
+        ?string $iban = null,
+        ?string $paymentReference = null,
+        ?string $swift = null,
+    ): self {
+        $obj = new self;
+
+        null !== $bankAccountNumber && $obj->bankAccountNumber = $bankAccountNumber;
+        null !== $iban && $obj->iban = $iban;
+        null !== $paymentReference && $obj->paymentReference = $paymentReference;
+        null !== $swift && $obj->swift = $swift;
+
+        return $obj;
+    }
+
+    public function setBankAccountNumber(?string $bankAccountNumber): self
+    {
+        $this->bankAccountNumber = $bankAccountNumber;
+
+        return $this;
+    }
+
+    public function setIban(?string $iban): self
+    {
+        $this->iban = $iban;
+
+        return $this;
+    }
+
+    public function setPaymentReference(?string $paymentReference): self
+    {
+        $this->paymentReference = $paymentReference;
+
+        return $this;
+    }
+
+    public function setSwift(?string $swift): self
+    {
+        $this->swift = $swift;
+
+        return $this;
     }
 }
-
-PaymentDetailCreate::_loadMetadata();

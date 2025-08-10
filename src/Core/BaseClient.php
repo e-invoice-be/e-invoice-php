@@ -34,7 +34,7 @@ class BaseClient
     public function __construct(
         protected array $headers,
         string $baseUrl,
-        protected RequestOptions $options = new RequestOptions(),
+        protected RequestOptions $options = new RequestOptions,
     ) {
         $this->uriFactory = Psr17FactoryDiscovery::findUriFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
@@ -45,13 +45,13 @@ class BaseClient
     }
 
     /**
-     * @param list<mixed>|string   $path
+     * @param list<mixed>|string $path
      * @param array<string, mixed> $query
      * @param array<string, mixed> $headers
      */
     public function request(
         string $method,
-        mixed $path,
+        array|string $path,
         array $query = [],
         array $headers = [],
         mixed $body = null,
@@ -88,27 +88,27 @@ class BaseClient
     }
 
     /**
-     * @param list<string>|string                             $path
-     * @param array<string, mixed>                            $query
+     * @param list<string>|string $path
+     * @param array<string, mixed> $query
      * @param array<string, null|int|list<int|string>|string> $headers
-     * @param RequestOptions|array{
-     *   timeout?: float|null,
-     *   maxRetries?: int|null,
-     *   initialRetryDelay?: float|null,
-     *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
-     * }|null $opts
+     * @param null|array{
+     *   timeout?: null|float,
+     *   maxRetries?: null|int,
+     *   initialRetryDelay?: null|float,
+     *   maxRetryDelay?: null|float,
+     *   extraHeaders?: null|list<string>,
+     *   extraQueryParams?: null|list<string>,
+     *   extraBodyParams?: null|list<string>,
+     * }|RequestOptions $opts
      *
      * @return array{RequestInterface, RequestOptions}
      */
     protected function buildRequest(
         string $method,
-        mixed $path,
+        array|string $path,
         array $query,
         array $headers,
-        mixed $opts
+        null|array|RequestOptions $opts,
     ): array {
         $opts = [...$this->options->__serialize(), ...RequestOptions::parse($opts)->__serialize()];
         $options = new RequestOptions(...$opts);
@@ -146,9 +146,9 @@ class BaseClient
     }
 
     /**
-     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
      *   mixed
-     * >|null $data
+     * > $data
      */
     protected function sendRequest(
         RequestInterface $req,
@@ -175,10 +175,11 @@ class BaseClient
             throw APIStatusError::from(null, request: $req, response: $rsp);
         }
 
-        // if ($code >= 500 && $retryCount < $opts->max_retries) {
-        //    usleep((int) ($opts->initial_retry_delay * 1_000_000));
-        //    return $this->sendRequest($req, data: $data, opts: $opts, retryCount: ++$retryCount, redirectCount: $redirectCount);
-        // }
+        if ($code >= 500 && $retryCount < $opts->maxRetries) {
+            usleep((int) $opts->initialRetryDelay);
+
+            return $this->sendRequest($req, data: $data, opts: $opts, retryCount: ++$retryCount, redirectCount: $redirectCount);
+        }
 
         return $rsp;
     }

@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class DocumentDirection
-{
-    final public const INBOUND = 'INBOUND';
+use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-    final public const OUTBOUND = 'OUTBOUND';
+/**
+ * @phpstan-type document_direction_alias = DocumentDirection::*
+ */
+final class DocumentDirection implements ConverterSource
+{
+    use Enum;
+
+    public const INBOUND = 'INBOUND';
+
+    public const OUTBOUND = 'OUTBOUND';
 }

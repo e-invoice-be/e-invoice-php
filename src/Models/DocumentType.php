@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class DocumentType
+use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
+
+/**
+ * @phpstan-type document_type_alias = DocumentType::*
+ */
+final class DocumentType implements ConverterSource
 {
-    final public const INVOICE = 'INVOICE';
+    use Enum;
 
-    final public const CREDIT_NOTE = 'CREDIT_NOTE';
+    public const INVOICE = 'INVOICE';
 
-    final public const DEBIT_NOTE = 'DEBIT_NOTE';
+    public const CREDIT_NOTE = 'CREDIT_NOTE';
+
+    public const DEBIT_NOTE = 'DEBIT_NOTE';
 }

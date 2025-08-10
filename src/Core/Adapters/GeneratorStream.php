@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core;
+namespace EInvoiceAPI\Core;
 
 use Psr\Http\Message\StreamInterface;
 
@@ -37,10 +37,10 @@ final class GeneratorStream implements StreamInterface
 
     public function close(): void
     {
-        $ex = new class extends \Exception {};
+        $ex = new class() extends \Exception {};
 
         try {
-            $this->st->throw(new $ex());
+            $this->st->throw(new $ex);
         } catch (\Throwable) {
         }
     }

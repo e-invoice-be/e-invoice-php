@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\Concerns;
 
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Core\Serde\DumpState;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\DumpState;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @internal
+ */
 trait Params
 {
     /**
@@ -26,8 +29,9 @@ trait Params
      */
     public static function parseRequest(null|array|self $params, null|array|RequestOptions $options): array
     {
-        $state = new DumpState();
-        $dumped = Serde::dump(self::class, value: $params, state: $state);
+        $converter = self::converter();
+        $state = new DumpState;
+        $dumped = (array) Conversion::dump($converter, value: $params, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line
 
         if (!$state->canRetry) {

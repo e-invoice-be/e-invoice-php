@@ -4,35 +4,43 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Models;
 
-class CurrencyCode
+use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
+
+/**
+ * @phpstan-type currency_code_alias = CurrencyCode::*
+ */
+final class CurrencyCode implements ConverterSource
 {
-    final public const EUR = 'EUR';
+    use Enum;
 
-    final public const USD = 'USD';
+    public const EUR = 'EUR';
 
-    final public const GBP = 'GBP';
+    public const USD = 'USD';
 
-    final public const JPY = 'JPY';
+    public const GBP = 'GBP';
 
-    final public const CHF = 'CHF';
+    public const JPY = 'JPY';
 
-    final public const CAD = 'CAD';
+    public const CHF = 'CHF';
 
-    final public const AUD = 'AUD';
+    public const CAD = 'CAD';
 
-    final public const NZD = 'NZD';
+    public const AUD = 'AUD';
 
-    final public const CNY = 'CNY';
+    public const NZD = 'NZD';
 
-    final public const INR = 'INR';
+    public const CNY = 'CNY';
 
-    final public const SEK = 'SEK';
+    public const INR = 'INR';
 
-    final public const NOK = 'NOK';
+    public const SEK = 'SEK';
 
-    final public const DKK = 'DKK';
+    public const NOK = 'NOK';
 
-    final public const SGD = 'SGD';
+    public const DKK = 'DKK';
 
-    final public const HKD = 'HKD';
+    public const SGD = 'SGD';
+
+    public const HKD = 'HKD';
 }

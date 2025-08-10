@@ -6,25 +6,27 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\LookupContract;
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Models\GetParticipantsResponse;
-use EInvoiceAPI\Models\GetResponse;
-use EInvoiceAPI\Parameters\Lookup\RetrieveParams;
-use EInvoiceAPI\Parameters\Lookup\RetrieveParticipantsParams;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Parameters\LookupRetrieveParam;
+use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\LookupGetParticipantsResponse;
+use EInvoiceAPI\Responses\LookupGetResponse;
 
-class Lookup implements LookupContract
+final class Lookup implements LookupContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
-     * @param array{peppolID?: string} $params
+     * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
+     *
+     * @param array{peppolID: string}|LookupRetrieveParam $params
      */
     public function retrieve(
-        array $params,
+        array|LookupRetrieveParam $params,
         ?RequestOptions $requestOptions = null
-    ): GetResponse {
-        [$parsed, $options] = RetrieveParams::parseRequest(
+    ): LookupGetResponse {
+        [$parsed, $options] = LookupRetrieveParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -36,17 +38,21 @@ class Lookup implements LookupContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(GetResponse::class, value: $resp);
+        return Conversion::coerce(LookupGetResponse::class, value: $resp);
     }
 
     /**
-     * @param array{query?: string, countryCode?: null|string} $params
+     * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
+     *
+     * @param array{
+     *   query: string, countryCode?: null|string
+     * }|LookupRetrieveParticipantsParam $params
      */
     public function retrieveParticipants(
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): GetParticipantsResponse {
-        [$parsed, $options] = RetrieveParticipantsParams::parseRequest(
+        array|LookupRetrieveParticipantsParam $params,
+        ?RequestOptions $requestOptions = null,
+    ): LookupGetParticipantsResponse {
+        [$parsed, $options] = LookupRetrieveParticipantsParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -58,6 +64,9 @@ class Lookup implements LookupContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(GetParticipantsResponse::class, value: $resp);
+        return Conversion::coerce(
+            LookupGetParticipantsResponse::class,
+            value: $resp
+        );
     }
 }

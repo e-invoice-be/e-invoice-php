@@ -7,9 +7,13 @@ namespace EInvoiceAPI\Models;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\Model;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\None;
 
-class DocumentAttachmentCreate implements BaseModel
+/**
+ * @phpstan-type document_attachment_create_alias = array{
+ *   fileName: string, fileData?: string|null, fileSize?: int, fileType?: string
+ * }
+ */
+final class DocumentAttachmentCreate implements BaseModel
 {
     use Model;
 
@@ -25,25 +29,59 @@ class DocumentAttachmentCreate implements BaseModel
     #[Api('file_type', optional: true)]
     public ?string $fileType;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * Construct an instance from the required parameters.
      *
-     * @param string      $fileName `required`
-     * @param null|string $fileData
-     * @param null|int    $fileSize
-     * @param null|string $fileType
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
-        $fileName,
-        $fileData = None::NOT_GIVEN,
-        $fileSize = None::NOT_GIVEN,
-        $fileType = None::NOT_GIVEN,
-    ) {
-        $this->constructFromArgs(func_get_args());
+    public static function new(
+        string $fileName,
+        ?string $fileData = null,
+        ?int $fileSize = null,
+        ?string $fileType = null,
+    ): self {
+        $obj = new self;
+
+        $obj->fileName = $fileName;
+
+        null !== $fileData && $obj->fileData = $fileData;
+        null !== $fileSize && $obj->fileSize = $fileSize;
+        null !== $fileType && $obj->fileType = $fileType;
+
+        return $obj;
+    }
+
+    public function setFileName(string $fileName): self
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    public function setFileData(?string $fileData): self
+    {
+        $this->fileData = $fileData;
+
+        return $this;
+    }
+
+    public function setFileSize(int $fileSize): self
+    {
+        $this->fileSize = $fileSize;
+
+        return $this;
+    }
+
+    public function setFileType(string $fileType): self
+    {
+        $this->fileType = $fileType;
+
+        return $this;
     }
 }
-
-DocumentAttachmentCreate::_loadMetadata();

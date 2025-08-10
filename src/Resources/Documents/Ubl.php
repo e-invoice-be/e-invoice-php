@@ -6,22 +6,21 @@ namespace EInvoiceAPI\Resources\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\UblContract;
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Models\Documents\GetResponse;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\Documents\UblGetResponse;
 
-class Ubl implements UblContract
+final class Ubl implements UblContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
-     * @param array{documentID?: string} $params
+     * Get the UBL for an invoice or credit note.
      */
     public function get(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
-    ): GetResponse {
+    ): UblGetResponse {
         $resp = $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/ubl', $documentID],
@@ -29,6 +28,6 @@ class Ubl implements UblContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(GetResponse::class, value: $resp);
+        return Conversion::coerce(UblGetResponse::class, value: $resp);
     }
 }

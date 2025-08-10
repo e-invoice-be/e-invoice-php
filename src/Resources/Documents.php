@@ -6,89 +6,90 @@ namespace EInvoiceAPI\Resources;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\DocumentsContract;
-use EInvoiceAPI\Core\Serde;
-use EInvoiceAPI\Models\DeleteResponse;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Models\CurrencyCode;
 use EInvoiceAPI\Models\DocumentAttachmentCreate;
+use EInvoiceAPI\Models\DocumentDirection;
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
 use EInvoiceAPI\Models\PaymentDetailCreate;
-use EInvoiceAPI\Parameters\Documents\CreateParams;
-use EInvoiceAPI\Parameters\Documents\SendParams;
+use EInvoiceAPI\Parameters\DocumentCreateParam;
+use EInvoiceAPI\Parameters\DocumentCreateParam\Item;
+use EInvoiceAPI\Parameters\DocumentCreateParam\TaxDetail;
+use EInvoiceAPI\Parameters\DocumentSendParam;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Resources\Documents\Attachments;
 use EInvoiceAPI\Resources\Documents\Ubl;
+use EInvoiceAPI\Responses\DocumentDeleteResponse;
 
-class Documents implements DocumentsContract
+final class Documents implements DocumentsContract
 {
     public Attachments $attachments;
 
     public Ubl $ubl;
 
-    public function __construct(protected Client $client)
+    public function __construct(private Client $client)
     {
-        $this->attachments = new Attachments($client);
-        $this->ubl = new Ubl($client);
+        $this->attachments = new Attachments($this->client);
+        $this->ubl = new Ubl($this->client);
     }
 
     /**
+     * Create a new invoice or credit note.
+     *
      * @param array{
-     *   amountDue?: float|string|null,
-     *   attachments?: list<DocumentAttachmentCreate>|null,
-     *   billingAddress?: string|null,
-     *   billingAddressRecipient?: string|null,
-     *   currency?: string,
-     *   customerAddress?: string|null,
-     *   customerAddressRecipient?: string|null,
-     *   customerEmail?: string|null,
-     *   customerID?: string|null,
-     *   customerName?: string|null,
-     *   customerTaxID?: string|null,
-     *   direction?: string,
-     *   documentType?: string,
-     *   dueDate?: \DateTimeInterface|null,
-     *   invoiceDate?: \DateTimeInterface|null,
-     *   invoiceID?: string|null,
-     *   invoiceTotal?: float|string|null,
-     *   items?: list<array{
-     *     amount?: float|string|null,
-     *     date?: mixed|null,
-     *     description?: string|null,
-     *     productCode?: string|null,
-     *     quantity?: float|string|null,
-     *     tax?: float|string|null,
-     *     taxRate?: string|null,
-     *     unit?: string,
-     *     unitPrice?: float|string|null,
-     *   }>|null,
-     *   note?: string|null,
-     *   paymentDetails?: list<PaymentDetailCreate>|null,
-     *   paymentTerm?: string|null,
-     *   previousUnpaidBalance?: float|string|null,
-     *   purchaseOrder?: string|null,
-     *   remittanceAddress?: string|null,
-     *   remittanceAddressRecipient?: string|null,
-     *   serviceAddress?: string|null,
-     *   serviceAddressRecipient?: string|null,
-     *   serviceEndDate?: \DateTimeInterface|null,
-     *   serviceStartDate?: \DateTimeInterface|null,
-     *   shippingAddress?: string|null,
-     *   shippingAddressRecipient?: string|null,
-     *   state?: string,
-     *   subtotal?: float|string|null,
-     *   taxDetails?: list<array{amount?: float|string|null, rate?: string|null}>|null,
-     *   totalDiscount?: float|string|null,
-     *   totalTax?: float|string|null,
-     *   vendorAddress?: string|null,
-     *   vendorAddressRecipient?: string|null,
-     *   vendorEmail?: string|null,
-     *   vendorName?: string|null,
-     *   vendorTaxID?: string|null,
-     * } $params
+     *   amountDue?: null|float|string,
+     *   attachments?: null|list<DocumentAttachmentCreate>,
+     *   billingAddress?: null|string,
+     *   billingAddressRecipient?: null|string,
+     *   currency?: CurrencyCode::*,
+     *   customerAddress?: null|string,
+     *   customerAddressRecipient?: null|string,
+     *   customerEmail?: null|string,
+     *   customerID?: null|string,
+     *   customerName?: null|string,
+     *   customerTaxID?: null|string,
+     *   direction?: DocumentDirection::*,
+     *   documentType?: DocumentType::*,
+     *   dueDate?: null|\DateTimeInterface,
+     *   invoiceDate?: null|\DateTimeInterface,
+     *   invoiceID?: null|string,
+     *   invoiceTotal?: null|float|string,
+     *   items?: null|list<Item>,
+     *   note?: null|string,
+     *   paymentDetails?: null|list<PaymentDetailCreate>,
+     *   paymentTerm?: null|string,
+     *   previousUnpaidBalance?: null|float|string,
+     *   purchaseOrder?: null|string,
+     *   remittanceAddress?: null|string,
+     *   remittanceAddressRecipient?: null|string,
+     *   serviceAddress?: null|string,
+     *   serviceAddressRecipient?: null|string,
+     *   serviceEndDate?: null|\DateTimeInterface,
+     *   serviceStartDate?: null|\DateTimeInterface,
+     *   shippingAddress?: null|string,
+     *   shippingAddressRecipient?: null|string,
+     *   state?: DocumentState::*,
+     *   subtotal?: null|float|string,
+     *   taxDetails?: null|list<TaxDetail>,
+     *   totalDiscount?: null|float|string,
+     *   totalTax?: null|float|string,
+     *   vendorAddress?: null|string,
+     *   vendorAddressRecipient?: null|string,
+     *   vendorEmail?: null|string,
+     *   vendorName?: null|string,
+     *   vendorTaxID?: null|string,
+     * }|DocumentCreateParam $params
      */
     public function create(
-        array $params,
+        array|DocumentCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = DocumentCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: 'api/documents/',
@@ -97,15 +98,14 @@ class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
-     * @param array{documentID?: string} $params
+     * Get an invoice or credit note by ID.
      */
     public function retrieve(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         $resp = $this->client->request(
@@ -115,17 +115,16 @@ class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
-     * @param array{documentID?: string} $params
+     * Delete an invoice or credit note.
      */
     public function delete(
         string $documentID,
-        array $params,
         ?RequestOptions $requestOptions = null
-    ): DeleteResponse {
+    ): DocumentDeleteResponse {
         $resp = $this->client->request(
             method: 'delete',
             path: ['api/documents/%1$s', $documentID],
@@ -133,25 +132,29 @@ class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeleteResponse::class, value: $resp);
+        return Conversion::coerce(DocumentDeleteResponse::class, value: $resp);
     }
 
     /**
+     * Send an invoice or credit note via Peppol.
+     *
      * @param array{
-     *   documentID?: string,
-     *   email?: string|null,
-     *   receiverPeppolID?: string|null,
-     *   receiverPeppolScheme?: string|null,
-     *   senderPeppolID?: string|null,
-     *   senderPeppolScheme?: string|null,
-     * } $params
+     *   email?: null|string,
+     *   receiverPeppolID?: null|string,
+     *   receiverPeppolScheme?: null|string,
+     *   senderPeppolID?: null|string,
+     *   senderPeppolScheme?: null|string,
+     * }|DocumentSendParam $params
      */
     public function send(
         string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|DocumentSendParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = SendParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = DocumentSendParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/send', $documentID],
@@ -160,6 +163,6 @@ class Documents implements DocumentsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DocumentResponse::class, value: $resp);
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }

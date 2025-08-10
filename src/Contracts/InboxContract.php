@@ -5,40 +5,45 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\Models\DocumentResponse;
+use EInvoiceAPI\Models\DocumentState;
+use EInvoiceAPI\Models\DocumentType;
+use EInvoiceAPI\Parameters\InboxListCreditNotesParam;
+use EInvoiceAPI\Parameters\InboxListInvoicesParam;
+use EInvoiceAPI\Parameters\InboxListParam;
 use EInvoiceAPI\RequestOptions;
 
 interface InboxContract
 {
     /**
      * @param array{
-     *   dateFrom?: \DateTimeInterface|null,
-     *   dateTo?: \DateTimeInterface|null,
+     *   dateFrom?: null|\DateTimeInterface,
+     *   dateTo?: null|\DateTimeInterface,
      *   page?: int,
      *   pageSize?: int,
-     *   search?: string|null,
-     *   sender?: string|null,
-     *   state?: string,
-     *   type?: string,
-     * } $params
+     *   search?: null|string,
+     *   sender?: null|string,
+     *   state?: DocumentState::*,
+     *   type?: DocumentType::*,
+     * }|InboxListParam $params
      */
     public function list(
-        array $params,
+        array|InboxListParam $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParam $params
      */
     public function listCreditNotes(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListCreditNotesParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 
     /**
-     * @param array{page?: int, pageSize?: int} $params
+     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParam $params
      */
     public function listInvoices(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListInvoicesParam $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }

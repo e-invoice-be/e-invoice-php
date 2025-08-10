@@ -1,0 +1,217 @@
+<?php
+
+declare(strict_types=1);
+
+namespace EInvoiceAPI\Responses;
+
+use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Models\Certificate;
+use EInvoiceAPI\Responses\LookupGetResponse\BusinessCard;
+use EInvoiceAPI\Responses\LookupGetResponse\DNSInfo;
+use EInvoiceAPI\Responses\LookupGetResponse\QueryMetadata;
+use EInvoiceAPI\Responses\LookupGetResponse\ServiceMetadata;
+
+/**
+ * Response from a Peppol ID lookup operation.
+ *
+ * This model represents the complete result of validating and looking up a Peppol ID
+ * in the Peppol network, including DNS information, service metadata, business card
+ * details, and certificate information.
+ *
+ * Example:
+ *     A successful lookup for a Peppol ID "0192:991825827" would return DNS information,
+ *     service metadata with supported document types and processes, business card information
+ *     with organization details, and certificate data.
+ *
+ * @phpstan-type lookup_get_response_alias = array{
+ *   businessCard: BusinessCard,
+ *   certificates: list<Certificate>,
+ *   dnsInfo: DNSInfo,
+ *   errors: list<string>,
+ *   executionTimeMs: float,
+ *   queryMetadata: QueryMetadata,
+ *   serviceMetadata: ServiceMetadata,
+ *   status: string,
+ * }
+ */
+final class LookupGetResponse implements BaseModel
+{
+    use Model;
+
+    /**
+     * Business card information for the Peppol participant.
+     */
+    #[Api]
+    public BusinessCard $businessCard;
+
+    /**
+     * List of certificates found for the Peppol participant.
+     *
+     * @var list<Certificate> $certificates
+     */
+    #[Api(type: new ListOf(Certificate::class))]
+    public array $certificates;
+
+    /**
+     * Information about the DNS lookup performed.
+     */
+    #[Api]
+    public DNSInfo $dnsInfo;
+
+    /**
+     * List of error messages if any errors occurred during the lookup.
+     *
+     * @var list<string> $errors
+     */
+    #[Api(type: new ListOf('string'))]
+    public array $errors;
+
+    /**
+     * Total execution time of the lookup operation in milliseconds.
+     */
+    #[Api]
+    public float $executionTimeMs;
+
+    /**
+     * Metadata about the query that was performed.
+     */
+    #[Api]
+    public QueryMetadata $queryMetadata;
+
+    /**
+     * Service metadata information for the Peppol participant.
+     */
+    #[Api]
+    public ServiceMetadata $serviceMetadata;
+
+    /**
+     * Overall status of the lookup: 'success' or 'error'.
+     */
+    #[Api]
+    public string $status;
+
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<Certificate> $certificates
+     * @param list<string> $errors
+     */
+    public static function new(
+        BusinessCard $businessCard,
+        array $certificates,
+        DNSInfo $dnsInfo,
+        array $errors,
+        float $executionTimeMs,
+        QueryMetadata $queryMetadata,
+        ServiceMetadata $serviceMetadata,
+        string $status,
+    ): self {
+        $obj = new self;
+
+        $obj->businessCard = $businessCard;
+        $obj->certificates = $certificates;
+        $obj->dnsInfo = $dnsInfo;
+        $obj->errors = $errors;
+        $obj->executionTimeMs = $executionTimeMs;
+        $obj->queryMetadata = $queryMetadata;
+        $obj->serviceMetadata = $serviceMetadata;
+        $obj->status = $status;
+
+        return $obj;
+    }
+
+    /**
+     * Business card information for the Peppol participant.
+     */
+    public function setBusinessCard(BusinessCard $businessCard): self
+    {
+        $this->businessCard = $businessCard;
+
+        return $this;
+    }
+
+    /**
+     * List of certificates found for the Peppol participant.
+     *
+     * @param list<Certificate> $certificates
+     */
+    public function setCertificates(array $certificates): self
+    {
+        $this->certificates = $certificates;
+
+        return $this;
+    }
+
+    /**
+     * Information about the DNS lookup performed.
+     */
+    public function setDNSInfo(DNSInfo $dnsInfo): self
+    {
+        $this->dnsInfo = $dnsInfo;
+
+        return $this;
+    }
+
+    /**
+     * List of error messages if any errors occurred during the lookup.
+     *
+     * @param list<string> $errors
+     */
+    public function setErrors(array $errors): self
+    {
+        $this->errors = $errors;
+
+        return $this;
+    }
+
+    /**
+     * Total execution time of the lookup operation in milliseconds.
+     */
+    public function setExecutionTimeMs(float $executionTimeMs): self
+    {
+        $this->executionTimeMs = $executionTimeMs;
+
+        return $this;
+    }
+
+    /**
+     * Metadata about the query that was performed.
+     */
+    public function setQueryMetadata(QueryMetadata $queryMetadata): self
+    {
+        $this->queryMetadata = $queryMetadata;
+
+        return $this;
+    }
+
+    /**
+     * Service metadata information for the Peppol participant.
+     */
+    public function setServiceMetadata(ServiceMetadata $serviceMetadata): self
+    {
+        $this->serviceMetadata = $serviceMetadata;
+
+        return $this;
+    }
+
+    /**
+     * Overall status of the lookup: 'success' or 'error'.
+     */
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+}
