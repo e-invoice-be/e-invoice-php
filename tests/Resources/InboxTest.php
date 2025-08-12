@@ -33,7 +33,7 @@ final class InboxTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->inbox->list(new InboxListParams);
@@ -45,7 +45,7 @@ final class InboxTest extends TestCase
     public function testListCreditNotes(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -61,7 +61,7 @@ final class InboxTest extends TestCase
     public function testListInvoices(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->inbox->listInvoices(new InboxListInvoicesParams);

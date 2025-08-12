@@ -33,7 +33,7 @@ final class ValidateTest extends TestCase
     public function testValidateJson(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -49,7 +49,7 @@ final class ValidateTest extends TestCase
     public function testValidatePeppolID(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -67,7 +67,7 @@ final class ValidateTest extends TestCase
     public function testValidatePeppolIDWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -85,7 +85,7 @@ final class ValidateTest extends TestCase
     public function testValidateUbl(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -101,7 +101,7 @@ final class ValidateTest extends TestCase
     public function testValidateUblWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this

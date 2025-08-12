@@ -32,7 +32,7 @@ final class WebhooksTest extends TestCase
     public function testCreate(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -50,7 +50,7 @@ final class WebhooksTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -72,7 +72,7 @@ final class WebhooksTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->webhooks->retrieve('webhook_id');
@@ -84,7 +84,7 @@ final class WebhooksTest extends TestCase
     public function testUpdate(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this
@@ -100,7 +100,7 @@ final class WebhooksTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->webhooks->list();
@@ -112,7 +112,7 @@ final class WebhooksTest extends TestCase
     public function testDelete(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->webhooks->delete('webhook_id');
