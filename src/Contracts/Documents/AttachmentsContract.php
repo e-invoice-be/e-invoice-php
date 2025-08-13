@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts\Documents;
 
-use EInvoiceAPI\Models\Documents\AttachmentAddParams;
-use EInvoiceAPI\Models\Documents\AttachmentDeleteParams;
-use EInvoiceAPI\Models\Documents\AttachmentRetrieveParams;
-use EInvoiceAPI\Models\Documents\DocumentAttachment;
+use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
+use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
+use EInvoiceAPI\Responses\Documents\Attachments\AttachmentDeleteResponse;
 
 interface AttachmentsContract
 {

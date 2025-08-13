@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\CurrencyCode;
-use EInvoiceAPI\Models\DocumentAttachmentCreate;
-use EInvoiceAPI\Models\DocumentDirection;
-use EInvoiceAPI\Models\DocumentState;
-use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Models\PaymentDetailCreate;
-use EInvoiceAPI\Models\UblDocumentValidation;
-use EInvoiceAPI\Models\ValidateValidateJsonParams;
-use EInvoiceAPI\Models\ValidateValidateJsonParams\Item;
-use EInvoiceAPI\Models\ValidateValidateJsonParams\TaxDetail;
-use EInvoiceAPI\Models\ValidateValidatePeppolIDParams;
-use EInvoiceAPI\Models\ValidateValidateUblParams;
+use EInvoiceAPI\Documents\CurrencyCode;
+use EInvoiceAPI\Documents\DocumentAttachmentCreate;
+use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Documents\PaymentDetailCreate;
+use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\ValidateValidatePeppolIDResponse;
+use EInvoiceAPI\Responses\Validate\ValidateValidatePeppolIDResponse;
+use EInvoiceAPI\Validate\UblDocumentValidation;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
+use EInvoiceAPI\Validate\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Validate\ValidateValidateUblParams;
 
 interface ValidateContract
 {

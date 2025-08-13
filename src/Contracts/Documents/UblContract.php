@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Contracts\Documents;
 
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\Documents\UblGetResponse;
+use EInvoiceAPI\Responses\Documents\Ubl\UblGetResponse;
 
 interface UblContract
 {

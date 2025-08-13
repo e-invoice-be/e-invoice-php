@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Models\WebhookCreateParams;
-use EInvoiceAPI\Models\WebhookUpdateParams;
+use EInvoiceAPI\Webhooks\WebhookCreateParams;
+use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,13 +35,11 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->webhooks
-            ->create(
-                WebhookCreateParams::new(events: ['string'], url: 'https://example.com')
-            )
-        ;
+        $params = WebhookCreateParams::from(
+            events: ['string'],
+            url: 'https://example.com'
+        );
+        $result = $this->client->webhooks->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -53,17 +51,12 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->webhooks
-            ->create(
-                WebhookCreateParams::new(
-                    events: ['string'],
-                    url: 'https://example.com',
-                    enabled: true
-                )
-            )
-        ;
+        $params = WebhookCreateParams::from(
+            events: ['string'],
+            url: 'https://example.com',
+            enabled: true
+        );
+        $result = $this->client->webhooks->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -87,11 +80,8 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->webhooks
-            ->update('webhook_id', new WebhookUpdateParams)
-        ;
+        $params = (new WebhookUpdateParams);
+        $result = $this->client->webhooks->update('webhook_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

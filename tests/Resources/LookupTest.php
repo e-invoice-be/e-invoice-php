@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Models\LookupRetrieveParams;
-use EInvoiceAPI\Models\LookupRetrieveParticipantsParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,11 +35,8 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieve(LookupRetrieveParams::new(peppolID: 'peppol_id'))
-        ;
+        $params = LookupRetrieveParams::from(peppolID: 'peppol_id');
+        $result = $this->client->lookup->retrieve($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -51,11 +48,8 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieve(LookupRetrieveParams::new(peppolID: 'peppol_id'))
-        ;
+        $params = LookupRetrieveParams::from(peppolID: 'peppol_id');
+        $result = $this->client->lookup->retrieve($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -67,13 +61,8 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieveParticipants(
-                LookupRetrieveParticipantsParams::new(query: 'query')
-            )
-        ;
+        $params = LookupRetrieveParticipantsParams::from(query: 'query');
+        $result = $this->client->lookup->retrieveParticipants($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -85,16 +74,11 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieveParticipants(
-                LookupRetrieveParticipantsParams::new(
-                    query: 'query',
-                    countryCode: 'country_code'
-                )
-            )
-        ;
+        $params = LookupRetrieveParticipantsParams::from(
+            query: 'query',
+            countryCode: 'country_code'
+        );
+        $result = $this->client->lookup->retrieveParticipants($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

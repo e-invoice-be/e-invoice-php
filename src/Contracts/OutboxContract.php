@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\DocumentResponse;
-use EInvoiceAPI\Models\DocumentState;
-use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Models\OutboxListDraftDocumentsParams;
-use EInvoiceAPI\Models\OutboxListReceivedDocumentsParams;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Inbox\DocumentState;
+use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
 interface OutboxContract

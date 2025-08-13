@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\LookupRetrieveParams;
-use EInvoiceAPI\Models\LookupRetrieveParticipantsParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\LookupGetParticipantsResponse;
-use EInvoiceAPI\Responses\LookupGetResponse;
+use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse;
+use EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 
 interface LookupContract
 {

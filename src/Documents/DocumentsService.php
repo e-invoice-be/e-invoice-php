@@ -1,0 +1,160 @@
+<?php
+
+declare(strict_types=1);
+
+namespace EInvoiceAPI\Documents;
+
+use EInvoiceAPI\Client;
+use EInvoiceAPI\Contracts\DocumentsContract;
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Documents\Attachments\AttachmentsService;
+use EInvoiceAPI\Documents\DocumentCreateParams\Item;
+use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
+use EInvoiceAPI\Documents\Ubl\UblService;
+use EInvoiceAPI\Inbox\DocumentState;
+use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Responses\Documents\DocumentDeleteResponse;
+
+final class DocumentsService implements DocumentsContract
+{
+    public AttachmentsService $attachments;
+
+    public UblService $ubl;
+
+    public function __construct(private Client $client)
+    {
+        $this->attachments = new AttachmentsService($this->client);
+        $this->ubl = new UblService($this->client);
+    }
+
+    /**
+     * Create a new invoice or credit note.
+     *
+     * @param array{
+     *   amountDue?: null|float|string,
+     *   attachments?: null|list<DocumentAttachmentCreate>,
+     *   billingAddress?: null|string,
+     *   billingAddressRecipient?: null|string,
+     *   currency?: CurrencyCode::*,
+     *   customerAddress?: null|string,
+     *   customerAddressRecipient?: null|string,
+     *   customerEmail?: null|string,
+     *   customerID?: null|string,
+     *   customerName?: null|string,
+     *   customerTaxID?: null|string,
+     *   direction?: DocumentDirection::*,
+     *   documentType?: DocumentType::*,
+     *   dueDate?: null|\DateTimeInterface,
+     *   invoiceDate?: null|\DateTimeInterface,
+     *   invoiceID?: null|string,
+     *   invoiceTotal?: null|float|string,
+     *   items?: null|list<Item>,
+     *   note?: null|string,
+     *   paymentDetails?: null|list<PaymentDetailCreate>,
+     *   paymentTerm?: null|string,
+     *   previousUnpaidBalance?: null|float|string,
+     *   purchaseOrder?: null|string,
+     *   remittanceAddress?: null|string,
+     *   remittanceAddressRecipient?: null|string,
+     *   serviceAddress?: null|string,
+     *   serviceAddressRecipient?: null|string,
+     *   serviceEndDate?: null|\DateTimeInterface,
+     *   serviceStartDate?: null|\DateTimeInterface,
+     *   shippingAddress?: null|string,
+     *   shippingAddressRecipient?: null|string,
+     *   state?: DocumentState::*,
+     *   subtotal?: null|float|string,
+     *   taxDetails?: null|list<TaxDetail>,
+     *   totalDiscount?: null|float|string,
+     *   totalTax?: null|float|string,
+     *   vendorAddress?: null|string,
+     *   vendorAddressRecipient?: null|string,
+     *   vendorEmail?: null|string,
+     *   vendorName?: null|string,
+     *   vendorTaxID?: null|string,
+     * }|DocumentCreateParams $params
+     */
+    public function create(
+        array|DocumentCreateParams $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentResponse {
+        [$parsed, $options] = DocumentCreateParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $resp = $this->client->request(
+            method: 'post',
+            path: 'api/documents/',
+            body: (object) $parsed,
+            options: $options,
+        );
+
+        // @phpstan-ignore-next-line;
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
+    }
+
+    /**
+     * Get an invoice or credit note by ID.
+     */
+    public function retrieve(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): DocumentResponse {
+        $resp = $this->client->request(
+            method: 'get',
+            path: ['api/documents/%1$s', $documentID],
+            options: $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line;
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
+    }
+
+    /**
+     * Delete an invoice or credit note.
+     */
+    public function delete(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): DocumentDeleteResponse {
+        $resp = $this->client->request(
+            method: 'delete',
+            path: ['api/documents/%1$s', $documentID],
+            options: $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line;
+        return Conversion::coerce(DocumentDeleteResponse::class, value: $resp);
+    }
+
+    /**
+     * Send an invoice or credit note via Peppol.
+     *
+     * @param array{
+     *   email?: null|string,
+     *   receiverPeppolID?: null|string,
+     *   receiverPeppolScheme?: null|string,
+     *   senderPeppolID?: null|string,
+     *   senderPeppolScheme?: null|string,
+     * }|DocumentSendParams $params
+     */
+    public function send(
+        string $documentID,
+        array|DocumentSendParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentResponse {
+        [$parsed, $options] = DocumentSendParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $resp = $this->client->request(
+            method: 'post',
+            path: ['api/documents/%1$s/send', $documentID],
+            query: $parsed,
+            options: $options,
+        );
+
+        // @phpstan-ignore-next-line;
+        return Conversion::coerce(DocumentResponse::class, value: $resp);
+    }
+}
