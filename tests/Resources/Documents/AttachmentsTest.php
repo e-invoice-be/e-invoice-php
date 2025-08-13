@@ -3,9 +3,9 @@
 namespace Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Models\Documents\AttachmentAddParams;
-use EInvoiceAPI\Models\Documents\AttachmentDeleteParams;
-use EInvoiceAPI\Models\Documents\AttachmentRetrieveParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -36,14 +36,12 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentRetrieveParams::from(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->retrieve(
-                'attachment_id',
-                AttachmentRetrieveParams::new(documentID: 'document_id')
-            )
+            ->retrieve('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -56,14 +54,12 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentRetrieveParams::from(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->retrieve(
-                'attachment_id',
-                AttachmentRetrieveParams::new(documentID: 'document_id')
-            )
+            ->retrieve('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -88,14 +84,12 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentDeleteParams::from(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->delete(
-                'attachment_id',
-                AttachmentDeleteParams::new(documentID: 'document_id')
-            )
+            ->delete('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -108,14 +102,12 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentDeleteParams::from(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->delete(
-                'attachment_id',
-                AttachmentDeleteParams::new(documentID: 'document_id')
-            )
+            ->delete('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -128,11 +120,12 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentAddParams::from(file: 'file');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->add('document_id', AttachmentAddParams::new(file: 'file'))
+            ->add('document_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -145,11 +138,12 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentAddParams::from(file: 'file');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->add('document_id', AttachmentAddParams::new(file: 'file'))
+            ->add('document_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

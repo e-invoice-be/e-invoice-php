@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\CurrencyCode;
-use EInvoiceAPI\Models\DocumentAttachmentCreate;
-use EInvoiceAPI\Models\DocumentCreateParams;
-use EInvoiceAPI\Models\DocumentCreateParams\Item;
-use EInvoiceAPI\Models\DocumentCreateParams\TaxDetail;
-use EInvoiceAPI\Models\DocumentDirection;
-use EInvoiceAPI\Models\DocumentResponse;
-use EInvoiceAPI\Models\DocumentSendParams;
-use EInvoiceAPI\Models\DocumentState;
-use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Models\PaymentDetailCreate;
+use EInvoiceAPI\Documents\CurrencyCode;
+use EInvoiceAPI\Documents\DocumentAttachmentCreate;
+use EInvoiceAPI\Documents\DocumentCreateParams;
+use EInvoiceAPI\Documents\DocumentCreateParams\Item;
+use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
+use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\DocumentSendParams;
+use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Documents\PaymentDetailCreate;
+use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\DocumentDeleteResponse;
+use EInvoiceAPI\Responses\Documents\DocumentDeleteResponse;
 
 interface DocumentsContract
 {

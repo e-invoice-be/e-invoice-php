@@ -3,9 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Models\ValidateValidateJsonParams;
-use EInvoiceAPI\Models\ValidateValidatePeppolIDParams;
-use EInvoiceAPI\Models\ValidateValidateUblParams;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams;
+use EInvoiceAPI\Validate\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Validate\ValidateValidateUblParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -36,11 +36,8 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validateJson(new ValidateValidateJsonParams)
-        ;
+        $params = (new ValidateValidateJsonParams);
+        $result = $this->client->validate->validateJson($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -52,13 +49,8 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validatePeppolID(
-                ValidateValidatePeppolIDParams::new(peppolID: 'peppol_id')
-            )
-        ;
+        $params = ValidateValidatePeppolIDParams::from(peppolID: 'peppol_id');
+        $result = $this->client->validate->validatePeppolID($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -70,13 +62,8 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validatePeppolID(
-                ValidateValidatePeppolIDParams::new(peppolID: 'peppol_id')
-            )
-        ;
+        $params = ValidateValidatePeppolIDParams::from(peppolID: 'peppol_id');
+        $result = $this->client->validate->validatePeppolID($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -88,11 +75,8 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validateUbl(ValidateValidateUblParams::new(file: 'file'))
-        ;
+        $params = ValidateValidateUblParams::from(file: 'file');
+        $result = $this->client->validate->validateUbl($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -104,11 +88,8 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validateUbl(ValidateValidateUblParams::new(file: 'file'))
-        ;
+        $params = ValidateValidateUblParams::from(file: 'file');
+        $result = $this->client->validate->validateUbl($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\DocumentResponse;
-use EInvoiceAPI\Models\DocumentState;
-use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Models\InboxListCreditNotesParams;
-use EInvoiceAPI\Models\InboxListInvoicesParams;
-use EInvoiceAPI\Models\InboxListParams;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Inbox\DocumentState;
+use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
+use EInvoiceAPI\Inbox\InboxListInvoicesParams;
+use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 
 interface InboxContract

@@ -5,28 +5,28 @@ declare(strict_types=1);
 namespace EInvoiceAPI;
 
 use EInvoiceAPI\Core\BaseClient;
-use EInvoiceAPI\Resources\Documents;
-use EInvoiceAPI\Resources\Inbox;
-use EInvoiceAPI\Resources\Lookup;
-use EInvoiceAPI\Resources\Outbox;
-use EInvoiceAPI\Resources\Validate;
-use EInvoiceAPI\Resources\Webhooks;
+use EInvoiceAPI\Documents\DocumentsService;
+use EInvoiceAPI\Inbox\InboxService;
+use EInvoiceAPI\Lookup\LookupService;
+use EInvoiceAPI\Outbox\OutboxService;
+use EInvoiceAPI\Validate\ValidateService;
+use EInvoiceAPI\Webhooks\WebhooksService;
 
 class Client extends BaseClient
 {
     public string $apiKey;
 
-    public Documents $documents;
+    public DocumentsService $documents;
 
-    public Inbox $inbox;
+    public InboxService $inbox;
 
-    public Outbox $outbox;
+    public OutboxService $outbox;
 
-    public Validate $validate;
+    public ValidateService $validate;
 
-    public Lookup $lookup;
+    public LookupService $lookup;
 
-    public Webhooks $webhooks;
+    public WebhooksService $webhooks;
 
     public function __construct(?string $apiKey = null, ?string $baseUrl = null)
     {
@@ -44,12 +44,12 @@ class Client extends BaseClient
             options: new RequestOptions,
         );
 
-        $this->documents = new Documents($this);
-        $this->inbox = new Inbox($this);
-        $this->outbox = new Outbox($this);
-        $this->validate = new Validate($this);
-        $this->lookup = new Lookup($this);
-        $this->webhooks = new Webhooks($this);
+        $this->documents = new DocumentsService($this);
+        $this->inbox = new InboxService($this);
+        $this->outbox = new OutboxService($this);
+        $this->validate = new ValidateService($this);
+        $this->lookup = new LookupService($this);
+        $this->webhooks = new WebhooksService($this);
     }
 
     /** @return array<string, string> */

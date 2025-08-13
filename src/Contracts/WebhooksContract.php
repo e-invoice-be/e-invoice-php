@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\WebhookCreateParams;
-use EInvoiceAPI\Models\WebhookResponse;
-use EInvoiceAPI\Models\WebhookUpdateParams;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\WebhookDeleteResponse;
+use EInvoiceAPI\Responses\Webhooks\WebhookDeleteResponse;
+use EInvoiceAPI\Webhooks\WebhookCreateParams;
+use EInvoiceAPI\Webhooks\WebhookResponse;
+use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
 interface WebhooksContract
 {

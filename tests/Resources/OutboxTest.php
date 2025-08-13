@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Models\OutboxListDraftDocumentsParams;
-use EInvoiceAPI\Models\OutboxListReceivedDocumentsParams;
+use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,11 +35,8 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->outbox
-            ->listDraftDocuments(new OutboxListDraftDocumentsParams)
-        ;
+        $params = (new OutboxListDraftDocumentsParams);
+        $result = $this->client->outbox->listDraftDocuments($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -51,11 +48,8 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->outbox
-            ->listReceivedDocuments(new OutboxListReceivedDocumentsParams)
-        ;
+        $params = (new OutboxListReceivedDocumentsParams);
+        $result = $this->client->outbox->listReceivedDocuments($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
