@@ -30,7 +30,7 @@ To use this package, install via Composer by adding the following to your applic
     }
   ],
   "require": {
-    "e-invoice/e-invoice-api": "dev-main"
+    "e-invoice-be/e-invoice": "dev-main"
   }
 }
 ```
@@ -43,10 +43,12 @@ To use this package, install via Composer by adding the following to your applic
 <?php
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Documents\DocumentCreateParams;
 
 $client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
-$documentResponse = $client->documents->create([]);
+$params = (new DocumentCreateParams);
+$documentResponse = $client->documents->create($params);
 
 var_dump($documentResponse->id);
 ```
@@ -58,10 +60,12 @@ When the library is unable to connect to the API, or if the API returns a non-su
 ```php
 <?php
 
+use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Errors\APIConnectionError;
 
+$params = (new DocumentCreateParams);
 try {
-    $Documents = $client->documents->create([]);
+  $Documents = $client->documents->create($params);
 } catch (APIConnectionError $e) {
     echo "The server could not be reached", PHP_EOL;
     var_dump($e->getPrevious());
@@ -101,12 +105,16 @@ You can use the `max_retries` option to configure or disable this:
 <?php
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Documents\DocumentCreateParams;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
+$params = (new DocumentCreateParams);
 
-// Or, configure per-request:
-$client->documents->create([], requestOptions: ["maxRetries" => 5]);
+// Or, configure per-request:$result = $client
+  ->documents
+  ->create($params, new RequestOptions(maxRetries: 5));
 ```
 
 ## Advanced concepts
@@ -122,13 +130,19 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
-$documentResponse = $client->documents->create(
-  [],
-  requestOptions: [
-    "extraQueryParams" => ["my_query_parameter" => "value"],
-    "extraBodyParams" => ["my_body_parameter" => "value"],
-    "extraHeaders" => ["my-header" => "value"],
-  ],
+use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Documents\DocumentCreateParams;
+
+$params = (new DocumentCreateParams);
+$documentResponse = $client
+  ->documents
+  ->create(
+  $params,
+  new RequestOptions(
+    extraQueryParams: ["my_query_parameter" => "value"],
+    extraBodyParams: ["my_body_parameter" => "value"],
+    extraHeaders: ["my-header" => "value"],
+  ),
 );
 
 var_dump($documentResponse["my_undocumented_property"]);

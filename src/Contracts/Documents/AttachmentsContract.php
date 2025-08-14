@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts\Documents;
 
-use EInvoiceAPI\Models\Documents\DocumentAttachment;
-use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
+use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
+use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\Documents\AttachmentDeleteResponse;
+use EInvoiceAPI\Responses\Documents\Attachments\AttachmentDeleteResponse;
 
 interface AttachmentsContract
 {
     /**
-     * @param array{documentID: string}|AttachmentRetrieveParam $params
+     * @param array{documentID: string}|AttachmentRetrieveParams $params
      */
     public function retrieve(
         string $attachmentID,
-        array|AttachmentRetrieveParam $params,
+        array|AttachmentRetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment;
 
@@ -31,20 +31,20 @@ interface AttachmentsContract
     ): array;
 
     /**
-     * @param array{documentID: string}|AttachmentDeleteParam $params
+     * @param array{documentID: string}|AttachmentDeleteParams $params
      */
     public function delete(
         string $attachmentID,
-        array|AttachmentDeleteParam $params,
+        array|AttachmentDeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): AttachmentDeleteResponse;
 
     /**
-     * @param array{file: string}|AttachmentAddParam $params
+     * @param array{file: string}|AttachmentAddParams $params
      */
     public function add(
         string $documentID,
-        array|AttachmentAddParam $params,
+        array|AttachmentAddParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment;
 }

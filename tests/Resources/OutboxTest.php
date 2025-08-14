@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
-use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
+use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,14 +32,11 @@ final class OutboxTest extends TestCase
     public function testListDraftDocuments(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->outbox
-            ->listDraftDocuments(new OutboxListDraftDocumentsParam)
-        ;
+        $params = (new OutboxListDraftDocumentsParams);
+        $result = $this->client->outbox->listDraftDocuments($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,14 +45,11 @@ final class OutboxTest extends TestCase
     public function testListReceivedDocuments(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->outbox
-            ->listReceivedDocuments(new OutboxListReceivedDocumentsParam)
-        ;
+        $params = (new OutboxListReceivedDocumentsParams);
+        $result = $this->client->outbox->listReceivedDocuments($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

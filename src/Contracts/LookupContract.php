@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Parameters\LookupRetrieveParam;
-use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
+use EInvoiceAPI\Lookup\LookupRetrieveParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Responses\LookupGetParticipantsResponse;
-use EInvoiceAPI\Responses\LookupGetResponse;
+use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse;
+use EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 
 interface LookupContract
 {
     /**
-     * @param array{peppolID: string}|LookupRetrieveParam $params
+     * @param array{peppolID: string}|LookupRetrieveParams $params
      */
     public function retrieve(
-        array|LookupRetrieveParam $params,
+        array|LookupRetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): LookupGetResponse;
 
     /**
      * @param array{
      *   query: string, countryCode?: null|string
-     * }|LookupRetrieveParticipantsParam $params
+     * }|LookupRetrieveParticipantsParams $params
      */
     public function retrieveParticipants(
-        array|LookupRetrieveParticipantsParam $params,
+        array|LookupRetrieveParticipantsParams $params,
         ?RequestOptions $requestOptions = null,
     ): LookupGetParticipantsResponse;
 }

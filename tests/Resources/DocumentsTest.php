@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\DocumentCreateParam;
-use EInvoiceAPI\Parameters\DocumentSendParam;
+use EInvoiceAPI\Documents\DocumentCreateParams;
+use EInvoiceAPI\Documents\DocumentSendParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,10 +32,11 @@ final class DocumentsTest extends TestCase
     public function testCreate(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->create(new DocumentCreateParam);
+        $params = (new DocumentCreateParams);
+        $result = $this->client->documents->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -44,7 +45,7 @@ final class DocumentsTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->documents->retrieve('document_id');
@@ -56,7 +57,7 @@ final class DocumentsTest extends TestCase
     public function testDelete(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->documents->delete('document_id');
@@ -68,14 +69,11 @@ final class DocumentsTest extends TestCase
     public function testSend(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->documents
-            ->send('document_id', new DocumentSendParam)
-        ;
+        $params = (new DocumentSendParams);
+        $result = $this->client->documents->send('document_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

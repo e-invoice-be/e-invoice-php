@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Contracts;
 
-use EInvoiceAPI\Models\DocumentResponse;
-use EInvoiceAPI\Models\DocumentState;
-use EInvoiceAPI\Models\DocumentType;
-use EInvoiceAPI\Parameters\OutboxListDraftDocumentsParam;
-use EInvoiceAPI\Parameters\OutboxListReceivedDocumentsParam;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Inbox\DocumentState;
+use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
 interface OutboxContract
 {
     /**
-     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParam $params
+     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParams $params
      */
     public function listDraftDocuments(
-        array|OutboxListDraftDocumentsParam $params,
+        array|OutboxListDraftDocumentsParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 
@@ -31,10 +31,10 @@ interface OutboxContract
      *   sender?: null|string,
      *   state?: DocumentState::*,
      *   type?: DocumentType::*,
-     * }|OutboxListReceivedDocumentsParam $params
+     * }|OutboxListReceivedDocumentsParams $params
      */
     public function listReceivedDocuments(
-        array|OutboxListReceivedDocumentsParam $params,
+        array|OutboxListReceivedDocumentsParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }

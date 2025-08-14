@@ -30,7 +30,7 @@ final class UblTest extends TestCase
     public function testGet(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->documents->ubl->get('document_id');

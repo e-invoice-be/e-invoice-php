@@ -3,9 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\InboxListCreditNotesParam;
-use EInvoiceAPI\Parameters\InboxListInvoicesParam;
-use EInvoiceAPI\Parameters\InboxListParam;
+use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
+use EInvoiceAPI\Inbox\InboxListInvoicesParams;
+use EInvoiceAPI\Inbox\InboxListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,10 +33,11 @@ final class InboxTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->list(new InboxListParam);
+        $params = (new InboxListParams);
+        $result = $this->client->inbox->list($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -45,14 +46,11 @@ final class InboxTest extends TestCase
     public function testListCreditNotes(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->inbox
-            ->listCreditNotes(new InboxListCreditNotesParam)
-        ;
+        $params = (new InboxListCreditNotesParams);
+        $result = $this->client->inbox->listCreditNotes($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -61,10 +59,11 @@ final class InboxTest extends TestCase
     public function testListInvoices(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->listInvoices(new InboxListInvoicesParam);
+        $params = (new InboxListInvoicesParams);
+        $result = $this->client->inbox->listInvoices($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

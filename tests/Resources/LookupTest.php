@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\LookupRetrieveParam;
-use EInvoiceAPI\Parameters\LookupRetrieveParticipantsParam;
+use EInvoiceAPI\Lookup\LookupRetrieveParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,14 +32,11 @@ final class LookupTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieve(LookupRetrieveParam::new(peppolID: 'peppol_id'))
-        ;
+        $params = LookupRetrieveParams::with(peppolID: 'peppol_id');
+        $result = $this->client->lookup->retrieve($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,14 +45,11 @@ final class LookupTest extends TestCase
     public function testRetrieveWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieve(LookupRetrieveParam::new(peppolID: 'peppol_id'))
-        ;
+        $params = LookupRetrieveParams::with(peppolID: 'peppol_id');
+        $result = $this->client->lookup->retrieve($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -64,16 +58,11 @@ final class LookupTest extends TestCase
     public function testRetrieveParticipants(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieveParticipants(
-                LookupRetrieveParticipantsParam::new(query: 'query')
-            )
-        ;
+        $params = LookupRetrieveParticipantsParams::with(query: 'query');
+        $result = $this->client->lookup->retrieveParticipants($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -82,19 +71,14 @@ final class LookupTest extends TestCase
     public function testRetrieveParticipantsWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->lookup
-            ->retrieveParticipants(
-                LookupRetrieveParticipantsParam::new(
-                    query: 'query',
-                    countryCode: 'country_code'
-                )
-            )
-        ;
+        $params = LookupRetrieveParticipantsParams::with(
+            query: 'query',
+            countryCode: 'country_code'
+        );
+        $result = $this->client->lookup->retrieveParticipants($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

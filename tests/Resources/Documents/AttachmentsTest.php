@@ -3,9 +3,9 @@
 namespace Tests\Resources\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\Documents\AttachmentAddParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentDeleteParam;
-use EInvoiceAPI\Parameters\Documents\AttachmentRetrieveParam;
+use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,17 +33,15 @@ final class AttachmentsTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentRetrieveParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->retrieve(
-                'attachment_id',
-                AttachmentRetrieveParam::new(documentID: 'document_id')
-            )
+            ->retrieve('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -53,17 +51,15 @@ final class AttachmentsTest extends TestCase
     public function testRetrieveWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentRetrieveParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->retrieve(
-                'attachment_id',
-                AttachmentRetrieveParam::new(documentID: 'document_id')
-            )
+            ->retrieve('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -73,7 +69,7 @@ final class AttachmentsTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
         $result = $this->client->documents->attachments->list('document_id');
@@ -85,17 +81,15 @@ final class AttachmentsTest extends TestCase
     public function testDelete(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentDeleteParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->delete(
-                'attachment_id',
-                AttachmentDeleteParam::new(documentID: 'document_id')
-            )
+            ->delete('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -105,17 +99,15 @@ final class AttachmentsTest extends TestCase
     public function testDeleteWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentDeleteParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->delete(
-                'attachment_id',
-                AttachmentDeleteParam::new(documentID: 'document_id')
-            )
+            ->delete('attachment_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -125,14 +117,15 @@ final class AttachmentsTest extends TestCase
     public function testAdd(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentAddParams::with(file: 'file');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->add('document_id', AttachmentAddParam::new(file: 'file'))
+            ->add('document_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -142,14 +135,15 @@ final class AttachmentsTest extends TestCase
     public function testAddWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
+        $params = AttachmentAddParams::with(file: 'file');
         $result = $this
             ->client
             ->documents
             ->attachments
-            ->add('document_id', AttachmentAddParam::new(file: 'file'))
+            ->add('document_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

@@ -3,9 +3,9 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Parameters\ValidateValidateJsonParam;
-use EInvoiceAPI\Parameters\ValidateValidatePeppolIDParam;
-use EInvoiceAPI\Parameters\ValidateValidateUblParam;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams;
+use EInvoiceAPI\Validate\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Validate\ValidateValidateUblParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,14 +33,11 @@ final class ValidateTest extends TestCase
     public function testValidateJson(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validateJson(new ValidateValidateJsonParam)
-        ;
+        $params = (new ValidateValidateJsonParams);
+        $result = $this->client->validate->validateJson($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -49,16 +46,11 @@ final class ValidateTest extends TestCase
     public function testValidatePeppolID(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validatePeppolID(
-                ValidateValidatePeppolIDParam::new(peppolID: 'peppol_id')
-            )
-        ;
+        $params = ValidateValidatePeppolIDParams::with(peppolID: 'peppol_id');
+        $result = $this->client->validate->validatePeppolID($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -67,16 +59,11 @@ final class ValidateTest extends TestCase
     public function testValidatePeppolIDWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validatePeppolID(
-                ValidateValidatePeppolIDParam::new(peppolID: 'peppol_id')
-            )
-        ;
+        $params = ValidateValidatePeppolIDParams::with(peppolID: 'peppol_id');
+        $result = $this->client->validate->validatePeppolID($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -85,14 +72,11 @@ final class ValidateTest extends TestCase
     public function testValidateUbl(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validateUbl(ValidateValidateUblParam::new(file: 'file'))
-        ;
+        $params = ValidateValidateUblParams::with(file: 'file');
+        $result = $this->client->validate->validateUbl($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -101,14 +85,11 @@ final class ValidateTest extends TestCase
     public function testValidateUblWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: tests are disabled for the time being');
+            $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this
-            ->client
-            ->validate
-            ->validateUbl(ValidateValidateUblParam::new(file: 'file'))
-        ;
+        $params = ValidateValidateUblParams::with(file: 'file');
+        $result = $this->client->validate->validateUbl($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

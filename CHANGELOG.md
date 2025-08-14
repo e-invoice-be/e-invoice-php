@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.1.1 (2025-08-14)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.1.0...v0.1.1)
+
+### Features
+
+* **api:** api update ([9381626](https://github.com/e-invoice-be/e-invoice-php/commit/93816266a1eb1d6a06c90f64dd849a8c52185e25))
+* **client:** use with for constructors ([09dc3d7](https://github.com/e-invoice-be/e-invoice-php/commit/09dc3d71c3d1a185f8a11a28cfb01b11a7a64c66))
+
+
+### Bug Fixes
+
+* **client:** rename param to params ([0c50d33](https://github.com/e-invoice-be/e-invoice-php/commit/0c50d33d6caa934e5f4d5dcf1621dbd32b9215f4))
+
+
+### Chores
+
+* ci fixes ([1428218](https://github.com/e-invoice-be/e-invoice-php/commit/14282188a614e69e10131e030c32d16e6143b658))
+* fix package name ([acd91f3](https://github.com/e-invoice-be/e-invoice-php/commit/acd91f31ceb5066a248435b5cc344a5d35555673))
+* **internal:** codegen related update ([42b6411](https://github.com/e-invoice-be/e-invoice-php/commit/42b6411d16ae8be6af382f2b32359d395d850f48))
+* **internal:** codegen related update ([30eb76f](https://github.com/e-invoice-be/e-invoice-php/commit/30eb76fc59d1eaee01c50a28d962b864dc343cc2))
+* **internal:** update comment in script ([0529e32](https://github.com/e-invoice-be/e-invoice-php/commit/0529e32c4aab3ea1a932b145b8eb8e4b6df7e671))
+* move parameters into models namespace ([b59f0dc](https://github.com/e-invoice-be/e-invoice-php/commit/b59f0dcf192a48d06debf5a33f47ed29c9c0131c))
+* remove version from composer ([544edb9](https://github.com/e-invoice-be/e-invoice-php/commit/544edb9b09b1e16d178587e2d9a74cb6f336bd4b))
+* update @stainless-api/prism-cli to v5.15.0 ([24797a3](https://github.com/e-invoice-be/e-invoice-php/commit/24797a38637f18a359dc10cb69072a25cef73e65))
+
 ## 0.1.0 (2025-08-05)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.0.1...v0.1.0)
