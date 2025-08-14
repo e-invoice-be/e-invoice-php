@@ -53,6 +53,31 @@ final class QueryMetadata implements BaseModel
     #[Api]
     public string $version;
 
+    /**
+     * `new QueryMetadata()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * QueryMetadata::with(
+     *   identifierScheme: ...,
+     *   identifierValue: ...,
+     *   smlDomain: ...,
+     *   timestamp: ...,
+     *   version: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new QueryMetadata)
+     *   ->withIdentifierScheme(...)
+     *   ->withIdentifierValue(...)
+     *   ->withSmlDomain(...)
+     *   ->withTimestamp(...)
+     *   ->withVersion(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -64,7 +89,7 @@ final class QueryMetadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $identifierScheme,
         string $identifierValue,
         string $smlDomain,
@@ -85,50 +110,55 @@ final class QueryMetadata implements BaseModel
     /**
      * Scheme of the identifier, typically 'iso6523-actorid-upis'.
      */
-    public function setIdentifierScheme(string $identifierScheme): self
+    public function withIdentifierScheme(string $identifierScheme): self
     {
-        $this->identifierScheme = $identifierScheme;
+        $obj = clone $this;
+        $obj->identifierScheme = $identifierScheme;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The actual Peppol ID value being queried.
      */
-    public function setIdentifierValue(string $identifierValue): self
+    public function withIdentifierValue(string $identifierValue): self
     {
-        $this->identifierValue = $identifierValue;
+        $obj = clone $this;
+        $obj->identifierValue = $identifierValue;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Domain of the SML (Service Metadata Locator) used for the lookup.
      */
-    public function setSmlDomain(string $smlDomain): self
+    public function withSmlDomain(string $smlDomain): self
     {
-        $this->smlDomain = $smlDomain;
+        $obj = clone $this;
+        $obj->smlDomain = $smlDomain;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * ISO 8601 timestamp of when the query was executed.
      */
-    public function setTimestamp(string $timestamp): self
+    public function withTimestamp(string $timestamp): self
     {
-        $this->timestamp = $timestamp;
+        $obj = clone $this;
+        $obj->timestamp = $timestamp;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Version of the API used for the lookup.
      */
-    public function setVersion(string $version): self
+    public function withVersion(string $version): self
     {
-        $this->version = $version;
+        $obj = clone $this;
+        $obj->version = $version;
 
-        return $this;
+        return $obj;
     }
 }

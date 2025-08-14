@@ -93,6 +93,37 @@ final class LookupGetResponse implements BaseModel
     #[Api]
     public string $status;
 
+    /**
+     * `new LookupGetResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LookupGetResponse::with(
+     *   businessCard: ...,
+     *   certificates: ...,
+     *   dnsInfo: ...,
+     *   errors: ...,
+     *   executionTimeMs: ...,
+     *   queryMetadata: ...,
+     *   serviceMetadata: ...,
+     *   status: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LookupGetResponse)
+     *   ->withBusinessCard(...)
+     *   ->withCertificates(...)
+     *   ->withDNSInfo(...)
+     *   ->withErrors(...)
+     *   ->withExecutionTimeMs(...)
+     *   ->withQueryMetadata(...)
+     *   ->withServiceMetadata(...)
+     *   ->withStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -107,7 +138,7 @@ final class LookupGetResponse implements BaseModel
      * @param list<Certificate> $certificates
      * @param list<string> $errors
      */
-    public static function from(
+    public static function with(
         BusinessCard $businessCard,
         array $certificates,
         DNSInfo $dnsInfo,
@@ -134,11 +165,12 @@ final class LookupGetResponse implements BaseModel
     /**
      * Business card information for the Peppol participant.
      */
-    public function setBusinessCard(BusinessCard $businessCard): self
+    public function withBusinessCard(BusinessCard $businessCard): self
     {
-        $this->businessCard = $businessCard;
+        $obj = clone $this;
+        $obj->businessCard = $businessCard;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -146,21 +178,23 @@ final class LookupGetResponse implements BaseModel
      *
      * @param list<Certificate> $certificates
      */
-    public function setCertificates(array $certificates): self
+    public function withCertificates(array $certificates): self
     {
-        $this->certificates = $certificates;
+        $obj = clone $this;
+        $obj->certificates = $certificates;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Information about the DNS lookup performed.
      */
-    public function setDNSInfo(DNSInfo $dnsInfo): self
+    public function withDNSInfo(DNSInfo $dnsInfo): self
     {
-        $this->dnsInfo = $dnsInfo;
+        $obj = clone $this;
+        $obj->dnsInfo = $dnsInfo;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -168,50 +202,55 @@ final class LookupGetResponse implements BaseModel
      *
      * @param list<string> $errors
      */
-    public function setErrors(array $errors): self
+    public function withErrors(array $errors): self
     {
-        $this->errors = $errors;
+        $obj = clone $this;
+        $obj->errors = $errors;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Total execution time of the lookup operation in milliseconds.
      */
-    public function setExecutionTimeMs(float $executionTimeMs): self
+    public function withExecutionTimeMs(float $executionTimeMs): self
     {
-        $this->executionTimeMs = $executionTimeMs;
+        $obj = clone $this;
+        $obj->executionTimeMs = $executionTimeMs;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Metadata about the query that was performed.
      */
-    public function setQueryMetadata(QueryMetadata $queryMetadata): self
+    public function withQueryMetadata(QueryMetadata $queryMetadata): self
     {
-        $this->queryMetadata = $queryMetadata;
+        $obj = clone $this;
+        $obj->queryMetadata = $queryMetadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Service metadata information for the Peppol participant.
      */
-    public function setServiceMetadata(ServiceMetadata $serviceMetadata): self
+    public function withServiceMetadata(ServiceMetadata $serviceMetadata): self
     {
-        $this->serviceMetadata = $serviceMetadata;
+        $obj = clone $this;
+        $obj->serviceMetadata = $serviceMetadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Overall status of the lookup: 'success' or 'error'.
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 }

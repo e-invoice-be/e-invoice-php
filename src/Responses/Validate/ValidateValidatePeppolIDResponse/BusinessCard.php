@@ -41,7 +41,7 @@ final class BusinessCard implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $countryCode = null,
         ?string $name = null,
         ?\DateTimeInterface $registrationDate = null,
@@ -55,25 +55,28 @@ final class BusinessCard implements BaseModel
         return $obj;
     }
 
-    public function setCountryCode(?string $countryCode): self
+    public function withCountryCode(?string $countryCode): self
     {
-        $this->countryCode = $countryCode;
+        $obj = clone $this;
+        $obj->countryCode = $countryCode;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
-    public function setRegistrationDate(
+    public function withRegistrationDate(
         ?\DateTimeInterface $registrationDate
     ): self {
-        $this->registrationDate = $registrationDate;
+        $obj = clone $this;
+        $obj->registrationDate = $registrationDate;
 
-        return $this;
+        return $obj;
     }
 }

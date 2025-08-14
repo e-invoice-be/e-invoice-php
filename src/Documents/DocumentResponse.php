@@ -206,6 +206,20 @@ final class DocumentResponse implements BaseModel
     #[Api('vendor_tax_id', optional: true)]
     public ?string $vendorTaxID;
 
+    /**
+     * `new DocumentResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DocumentResponse::with(id: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DocumentResponse)->withID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -226,7 +240,7 @@ final class DocumentResponse implements BaseModel
      * @param DocumentState::* $state
      * @param null|list<TaxDetail> $taxDetails
      */
-    public static function from(
+    public static function with(
         string $id,
         ?string $amountDue = null,
         ?array $attachments = null,
@@ -319,43 +333,48 @@ final class DocumentResponse implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setAmountDue(?string $amountDue): self
+    public function withAmountDue(?string $amountDue): self
     {
-        $this->amountDue = $amountDue;
+        $obj = clone $this;
+        $obj->amountDue = $amountDue;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<DocumentAttachment> $attachments
      */
-    public function setAttachments(array $attachments): self
+    public function withAttachments(array $attachments): self
     {
-        $this->attachments = $attachments;
+        $obj = clone $this;
+        $obj->attachments = $attachments;
 
-        return $this;
+        return $obj;
     }
 
-    public function setBillingAddress(?string $billingAddress): self
+    public function withBillingAddress(?string $billingAddress): self
     {
-        $this->billingAddress = $billingAddress;
+        $obj = clone $this;
+        $obj->billingAddress = $billingAddress;
 
-        return $this;
+        return $obj;
     }
 
-    public function setBillingAddressRecipient(
+    public function withBillingAddressRecipient(
         ?string $billingAddressRecipient
     ): self {
-        $this->billingAddressRecipient = $billingAddressRecipient;
+        $obj = clone $this;
+        $obj->billingAddressRecipient = $billingAddressRecipient;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -363,287 +382,325 @@ final class DocumentResponse implements BaseModel
      *
      * @param CurrencyCode::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCustomerAddress(?string $customerAddress): self
+    public function withCustomerAddress(?string $customerAddress): self
     {
-        $this->customerAddress = $customerAddress;
+        $obj = clone $this;
+        $obj->customerAddress = $customerAddress;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCustomerAddressRecipient(
+    public function withCustomerAddressRecipient(
         ?string $customerAddressRecipient
     ): self {
-        $this->customerAddressRecipient = $customerAddressRecipient;
+        $obj = clone $this;
+        $obj->customerAddressRecipient = $customerAddressRecipient;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCustomerEmail(?string $customerEmail): self
+    public function withCustomerEmail(?string $customerEmail): self
     {
-        $this->customerEmail = $customerEmail;
+        $obj = clone $this;
+        $obj->customerEmail = $customerEmail;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCustomerID(?string $customerID): self
+    public function withCustomerID(?string $customerID): self
     {
-        $this->customerID = $customerID;
+        $obj = clone $this;
+        $obj->customerID = $customerID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCustomerName(?string $customerName): self
+    public function withCustomerName(?string $customerName): self
     {
-        $this->customerName = $customerName;
+        $obj = clone $this;
+        $obj->customerName = $customerName;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCustomerTaxID(?string $customerTaxID): self
+    public function withCustomerTaxID(?string $customerTaxID): self
     {
-        $this->customerTaxID = $customerTaxID;
+        $obj = clone $this;
+        $obj->customerTaxID = $customerTaxID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param DocumentDirection::* $direction
      */
-    public function setDirection(string $direction): self
+    public function withDirection(string $direction): self
     {
-        $this->direction = $direction;
+        $obj = clone $this;
+        $obj->direction = $direction;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param DocumentType::* $documentType
      */
-    public function setDocumentType(string $documentType): self
+    public function withDocumentType(string $documentType): self
     {
-        $this->documentType = $documentType;
+        $obj = clone $this;
+        $obj->documentType = $documentType;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDueDate(?\DateTimeInterface $dueDate): self
+    public function withDueDate(?\DateTimeInterface $dueDate): self
     {
-        $this->dueDate = $dueDate;
+        $obj = clone $this;
+        $obj->dueDate = $dueDate;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInvoiceDate(?\DateTimeInterface $invoiceDate): self
+    public function withInvoiceDate(?\DateTimeInterface $invoiceDate): self
     {
-        $this->invoiceDate = $invoiceDate;
+        $obj = clone $this;
+        $obj->invoiceDate = $invoiceDate;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInvoiceID(?string $invoiceID): self
+    public function withInvoiceID(?string $invoiceID): self
     {
-        $this->invoiceID = $invoiceID;
+        $obj = clone $this;
+        $obj->invoiceID = $invoiceID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInvoiceTotal(?string $invoiceTotal): self
+    public function withInvoiceTotal(?string $invoiceTotal): self
     {
-        $this->invoiceTotal = $invoiceTotal;
+        $obj = clone $this;
+        $obj->invoiceTotal = $invoiceTotal;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<Item> $items
      */
-    public function setItems(array $items): self
+    public function withItems(array $items): self
     {
-        $this->items = $items;
+        $obj = clone $this;
+        $obj->items = $items;
 
-        return $this;
+        return $obj;
     }
 
-    public function setNote(?string $note): self
+    public function withNote(?string $note): self
     {
-        $this->note = $note;
+        $obj = clone $this;
+        $obj->note = $note;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<PaymentDetail> $paymentDetails
      */
-    public function setPaymentDetails(array $paymentDetails): self
+    public function withPaymentDetails(array $paymentDetails): self
     {
-        $this->paymentDetails = $paymentDetails;
+        $obj = clone $this;
+        $obj->paymentDetails = $paymentDetails;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPaymentTerm(?string $paymentTerm): self
+    public function withPaymentTerm(?string $paymentTerm): self
     {
-        $this->paymentTerm = $paymentTerm;
+        $obj = clone $this;
+        $obj->paymentTerm = $paymentTerm;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPreviousUnpaidBalance(
+    public function withPreviousUnpaidBalance(
         ?string $previousUnpaidBalance
     ): self {
-        $this->previousUnpaidBalance = $previousUnpaidBalance;
+        $obj = clone $this;
+        $obj->previousUnpaidBalance = $previousUnpaidBalance;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPurchaseOrder(?string $purchaseOrder): self
+    public function withPurchaseOrder(?string $purchaseOrder): self
     {
-        $this->purchaseOrder = $purchaseOrder;
+        $obj = clone $this;
+        $obj->purchaseOrder = $purchaseOrder;
 
-        return $this;
+        return $obj;
     }
 
-    public function setRemittanceAddress(?string $remittanceAddress): self
+    public function withRemittanceAddress(?string $remittanceAddress): self
     {
-        $this->remittanceAddress = $remittanceAddress;
+        $obj = clone $this;
+        $obj->remittanceAddress = $remittanceAddress;
 
-        return $this;
+        return $obj;
     }
 
-    public function setRemittanceAddressRecipient(
+    public function withRemittanceAddressRecipient(
         ?string $remittanceAddressRecipient
     ): self {
-        $this->remittanceAddressRecipient = $remittanceAddressRecipient;
+        $obj = clone $this;
+        $obj->remittanceAddressRecipient = $remittanceAddressRecipient;
 
-        return $this;
+        return $obj;
     }
 
-    public function setServiceAddress(?string $serviceAddress): self
+    public function withServiceAddress(?string $serviceAddress): self
     {
-        $this->serviceAddress = $serviceAddress;
+        $obj = clone $this;
+        $obj->serviceAddress = $serviceAddress;
 
-        return $this;
+        return $obj;
     }
 
-    public function setServiceAddressRecipient(
+    public function withServiceAddressRecipient(
         ?string $serviceAddressRecipient
     ): self {
-        $this->serviceAddressRecipient = $serviceAddressRecipient;
+        $obj = clone $this;
+        $obj->serviceAddressRecipient = $serviceAddressRecipient;
 
-        return $this;
+        return $obj;
     }
 
-    public function setServiceEndDate(?\DateTimeInterface $serviceEndDate): self
-    {
-        $this->serviceEndDate = $serviceEndDate;
+    public function withServiceEndDate(
+        ?\DateTimeInterface $serviceEndDate
+    ): self {
+        $obj = clone $this;
+        $obj->serviceEndDate = $serviceEndDate;
 
-        return $this;
+        return $obj;
     }
 
-    public function setServiceStartDate(
+    public function withServiceStartDate(
         ?\DateTimeInterface $serviceStartDate
     ): self {
-        $this->serviceStartDate = $serviceStartDate;
+        $obj = clone $this;
+        $obj->serviceStartDate = $serviceStartDate;
 
-        return $this;
+        return $obj;
     }
 
-    public function setShippingAddress(?string $shippingAddress): self
+    public function withShippingAddress(?string $shippingAddress): self
     {
-        $this->shippingAddress = $shippingAddress;
+        $obj = clone $this;
+        $obj->shippingAddress = $shippingAddress;
 
-        return $this;
+        return $obj;
     }
 
-    public function setShippingAddressRecipient(
+    public function withShippingAddressRecipient(
         ?string $shippingAddressRecipient
     ): self {
-        $this->shippingAddressRecipient = $shippingAddressRecipient;
+        $obj = clone $this;
+        $obj->shippingAddressRecipient = $shippingAddressRecipient;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param DocumentState::* $state
      */
-    public function setState(string $state): self
+    public function withState(string $state): self
     {
-        $this->state = $state;
+        $obj = clone $this;
+        $obj->state = $state;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSubtotal(?string $subtotal): self
+    public function withSubtotal(?string $subtotal): self
     {
-        $this->subtotal = $subtotal;
+        $obj = clone $this;
+        $obj->subtotal = $subtotal;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<TaxDetail> $taxDetails
      */
-    public function setTaxDetails(array $taxDetails): self
+    public function withTaxDetails(array $taxDetails): self
     {
-        $this->taxDetails = $taxDetails;
+        $obj = clone $this;
+        $obj->taxDetails = $taxDetails;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTotalDiscount(?string $totalDiscount): self
+    public function withTotalDiscount(?string $totalDiscount): self
     {
-        $this->totalDiscount = $totalDiscount;
+        $obj = clone $this;
+        $obj->totalDiscount = $totalDiscount;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTotalTax(?string $totalTax): self
+    public function withTotalTax(?string $totalTax): self
     {
-        $this->totalTax = $totalTax;
+        $obj = clone $this;
+        $obj->totalTax = $totalTax;
 
-        return $this;
+        return $obj;
     }
 
-    public function setVendorAddress(?string $vendorAddress): self
+    public function withVendorAddress(?string $vendorAddress): self
     {
-        $this->vendorAddress = $vendorAddress;
+        $obj = clone $this;
+        $obj->vendorAddress = $vendorAddress;
 
-        return $this;
+        return $obj;
     }
 
-    public function setVendorAddressRecipient(
+    public function withVendorAddressRecipient(
         ?string $vendorAddressRecipient
     ): self {
-        $this->vendorAddressRecipient = $vendorAddressRecipient;
+        $obj = clone $this;
+        $obj->vendorAddressRecipient = $vendorAddressRecipient;
 
-        return $this;
+        return $obj;
     }
 
-    public function setVendorEmail(?string $vendorEmail): self
+    public function withVendorEmail(?string $vendorEmail): self
     {
-        $this->vendorEmail = $vendorEmail;
+        $obj = clone $this;
+        $obj->vendorEmail = $vendorEmail;
 
-        return $this;
+        return $obj;
     }
 
-    public function setVendorName(?string $vendorName): self
+    public function withVendorName(?string $vendorName): self
     {
-        $this->vendorName = $vendorName;
+        $obj = clone $this;
+        $obj->vendorName = $vendorName;
 
-        return $this;
+        return $obj;
     }
 
-    public function setVendorTaxID(?string $vendorTaxID): self
+    public function withVendorTaxID(?string $vendorTaxID): self
     {
-        $this->vendorTaxID = $vendorTaxID;
+        $obj = clone $this;
+        $obj->vendorTaxID = $vendorTaxID;
 
-        return $this;
+        return $obj;
     }
 }

@@ -39,6 +39,27 @@ final class PaginatedDocumentResponse implements BaseModel
     #[Api]
     public int $total;
 
+    /**
+     * `new PaginatedDocumentResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * PaginatedDocumentResponse::with(
+     *   items: ..., page: ..., pageSize: ..., pages: ..., total: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new PaginatedDocumentResponse)
+     *   ->withItems(...)
+     *   ->withPage(...)
+     *   ->withPageSize(...)
+     *   ->withPages(...)
+     *   ->withTotal(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -52,7 +73,7 @@ final class PaginatedDocumentResponse implements BaseModel
      *
      * @param list<DocumentResponse> $items
      */
-    public static function from(
+    public static function with(
         array $items,
         int $page,
         int $pageSize,
@@ -73,38 +94,43 @@ final class PaginatedDocumentResponse implements BaseModel
     /**
      * @param list<DocumentResponse> $items
      */
-    public function setItems(array $items): self
+    public function withItems(array $items): self
     {
-        $this->items = $items;
+        $obj = clone $this;
+        $obj->items = $items;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPage(int $page): self
+    public function withPage(int $page): self
     {
-        $this->page = $page;
+        $obj = clone $this;
+        $obj->page = $page;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPageSize(int $pageSize): self
+    public function withPageSize(int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPages(int $pages): self
+    public function withPages(int $pages): self
     {
-        $this->pages = $pages;
+        $obj = clone $this;
+        $obj->pages = $pages;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTotal(int $total): self
+    public function withTotal(int $total): self
     {
-        $this->total = $total;
+        $obj = clone $this;
+        $obj->total = $total;
 
-        return $this;
+        return $obj;
     }
 }

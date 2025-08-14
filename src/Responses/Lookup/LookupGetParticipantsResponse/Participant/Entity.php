@@ -84,7 +84,7 @@ final class Entity implements BaseModel
      *
      * @param null|list<Identifier> $identifiers
      */
-    public static function from(
+    public static function with(
         ?string $additionalInfo = null,
         ?string $countryCode = null,
         ?string $geoInfo = null,
@@ -109,31 +109,34 @@ final class Entity implements BaseModel
     /**
      * Additional information.
      */
-    public function setAdditionalInfo(?string $additionalInfo): self
+    public function withAdditionalInfo(?string $additionalInfo): self
     {
-        $this->additionalInfo = $additionalInfo;
+        $obj = clone $this;
+        $obj->additionalInfo = $additionalInfo;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Country code.
      */
-    public function setCountryCode(?string $countryCode): self
+    public function withCountryCode(?string $countryCode): self
     {
-        $this->countryCode = $countryCode;
+        $obj = clone $this;
+        $obj->countryCode = $countryCode;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Geographic information.
      */
-    public function setGeoInfo(?string $geoInfo): self
+    public function withGeoInfo(?string $geoInfo): self
     {
-        $this->geoInfo = $geoInfo;
+        $obj = clone $this;
+        $obj->geoInfo = $geoInfo;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -141,40 +144,44 @@ final class Entity implements BaseModel
      *
      * @param list<Identifier> $identifiers
      */
-    public function setIdentifiers(array $identifiers): self
+    public function withIdentifiers(array $identifiers): self
     {
-        $this->identifiers = $identifiers;
+        $obj = clone $this;
+        $obj->identifiers = $identifiers;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Business entity name.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Registration date.
      */
-    public function setRegistrationDate(?string $registrationDate): self
+    public function withRegistrationDate(?string $registrationDate): self
     {
-        $this->registrationDate = $registrationDate;
+        $obj = clone $this;
+        $obj->registrationDate = $registrationDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Website URL.
      */
-    public function setWebsite(?string $website): self
+    public function withWebsite(?string $website): self
     {
-        $this->website = $website;
+        $obj = clone $this;
+        $obj->website = $website;
 
-        return $this;
+        return $obj;
     }
 }

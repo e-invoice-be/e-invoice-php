@@ -29,6 +29,20 @@ final class DocumentType implements BaseModel
     #[Api]
     public string $value;
 
+    /**
+     * `new DocumentType()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DocumentType::with(scheme: ..., value: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DocumentType)->withScheme(...)->withValue(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class DocumentType implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $scheme, string $value): self
+    public static function with(string $scheme, string $value): self
     {
         $obj = new self;
 
@@ -53,20 +67,22 @@ final class DocumentType implements BaseModel
     /**
      * Document type scheme.
      */
-    public function setScheme(string $scheme): self
+    public function withScheme(string $scheme): self
     {
-        $this->scheme = $scheme;
+        $obj = clone $this;
+        $obj->scheme = $scheme;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Document type value.
      */
-    public function setValue(string $value): self
+    public function withValue(string $value): self
     {
-        $this->value = $value;
+        $obj = clone $this;
+        $obj->value = $value;
 
-        return $this;
+        return $obj;
     }
 }

@@ -34,7 +34,7 @@ final class TaxDetail implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         null|float|string $amount = null,
         ?string $rate = null
     ): self {
@@ -46,17 +46,19 @@ final class TaxDetail implements BaseModel
         return $obj;
     }
 
-    public function setAmount(null|float|string $amount): self
+    public function withAmount(null|float|string $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
-    public function setRate(?string $rate): self
+    public function withRate(?string $rate): self
     {
-        $this->rate = $rate;
+        $obj = clone $this;
+        $obj->rate = $rate;
 
-        return $this;
+        return $obj;
     }
 }

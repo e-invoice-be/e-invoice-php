@@ -25,6 +25,20 @@ final class ValidateValidatePeppolIDParams implements BaseModel
     #[Api]
     public string $peppolID;
 
+    /**
+     * `new ValidateValidatePeppolIDParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ValidateValidatePeppolIDParams::with(peppolID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ValidateValidatePeppolIDParams)->withPeppolID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -36,7 +50,7 @@ final class ValidateValidatePeppolIDParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $peppolID): self
+    public static function with(string $peppolID): self
     {
         $obj = new self;
 
@@ -48,10 +62,11 @@ final class ValidateValidatePeppolIDParams implements BaseModel
     /**
      * Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
-    public function setPeppolID(string $peppolID): self
+    public function withPeppolID(string $peppolID): self
     {
-        $this->peppolID = $peppolID;
+        $obj = clone $this;
+        $obj->peppolID = $peppolID;
 
-        return $this;
+        return $obj;
     }
 }

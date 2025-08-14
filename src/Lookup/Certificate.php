@@ -40,6 +40,20 @@ final class Certificate implements BaseModel
     #[Api(optional: true)]
     public ?string $error;
 
+    /**
+     * `new Certificate()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Certificate::with(status: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Certificate)->withStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -53,7 +67,7 @@ final class Certificate implements BaseModel
      *
      * @param null|array<string, mixed> $details
      */
-    public static function from(
+    public static function with(
         string $status,
         ?array $details = null,
         ?string $error = null
@@ -71,11 +85,12 @@ final class Certificate implements BaseModel
     /**
      * Status of the certificate validation: 'success', 'error', or 'pending'.
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -83,20 +98,22 @@ final class Certificate implements BaseModel
      *
      * @param null|array<string, mixed> $details
      */
-    public function setDetails(?array $details): self
+    public function withDetails(?array $details): self
     {
-        $this->details = $details;
+        $obj = clone $this;
+        $obj->details = $details;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Error message if certificate validation failed.
      */
-    public function setError(?string $error): self
+    public function withError(?string $error): self
     {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 }

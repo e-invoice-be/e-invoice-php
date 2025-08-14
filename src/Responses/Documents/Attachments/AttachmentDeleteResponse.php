@@ -18,6 +18,20 @@ final class AttachmentDeleteResponse implements BaseModel
     #[Api('is_deleted')]
     public bool $isDeleted;
 
+    /**
+     * `new AttachmentDeleteResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * AttachmentDeleteResponse::with(isDeleted: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new AttachmentDeleteResponse)->withIsDeleted(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -29,7 +43,7 @@ final class AttachmentDeleteResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(bool $isDeleted): self
+    public static function with(bool $isDeleted): self
     {
         $obj = new self;
 
@@ -38,10 +52,11 @@ final class AttachmentDeleteResponse implements BaseModel
         return $obj;
     }
 
-    public function setIsDeleted(bool $isDeleted): self
+    public function withIsDeleted(bool $isDeleted): self
     {
-        $this->isDeleted = $isDeleted;
+        $obj = clone $this;
+        $obj->isDeleted = $isDeleted;
 
-        return $this;
+        return $obj;
     }
 }

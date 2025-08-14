@@ -22,6 +22,20 @@ final class AttachmentAddParams implements BaseModel
     #[Api]
     public string $file;
 
+    /**
+     * `new AttachmentAddParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * AttachmentAddParams::with(file: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new AttachmentAddParams)->withFile(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -33,7 +47,7 @@ final class AttachmentAddParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $file): self
+    public static function with(string $file): self
     {
         $obj = new self;
 
@@ -42,10 +56,11 @@ final class AttachmentAddParams implements BaseModel
         return $obj;
     }
 
-    public function setFile(string $file): self
+    public function withFile(string $file): self
     {
-        $this->file = $file;
+        $obj = clone $this;
+        $obj->file = $file;
 
-        return $this;
+        return $obj;
     }
 }

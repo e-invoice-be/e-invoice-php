@@ -29,6 +29,20 @@ final class DocumentAttachmentCreate implements BaseModel
     #[Api('file_type', optional: true)]
     public ?string $fileType;
 
+    /**
+     * `new DocumentAttachmentCreate()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DocumentAttachmentCreate::with(fileName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DocumentAttachmentCreate)->withFileName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class DocumentAttachmentCreate implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $fileName,
         ?string $fileData = null,
         ?int $fileSize = null,
@@ -57,31 +71,35 @@ final class DocumentAttachmentCreate implements BaseModel
         return $obj;
     }
 
-    public function setFileName(string $fileName): self
+    public function withFileName(string $fileName): self
     {
-        $this->fileName = $fileName;
+        $obj = clone $this;
+        $obj->fileName = $fileName;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileData(?string $fileData): self
+    public function withFileData(?string $fileData): self
     {
-        $this->fileData = $fileData;
+        $obj = clone $this;
+        $obj->fileData = $fileData;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileSize(int $fileSize): self
+    public function withFileSize(int $fileSize): self
     {
-        $this->fileSize = $fileSize;
+        $obj = clone $this;
+        $obj->fileSize = $fileSize;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileType(string $fileType): self
+    public function withFileType(string $fileType): self
     {
-        $this->fileType = $fileType;
+        $obj = clone $this;
+        $obj->fileType = $fileType;
 
-        return $this;
+        return $obj;
     }
 }

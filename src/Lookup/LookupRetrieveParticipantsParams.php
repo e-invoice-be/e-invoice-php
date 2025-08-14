@@ -33,6 +33,20 @@ final class LookupRetrieveParticipantsParams implements BaseModel
     #[Api(optional: true)]
     public ?string $countryCode;
 
+    /**
+     * `new LookupRetrieveParticipantsParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LookupRetrieveParticipantsParams::with(query: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LookupRetrieveParticipantsParams)->withQuery(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -44,7 +58,7 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $query,
         ?string $countryCode = null
     ): self {
@@ -60,20 +74,22 @@ final class LookupRetrieveParticipantsParams implements BaseModel
     /**
      * Query to lookup.
      */
-    public function setQuery(string $query): self
+    public function withQuery(string $query): self
     {
-        $this->query = $query;
+        $obj = clone $this;
+        $obj->query = $query;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Country code of the company to lookup. If not provided, the search will be global.
      */
-    public function setCountryCode(?string $countryCode): self
+    public function withCountryCode(?string $countryCode): self
     {
-        $this->countryCode = $countryCode;
+        $obj = clone $this;
+        $obj->countryCode = $countryCode;
 
-        return $this;
+        return $obj;
     }
 }

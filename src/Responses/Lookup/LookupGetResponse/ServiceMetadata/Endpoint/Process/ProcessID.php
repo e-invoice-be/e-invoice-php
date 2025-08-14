@@ -29,6 +29,20 @@ final class ProcessID implements BaseModel
     #[Api]
     public string $value;
 
+    /**
+     * `new ProcessID()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ProcessID::with(scheme: ..., value: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ProcessID)->withScheme(...)->withValue(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class ProcessID implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $scheme, string $value): self
+    public static function with(string $scheme, string $value): self
     {
         $obj = new self;
 
@@ -53,20 +67,22 @@ final class ProcessID implements BaseModel
     /**
      * Scheme of the process identifier.
      */
-    public function setScheme(string $scheme): self
+    public function withScheme(string $scheme): self
     {
-        $this->scheme = $scheme;
+        $obj = clone $this;
+        $obj->scheme = $scheme;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Value of the process identifier.
      */
-    public function setValue(string $value): self
+    public function withValue(string $value): self
     {
-        $this->value = $value;
+        $obj = clone $this;
+        $obj->value = $value;
 
-        return $this;
+        return $obj;
     }
 }

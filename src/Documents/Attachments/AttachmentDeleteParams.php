@@ -22,6 +22,20 @@ final class AttachmentDeleteParams implements BaseModel
     #[Api]
     public string $documentID;
 
+    /**
+     * `new AttachmentDeleteParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * AttachmentDeleteParams::with(documentID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new AttachmentDeleteParams)->withDocumentID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -33,7 +47,7 @@ final class AttachmentDeleteParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $documentID): self
+    public static function with(string $documentID): self
     {
         $obj = new self;
 
@@ -42,10 +56,11 @@ final class AttachmentDeleteParams implements BaseModel
         return $obj;
     }
 
-    public function setDocumentID(string $documentID): self
+    public function withDocumentID(string $documentID): self
     {
-        $this->documentID = $documentID;
+        $obj = clone $this;
+        $obj->documentID = $documentID;
 
-        return $this;
+        return $obj;
     }
 }

@@ -43,7 +43,7 @@ final class PaymentDetailCreate implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $bankAccountNumber = null,
         ?string $iban = null,
         ?string $paymentReference = null,
@@ -59,31 +59,35 @@ final class PaymentDetailCreate implements BaseModel
         return $obj;
     }
 
-    public function setBankAccountNumber(?string $bankAccountNumber): self
+    public function withBankAccountNumber(?string $bankAccountNumber): self
     {
-        $this->bankAccountNumber = $bankAccountNumber;
+        $obj = clone $this;
+        $obj->bankAccountNumber = $bankAccountNumber;
 
-        return $this;
+        return $obj;
     }
 
-    public function setIban(?string $iban): self
+    public function withIban(?string $iban): self
     {
-        $this->iban = $iban;
+        $obj = clone $this;
+        $obj->iban = $iban;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPaymentReference(?string $paymentReference): self
+    public function withPaymentReference(?string $paymentReference): self
     {
-        $this->paymentReference = $paymentReference;
+        $obj = clone $this;
+        $obj->paymentReference = $paymentReference;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSwift(?string $swift): self
+    public function withSwift(?string $swift): self
     {
-        $this->swift = $swift;
+        $obj = clone $this;
+        $obj->swift = $swift;
 
-        return $this;
+        return $obj;
     }
 }

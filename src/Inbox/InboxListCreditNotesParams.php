@@ -42,7 +42,7 @@ final class InboxListCreditNotesParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(?int $page = null, ?int $pageSize = null): self
+    public static function with(?int $page = null, ?int $pageSize = null): self
     {
         $obj = new self;
 
@@ -55,20 +55,22 @@ final class InboxListCreditNotesParams implements BaseModel
     /**
      * Page number.
      */
-    public function setPage(int $page): self
+    public function withPage(int $page): self
     {
-        $this->page = $page;
+        $obj = clone $this;
+        $obj->page = $page;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of items per page.
      */
-    public function setPageSize(int $pageSize): self
+    public function withPageSize(int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 }

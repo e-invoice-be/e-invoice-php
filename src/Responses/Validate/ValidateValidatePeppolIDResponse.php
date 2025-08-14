@@ -56,6 +56,26 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     #[Api('supported_document_types', type: new ListOf('string'), optional: true)]
     public ?array $supportedDocumentTypes;
 
+    /**
+     * `new ValidateValidatePeppolIDResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ValidateValidatePeppolIDResponse::with(
+     *   businessCard: ..., businessCardValid: ..., dnsValid: ..., isValid: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ValidateValidatePeppolIDResponse)
+     *   ->withBusinessCard(...)
+     *   ->withBusinessCardValid(...)
+     *   ->withDNSValid(...)
+     *   ->withIsValid(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -69,7 +89,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      *
      * @param null|list<string> $supportedDocumentTypes
      */
-    public static function from(
+    public static function with(
         ?BusinessCard $businessCard,
         bool $businessCardValid,
         bool $dnsValid,
@@ -91,51 +111,56 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     /**
      * Business card information for the Peppol ID.
      */
-    public function setBusinessCard(?BusinessCard $businessCard): self
+    public function withBusinessCard(?BusinessCard $businessCard): self
     {
-        $this->businessCard = $businessCard;
+        $obj = clone $this;
+        $obj->businessCard = $businessCard;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Whether a business card is set at the SMP.
      */
-    public function setBusinessCardValid(bool $businessCardValid): self
+    public function withBusinessCardValid(bool $businessCardValid): self
     {
-        $this->businessCardValid = $businessCardValid;
+        $obj = clone $this;
+        $obj->businessCardValid = $businessCardValid;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Whether the DNS resolves to a valid SMP.
      */
-    public function setDNSValid(bool $dnsValid): self
+    public function withDNSValid(bool $dnsValid): self
     {
-        $this->dnsValid = $dnsValid;
+        $obj = clone $this;
+        $obj->dnsValid = $dnsValid;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Whether the Peppol ID is valid and registered in the Peppol network.
      */
-    public function setIsValid(bool $isValid): self
+    public function withIsValid(bool $isValid): self
     {
-        $this->isValid = $isValid;
+        $obj = clone $this;
+        $obj->isValid = $isValid;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<string> $supportedDocumentTypes
      */
-    public function setSupportedDocumentTypes(
+    public function withSupportedDocumentTypes(
         array $supportedDocumentTypes
     ): self {
-        $this->supportedDocumentTypes = $supportedDocumentTypes;
+        $obj = clone $this;
+        $obj->supportedDocumentTypes = $supportedDocumentTypes;
 
-        return $this;
+        return $obj;
     }
 }

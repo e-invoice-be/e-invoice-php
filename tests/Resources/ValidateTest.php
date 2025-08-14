@@ -49,7 +49,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = ValidateValidatePeppolIDParams::from(peppolID: 'peppol_id');
+        $params = ValidateValidatePeppolIDParams::with(peppolID: 'peppol_id');
         $result = $this->client->validate->validatePeppolID($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -62,7 +62,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = ValidateValidatePeppolIDParams::from(peppolID: 'peppol_id');
+        $params = ValidateValidatePeppolIDParams::with(peppolID: 'peppol_id');
         $result = $this->client->validate->validatePeppolID($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -75,7 +75,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = ValidateValidateUblParams::from(file: 'file');
+        $params = ValidateValidateUblParams::with(file: 'file');
         $result = $this->client->validate->validateUbl($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -88,7 +88,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = ValidateValidateUblParams::from(file: 'file');
+        $params = ValidateValidateUblParams::with(file: 'file');
         $result = $this->client->validate->validateUbl($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line

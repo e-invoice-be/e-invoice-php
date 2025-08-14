@@ -32,6 +32,20 @@ final class WebhookCreateParams implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
+    /**
+     * `new WebhookCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebhookCreateParams::with(events: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebhookCreateParams)->withEvents(...)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -45,7 +59,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * @param list<string> $events
      */
-    public static function from(
+    public static function with(
         array $events,
         string $url,
         ?bool $enabled = null
@@ -63,24 +77,27 @@ final class WebhookCreateParams implements BaseModel
     /**
      * @param list<string> $events
      */
-    public function setEvents(array $events): self
+    public function withEvents(array $events): self
     {
-        $this->events = $events;
+        $obj = clone $this;
+        $obj->events = $events;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function withEnabled(bool $enabled): self
     {
-        $this->enabled = $enabled;
+        $obj = clone $this;
+        $obj->enabled = $enabled;
 
-        return $this;
+        return $obj;
     }
 }

@@ -72,7 +72,7 @@ final class Item implements BaseModel
      *
      * @param UnitOfMeasureCode::* $unit
      */
-    public static function from(
+    public static function with(
         ?string $amount = null,
         null $date = null,
         ?string $description = null,
@@ -98,56 +98,63 @@ final class Item implements BaseModel
         return $obj;
     }
 
-    public function setAmount(?string $amount): self
+    public function withAmount(?string $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param null|null $date
      */
-    public function setDate(null $date): self
+    public function withDate(null $date): self
     {
-        $this->date = $date;
+        $obj = clone $this;
+        $obj->date = $date;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
-    public function setProductCode(?string $productCode): self
+    public function withProductCode(?string $productCode): self
     {
-        $this->productCode = $productCode;
+        $obj = clone $this;
+        $obj->productCode = $productCode;
 
-        return $this;
+        return $obj;
     }
 
-    public function setQuantity(?string $quantity): self
+    public function withQuantity(?string $quantity): self
     {
-        $this->quantity = $quantity;
+        $obj = clone $this;
+        $obj->quantity = $quantity;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTax(?string $tax): self
+    public function withTax(?string $tax): self
     {
-        $this->tax = $tax;
+        $obj = clone $this;
+        $obj->tax = $tax;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTaxRate(?string $taxRate): self
+    public function withTaxRate(?string $taxRate): self
     {
-        $this->taxRate = $taxRate;
+        $obj = clone $this;
+        $obj->taxRate = $taxRate;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -155,17 +162,19 @@ final class Item implements BaseModel
      *
      * @param UnitOfMeasureCode::* $unit
      */
-    public function setUnit(string $unit): self
+    public function withUnit(string $unit): self
     {
-        $this->unit = $unit;
+        $obj = clone $this;
+        $obj->unit = $unit;
 
-        return $this;
+        return $obj;
     }
 
-    public function setUnitPrice(?string $unitPrice): self
+    public function withUnitPrice(?string $unitPrice): self
     {
-        $this->unitPrice = $unitPrice;
+        $obj = clone $this;
+        $obj->unitPrice = $unitPrice;
 
-        return $this;
+        return $obj;
     }
 }

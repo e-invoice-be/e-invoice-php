@@ -36,6 +36,20 @@ final class DocumentAttachment implements BaseModel
     #[Api('file_url', optional: true)]
     public ?string $fileURL;
 
+    /**
+     * `new DocumentAttachment()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DocumentAttachment::with(id: ..., fileName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DocumentAttachment)->withID(...)->withFileName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +61,7 @@ final class DocumentAttachment implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         string $fileName,
         ?int $fileSize = null,
@@ -66,38 +80,43 @@ final class DocumentAttachment implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileName(string $fileName): self
+    public function withFileName(string $fileName): self
     {
-        $this->fileName = $fileName;
+        $obj = clone $this;
+        $obj->fileName = $fileName;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileSize(int $fileSize): self
+    public function withFileSize(int $fileSize): self
     {
-        $this->fileSize = $fileSize;
+        $obj = clone $this;
+        $obj->fileSize = $fileSize;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileType(string $fileType): self
+    public function withFileType(string $fileType): self
     {
-        $this->fileType = $fileType;
+        $obj = clone $this;
+        $obj->fileType = $fileType;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileURL(?string $fileURL): self
+    public function withFileURL(?string $fileURL): self
     {
-        $this->fileURL = $fileURL;
+        $obj = clone $this;
+        $obj->fileURL = $fileURL;
 
-        return $this;
+        return $obj;
     }
 }

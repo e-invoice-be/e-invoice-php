@@ -50,6 +50,20 @@ final class BusinessCard implements BaseModel
     #[Api(optional: true)]
     public ?string $error;
 
+    /**
+     * `new BusinessCard()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BusinessCard::with(entities: ..., queryTimeMs: ..., status: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BusinessCard)->withEntities(...)->withQueryTimeMs(...)->withStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -63,7 +77,7 @@ final class BusinessCard implements BaseModel
      *
      * @param list<Entity> $entities
      */
-    public static function from(
+    public static function with(
         array $entities,
         float $queryTimeMs,
         string $status,
@@ -85,40 +99,44 @@ final class BusinessCard implements BaseModel
      *
      * @param list<Entity> $entities
      */
-    public function setEntities(array $entities): self
+    public function withEntities(array $entities): self
     {
-        $this->entities = $entities;
+        $obj = clone $this;
+        $obj->entities = $entities;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Time taken to query the business card in milliseconds.
      */
-    public function setQueryTimeMs(float $queryTimeMs): self
+    public function withQueryTimeMs(float $queryTimeMs): self
     {
-        $this->queryTimeMs = $queryTimeMs;
+        $obj = clone $this;
+        $obj->queryTimeMs = $queryTimeMs;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Status of the business card lookup: 'success', 'error', or 'pending'.
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Error message if business card lookup failed.
      */
-    public function setError(?string $error): self
+    public function withError(?string $error): self
     {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 }

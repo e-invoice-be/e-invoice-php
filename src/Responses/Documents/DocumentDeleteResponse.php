@@ -18,6 +18,20 @@ final class DocumentDeleteResponse implements BaseModel
     #[Api('is_deleted')]
     public bool $isDeleted;
 
+    /**
+     * `new DocumentDeleteResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DocumentDeleteResponse::with(isDeleted: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DocumentDeleteResponse)->withIsDeleted(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -29,7 +43,7 @@ final class DocumentDeleteResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(bool $isDeleted): self
+    public static function with(bool $isDeleted): self
     {
         $obj = new self;
 
@@ -38,10 +52,11 @@ final class DocumentDeleteResponse implements BaseModel
         return $obj;
     }
 
-    public function setIsDeleted(bool $isDeleted): self
+    public function withIsDeleted(bool $isDeleted): self
     {
-        $this->isDeleted = $isDeleted;
+        $obj = clone $this;
+        $obj->isDeleted = $isDeleted;
 
-        return $this;
+        return $obj;
     }
 }
