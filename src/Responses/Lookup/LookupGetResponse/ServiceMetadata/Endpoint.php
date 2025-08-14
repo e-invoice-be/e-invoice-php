@@ -60,6 +60,20 @@ final class Endpoint implements BaseModel
     #[Api(type: new ListOf(Process::class), nullable: true, optional: true)]
     public ?array $processes;
 
+    /**
+     * `new Endpoint()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Endpoint::with(documentTypes: ..., status: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Endpoint)->withDocumentTypes(...)->withStatus(...)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -74,7 +88,7 @@ final class Endpoint implements BaseModel
      * @param list<DocumentType> $documentTypes
      * @param null|list<Process> $processes
      */
-    public static function from(
+    public static function with(
         array $documentTypes,
         string $status,
         string $url,
@@ -98,41 +112,45 @@ final class Endpoint implements BaseModel
      *
      * @param list<DocumentType> $documentTypes
      */
-    public function setDocumentTypes(array $documentTypes): self
+    public function withDocumentTypes(array $documentTypes): self
     {
-        $this->documentTypes = $documentTypes;
+        $obj = clone $this;
+        $obj->documentTypes = $documentTypes;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Status of the endpoint lookup: 'success', 'error', or 'pending'.
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * URL of the endpoint.
      */
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Error message if endpoint lookup failed.
      */
-    public function setError(?string $error): self
+    public function withError(?string $error): self
     {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -140,10 +158,11 @@ final class Endpoint implements BaseModel
      *
      * @param null|list<Process> $processes
      */
-    public function setProcesses(?array $processes): self
+    public function withProcesses(?array $processes): self
     {
-        $this->processes = $processes;
+        $obj = clone $this;
+        $obj->processes = $processes;
 
-        return $this;
+        return $obj;
     }
 }

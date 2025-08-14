@@ -50,6 +50,20 @@ final class ServiceMetadata implements BaseModel
     #[Api(optional: true)]
     public ?string $error;
 
+    /**
+     * `new ServiceMetadata()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ServiceMetadata::with(endpoints: ..., queryTimeMs: ..., status: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ServiceMetadata)->withEndpoints(...)->withQueryTimeMs(...)->withStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -63,7 +77,7 @@ final class ServiceMetadata implements BaseModel
      *
      * @param list<Endpoint> $endpoints
      */
-    public static function from(
+    public static function with(
         array $endpoints,
         float $queryTimeMs,
         string $status,
@@ -85,40 +99,44 @@ final class ServiceMetadata implements BaseModel
      *
      * @param list<Endpoint> $endpoints
      */
-    public function setEndpoints(array $endpoints): self
+    public function withEndpoints(array $endpoints): self
     {
-        $this->endpoints = $endpoints;
+        $obj = clone $this;
+        $obj->endpoints = $endpoints;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Time taken to query the service metadata in milliseconds.
      */
-    public function setQueryTimeMs(float $queryTimeMs): self
+    public function withQueryTimeMs(float $queryTimeMs): self
     {
-        $this->queryTimeMs = $queryTimeMs;
+        $obj = clone $this;
+        $obj->queryTimeMs = $queryTimeMs;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Status of the service metadata lookup: 'success', 'error', or 'pending'.
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Error message if service metadata lookup failed.
      */
-    public function setError(?string $error): self
+    public function withError(?string $error): self
     {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 }

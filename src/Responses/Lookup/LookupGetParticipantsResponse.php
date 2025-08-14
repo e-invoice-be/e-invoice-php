@@ -57,6 +57,26 @@ final class LookupGetParticipantsResponse implements BaseModel
     #[Api(type: new ListOf(Participant::class), optional: true)]
     public ?array $participants;
 
+    /**
+     * `new LookupGetParticipantsResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LookupGetParticipantsResponse::with(
+     *   queryTerms: ..., searchDate: ..., totalCount: ..., usedCount: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LookupGetParticipantsResponse)
+     *   ->withQueryTerms(...)
+     *   ->withSearchDate(...)
+     *   ->withTotalCount(...)
+     *   ->withUsedCount(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -70,7 +90,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * @param null|list<Participant> $participants
      */
-    public static function from(
+    public static function with(
         string $queryTerms,
         string $searchDate,
         int $totalCount,
@@ -92,41 +112,45 @@ final class LookupGetParticipantsResponse implements BaseModel
     /**
      * Query terms used for search.
      */
-    public function setQueryTerms(string $queryTerms): self
+    public function withQueryTerms(string $queryTerms): self
     {
-        $this->queryTerms = $queryTerms;
+        $obj = clone $this;
+        $obj->queryTerms = $queryTerms;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Search date of the result.
      */
-    public function setSearchDate(string $searchDate): self
+    public function withSearchDate(string $searchDate): self
     {
-        $this->searchDate = $searchDate;
+        $obj = clone $this;
+        $obj->searchDate = $searchDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Total number of results.
      */
-    public function setTotalCount(int $totalCount): self
+    public function withTotalCount(int $totalCount): self
     {
-        $this->totalCount = $totalCount;
+        $obj = clone $this;
+        $obj->totalCount = $totalCount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of results returned by the API.
      */
-    public function setUsedCount(int $usedCount): self
+    public function withUsedCount(int $usedCount): self
     {
-        $this->usedCount = $usedCount;
+        $obj = clone $this;
+        $obj->usedCount = $usedCount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -134,10 +158,11 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * @param list<Participant> $participants
      */
-    public function setParticipants(array $participants): self
+    public function withParticipants(array $participants): self
     {
-        $this->participants = $participants;
+        $obj = clone $this;
+        $obj->participants = $participants;
 
-        return $this;
+        return $obj;
     }
 }

@@ -50,6 +50,20 @@ final class DNSInfo implements BaseModel
     #[Api(optional: true)]
     public ?string $error;
 
+    /**
+     * `new DNSInfo()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DNSInfo::with(dnsRecords: ..., smlHostname: ..., status: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DNSInfo)->withDNSRecords(...)->withSmlHostname(...)->withStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -63,7 +77,7 @@ final class DNSInfo implements BaseModel
      *
      * @param list<DNSRecord> $dnsRecords
      */
-    public static function from(
+    public static function with(
         array $dnsRecords,
         string $smlHostname,
         string $status,
@@ -85,40 +99,44 @@ final class DNSInfo implements BaseModel
      *
      * @param list<DNSRecord> $dnsRecords
      */
-    public function setDNSRecords(array $dnsRecords): self
+    public function withDNSRecords(array $dnsRecords): self
     {
-        $this->dnsRecords = $dnsRecords;
+        $obj = clone $this;
+        $obj->dnsRecords = $dnsRecords;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Hostname of the SML used for the query.
      */
-    public function setSmlHostname(string $smlHostname): self
+    public function withSmlHostname(string $smlHostname): self
     {
-        $this->smlHostname = $smlHostname;
+        $obj = clone $this;
+        $obj->smlHostname = $smlHostname;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Status of the DNS lookup: 'success', 'error', or 'pending'.
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Error message if the DNS lookup failed.
      */
-    public function setError(?string $error): self
+    public function withError(?string $error): self
     {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 }

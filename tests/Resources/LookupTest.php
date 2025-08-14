@@ -35,7 +35,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParams::from(peppolID: 'peppol_id');
+        $params = LookupRetrieveParams::with(peppolID: 'peppol_id');
         $result = $this->client->lookup->retrieve($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -48,7 +48,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParams::from(peppolID: 'peppol_id');
+        $params = LookupRetrieveParams::with(peppolID: 'peppol_id');
         $result = $this->client->lookup->retrieve($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -61,7 +61,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParticipantsParams::from(query: 'query');
+        $params = LookupRetrieveParticipantsParams::with(query: 'query');
         $result = $this->client->lookup->retrieveParticipants($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -74,7 +74,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParticipantsParams::from(
+        $params = LookupRetrieveParticipantsParams::with(
             query: 'query',
             countryCode: 'country_code'
         );

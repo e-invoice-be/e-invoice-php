@@ -46,6 +46,20 @@ final class Issue implements BaseModel
     #[Api(optional: true)]
     public ?string $test;
 
+    /**
+     * `new Issue()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Issue::with(message: ..., schematron: ..., type: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Issue)->withMessage(...)->withSchematron(...)->withType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -59,7 +73,7 @@ final class Issue implements BaseModel
      *
      * @param Type::* $type
      */
-    public static function from(
+    public static function with(
         string $message,
         string $schematron,
         string $type,
@@ -82,55 +96,62 @@ final class Issue implements BaseModel
         return $obj;
     }
 
-    public function setMessage(string $message): self
+    public function withMessage(string $message): self
     {
-        $this->message = $message;
+        $obj = clone $this;
+        $obj->message = $message;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSchematron(string $schematron): self
+    public function withSchematron(string $schematron): self
     {
-        $this->schematron = $schematron;
+        $obj = clone $this;
+        $obj->schematron = $schematron;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param Type::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFlag(?string $flag): self
+    public function withFlag(?string $flag): self
     {
-        $this->flag = $flag;
+        $obj = clone $this;
+        $obj->flag = $flag;
 
-        return $this;
+        return $obj;
     }
 
-    public function setLocation(?string $location): self
+    public function withLocation(?string $location): self
     {
-        $this->location = $location;
+        $obj = clone $this;
+        $obj->location = $location;
 
-        return $this;
+        return $obj;
     }
 
-    public function setRuleID(?string $ruleID): self
+    public function withRuleID(?string $ruleID): self
     {
-        $this->ruleID = $ruleID;
+        $obj = clone $this;
+        $obj->ruleID = $ruleID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTest(?string $test): self
+    public function withTest(?string $test): self
     {
-        $this->test = $test;
+        $obj = clone $this;
+        $obj->test = $test;
 
-        return $this;
+        return $obj;
     }
 }

@@ -35,7 +35,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = WebhookCreateParams::from(
+        $params = WebhookCreateParams::with(
             events: ['string'],
             url: 'https://example.com'
         );
@@ -51,7 +51,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = WebhookCreateParams::from(
+        $params = WebhookCreateParams::with(
             events: ['string'],
             url: 'https://example.com',
             enabled: true

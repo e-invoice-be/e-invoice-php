@@ -62,7 +62,7 @@ final class Entity implements BaseModel
      *
      * @param null|list<string> $additionalInformation
      */
-    public static function from(
+    public static function with(
         ?array $additionalInformation = null,
         ?string $countryCode = null,
         ?string $name = null,
@@ -83,41 +83,45 @@ final class Entity implements BaseModel
      *
      * @param null|list<string> $additionalInformation
      */
-    public function setAdditionalInformation(
+    public function withAdditionalInformation(
         ?array $additionalInformation
     ): self {
-        $this->additionalInformation = $additionalInformation;
+        $obj = clone $this;
+        $obj->additionalInformation = $additionalInformation;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * ISO 3166-1 alpha-2 country code of the business entity.
      */
-    public function setCountryCode(?string $countryCode): self
+    public function withCountryCode(?string $countryCode): self
     {
-        $this->countryCode = $countryCode;
+        $obj = clone $this;
+        $obj->countryCode = $countryCode;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name of the business entity.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * ISO 8601 date of when the entity was registered in Peppol.
      */
-    public function setRegistrationDate(?string $registrationDate): self
+    public function withRegistrationDate(?string $registrationDate): self
     {
-        $this->registrationDate = $registrationDate;
+        $obj = clone $this;
+        $obj->registrationDate = $registrationDate;
 
-        return $this;
+        return $obj;
     }
 }

@@ -57,6 +57,20 @@ final class Participant implements BaseModel
     #[Api(type: new ListOf(Entity::class), optional: true)]
     public ?array $entities;
 
+    /**
+     * `new Participant()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Participant::with(peppolID: ..., peppolScheme: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Participant)->withPeppolID(...)->withPeppolScheme(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -71,7 +85,7 @@ final class Participant implements BaseModel
      * @param null|list<DocumentType> $documentTypes
      * @param null|list<Entity> $entities
      */
-    public static function from(
+    public static function with(
         string $peppolID,
         string $peppolScheme,
         ?array $documentTypes = null,
@@ -91,21 +105,23 @@ final class Participant implements BaseModel
     /**
      * Peppol ID of the participant.
      */
-    public function setPeppolID(string $peppolID): self
+    public function withPeppolID(string $peppolID): self
     {
-        $this->peppolID = $peppolID;
+        $obj = clone $this;
+        $obj->peppolID = $peppolID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Peppol scheme of the participant.
      */
-    public function setPeppolScheme(string $peppolScheme): self
+    public function withPeppolScheme(string $peppolScheme): self
     {
-        $this->peppolScheme = $peppolScheme;
+        $obj = clone $this;
+        $obj->peppolScheme = $peppolScheme;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -113,11 +129,12 @@ final class Participant implements BaseModel
      *
      * @param list<DocumentType> $documentTypes
      */
-    public function setDocumentTypes(array $documentTypes): self
+    public function withDocumentTypes(array $documentTypes): self
     {
-        $this->documentTypes = $documentTypes;
+        $obj = clone $this;
+        $obj->documentTypes = $documentTypes;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -125,10 +142,11 @@ final class Participant implements BaseModel
      *
      * @param list<Entity> $entities
      */
-    public function setEntities(array $entities): self
+    public function withEntities(array $entities): self
     {
-        $this->entities = $entities;
+        $obj = clone $this;
+        $obj->entities = $entities;
 
-        return $this;
+        return $obj;
     }
 }

@@ -23,6 +23,20 @@ final class DNSRecord implements BaseModel
     #[Api]
     public string $ip;
 
+    /**
+     * `new DNSRecord()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DNSRecord::with(ip: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DNSRecord)->withIP(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class DNSRecord implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $ip): self
+    public static function with(string $ip): self
     {
         $obj = new self;
 
@@ -46,10 +60,11 @@ final class DNSRecord implements BaseModel
     /**
      * IP address found in the DNS record.
      */
-    public function setIP(string $ip): self
+    public function withIP(string $ip): self
     {
-        $this->ip = $ip;
+        $obj = clone $this;
+        $obj->ip = $ip;
 
-        return $this;
+        return $obj;
     }
 }

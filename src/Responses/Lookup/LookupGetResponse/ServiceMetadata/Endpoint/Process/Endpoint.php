@@ -75,6 +75,20 @@ final class Endpoint implements BaseModel
     #[Api('technicalInformationUrl', optional: true)]
     public ?string $technicalInformationURL;
 
+    /**
+     * `new Endpoint()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Endpoint::with(address: ..., transportProfile: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Endpoint)->withAddress(...)->withTransportProfile(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -86,7 +100,7 @@ final class Endpoint implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $address,
         string $transportProfile,
         ?Certificate $certificate = null,
@@ -114,83 +128,91 @@ final class Endpoint implements BaseModel
     /**
      * URL or address of the endpoint.
      */
-    public function setAddress(string $address): self
+    public function withAddress(string $address): self
     {
-        $this->address = $address;
+        $obj = clone $this;
+        $obj->address = $address;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Transport profile used by this endpoint.
      */
-    public function setTransportProfile(string $transportProfile): self
+    public function withTransportProfile(string $transportProfile): self
     {
-        $this->transportProfile = $transportProfile;
+        $obj = clone $this;
+        $obj->transportProfile = $transportProfile;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Certificate information for a Peppol endpoint.
      */
-    public function setCertificate(Certificate $certificate): self
+    public function withCertificate(Certificate $certificate): self
     {
-        $this->certificate = $certificate;
+        $obj = clone $this;
+        $obj->certificate = $certificate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * ISO 8601 date when the service was activated.
      */
-    public function setServiceActivationDate(
+    public function withServiceActivationDate(
         ?string $serviceActivationDate
     ): self {
-        $this->serviceActivationDate = $serviceActivationDate;
+        $obj = clone $this;
+        $obj->serviceActivationDate = $serviceActivationDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Human-readable description of the service.
      */
-    public function setServiceDescription(?string $serviceDescription): self
+    public function withServiceDescription(?string $serviceDescription): self
     {
-        $this->serviceDescription = $serviceDescription;
+        $obj = clone $this;
+        $obj->serviceDescription = $serviceDescription;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * ISO 8601 date when the service will expire.
      */
-    public function setServiceExpirationDate(
+    public function withServiceExpirationDate(
         ?string $serviceExpirationDate
     ): self {
-        $this->serviceExpirationDate = $serviceExpirationDate;
+        $obj = clone $this;
+        $obj->serviceExpirationDate = $serviceExpirationDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * URL for technical contact information.
      */
-    public function setTechnicalContactURL(?string $technicalContactURL): self
+    public function withTechnicalContactURL(?string $technicalContactURL): self
     {
-        $this->technicalContactURL = $technicalContactURL;
+        $obj = clone $this;
+        $obj->technicalContactURL = $technicalContactURL;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * URL for technical documentation.
      */
-    public function setTechnicalInformationURL(
+    public function withTechnicalInformationURL(
         ?string $technicalInformationURL
     ): self {
-        $this->technicalInformationURL = $technicalInformationURL;
+        $obj = clone $this;
+        $obj->technicalInformationURL = $technicalInformationURL;
 
-        return $this;
+        return $obj;
     }
 }

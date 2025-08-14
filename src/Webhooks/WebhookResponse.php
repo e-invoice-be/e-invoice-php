@@ -36,6 +36,24 @@ final class WebhookResponse implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
+    /**
+     * `new WebhookResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebhookResponse::with(id: ..., events: ..., secret: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebhookResponse)
+     *   ->withID(...)
+     *   ->withEvents(...)
+     *   ->withSecret(...)
+     *   ->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -49,7 +67,7 @@ final class WebhookResponse implements BaseModel
      *
      * @param list<string> $events
      */
-    public static function from(
+    public static function with(
         string $id,
         array $events,
         string $secret,
@@ -68,41 +86,46 @@ final class WebhookResponse implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<string> $events
      */
-    public function setEvents(array $events): self
+    public function withEvents(array $events): self
     {
-        $this->events = $events;
+        $obj = clone $this;
+        $obj->events = $events;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSecret(string $secret): self
+    public function withSecret(string $secret): self
     {
-        $this->secret = $secret;
+        $obj = clone $this;
+        $obj->secret = $secret;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function withEnabled(bool $enabled): self
     {
-        $this->enabled = $enabled;
+        $obj = clone $this;
+        $obj->enabled = $enabled;
 
-        return $this;
+        return $obj;
     }
 }

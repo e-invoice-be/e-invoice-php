@@ -56,6 +56,20 @@ final class UblGetResponse implements BaseModel
     #[Api('validated_at', optional: true)]
     public ?\DateTimeInterface $validatedAt;
 
+    /**
+     * `new UblGetResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * UblGetResponse::with(id: ..., fileName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new UblGetResponse)->withID(...)->withFileName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -67,7 +81,7 @@ final class UblGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         string $fileName,
         ?string $fileHash = null,
@@ -96,73 +110,84 @@ final class UblGetResponse implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileName(string $fileName): self
+    public function withFileName(string $fileName): self
     {
-        $this->fileName = $fileName;
+        $obj = clone $this;
+        $obj->fileName = $fileName;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileHash(?string $fileHash): self
+    public function withFileHash(?string $fileHash): self
     {
-        $this->fileHash = $fileHash;
+        $obj = clone $this;
+        $obj->fileHash = $fileHash;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileSize(int $fileSize): self
+    public function withFileSize(int $fileSize): self
     {
-        $this->fileSize = $fileSize;
+        $obj = clone $this;
+        $obj->fileSize = $fileSize;
 
-        return $this;
+        return $obj;
     }
 
-    public function setReceiverPeppolID(?string $receiverPeppolID): self
+    public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
-        $this->receiverPeppolID = $receiverPeppolID;
+        $obj = clone $this;
+        $obj->receiverPeppolID = $receiverPeppolID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setReceiverPeppolScheme(?string $receiverPeppolScheme): self
-    {
-        $this->receiverPeppolScheme = $receiverPeppolScheme;
+    public function withReceiverPeppolScheme(
+        ?string $receiverPeppolScheme
+    ): self {
+        $obj = clone $this;
+        $obj->receiverPeppolScheme = $receiverPeppolScheme;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSenderPeppolID(?string $senderPeppolID): self
+    public function withSenderPeppolID(?string $senderPeppolID): self
     {
-        $this->senderPeppolID = $senderPeppolID;
+        $obj = clone $this;
+        $obj->senderPeppolID = $senderPeppolID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSenderPeppolScheme(?string $senderPeppolScheme): self
+    public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
-        $this->senderPeppolScheme = $senderPeppolScheme;
+        $obj = clone $this;
+        $obj->senderPeppolScheme = $senderPeppolScheme;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSignedURL(?string $signedURL): self
+    public function withSignedURL(?string $signedURL): self
     {
-        $this->signedURL = $signedURL;
+        $obj = clone $this;
+        $obj->signedURL = $signedURL;
 
-        return $this;
+        return $obj;
     }
 
-    public function setValidatedAt(?\DateTimeInterface $validatedAt): self
+    public function withValidatedAt(?\DateTimeInterface $validatedAt): self
     {
-        $this->validatedAt = $validatedAt;
+        $obj = clone $this;
+        $obj->validatedAt = $validatedAt;
 
-        return $this;
+        return $obj;
     }
 }

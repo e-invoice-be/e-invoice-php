@@ -63,9 +63,9 @@ When the library is unable to connect to the API, or if the API returns a non-su
 use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Errors\APIConnectionError;
 
+$params = (new DocumentCreateParams);
 try {
-    $params = (new DocumentCreateParams);
-    $Documents = $client->documents->create($params);
+  $Documents = $client->documents->create($params);
 } catch (APIConnectionError $e) {
     echo "The server could not be reached", PHP_EOL;
     var_dump($e->getPrevious());
@@ -112,8 +112,7 @@ use EInvoiceAPI\Documents\DocumentCreateParams;
 $client = new Client(maxRetries: 0);
 $params = (new DocumentCreateParams);
 
-// Or, configure per-request:
-$result = $client
+// Or, configure per-request:$result = $client
   ->documents
   ->create($params, new RequestOptions(maxRetries: 5));
 ```

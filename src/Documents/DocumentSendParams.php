@@ -51,7 +51,7 @@ final class DocumentSendParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $email = null,
         ?string $receiverPeppolID = null,
         ?string $receiverPeppolScheme = null,
@@ -69,38 +69,44 @@ final class DocumentSendParams implements BaseModel
         return $obj;
     }
 
-    public function setEmail(?string $email): self
+    public function withEmail(?string $email): self
     {
-        $this->email = $email;
+        $obj = clone $this;
+        $obj->email = $email;
 
-        return $this;
+        return $obj;
     }
 
-    public function setReceiverPeppolID(?string $receiverPeppolID): self
+    public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
-        $this->receiverPeppolID = $receiverPeppolID;
+        $obj = clone $this;
+        $obj->receiverPeppolID = $receiverPeppolID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setReceiverPeppolScheme(?string $receiverPeppolScheme): self
-    {
-        $this->receiverPeppolScheme = $receiverPeppolScheme;
+    public function withReceiverPeppolScheme(
+        ?string $receiverPeppolScheme
+    ): self {
+        $obj = clone $this;
+        $obj->receiverPeppolScheme = $receiverPeppolScheme;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSenderPeppolID(?string $senderPeppolID): self
+    public function withSenderPeppolID(?string $senderPeppolID): self
     {
-        $this->senderPeppolID = $senderPeppolID;
+        $obj = clone $this;
+        $obj->senderPeppolID = $senderPeppolID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSenderPeppolScheme(?string $senderPeppolScheme): self
+    public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
-        $this->senderPeppolScheme = $senderPeppolScheme;
+        $obj = clone $this;
+        $obj->senderPeppolScheme = $senderPeppolScheme;
 
-        return $this;
+        return $obj;
     }
 }

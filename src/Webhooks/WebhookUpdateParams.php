@@ -45,7 +45,7 @@ final class WebhookUpdateParams implements BaseModel
      *
      * @param null|list<string> $events
      */
-    public static function from(
+    public static function with(
         ?bool $enabled = null,
         ?array $events = null,
         ?string $url = null
@@ -59,27 +59,30 @@ final class WebhookUpdateParams implements BaseModel
         return $obj;
     }
 
-    public function setEnabled(?bool $enabled): self
+    public function withEnabled(?bool $enabled): self
     {
-        $this->enabled = $enabled;
+        $obj = clone $this;
+        $obj->enabled = $enabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param null|list<string> $events
      */
-    public function setEvents(?array $events): self
+    public function withEvents(?array $events): self
     {
-        $this->events = $events;
+        $obj = clone $this;
+        $obj->events = $events;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(?string $url): self
+    public function withURL(?string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

@@ -39,6 +39,24 @@ final class UblDocumentValidation implements BaseModel
     #[Api('ubl_document', optional: true)]
     public ?string $ublDocument;
 
+    /**
+     * `new UblDocumentValidation()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * UblDocumentValidation::with(id: ..., fileName: ..., isValid: ..., issues: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new UblDocumentValidation)
+     *   ->withID(...)
+     *   ->withFileName(...)
+     *   ->withIsValid(...)
+     *   ->withIssues(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -52,7 +70,7 @@ final class UblDocumentValidation implements BaseModel
      *
      * @param list<Issue> $issues
      */
-    public static function from(
+    public static function with(
         string $id,
         ?string $fileName,
         bool $isValid,
@@ -71,41 +89,46 @@ final class UblDocumentValidation implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileName(?string $fileName): self
+    public function withFileName(?string $fileName): self
     {
-        $this->fileName = $fileName;
+        $obj = clone $this;
+        $obj->fileName = $fileName;
 
-        return $this;
+        return $obj;
     }
 
-    public function setIsValid(bool $isValid): self
+    public function withIsValid(bool $isValid): self
     {
-        $this->isValid = $isValid;
+        $obj = clone $this;
+        $obj->isValid = $isValid;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<Issue> $issues
      */
-    public function setIssues(array $issues): self
+    public function withIssues(array $issues): self
     {
-        $this->issues = $issues;
+        $obj = clone $this;
+        $obj->issues = $issues;
 
-        return $this;
+        return $obj;
     }
 
-    public function setUblDocument(?string $ublDocument): self
+    public function withUblDocument(?string $ublDocument): self
     {
-        $this->ublDocument = $ublDocument;
+        $obj = clone $this;
+        $obj->ublDocument = $ublDocument;
 
-        return $this;
+        return $obj;
     }
 }

@@ -36,6 +36,20 @@ final class Process implements BaseModel
     #[Api('processId')]
     public ProcessID $processID;
 
+    /**
+     * `new Process()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Process::with(endpoints: ..., processID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Process)->withEndpoints(...)->withProcessID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -49,7 +63,7 @@ final class Process implements BaseModel
      *
      * @param list<Endpoint> $endpoints
      */
-    public static function from(array $endpoints, ProcessID $processID): self
+    public static function with(array $endpoints, ProcessID $processID): self
     {
         $obj = new self;
 
@@ -64,20 +78,22 @@ final class Process implements BaseModel
      *
      * @param list<Endpoint> $endpoints
      */
-    public function setEndpoints(array $endpoints): self
+    public function withEndpoints(array $endpoints): self
     {
-        $this->endpoints = $endpoints;
+        $obj = clone $this;
+        $obj->endpoints = $endpoints;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Identifier of the process.
      */
-    public function setProcessID(ProcessID $processID): self
+    public function withProcessID(ProcessID $processID): self
     {
-        $this->processID = $processID;
+        $obj = clone $this;
+        $obj->processID = $processID;
 
-        return $this;
+        return $obj;
     }
 }

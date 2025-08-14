@@ -96,7 +96,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      * @param DocumentState::* $state
      * @param DocumentType::* $type
      */
-    public static function from(
+    public static function with(
         ?\DateTimeInterface $dateFrom = null,
         ?\DateTimeInterface $dateTo = null,
         ?int $page = null,
@@ -123,61 +123,67 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     /**
      * Filter by issue date (from).
      */
-    public function setDateFrom(?\DateTimeInterface $dateFrom): self
+    public function withDateFrom(?\DateTimeInterface $dateFrom): self
     {
-        $this->dateFrom = $dateFrom;
+        $obj = clone $this;
+        $obj->dateFrom = $dateFrom;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Filter by issue date (to).
      */
-    public function setDateTo(?\DateTimeInterface $dateTo): self
+    public function withDateTo(?\DateTimeInterface $dateTo): self
     {
-        $this->dateTo = $dateTo;
+        $obj = clone $this;
+        $obj->dateTo = $dateTo;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page number.
      */
-    public function setPage(int $page): self
+    public function withPage(int $page): self
     {
-        $this->page = $page;
+        $obj = clone $this;
+        $obj->page = $page;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of items per page.
      */
-    public function setPageSize(int $pageSize): self
+    public function withPageSize(int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Search in invoice number, seller/buyer names.
      */
-    public function setSearch(?string $search): self
+    public function withSearch(?string $search): self
     {
-        $this->search = $search;
+        $obj = clone $this;
+        $obj->search = $search;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Filter by sender ID.
      */
-    public function setSender(?string $sender): self
+    public function withSender(?string $sender): self
     {
-        $this->sender = $sender;
+        $obj = clone $this;
+        $obj->sender = $sender;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -185,11 +191,12 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      *
      * @param DocumentState::* $state
      */
-    public function setState(string $state): self
+    public function withState(string $state): self
     {
-        $this->state = $state;
+        $obj = clone $this;
+        $obj->state = $state;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -197,10 +204,11 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      *
      * @param DocumentType::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 }

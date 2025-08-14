@@ -36,7 +36,7 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = AttachmentRetrieveParams::from(documentID: 'document_id');
+        $params = AttachmentRetrieveParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
@@ -54,7 +54,7 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = AttachmentRetrieveParams::from(documentID: 'document_id');
+        $params = AttachmentRetrieveParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
@@ -84,7 +84,7 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = AttachmentDeleteParams::from(documentID: 'document_id');
+        $params = AttachmentDeleteParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
@@ -102,7 +102,7 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = AttachmentDeleteParams::from(documentID: 'document_id');
+        $params = AttachmentDeleteParams::with(documentID: 'document_id');
         $result = $this
             ->client
             ->documents
@@ -120,7 +120,7 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = AttachmentAddParams::from(file: 'file');
+        $params = AttachmentAddParams::with(file: 'file');
         $result = $this
             ->client
             ->documents
@@ -138,7 +138,7 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = AttachmentAddParams::from(file: 'file');
+        $params = AttachmentAddParams::with(file: 'file');
         $result = $this
             ->client
             ->documents
