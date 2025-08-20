@@ -18,17 +18,19 @@ final class WebhooksService implements WebhooksContract
     /**
      * Create a new webhook.
      *
-     * @param array{
-     *   events: list<string>, url: string, enabled?: bool
-     * }|WebhookCreateParams $params
+     * @param list<string> $events
+     * @param string $url
+     * @param bool $enabled
      */
     public function create(
-        array|WebhookCreateParams $params,
+        $events,
+        $url,
+        $enabled = null,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
         [$parsed, $options] = WebhookCreateParams::parseRequest(
-            $params,
-            $requestOptions
+            ['events' => $events, 'url' => $url, 'enabled' => $enabled],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -61,18 +63,20 @@ final class WebhooksService implements WebhooksContract
     /**
      * Update a webhook by ID.
      *
-     * @param array{
-     *   enabled?: null|bool, events?: null|list<string>, url?: null|string
-     * }|WebhookUpdateParams $params
+     * @param null|bool $enabled
+     * @param null|list<string> $events
+     * @param null|string $url
      */
     public function update(
         string $webhookID,
-        array|WebhookUpdateParams $params,
+        $enabled = null,
+        $events = null,
+        $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
-            $params,
-            $requestOptions
+            ['enabled' => $enabled, 'events' => $events, 'url' => $url],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'put',

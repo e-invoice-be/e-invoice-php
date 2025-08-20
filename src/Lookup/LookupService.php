@@ -18,14 +18,14 @@ final class LookupService implements LookupContract
     /**
      * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
-     * @param array{peppolID: string}|LookupRetrieveParams $params
+     * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
     public function retrieve(
-        array|LookupRetrieveParams $params,
+        $peppolID,
         ?RequestOptions $requestOptions = null
     ): LookupGetResponse {
         [$parsed, $options] = LookupRetrieveParams::parseRequest(
-            $params,
+            ['peppolID' => $peppolID],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -42,16 +42,16 @@ final class LookupService implements LookupContract
     /**
      * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
      *
-     * @param array{
-     *   query: string, countryCode?: null|string
-     * }|LookupRetrieveParticipantsParams $params
+     * @param string $query Query to lookup
+     * @param null|string $countryCode Country code of the company to lookup. If not provided, the search will be global.
      */
     public function retrieveParticipants(
-        array|LookupRetrieveParticipantsParams $params,
-        ?RequestOptions $requestOptions = null,
+        $query,
+        $countryCode = null,
+        ?RequestOptions $requestOptions = null
     ): LookupGetParticipantsResponse {
         [$parsed, $options] = LookupRetrieveParticipantsParams::parseRequest(
-            $params,
+            ['query' => $query, 'countryCode' => $countryCode],
             $requestOptions
         );
         $resp = $this->client->request(

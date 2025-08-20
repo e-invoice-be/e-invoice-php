@@ -3,9 +3,6 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
-use EInvoiceAPI\Inbox\InboxListInvoicesParams;
-use EInvoiceAPI\Inbox\InboxListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -36,8 +33,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = (new InboxListParams);
-        $result = $this->client->inbox->list($params);
+        $result = $this->client->inbox->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -49,8 +45,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = (new InboxListCreditNotesParams);
-        $result = $this->client->inbox->listCreditNotes($params);
+        $result = $this->client->inbox->listCreditNotes();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -62,8 +57,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = (new InboxListInvoicesParams);
-        $result = $this->client->inbox->listInvoices($params);
+        $result = $this->client->inbox->listInvoices();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

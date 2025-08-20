@@ -18,15 +18,15 @@ final class AttachmentsService implements AttachmentsContract
     /**
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
      *
-     * @param array{documentID: string}|AttachmentRetrieveParams $params
+     * @param string $documentID
      */
     public function retrieve(
         string $attachmentID,
-        array|AttachmentRetrieveParams $params,
-        ?RequestOptions $requestOptions = null,
+        $documentID,
+        ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
         [$parsed, $options] = AttachmentRetrieveParams::parseRequest(
-            $params,
+            ['documentID' => $documentID],
             $requestOptions
         );
         $documentID = $parsed['documentID'];
@@ -66,15 +66,15 @@ final class AttachmentsService implements AttachmentsContract
     /**
      * Delete an attachment from an invoice or credit note.
      *
-     * @param array{documentID: string}|AttachmentDeleteParams $params
+     * @param string $documentID
      */
     public function delete(
         string $attachmentID,
-        array|AttachmentDeleteParams $params,
-        ?RequestOptions $requestOptions = null,
+        $documentID,
+        ?RequestOptions $requestOptions = null
     ): AttachmentDeleteResponse {
         [$parsed, $options] = AttachmentDeleteParams::parseRequest(
-            $params,
+            ['documentID' => $documentID],
             $requestOptions
         );
         $documentID = $parsed['documentID'];
@@ -92,15 +92,15 @@ final class AttachmentsService implements AttachmentsContract
     /**
      * Add a new attachment to an invoice or credit note.
      *
-     * @param array{file: string}|AttachmentAddParams $params
+     * @param string $file
      */
     public function add(
         string $documentID,
-        array|AttachmentAddParams $params,
-        ?RequestOptions $requestOptions = null,
+        $file,
+        ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
         [$parsed, $options] = AttachmentAddParams::parseRequest(
-            $params,
+            ['file' => $file],
             $requestOptions
         );
         $resp = $this->client->request(

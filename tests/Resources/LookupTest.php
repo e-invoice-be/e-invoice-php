@@ -3,8 +3,6 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Lookup\LookupRetrieveParams;
-use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,8 +33,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParams::with(peppolID: 'peppol_id');
-        $result = $this->client->lookup->retrieve($params);
+        $result = $this->client->lookup->retrieve('peppol_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,8 +45,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParams::with(peppolID: 'peppol_id');
-        $result = $this->client->lookup->retrieve($params);
+        $result = $this->client->lookup->retrieve('peppol_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -61,8 +57,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParticipantsParams::with(query: 'query');
-        $result = $this->client->lookup->retrieveParticipants($params);
+        $result = $this->client->lookup->retrieveParticipants(query: 'query');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -74,11 +69,10 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = LookupRetrieveParticipantsParams::with(
+        $result = $this->client->lookup->retrieveParticipants(
             query: 'query',
             countryCode: 'country_code'
         );
-        $result = $this->client->lookup->retrieveParticipants($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

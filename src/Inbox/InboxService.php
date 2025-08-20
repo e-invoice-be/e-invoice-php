@@ -18,24 +18,38 @@ final class InboxService implements InboxContract
     /**
      * Retrieve a paginated list of received documents with filtering options.
      *
-     * @param array{
-     *   dateFrom?: null|\DateTimeInterface,
-     *   dateTo?: null|\DateTimeInterface,
-     *   page?: int,
-     *   pageSize?: int,
-     *   search?: null|string,
-     *   sender?: null|string,
-     *   state?: DocumentState::*,
-     *   type?: DocumentType::*,
-     * }|InboxListParams $params
+     * @param null|\DateTimeInterface $dateFrom Filter by issue date (from)
+     * @param null|\DateTimeInterface $dateTo Filter by issue date (to)
+     * @param int $page Page number
+     * @param int $pageSize Number of items per page
+     * @param null|string $search Search in invoice number, seller/buyer names
+     * @param null|string $sender Filter by sender ID
+     * @param DocumentState::* $state Filter by document state
+     * @param DocumentType::* $type Filter by document type
      */
     public function list(
-        array|InboxListParams $params,
-        ?RequestOptions $requestOptions = null
+        $dateFrom = null,
+        $dateTo = null,
+        $page = null,
+        $pageSize = null,
+        $search = null,
+        $sender = null,
+        $state = null,
+        $type = null,
+        ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
         [$parsed, $options] = InboxListParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+                'page' => $page,
+                'pageSize' => $pageSize,
+                'search' => $search,
+                'sender' => $sender,
+                'state' => $state,
+                'type' => $type,
+            ],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',
@@ -51,14 +65,16 @@ final class InboxService implements InboxContract
     /**
      * Retrieve a paginated list of received credit notes with filtering options.
      *
-     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParams $params
+     * @param int $page Page number
+     * @param int $pageSize Number of items per page
      */
     public function listCreditNotes(
-        array|InboxListCreditNotesParams $params,
-        ?RequestOptions $requestOptions = null,
+        $page = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
-            $params,
+            ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -75,14 +91,16 @@ final class InboxService implements InboxContract
     /**
      * Retrieve a paginated list of received invoices with filtering options.
      *
-     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParams $params
+     * @param int $page Page number
+     * @param int $pageSize Number of items per page
      */
     public function listInvoices(
-        array|InboxListInvoicesParams $params,
-        ?RequestOptions $requestOptions = null,
+        $page = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         [$parsed, $options] = InboxListInvoicesParams::parseRequest(
-            $params,
+            ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(
