@@ -3,8 +3,6 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Documents\DocumentCreateParams;
-use EInvoiceAPI\Documents\DocumentSendParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,8 +33,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = (new DocumentCreateParams);
-        $result = $this->client->documents->create($params);
+        $result = $this->client->documents->create();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -72,8 +69,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = (new DocumentSendParams);
-        $result = $this->client->documents->send('document_id', $params);
+        $result = $this->client->documents->send('document_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

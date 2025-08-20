@@ -7,43 +7,49 @@ namespace EInvoiceAPI\Contracts;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
-use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
-use EInvoiceAPI\Inbox\InboxListInvoicesParams;
-use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 
 interface InboxContract
 {
     /**
-     * @param array{
-     *   dateFrom?: null|\DateTimeInterface,
-     *   dateTo?: null|\DateTimeInterface,
-     *   page?: int,
-     *   pageSize?: int,
-     *   search?: null|string,
-     *   sender?: null|string,
-     *   state?: DocumentState::*,
-     *   type?: DocumentType::*,
-     * }|InboxListParams $params
+     * @param null|\DateTimeInterface $dateFrom Filter by issue date (from)
+     * @param null|\DateTimeInterface $dateTo Filter by issue date (to)
+     * @param int $page Page number
+     * @param int $pageSize Number of items per page
+     * @param null|string $search Search in invoice number, seller/buyer names
+     * @param null|string $sender Filter by sender ID
+     * @param DocumentState::* $state Filter by document state
+     * @param DocumentType::* $type Filter by document type
      */
     public function list(
-        array|InboxListParams $params,
+        $dateFrom = null,
+        $dateTo = null,
+        $page = null,
+        $pageSize = null,
+        $search = null,
+        $sender = null,
+        $state = null,
+        $type = null,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentResponse;
+
+    /**
+     * @param int $page Page number
+     * @param int $pageSize Number of items per page
+     */
+    public function listCreditNotes(
+        $page = null,
+        $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
     /**
-     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParams $params
-     */
-    public function listCreditNotes(
-        array|InboxListCreditNotesParams $params,
-        ?RequestOptions $requestOptions = null,
-    ): DocumentResponse;
-
-    /**
-     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParams $params
+     * @param int $page Page number
+     * @param int $pageSize Number of items per page
      */
     public function listInvoices(
-        array|InboxListInvoicesParams $params,
-        ?RequestOptions $requestOptions = null,
+        $page = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 }

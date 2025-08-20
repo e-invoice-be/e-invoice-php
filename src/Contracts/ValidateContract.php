@@ -13,77 +13,112 @@ use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Validate\ValidateValidatePeppolIDResponse;
 use EInvoiceAPI\Validate\UblDocumentValidation;
-use EInvoiceAPI\Validate\ValidateValidateJsonParams;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
-use EInvoiceAPI\Validate\ValidateValidatePeppolIDParams;
-use EInvoiceAPI\Validate\ValidateValidateUblParams;
 
 interface ValidateContract
 {
     /**
-     * @param array{
-     *   amountDue?: null|float|string,
-     *   attachments?: null|list<DocumentAttachmentCreate>,
-     *   billingAddress?: null|string,
-     *   billingAddressRecipient?: null|string,
-     *   currency?: CurrencyCode::*,
-     *   customerAddress?: null|string,
-     *   customerAddressRecipient?: null|string,
-     *   customerEmail?: null|string,
-     *   customerID?: null|string,
-     *   customerName?: null|string,
-     *   customerTaxID?: null|string,
-     *   direction?: DocumentDirection::*,
-     *   documentType?: DocumentType::*,
-     *   dueDate?: null|\DateTimeInterface,
-     *   invoiceDate?: null|\DateTimeInterface,
-     *   invoiceID?: null|string,
-     *   invoiceTotal?: null|float|string,
-     *   items?: null|list<Item>,
-     *   note?: null|string,
-     *   paymentDetails?: null|list<PaymentDetailCreate>,
-     *   paymentTerm?: null|string,
-     *   previousUnpaidBalance?: null|float|string,
-     *   purchaseOrder?: null|string,
-     *   remittanceAddress?: null|string,
-     *   remittanceAddressRecipient?: null|string,
-     *   serviceAddress?: null|string,
-     *   serviceAddressRecipient?: null|string,
-     *   serviceEndDate?: null|\DateTimeInterface,
-     *   serviceStartDate?: null|\DateTimeInterface,
-     *   shippingAddress?: null|string,
-     *   shippingAddressRecipient?: null|string,
-     *   state?: DocumentState::*,
-     *   subtotal?: null|float|string,
-     *   taxDetails?: null|list<TaxDetail>,
-     *   totalDiscount?: null|float|string,
-     *   totalTax?: null|float|string,
-     *   vendorAddress?: null|string,
-     *   vendorAddressRecipient?: null|string,
-     *   vendorEmail?: null|string,
-     *   vendorName?: null|string,
-     *   vendorTaxID?: null|string,
-     * }|ValidateValidateJsonParams $params
+     * @param null|float|string $amountDue
+     * @param null|list<DocumentAttachmentCreate> $attachments
+     * @param null|string $billingAddress
+     * @param null|string $billingAddressRecipient
+     * @param CurrencyCode::* $currency Currency of the invoice
+     * @param null|string $customerAddress
+     * @param null|string $customerAddressRecipient
+     * @param null|string $customerEmail
+     * @param null|string $customerID
+     * @param null|string $customerName
+     * @param null|string $customerTaxID
+     * @param DocumentDirection::* $direction
+     * @param DocumentType::* $documentType
+     * @param null|\DateTimeInterface $dueDate
+     * @param null|\DateTimeInterface $invoiceDate
+     * @param null|string $invoiceID
+     * @param null|float|string $invoiceTotal
+     * @param null|list<Item> $items
+     * @param null|string $note
+     * @param null|list<PaymentDetailCreate> $paymentDetails
+     * @param null|string $paymentTerm
+     * @param null|float|string $previousUnpaidBalance
+     * @param null|string $purchaseOrder
+     * @param null|string $remittanceAddress
+     * @param null|string $remittanceAddressRecipient
+     * @param null|string $serviceAddress
+     * @param null|string $serviceAddressRecipient
+     * @param null|\DateTimeInterface $serviceEndDate
+     * @param null|\DateTimeInterface $serviceStartDate
+     * @param null|string $shippingAddress
+     * @param null|string $shippingAddressRecipient
+     * @param DocumentState::* $state
+     * @param null|float|string $subtotal
+     * @param null|list<TaxDetail> $taxDetails
+     * @param null|float|string $totalDiscount
+     * @param null|float|string $totalTax
+     * @param null|string $vendorAddress
+     * @param null|string $vendorAddressRecipient
+     * @param null|string $vendorEmail
+     * @param null|string $vendorName
+     * @param null|string $vendorTaxID
      */
     public function validateJson(
-        array|ValidateValidateJsonParams $params,
+        $amountDue = null,
+        $attachments = null,
+        $billingAddress = null,
+        $billingAddressRecipient = null,
+        $currency = null,
+        $customerAddress = null,
+        $customerAddressRecipient = null,
+        $customerEmail = null,
+        $customerID = null,
+        $customerName = null,
+        $customerTaxID = null,
+        $direction = null,
+        $documentType = null,
+        $dueDate = null,
+        $invoiceDate = null,
+        $invoiceID = null,
+        $invoiceTotal = null,
+        $items = null,
+        $note = null,
+        $paymentDetails = null,
+        $paymentTerm = null,
+        $previousUnpaidBalance = null,
+        $purchaseOrder = null,
+        $remittanceAddress = null,
+        $remittanceAddressRecipient = null,
+        $serviceAddress = null,
+        $serviceAddressRecipient = null,
+        $serviceEndDate = null,
+        $serviceStartDate = null,
+        $shippingAddress = null,
+        $shippingAddressRecipient = null,
+        $state = null,
+        $subtotal = null,
+        $taxDetails = null,
+        $totalDiscount = null,
+        $totalTax = null,
+        $vendorAddress = null,
+        $vendorAddressRecipient = null,
+        $vendorEmail = null,
+        $vendorName = null,
+        $vendorTaxID = null,
         ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation;
 
     /**
-     * @param array{peppolID: string}|ValidateValidatePeppolIDParams $params
+     * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
     public function validatePeppolID(
-        array|ValidateValidatePeppolIDParams $params,
-        ?RequestOptions $requestOptions = null,
+        $peppolID,
+        ?RequestOptions $requestOptions = null
     ): ValidateValidatePeppolIDResponse;
 
     /**
-     * @param array{file: string}|ValidateValidateUblParams $params
+     * @param string $file
      */
     public function validateUbl(
-        array|ValidateValidateUblParams $params,
-        ?RequestOptions $requestOptions = null,
+        $file,
+        ?RequestOptions $requestOptions = null
     ): UblDocumentValidation;
 }

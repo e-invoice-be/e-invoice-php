@@ -3,8 +3,6 @@
 namespace Tests\Resources;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Webhooks\WebhookCreateParams;
-use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,11 +33,10 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = WebhookCreateParams::with(
+        $result = $this->client->webhooks->create(
             events: ['string'],
             url: 'https://example.com'
         );
-        $result = $this->client->webhooks->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -51,12 +48,11 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = WebhookCreateParams::with(
+        $result = $this->client->webhooks->create(
             events: ['string'],
             url: 'https://example.com',
             enabled: true
         );
-        $result = $this->client->webhooks->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -80,8 +76,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $params = (new WebhookUpdateParams);
-        $result = $this->client->webhooks->update('webhook_id', $params);
+        $result = $this->client->webhooks->update('webhook_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

@@ -6,20 +6,20 @@ namespace EInvoiceAPI\Contracts;
 
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Webhooks\WebhookDeleteResponse;
-use EInvoiceAPI\Webhooks\WebhookCreateParams;
 use EInvoiceAPI\Webhooks\WebhookResponse;
-use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
 interface WebhooksContract
 {
     /**
-     * @param array{
-     *   events: list<string>, url: string, enabled?: bool
-     * }|WebhookCreateParams $params
+     * @param list<string> $events
+     * @param string $url
+     * @param bool $enabled
      */
     public function create(
-        array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        $events,
+        $url,
+        $enabled = null,
+        ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
     public function retrieve(
@@ -28,13 +28,15 @@ interface WebhooksContract
     ): WebhookResponse;
 
     /**
-     * @param array{
-     *   enabled?: null|bool, events?: null|list<string>, url?: null|string
-     * }|WebhookUpdateParams $params
+     * @param null|bool $enabled
+     * @param null|list<string> $events
+     * @param null|string $url
      */
     public function update(
         string $webhookID,
-        array|WebhookUpdateParams $params,
+        $enabled = null,
+        $events = null,
+        $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 
