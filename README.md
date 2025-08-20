@@ -41,8 +41,8 @@ use EInvoiceAPI\Documents\DocumentCreateParams;
 $client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
 $params = (new DocumentCreateParams);
-$documentResponse = $client->documents->create($params);
 
+$documentResponse = $client->documents->create($params);
 var_dump($documentResponse->id);
 ```
 
@@ -66,7 +66,7 @@ try {
     echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
     echo "Another non-200-range status code was received", PHP_EOL;
-    var_dump($e->status);
+    echo $e->getMessage();
 }
 ```
 
