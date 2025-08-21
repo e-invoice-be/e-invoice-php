@@ -56,10 +56,10 @@ var_dump($documentResponse->id);
 
 ## Value Objects
 
-It is recommended to use the `with` constructor `Dog::with(name: "Joey")`
+It is recommended to use the static `with` constructor `DocumentAttachmentCreate::with(fileName: "file_name", ...)`
 and named parameters to initialize value objects.
 
-However builders are provided as well `(new Dog)->withName("Joey")`.
+However, builders are also provided `(new DocumentAttachmentCreate)->withFileName("file_name")`.
 
 ### Handling errors
 
