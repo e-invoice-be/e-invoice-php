@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
@@ -21,7 +21,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class QueryMetadata implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Scheme of the identifier, typically 'iso6523-actorid-upis'.

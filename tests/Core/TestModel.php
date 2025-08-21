@@ -3,7 +3,7 @@
 namespace Tests\Core;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class TestModel implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $name;

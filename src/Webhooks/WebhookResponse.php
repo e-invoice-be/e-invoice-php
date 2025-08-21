@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Webhooks;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 
@@ -18,7 +18,7 @@ use EInvoiceAPI\Core\Conversion\ListOf;
  */
 final class WebhookResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $id;

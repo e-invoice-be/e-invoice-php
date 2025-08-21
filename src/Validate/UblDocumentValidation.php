@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
@@ -21,7 +21,7 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
  */
 final class UblDocumentValidation implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $id;

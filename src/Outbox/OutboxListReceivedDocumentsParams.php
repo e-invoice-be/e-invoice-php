@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Outbox;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
@@ -27,8 +27,8 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class OutboxListReceivedDocumentsParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * Filter by issue date (from).

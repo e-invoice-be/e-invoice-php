@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
@@ -23,7 +23,7 @@ use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant\Entit
  */
 final class Participant implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Peppol ID of the participant.

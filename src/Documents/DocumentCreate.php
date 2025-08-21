@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Documents\DocumentCreate\Item;
@@ -59,7 +59,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class DocumentCreate implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api('amount_due', optional: true)]
     public null|float|string $amountDue;

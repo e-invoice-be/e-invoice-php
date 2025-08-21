@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Inbox;
 
-use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Concerns\SdkEnum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
  */
 final class DocumentState implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const DRAFT = 'DRAFT';
 

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
@@ -16,8 +16,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class ValidateValidateUblParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     #[Api]
     public string $file;
