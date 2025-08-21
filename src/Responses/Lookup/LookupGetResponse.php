@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Lookup\Certificate;
@@ -39,7 +39,7 @@ use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata;
  */
 final class LookupGetResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Business card information for the Peppol participant.

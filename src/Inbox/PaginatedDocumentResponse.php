@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Inbox;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Documents\DocumentResponse;
@@ -21,7 +21,7 @@ use EInvoiceAPI\Documents\DocumentResponse;
  */
 final class PaginatedDocumentResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /** @var list<DocumentResponse> $items */
     #[Api(type: new ListOf(DocumentResponse::class))]

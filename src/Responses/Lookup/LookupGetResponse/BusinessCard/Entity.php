@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse\BusinessCard;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 
@@ -21,7 +21,7 @@ use EInvoiceAPI\Core\Conversion\ListOf;
  */
 final class Entity implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Additional information about the business entity.

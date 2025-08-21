@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse\DNSInfo;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class DNSRecord implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * IP address found in the DNS record.

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\DocumentResponse;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
@@ -13,7 +13,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class TaxDetail implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api(optional: true)]
     public ?string $amount;

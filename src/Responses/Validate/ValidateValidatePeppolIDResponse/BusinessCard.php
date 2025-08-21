@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Validate\ValidateValidatePeppolIDResponse;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
@@ -19,7 +19,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class BusinessCard implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api('country_code', optional: true)]
     public ?string $countryCode;

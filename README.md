@@ -47,7 +47,7 @@ $documentResponse = $client->documents->create();
 var_dump($documentResponse->id);
 ```
 
-## Value Objects
+### Value Objects
 
 It is recommended to use the static `with` constructor `DocumentAttachmentCreate::with(fileName: "file_name", ...)`
 and named parameters to initialize value objects.

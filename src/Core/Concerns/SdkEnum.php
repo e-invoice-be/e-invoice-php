@@ -7,7 +7,10 @@ namespace EInvoiceAPI\Core\Concerns;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\EnumOf;
 
-trait Enum
+/**
+ * @internal
+ */
+trait SdkEnum
 {
     private static Converter $converter;
 

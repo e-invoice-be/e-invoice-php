@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Pagination;
 
 use EInvoiceAPI\Core\BaseClient;
-use EInvoiceAPI\Core\Concerns\Page;
+use EInvoiceAPI\Core\Contracts\BasePage;
 use EInvoiceAPI\Errors\Error;
 use Psr\Http\Message\ResponseInterface;
 
@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @implements \IteratorAggregate<Item>
  */
-abstract class AbstractPage implements \IteratorAggregate, Page
+abstract class AbstractPage implements \IteratorAggregate, BasePage
 {
     public function __construct(
         protected BaseClient $client,

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\Certificate;
 
@@ -25,7 +25,7 @@ use EInvoiceAPI\Lookup\Certificate;
  */
 final class Endpoint implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * URL or address of the endpoint.

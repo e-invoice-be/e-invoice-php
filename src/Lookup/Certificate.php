@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\MapOf;
 
@@ -18,7 +18,7 @@ use EInvoiceAPI\Core\Conversion\MapOf;
  */
 final class Certificate implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Status of the certificate validation: 'success', 'error', or 'pending'.

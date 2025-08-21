@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\BusinessCard\Entity;
@@ -22,7 +22,7 @@ use EInvoiceAPI\Responses\Lookup\LookupGetResponse\BusinessCard\Entity;
  */
 final class BusinessCard implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * List of business entities associated with the Peppol ID.

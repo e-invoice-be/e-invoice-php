@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 
-use EInvoiceAPI\Core\Concerns\Union;
+use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
@@ -13,7 +13,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
  */
 final class Amount implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

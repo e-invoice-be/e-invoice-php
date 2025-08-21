@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant\Entity;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class Identifier implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Identifier scheme.

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Webhooks;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 
@@ -19,8 +19,8 @@ use EInvoiceAPI\Core\Conversion\ListOf;
  */
 final class WebhookUpdateParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     #[Api(optional: true)]
     public ?bool $enabled;
