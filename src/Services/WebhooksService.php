@@ -2,14 +2,18 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Webhooks;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\WebhooksContract;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Webhooks\WebhookDeleteResponse;
+use EInvoiceAPI\Webhooks\WebhookCreateParams;
+use EInvoiceAPI\Webhooks\WebhookResponse;
+use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
 final class WebhooksService implements WebhooksContract
 {
@@ -28,9 +32,11 @@ final class WebhooksService implements WebhooksContract
         $enabled = null,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
+        $args = ['events' => $events, 'url' => $url, 'enabled' => $enabled];
+        $args = Util::array_filter_null($args, ['enabled']);
         [$parsed, $options] = WebhookCreateParams::parseRequest(
-            ['events' => $events, 'url' => $url, 'enabled' => $enabled],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -74,9 +80,11 @@ final class WebhooksService implements WebhooksContract
         $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
+        $args = ['enabled' => $enabled, 'events' => $events, 'url' => $url];
+        $args = Util::array_filter_null($args, ['enabled', 'events', 'url']);
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
-            ['enabled' => $enabled, 'events' => $events, 'url' => $url],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'put',

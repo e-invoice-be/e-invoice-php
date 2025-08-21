@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Validate;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\ValidateContract;
 use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
@@ -15,8 +16,12 @@ use EInvoiceAPI\Documents\PaymentDetailCreate;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Validate\ValidateValidatePeppolIDResponse;
+use EInvoiceAPI\Validate\UblDocumentValidation;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
+use EInvoiceAPI\Validate\ValidateValidatePeppolIDParams;
+use EInvoiceAPI\Validate\ValidateValidateUblParams;
 
 final class ValidateService implements ValidateContract
 {
@@ -111,51 +116,98 @@ final class ValidateService implements ValidateContract
         $vendorTaxID = null,
         ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation {
-        [$parsed, $options] = ValidateValidateJsonParams::parseRequest(
+        $args = [
+            'amountDue' => $amountDue,
+            'attachments' => $attachments,
+            'billingAddress' => $billingAddress,
+            'billingAddressRecipient' => $billingAddressRecipient,
+            'currency' => $currency,
+            'customerAddress' => $customerAddress,
+            'customerAddressRecipient' => $customerAddressRecipient,
+            'customerEmail' => $customerEmail,
+            'customerID' => $customerID,
+            'customerName' => $customerName,
+            'customerTaxID' => $customerTaxID,
+            'direction' => $direction,
+            'documentType' => $documentType,
+            'dueDate' => $dueDate,
+            'invoiceDate' => $invoiceDate,
+            'invoiceID' => $invoiceID,
+            'invoiceTotal' => $invoiceTotal,
+            'items' => $items,
+            'note' => $note,
+            'paymentDetails' => $paymentDetails,
+            'paymentTerm' => $paymentTerm,
+            'previousUnpaidBalance' => $previousUnpaidBalance,
+            'purchaseOrder' => $purchaseOrder,
+            'remittanceAddress' => $remittanceAddress,
+            'remittanceAddressRecipient' => $remittanceAddressRecipient,
+            'serviceAddress' => $serviceAddress,
+            'serviceAddressRecipient' => $serviceAddressRecipient,
+            'serviceEndDate' => $serviceEndDate,
+            'serviceStartDate' => $serviceStartDate,
+            'shippingAddress' => $shippingAddress,
+            'shippingAddressRecipient' => $shippingAddressRecipient,
+            'state' => $state,
+            'subtotal' => $subtotal,
+            'taxDetails' => $taxDetails,
+            'totalDiscount' => $totalDiscount,
+            'totalTax' => $totalTax,
+            'vendorAddress' => $vendorAddress,
+            'vendorAddressRecipient' => $vendorAddressRecipient,
+            'vendorEmail' => $vendorEmail,
+            'vendorName' => $vendorName,
+            'vendorTaxID' => $vendorTaxID,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'amountDue' => $amountDue,
-                'attachments' => $attachments,
-                'billingAddress' => $billingAddress,
-                'billingAddressRecipient' => $billingAddressRecipient,
-                'currency' => $currency,
-                'customerAddress' => $customerAddress,
-                'customerAddressRecipient' => $customerAddressRecipient,
-                'customerEmail' => $customerEmail,
-                'customerID' => $customerID,
-                'customerName' => $customerName,
-                'customerTaxID' => $customerTaxID,
-                'direction' => $direction,
-                'documentType' => $documentType,
-                'dueDate' => $dueDate,
-                'invoiceDate' => $invoiceDate,
-                'invoiceID' => $invoiceID,
-                'invoiceTotal' => $invoiceTotal,
-                'items' => $items,
-                'note' => $note,
-                'paymentDetails' => $paymentDetails,
-                'paymentTerm' => $paymentTerm,
-                'previousUnpaidBalance' => $previousUnpaidBalance,
-                'purchaseOrder' => $purchaseOrder,
-                'remittanceAddress' => $remittanceAddress,
-                'remittanceAddressRecipient' => $remittanceAddressRecipient,
-                'serviceAddress' => $serviceAddress,
-                'serviceAddressRecipient' => $serviceAddressRecipient,
-                'serviceEndDate' => $serviceEndDate,
-                'serviceStartDate' => $serviceStartDate,
-                'shippingAddress' => $shippingAddress,
-                'shippingAddressRecipient' => $shippingAddressRecipient,
-                'state' => $state,
-                'subtotal' => $subtotal,
-                'taxDetails' => $taxDetails,
-                'totalDiscount' => $totalDiscount,
-                'totalTax' => $totalTax,
-                'vendorAddress' => $vendorAddress,
-                'vendorAddressRecipient' => $vendorAddressRecipient,
-                'vendorEmail' => $vendorEmail,
-                'vendorName' => $vendorName,
-                'vendorTaxID' => $vendorTaxID,
+                'amountDue',
+                'attachments',
+                'billingAddress',
+                'billingAddressRecipient',
+                'currency',
+                'customerAddress',
+                'customerAddressRecipient',
+                'customerEmail',
+                'customerID',
+                'customerName',
+                'customerTaxID',
+                'direction',
+                'documentType',
+                'dueDate',
+                'invoiceDate',
+                'invoiceID',
+                'invoiceTotal',
+                'items',
+                'note',
+                'paymentDetails',
+                'paymentTerm',
+                'previousUnpaidBalance',
+                'purchaseOrder',
+                'remittanceAddress',
+                'remittanceAddressRecipient',
+                'serviceAddress',
+                'serviceAddressRecipient',
+                'serviceEndDate',
+                'serviceStartDate',
+                'shippingAddress',
+                'shippingAddressRecipient',
+                'state',
+                'subtotal',
+                'taxDetails',
+                'totalDiscount',
+                'totalTax',
+                'vendorAddress',
+                'vendorAddressRecipient',
+                'vendorEmail',
+                'vendorName',
+                'vendorTaxID',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = ValidateValidateJsonParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -177,8 +229,9 @@ final class ValidateService implements ValidateContract
         $peppolID,
         ?RequestOptions $requestOptions = null
     ): ValidateValidatePeppolIDResponse {
+        $args = ['peppolID' => $peppolID];
         [$parsed, $options] = ValidateValidatePeppolIDParams::parseRequest(
-            ['peppolID' => $peppolID],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -204,8 +257,9 @@ final class ValidateService implements ValidateContract
         $file,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
+        $args = ['file' => $file];
         [$parsed, $options] = ValidateValidateUblParams::parseRequest(
-            ['file' => $file],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

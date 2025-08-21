@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Documents\Ubl;
+namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\UblContract;

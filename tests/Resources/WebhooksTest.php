@@ -50,8 +50,7 @@ final class WebhooksTest extends TestCase
 
         $result = $this->client->webhooks->create(
             events: ['string'],
-            url: 'https://example.com',
-            enabled: true
+            url: 'https://example.com'
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

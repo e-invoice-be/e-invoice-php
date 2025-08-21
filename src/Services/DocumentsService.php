@@ -2,18 +2,27 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Documents;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\DocumentsContract;
 use EInvoiceAPI\Core\Conversion;
-use EInvoiceAPI\Documents\Attachments\AttachmentsService;
+use EInvoiceAPI\Core\Util;
+use EInvoiceAPI\Documents\CurrencyCode;
+use EInvoiceAPI\Documents\DocumentAttachmentCreate;
+use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item;
 use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
-use EInvoiceAPI\Documents\Ubl\UblService;
+use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\DocumentSendParams;
+use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Documents\PaymentDetailCreate;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Documents\DocumentDeleteResponse;
+use EInvoiceAPI\Services\Documents\AttachmentsService;
+use EInvoiceAPI\Services\Documents\UblService;
 
 final class DocumentsService implements DocumentsContract
 {
@@ -116,51 +125,98 @@ final class DocumentsService implements DocumentsContract
         $vendorTaxID = null,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = DocumentCreateParams::parseRequest(
+        $args = [
+            'amountDue' => $amountDue,
+            'attachments' => $attachments,
+            'billingAddress' => $billingAddress,
+            'billingAddressRecipient' => $billingAddressRecipient,
+            'currency' => $currency,
+            'customerAddress' => $customerAddress,
+            'customerAddressRecipient' => $customerAddressRecipient,
+            'customerEmail' => $customerEmail,
+            'customerID' => $customerID,
+            'customerName' => $customerName,
+            'customerTaxID' => $customerTaxID,
+            'direction' => $direction,
+            'documentType' => $documentType,
+            'dueDate' => $dueDate,
+            'invoiceDate' => $invoiceDate,
+            'invoiceID' => $invoiceID,
+            'invoiceTotal' => $invoiceTotal,
+            'items' => $items,
+            'note' => $note,
+            'paymentDetails' => $paymentDetails,
+            'paymentTerm' => $paymentTerm,
+            'previousUnpaidBalance' => $previousUnpaidBalance,
+            'purchaseOrder' => $purchaseOrder,
+            'remittanceAddress' => $remittanceAddress,
+            'remittanceAddressRecipient' => $remittanceAddressRecipient,
+            'serviceAddress' => $serviceAddress,
+            'serviceAddressRecipient' => $serviceAddressRecipient,
+            'serviceEndDate' => $serviceEndDate,
+            'serviceStartDate' => $serviceStartDate,
+            'shippingAddress' => $shippingAddress,
+            'shippingAddressRecipient' => $shippingAddressRecipient,
+            'state' => $state,
+            'subtotal' => $subtotal,
+            'taxDetails' => $taxDetails,
+            'totalDiscount' => $totalDiscount,
+            'totalTax' => $totalTax,
+            'vendorAddress' => $vendorAddress,
+            'vendorAddressRecipient' => $vendorAddressRecipient,
+            'vendorEmail' => $vendorEmail,
+            'vendorName' => $vendorName,
+            'vendorTaxID' => $vendorTaxID,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'amountDue' => $amountDue,
-                'attachments' => $attachments,
-                'billingAddress' => $billingAddress,
-                'billingAddressRecipient' => $billingAddressRecipient,
-                'currency' => $currency,
-                'customerAddress' => $customerAddress,
-                'customerAddressRecipient' => $customerAddressRecipient,
-                'customerEmail' => $customerEmail,
-                'customerID' => $customerID,
-                'customerName' => $customerName,
-                'customerTaxID' => $customerTaxID,
-                'direction' => $direction,
-                'documentType' => $documentType,
-                'dueDate' => $dueDate,
-                'invoiceDate' => $invoiceDate,
-                'invoiceID' => $invoiceID,
-                'invoiceTotal' => $invoiceTotal,
-                'items' => $items,
-                'note' => $note,
-                'paymentDetails' => $paymentDetails,
-                'paymentTerm' => $paymentTerm,
-                'previousUnpaidBalance' => $previousUnpaidBalance,
-                'purchaseOrder' => $purchaseOrder,
-                'remittanceAddress' => $remittanceAddress,
-                'remittanceAddressRecipient' => $remittanceAddressRecipient,
-                'serviceAddress' => $serviceAddress,
-                'serviceAddressRecipient' => $serviceAddressRecipient,
-                'serviceEndDate' => $serviceEndDate,
-                'serviceStartDate' => $serviceStartDate,
-                'shippingAddress' => $shippingAddress,
-                'shippingAddressRecipient' => $shippingAddressRecipient,
-                'state' => $state,
-                'subtotal' => $subtotal,
-                'taxDetails' => $taxDetails,
-                'totalDiscount' => $totalDiscount,
-                'totalTax' => $totalTax,
-                'vendorAddress' => $vendorAddress,
-                'vendorAddressRecipient' => $vendorAddressRecipient,
-                'vendorEmail' => $vendorEmail,
-                'vendorName' => $vendorName,
-                'vendorTaxID' => $vendorTaxID,
+                'amountDue',
+                'attachments',
+                'billingAddress',
+                'billingAddressRecipient',
+                'currency',
+                'customerAddress',
+                'customerAddressRecipient',
+                'customerEmail',
+                'customerID',
+                'customerName',
+                'customerTaxID',
+                'direction',
+                'documentType',
+                'dueDate',
+                'invoiceDate',
+                'invoiceID',
+                'invoiceTotal',
+                'items',
+                'note',
+                'paymentDetails',
+                'paymentTerm',
+                'previousUnpaidBalance',
+                'purchaseOrder',
+                'remittanceAddress',
+                'remittanceAddressRecipient',
+                'serviceAddress',
+                'serviceAddressRecipient',
+                'serviceEndDate',
+                'serviceStartDate',
+                'shippingAddress',
+                'shippingAddressRecipient',
+                'state',
+                'subtotal',
+                'taxDetails',
+                'totalDiscount',
+                'totalTax',
+                'vendorAddress',
+                'vendorAddressRecipient',
+                'vendorEmail',
+                'vendorName',
+                'vendorTaxID',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = DocumentCreateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -225,15 +281,26 @@ final class DocumentsService implements DocumentsContract
         $senderPeppolScheme = null,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = DocumentSendParams::parseRequest(
+        $args = [
+            'email' => $email,
+            'receiverPeppolID' => $receiverPeppolID,
+            'receiverPeppolScheme' => $receiverPeppolScheme,
+            'senderPeppolID' => $senderPeppolID,
+            'senderPeppolScheme' => $senderPeppolScheme,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'email' => $email,
-                'receiverPeppolID' => $receiverPeppolID,
-                'receiverPeppolScheme' => $receiverPeppolScheme,
-                'senderPeppolID' => $senderPeppolID,
-                'senderPeppolScheme' => $senderPeppolScheme,
+                'email',
+                'receiverPeppolID',
+                'receiverPeppolScheme',
+                'senderPeppolID',
+                'senderPeppolScheme',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = DocumentSendParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',

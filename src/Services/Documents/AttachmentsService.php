@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Documents\Attachments;
+namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\Documents\AttachmentsContract;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
+use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Documents\Attachments\AttachmentDeleteResponse;
 
@@ -25,8 +29,9 @@ final class AttachmentsService implements AttachmentsContract
         $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
+        $args = ['documentID' => $documentID];
         [$parsed, $options] = AttachmentRetrieveParams::parseRequest(
-            ['documentID' => $documentID],
+            $args,
             $requestOptions
         );
         $documentID = $parsed['documentID'];
@@ -73,8 +78,9 @@ final class AttachmentsService implements AttachmentsContract
         $documentID,
         ?RequestOptions $requestOptions = null
     ): AttachmentDeleteResponse {
+        $args = ['documentID' => $documentID];
         [$parsed, $options] = AttachmentDeleteParams::parseRequest(
-            ['documentID' => $documentID],
+            $args,
             $requestOptions
         );
         $documentID = $parsed['documentID'];
@@ -99,8 +105,9 @@ final class AttachmentsService implements AttachmentsContract
         $file,
         ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
+        $args = ['file' => $file];
         [$parsed, $options] = AttachmentAddParams::parseRequest(
-            ['file' => $file],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
