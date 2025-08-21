@@ -48,7 +48,7 @@ final class Entity implements BaseModel
     /**
      * List of business identifiers.
      *
-     * @var null|list<Identifier> $identifiers
+     * @var list<Identifier>|null $identifiers
      */
     #[Api(type: new ListOf(Identifier::class), optional: true)]
     public ?array $identifiers;
@@ -82,7 +82,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<Identifier> $identifiers
+     * @param list<Identifier>|null $identifiers
      */
     public static function with(
         ?string $additionalInfo = null,

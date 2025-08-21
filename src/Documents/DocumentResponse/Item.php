@@ -51,7 +51,7 @@ final class Item implements BaseModel
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
      *
-     * @var null|UnitOfMeasureCode::* $unit
+     * @var UnitOfMeasureCode::*|null $unit
      */
     #[Api(enum: UnitOfMeasureCode::class, optional: true)]
     public ?string $unit;

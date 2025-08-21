@@ -18,7 +18,7 @@ final class TaxDetail implements BaseModel
     use SdkModel;
 
     #[Api(optional: true)]
-    public null|float|string $amount;
+    public float|string|null $amount;
 
     #[Api(optional: true)]
     public ?string $rate;
@@ -35,7 +35,7 @@ final class TaxDetail implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        null|float|string $amount = null,
+        float|string|null $amount = null,
         ?string $rate = null
     ): self {
         $obj = new self;
@@ -46,7 +46,7 @@ final class TaxDetail implements BaseModel
         return $obj;
     }
 
-    public function withAmount(null|float|string $amount): self
+    public function withAmount(float|string|null $amount): self
     {
         $obj = clone $this;
         $obj->amount = $amount;

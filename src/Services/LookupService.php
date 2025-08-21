@@ -47,7 +47,7 @@ final class LookupService implements LookupContract
      * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
      *
      * @param string $query Query to lookup
-     * @param null|string $countryCode Country code of the company to lookup. If not provided, the search will be global.
+     * @param string|null $countryCode Country code of the company to lookup. If not provided, the search will be global.
      */
     public function retrieveParticipants(
         $query,

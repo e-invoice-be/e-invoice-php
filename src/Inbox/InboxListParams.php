@@ -68,7 +68,7 @@ final class InboxListParams implements BaseModel
     /**
      * Filter by document state.
      *
-     * @var null|DocumentState::* $state
+     * @var DocumentState::*|null $state
      */
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
@@ -76,7 +76,7 @@ final class InboxListParams implements BaseModel
     /**
      * Filter by document type.
      *
-     * @var null|DocumentType::* $type
+     * @var DocumentType::*|null $type
      */
     #[Api(enum: DocumentType::class, optional: true)]
     public ?string $type;

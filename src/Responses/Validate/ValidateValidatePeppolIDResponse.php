@@ -52,7 +52,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     #[Api('is_valid')]
     public bool $isValid;
 
-    /** @var null|list<string> $supportedDocumentTypes */
+    /** @var list<string>|null $supportedDocumentTypes */
     #[Api('supported_document_types', type: new ListOf('string'), optional: true)]
     public ?array $supportedDocumentTypes;
 
@@ -87,7 +87,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $supportedDocumentTypes
+     * @param list<string>|null $supportedDocumentTypes
      */
     public static function with(
         ?BusinessCard $businessCard,

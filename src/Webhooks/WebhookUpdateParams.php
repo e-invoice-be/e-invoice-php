@@ -25,7 +25,7 @@ final class WebhookUpdateParams implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
-    /** @var null|list<string> $events */
+    /** @var list<string>|null $events */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $events;
 
@@ -43,7 +43,7 @@ final class WebhookUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $events
+     * @param list<string>|null $events
      */
     public static function with(
         ?bool $enabled = null,
@@ -68,7 +68,7 @@ final class WebhookUpdateParams implements BaseModel
     }
 
     /**
-     * @param null|list<string> $events
+     * @param list<string>|null $events
      */
     public function withEvents(?array $events): self
     {

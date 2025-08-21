@@ -22,12 +22,12 @@ interface OutboxContract
     ): DocumentResponse;
 
     /**
-     * @param null|\DateTimeInterface $dateFrom Filter by issue date (from)
-     * @param null|\DateTimeInterface $dateTo Filter by issue date (to)
+     * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
+     * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
      * @param int $page Page number
      * @param int $pageSize Number of items per page
-     * @param null|string $search Search in invoice number, seller/buyer names
-     * @param null|string $sender Filter by sender ID
+     * @param string|null $search Search in invoice number, seller/buyer names
+     * @param string|null $sender Filter by sender ID
      * @param DocumentState::* $state Filter by document state
      * @param DocumentType::* $type Filter by document type
      */

@@ -70,7 +70,7 @@ final class DocumentResponse implements BaseModel
     #[Api('amount_due', optional: true)]
     public ?string $amountDue;
 
-    /** @var null|list<DocumentAttachment> $attachments */
+    /** @var list<DocumentAttachment>|null $attachments */
     #[Api(type: new ListOf(DocumentAttachment::class), optional: true)]
     public ?array $attachments;
 
@@ -83,7 +83,7 @@ final class DocumentResponse implements BaseModel
     /**
      * Currency of the invoice.
      *
-     * @var null|CurrencyCode::* $currency
+     * @var CurrencyCode::*|null $currency
      */
     #[Api(enum: CurrencyCode::class, optional: true)]
     public ?string $currency;
@@ -106,11 +106,11 @@ final class DocumentResponse implements BaseModel
     #[Api('customer_tax_id', optional: true)]
     public ?string $customerTaxID;
 
-    /** @var null|DocumentDirection::* $direction */
+    /** @var DocumentDirection::*|null $direction */
     #[Api(enum: DocumentDirection::class, optional: true)]
     public ?string $direction;
 
-    /** @var null|DocumentType::* $documentType */
+    /** @var DocumentType::*|null $documentType */
     #[Api('document_type', enum: DocumentType::class, optional: true)]
     public ?string $documentType;
 
@@ -126,14 +126,14 @@ final class DocumentResponse implements BaseModel
     #[Api('invoice_total', optional: true)]
     public ?string $invoiceTotal;
 
-    /** @var null|list<Item> $items */
+    /** @var list<Item>|null $items */
     #[Api(type: new ListOf(Item::class), optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
     public ?string $note;
 
-    /** @var null|list<PaymentDetail> $paymentDetails */
+    /** @var list<PaymentDetail>|null $paymentDetails */
     #[Api(
         'payment_details',
         type: new ListOf(PaymentDetail::class),
@@ -174,14 +174,14 @@ final class DocumentResponse implements BaseModel
     #[Api('shipping_address_recipient', optional: true)]
     public ?string $shippingAddressRecipient;
 
-    /** @var null|DocumentState::* $state */
+    /** @var DocumentState::*|null $state */
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
     #[Api(optional: true)]
     public ?string $subtotal;
 
-    /** @var null|list<TaxDetail> $taxDetails */
+    /** @var list<TaxDetail>|null $taxDetails */
     #[Api('tax_details', type: new ListOf(TaxDetail::class), optional: true)]
     public ?array $taxDetails;
 
@@ -231,14 +231,14 @@ final class DocumentResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<DocumentAttachment> $attachments
+     * @param list<DocumentAttachment>|null $attachments
      * @param CurrencyCode::* $currency
      * @param DocumentDirection::* $direction
      * @param DocumentType::* $documentType
-     * @param null|list<Item> $items
-     * @param null|list<PaymentDetail> $paymentDetails
+     * @param list<Item>|null $items
+     * @param list<PaymentDetail>|null $paymentDetails
      * @param DocumentState::* $state
-     * @param null|list<TaxDetail> $taxDetails
+     * @param list<TaxDetail>|null $taxDetails
      */
     public static function with(
         string $id,
