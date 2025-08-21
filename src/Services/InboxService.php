@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Inbox;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\InboxContract;
 use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Inbox\DocumentState;
+use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
+use EInvoiceAPI\Inbox\InboxListInvoicesParams;
+use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 
 final class InboxService implements InboxContract
@@ -38,19 +43,30 @@ final class InboxService implements InboxContract
         $type = null,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = InboxListParams::parseRequest(
+        $args = [
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'search' => $search,
+            'sender' => $sender,
+            'state' => $state,
+            'type' => $type,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-                'page' => $page,
-                'pageSize' => $pageSize,
-                'search' => $search,
-                'sender' => $sender,
-                'state' => $state,
-                'type' => $type,
+                'dateFrom',
+                'dateTo',
+                'page',
+                'pageSize',
+                'search',
+                'sender',
+                'state',
+                'type',
             ],
-            $requestOptions,
         );
+        [$parsed, $options] = InboxListParams::parseRequest($args, $requestOptions);
         $resp = $this->client->request(
             method: 'get',
             path: 'api/inbox/',
@@ -73,8 +89,10 @@ final class InboxService implements InboxContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
+        $args = ['page' => $page, 'pageSize' => $pageSize];
+        $args = Util::array_filter_null($args, ['page', 'pageSize']);
         [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
-            ['page' => $page, 'pageSize' => $pageSize],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -99,8 +117,10 @@ final class InboxService implements InboxContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
+        $args = ['page' => $page, 'pageSize' => $pageSize];
+        $args = Util::array_filter_null($args, ['page', 'pageSize']);
         [$parsed, $options] = InboxListInvoicesParams::parseRequest(
-            ['page' => $page, 'pageSize' => $pageSize],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

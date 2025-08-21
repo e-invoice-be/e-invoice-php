@@ -50,7 +50,6 @@ use EInvoiceAPI\Client;
 $client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
 $documentResponse = $client->documents->create();
-
 var_dump($documentResponse->id);
 ```
 

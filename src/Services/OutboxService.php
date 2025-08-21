@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Outbox;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\OutboxContract;
 use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
+use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
+use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
 final class OutboxService implements OutboxContract
@@ -27,8 +30,10 @@ final class OutboxService implements OutboxContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
+        $args = ['page' => $page, 'pageSize' => $pageSize];
+        $args = Util::array_filter_null($args, ['page', 'pageSize']);
         [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
-            ['page' => $page, 'pageSize' => $pageSize],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -65,18 +70,32 @@ final class OutboxService implements OutboxContract
         $type = null,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
+        $args = [
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'search' => $search,
+            'sender' => $sender,
+            'state' => $state,
+            'type' => $type,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-                'page' => $page,
-                'pageSize' => $pageSize,
-                'search' => $search,
-                'sender' => $sender,
-                'state' => $state,
-                'type' => $type,
+                'dateFrom',
+                'dateTo',
+                'page',
+                'pageSize',
+                'search',
+                'sender',
+                'state',
+                'type',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'get',

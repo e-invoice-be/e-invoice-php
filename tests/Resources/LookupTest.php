@@ -69,10 +69,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieveParticipants(
-            query: 'query',
-            countryCode: 'country_code'
-        );
+        $result = $this->client->lookup->retrieveParticipants(query: 'query');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

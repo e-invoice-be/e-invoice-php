@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Lookup;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\LookupContract;
 use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Util;
+use EInvoiceAPI\Lookup\LookupRetrieveParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse;
@@ -24,8 +27,9 @@ final class LookupService implements LookupContract
         $peppolID,
         ?RequestOptions $requestOptions = null
     ): LookupGetResponse {
+        $args = ['peppolID' => $peppolID];
         [$parsed, $options] = LookupRetrieveParams::parseRequest(
-            ['peppolID' => $peppolID],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -50,8 +54,10 @@ final class LookupService implements LookupContract
         $countryCode = null,
         ?RequestOptions $requestOptions = null
     ): LookupGetParticipantsResponse {
+        $args = ['query' => $query, 'countryCode' => $countryCode];
+        $args = Util::array_filter_null($args, ['countryCode']);
         [$parsed, $options] = LookupRetrieveParticipantsParams::parseRequest(
-            ['query' => $query, 'countryCode' => $countryCode],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
