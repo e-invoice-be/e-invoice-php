@@ -40,7 +40,7 @@ final class Participant implements BaseModel
     /**
      * List of supported document types.
      *
-     * @var null|list<DocumentType> $documentTypes
+     * @var list<DocumentType>|null $documentTypes
      */
     #[Api(
         'document_types',
@@ -52,7 +52,7 @@ final class Participant implements BaseModel
     /**
      * List of business entities.
      *
-     * @var null|list<Entity> $entities
+     * @var list<Entity>|null $entities
      */
     #[Api(type: new ListOf(Entity::class), optional: true)]
     public ?array $entities;
@@ -82,8 +82,8 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<DocumentType> $documentTypes
-     * @param null|list<Entity> $entities
+     * @param list<DocumentType>|null $documentTypes
+     * @param list<Entity>|null $entities
      */
     public static function with(
         string $peppolID,

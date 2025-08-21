@@ -26,7 +26,7 @@ final class Entity implements BaseModel
     /**
      * Additional information about the business entity.
      *
-     * @var null|list<string> $additionalInformation
+     * @var list<string>|null $additionalInformation
      */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $additionalInformation;
@@ -60,7 +60,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $additionalInformation
+     * @param list<string>|null $additionalInformation
      */
     public static function with(
         ?array $additionalInformation = null,
@@ -81,7 +81,7 @@ final class Entity implements BaseModel
     /**
      * Additional information about the business entity.
      *
-     * @param null|list<string> $additionalInformation
+     * @param list<string>|null $additionalInformation
      */
     public function withAdditionalInformation(
         ?array $additionalInformation

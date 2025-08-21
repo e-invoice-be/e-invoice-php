@@ -55,7 +55,7 @@ final class Endpoint implements BaseModel
     /**
      * List of processes supported by this endpoint.
      *
-     * @var null|list<Process> $processes
+     * @var list<Process>|null $processes
      */
     #[Api(type: new ListOf(Process::class), nullable: true, optional: true)]
     public ?array $processes;
@@ -86,7 +86,7 @@ final class Endpoint implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<DocumentType> $documentTypes
-     * @param null|list<Process> $processes
+     * @param list<Process>|null $processes
      */
     public static function with(
         array $documentTypes,
@@ -156,7 +156,7 @@ final class Endpoint implements BaseModel
     /**
      * List of processes supported by this endpoint.
      *
-     * @param null|list<Process> $processes
+     * @param list<Process>|null $processes
      */
     public function withProcesses(?array $processes): self
     {

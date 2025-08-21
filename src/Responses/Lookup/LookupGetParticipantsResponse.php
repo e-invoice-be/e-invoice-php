@@ -52,7 +52,7 @@ final class LookupGetParticipantsResponse implements BaseModel
     /**
      * List of participants.
      *
-     * @var null|list<Participant> $participants
+     * @var list<Participant>|null $participants
      */
     #[Api(type: new ListOf(Participant::class), optional: true)]
     public ?array $participants;
@@ -88,7 +88,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<Participant> $participants
+     * @param list<Participant>|null $participants
      */
     public static function with(
         string $queryTerms,

@@ -69,9 +69,9 @@ final class WebhooksService implements WebhooksContract
     /**
      * Update a webhook by ID.
      *
-     * @param null|bool $enabled
-     * @param null|list<string> $events
-     * @param null|string $url
+     * @param bool|null $enabled
+     * @param list<string>|null $events
+     * @param string|null $url
      */
     public function update(
         string $webhookID,

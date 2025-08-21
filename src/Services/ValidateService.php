@@ -30,47 +30,47 @@ final class ValidateService implements ValidateContract
     /**
      * Validate if the JSON document can be converted to a valid UBL document.
      *
-     * @param null|float|string $amountDue
-     * @param null|list<DocumentAttachmentCreate> $attachments
-     * @param null|string $billingAddress
-     * @param null|string $billingAddressRecipient
+     * @param float|string|null $amountDue
+     * @param list<DocumentAttachmentCreate>|null $attachments
+     * @param string|null $billingAddress
+     * @param string|null $billingAddressRecipient
      * @param CurrencyCode::* $currency Currency of the invoice
-     * @param null|string $customerAddress
-     * @param null|string $customerAddressRecipient
-     * @param null|string $customerEmail
-     * @param null|string $customerID
-     * @param null|string $customerName
-     * @param null|string $customerTaxID
+     * @param string|null $customerAddress
+     * @param string|null $customerAddressRecipient
+     * @param string|null $customerEmail
+     * @param string|null $customerID
+     * @param string|null $customerName
+     * @param string|null $customerTaxID
      * @param DocumentDirection::* $direction
      * @param DocumentType::* $documentType
-     * @param null|\DateTimeInterface $dueDate
-     * @param null|\DateTimeInterface $invoiceDate
-     * @param null|string $invoiceID
-     * @param null|float|string $invoiceTotal
-     * @param null|list<Item> $items
-     * @param null|string $note
-     * @param null|list<PaymentDetailCreate> $paymentDetails
-     * @param null|string $paymentTerm
-     * @param null|float|string $previousUnpaidBalance
-     * @param null|string $purchaseOrder
-     * @param null|string $remittanceAddress
-     * @param null|string $remittanceAddressRecipient
-     * @param null|string $serviceAddress
-     * @param null|string $serviceAddressRecipient
-     * @param null|\DateTimeInterface $serviceEndDate
-     * @param null|\DateTimeInterface $serviceStartDate
-     * @param null|string $shippingAddress
-     * @param null|string $shippingAddressRecipient
+     * @param \DateTimeInterface|null $dueDate
+     * @param \DateTimeInterface|null $invoiceDate
+     * @param string|null $invoiceID
+     * @param float|string|null $invoiceTotal
+     * @param list<Item>|null $items
+     * @param string|null $note
+     * @param list<PaymentDetailCreate>|null $paymentDetails
+     * @param string|null $paymentTerm
+     * @param float|string|null $previousUnpaidBalance
+     * @param string|null $purchaseOrder
+     * @param string|null $remittanceAddress
+     * @param string|null $remittanceAddressRecipient
+     * @param string|null $serviceAddress
+     * @param string|null $serviceAddressRecipient
+     * @param \DateTimeInterface|null $serviceEndDate
+     * @param \DateTimeInterface|null $serviceStartDate
+     * @param string|null $shippingAddress
+     * @param string|null $shippingAddressRecipient
      * @param DocumentState::* $state
-     * @param null|float|string $subtotal
-     * @param null|list<TaxDetail> $taxDetails
-     * @param null|float|string $totalDiscount
-     * @param null|float|string $totalTax
-     * @param null|string $vendorAddress
-     * @param null|string $vendorAddressRecipient
-     * @param null|string $vendorEmail
-     * @param null|string $vendorName
-     * @param null|string $vendorTaxID
+     * @param float|string|null $subtotal
+     * @param list<TaxDetail>|null $taxDetails
+     * @param float|string|null $totalDiscount
+     * @param float|string|null $totalTax
+     * @param string|null $vendorAddress
+     * @param string|null $vendorAddressRecipient
+     * @param string|null $vendorEmail
+     * @param string|null $vendorName
+     * @param string|null $vendorTaxID
      */
     public function validateJson(
         $amountDue = null,

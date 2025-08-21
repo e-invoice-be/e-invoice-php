@@ -29,7 +29,7 @@ final class Certificate implements BaseModel
     /**
      * Details about the certificate including subject, issuer, validity dates, etc.
      *
-     * @var null|array<string, mixed> $details
+     * @var array<string, mixed>|null $details
      */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $details;
@@ -65,7 +65,7 @@ final class Certificate implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|array<string, mixed> $details
+     * @param array<string, mixed>|null $details
      */
     public static function with(
         string $status,
@@ -96,7 +96,7 @@ final class Certificate implements BaseModel
     /**
      * Details about the certificate including subject, issuer, validity dates, etc.
      *
-     * @param null|array<string, mixed> $details
+     * @param array<string, mixed>|null $details
      */
     public function withDetails(?array $details): self
     {
