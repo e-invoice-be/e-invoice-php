@@ -25,17 +25,6 @@ use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata;
  *     A successful lookup for a Peppol ID "0192:991825827" would return DNS information,
  *     service metadata with supported document types and processes, business card information
  *     with organization details, and certificate data.
- *
- * @phpstan-type lookup_get_response_alias = array{
- *   businessCard: BusinessCard,
- *   certificates: list<Certificate>,
- *   dnsInfo: DNSInfo,
- *   errors: list<string>,
- *   executionTimeMs: float,
- *   queryMetadata: QueryMetadata,
- *   serviceMetadata: ServiceMetadata,
- *   status: string,
- * }
  */
 final class LookupGetResponse implements BaseModel
 {

@@ -10,14 +10,6 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Metadata about the query that was performed.
- *
- * @phpstan-type query_metadata_alias = array{
- *   identifierScheme: string,
- *   identifierValue: string,
- *   smlDomain: string,
- *   timestamp: string,
- *   version: string,
- * }
  */
 final class QueryMetadata implements BaseModel
 {

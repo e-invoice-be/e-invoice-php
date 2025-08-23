@@ -13,14 +13,6 @@ use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Proc
 
 /**
  * Information about a Peppol participant's endpoint.
- *
- * @phpstan-type endpoint_alias = array{
- *   documentTypes: list<DocumentType>,
- *   status: string,
- *   url: string,
- *   error?: string|null,
- *   processes?: list<Process>|null,
- * }
  */
 final class Endpoint implements BaseModel
 {

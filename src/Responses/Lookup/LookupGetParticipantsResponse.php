@@ -12,14 +12,6 @@ use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant;
 
 /**
  * Represents the result of a Peppol directory search.
- *
- * @phpstan-type lookup_get_participants_response_alias = array{
- *   queryTerms: string,
- *   searchDate: string,
- *   totalCount: int,
- *   usedCount: int,
- *   participants?: list<Participant>,
- * }
  */
 final class LookupGetParticipantsResponse implements BaseModel
 {

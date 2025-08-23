@@ -8,14 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type payment_detail_alias = array{
- *   bankAccountNumber?: string|null,
- *   iban?: string|null,
- *   paymentReference?: string|null,
- *   swift?: string|null,
- * }
- */
 final class PaymentDetail implements BaseModel
 {
     use SdkModel;

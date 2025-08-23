@@ -8,9 +8,6 @@ use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type unit_price_alias = float|string|null
- */
 final class UnitPrice implements ConverterSource
 {
     use SdkUnion;

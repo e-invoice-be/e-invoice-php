@@ -10,15 +10,6 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
 
-/**
- * @phpstan-type ubl_document_validation_alias = array{
- *   id: string,
- *   fileName: string|null,
- *   isValid: bool,
- *   issues: list<Issue>,
- *   ublDocument?: string|null,
- * }
- */
 final class UblDocumentValidation implements BaseModel
 {
     use SdkModel;

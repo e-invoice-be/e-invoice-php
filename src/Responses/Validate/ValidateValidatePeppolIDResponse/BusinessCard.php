@@ -10,12 +10,6 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Business card information for the Peppol ID.
- *
- * @phpstan-type business_card_alias = array{
- *   countryCode?: string|null,
- *   name?: string|null,
- *   registrationDate?: \DateTimeInterface|null,
- * }
  */
 final class BusinessCard implements BaseModel
 {

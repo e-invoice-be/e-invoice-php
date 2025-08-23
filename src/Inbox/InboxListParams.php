@@ -12,17 +12,6 @@ use EInvoiceAPI\Documents\DocumentType;
 
 /**
  * Retrieve a paginated list of received documents with filtering options.
- *
- * @phpstan-type list_params = array{
- *   dateFrom?: \DateTimeInterface|null,
- *   dateTo?: \DateTimeInterface|null,
- *   page?: int,
- *   pageSize?: int,
- *   search?: string|null,
- *   sender?: string|null,
- *   state?: DocumentState::*,
- *   type?: DocumentType::*,
- * }
  */
 final class InboxListParams implements BaseModel
 {

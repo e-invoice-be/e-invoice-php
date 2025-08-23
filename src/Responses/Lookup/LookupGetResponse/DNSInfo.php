@@ -12,13 +12,6 @@ use EInvoiceAPI\Responses\Lookup\LookupGetResponse\DNSInfo\DNSRecord;
 
 /**
  * Information about the DNS lookup performed.
- *
- * @phpstan-type dns_info_alias = array{
- *   dnsRecords: list<DNSRecord>,
- *   smlHostname: string,
- *   status: string,
- *   error?: string|null,
- * }
  */
 final class DNSInfo implements BaseModel
 {
