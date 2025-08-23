@@ -11,10 +11,6 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Response model for webhook API endpoints.
- *
- * @phpstan-type webhook_response_alias = array{
- *   id: string, events: list<string>, secret: string, url: string, enabled?: bool
- * }
  */
 final class WebhookResponse implements BaseModel
 {

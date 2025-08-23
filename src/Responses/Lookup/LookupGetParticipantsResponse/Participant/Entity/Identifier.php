@@ -10,8 +10,6 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Represents a business identifier.
- *
- * @phpstan-type identifier_alias = array{scheme: string, value: string}
  */
 final class Identifier implements BaseModel
 {

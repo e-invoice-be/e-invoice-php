@@ -11,13 +11,6 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Business entity information in the Peppol network.
- *
- * @phpstan-type entity_alias = array{
- *   additionalInformation?: list<string>|null,
- *   countryCode?: string|null,
- *   name?: string|null,
- *   registrationDate?: string|null,
- * }
  */
 final class Entity implements BaseModel
 {

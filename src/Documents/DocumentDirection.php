@@ -7,9 +7,6 @@ namespace EInvoiceAPI\Documents;
 use EInvoiceAPI\Core\Concerns\SdkEnum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type document_direction_alias = DocumentDirection::*
- */
 final class DocumentDirection implements ConverterSource
 {
     use SdkEnum;

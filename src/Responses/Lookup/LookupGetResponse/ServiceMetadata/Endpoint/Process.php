@@ -13,10 +13,6 @@ use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Proc
 
 /**
  * Process information in the Peppol network.
- *
- * @phpstan-type process_alias = array{
- *   endpoints: list<Endpoint>, processID: ProcessID
- * }
  */
 final class Process implements BaseModel
 {

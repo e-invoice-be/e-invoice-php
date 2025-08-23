@@ -10,15 +10,6 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Documents\DocumentResponse;
 
-/**
- * @phpstan-type paginated_document_response_alias = array{
- *   items: list<DocumentResponse>,
- *   page: int,
- *   pageSize: int,
- *   pages: int,
- *   total: int,
- * }
- */
 final class PaginatedDocumentResponse implements BaseModel
 {
     use SdkModel;

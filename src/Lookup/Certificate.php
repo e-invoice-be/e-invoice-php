@@ -11,10 +11,6 @@ use EInvoiceAPI\Core\Conversion\MapOf;
 
 /**
  * Certificate information for a Peppol endpoint.
- *
- * @phpstan-type certificate_alias = array{
- *   status: string, details?: array<string, mixed>|null, error?: string|null
- * }
  */
 final class Certificate implements BaseModel
 {

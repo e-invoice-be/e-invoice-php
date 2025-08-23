@@ -12,10 +12,6 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Create a new webhook.
- *
- * @phpstan-type create_params = array{
- *   events: list<string>, url: string, enabled?: bool
- * }
  */
 final class WebhookCreateParams implements BaseModel
 {

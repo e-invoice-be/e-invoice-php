@@ -9,8 +9,6 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
- *
- * @phpstan-type unit_of_measure_code_alias = UnitOfMeasureCode::*
  */
 final class UnitOfMeasureCode implements ConverterSource
 {

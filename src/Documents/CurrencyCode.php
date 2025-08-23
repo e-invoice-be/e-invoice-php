@@ -7,9 +7,6 @@ namespace EInvoiceAPI\Documents;
 use EInvoiceAPI\Core\Concerns\SdkEnum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type currency_code_alias = CurrencyCode::*
- */
 final class CurrencyCode implements ConverterSource
 {
     use SdkEnum;
