@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Validate;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
 
 final class UblDocumentValidation implements BaseModel
@@ -24,10 +23,10 @@ final class UblDocumentValidation implements BaseModel
     public bool $isValid;
 
     /** @var list<Issue> $issues */
-    #[Api(type: new ListOf(Issue::class))]
+    #[Api(list: Issue::class)]
     public array $issues;
 
-    #[Api('ubl_document', optional: true)]
+    #[Api('ubl_document', nullable: true, optional: true)]
     public ?string $ublDocument;
 
     /**

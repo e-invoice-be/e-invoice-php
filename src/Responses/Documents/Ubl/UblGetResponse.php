@@ -18,28 +18,28 @@ final class UblGetResponse implements BaseModel
     #[Api('file_name')]
     public string $fileName;
 
-    #[Api('file_hash', optional: true)]
+    #[Api('file_hash', nullable: true, optional: true)]
     public ?string $fileHash;
 
     #[Api('file_size', optional: true)]
     public ?int $fileSize;
 
-    #[Api('receiver_peppol_id', optional: true)]
+    #[Api('receiver_peppol_id', nullable: true, optional: true)]
     public ?string $receiverPeppolID;
 
-    #[Api('receiver_peppol_scheme', optional: true)]
+    #[Api('receiver_peppol_scheme', nullable: true, optional: true)]
     public ?string $receiverPeppolScheme;
 
-    #[Api('sender_peppol_id', optional: true)]
+    #[Api('sender_peppol_id', nullable: true, optional: true)]
     public ?string $senderPeppolID;
 
-    #[Api('sender_peppol_scheme', optional: true)]
+    #[Api('sender_peppol_scheme', nullable: true, optional: true)]
     public ?string $senderPeppolScheme;
 
-    #[Api('signed_url', optional: true)]
+    #[Api('signed_url', nullable: true, optional: true)]
     public ?string $signedURL;
 
-    #[Api('validated_at', optional: true)]
+    #[Api('validated_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $validatedAt;
 
     /**

@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant\Entity;
 
@@ -35,11 +34,7 @@ final class Participant implements BaseModel
      *
      * @var list<DocumentType>|null $documentTypes
      */
-    #[Api(
-        'document_types',
-        type: new ListOf(DocumentType::class),
-        optional: true
-    )]
+    #[Api('document_types', list: DocumentType::class, optional: true)]
     public ?array $documentTypes;
 
     /**
@@ -47,7 +42,7 @@ final class Participant implements BaseModel
      *
      * @var list<Entity>|null $entities
      */
-    #[Api(type: new ListOf(Entity::class), optional: true)]
+    #[Api(list: Entity::class, optional: true)]
     public ?array $entities;
 
     /**
@@ -75,8 +70,8 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentType>|null $documentTypes
-     * @param list<Entity>|null $entities
+     * @param list<DocumentType> $documentTypes
+     * @param list<Entity> $entities
      */
     public static function with(
         string $peppolID,

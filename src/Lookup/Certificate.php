@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Lookup;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\MapOf;
 
 /**
  * Certificate information for a Peppol endpoint.
@@ -27,13 +26,13 @@ final class Certificate implements BaseModel
      *
      * @var array<string, mixed>|null $details
      */
-    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
+    #[Api(map: 'mixed', nullable: true, optional: true)]
     public ?array $details;
 
     /**
      * Error message if certificate validation failed.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $error;
 
     /**

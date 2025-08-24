@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\DNSInfo\DNSRecord;
 
 /**
@@ -22,7 +21,7 @@ final class DNSInfo implements BaseModel
      *
      * @var list<DNSRecord> $dnsRecords
      */
-    #[Api(type: new ListOf(DNSRecord::class))]
+    #[Api(list: DNSRecord::class)]
     public array $dnsRecords;
 
     /**
@@ -40,7 +39,7 @@ final class DNSInfo implements BaseModel
     /**
      * Error message if the DNS lookup failed.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $error;
 
     /**

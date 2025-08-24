@@ -17,19 +17,19 @@ final class DocumentSendParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $email;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $receiverPeppolID;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $receiverPeppolScheme;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $senderPeppolID;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $senderPeppolScheme;
 
     public function __construct()

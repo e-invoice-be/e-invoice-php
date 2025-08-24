@@ -8,7 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Update a webhook by ID.
@@ -18,14 +17,14 @@ final class WebhookUpdateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?bool $enabled;
 
     /** @var list<string>|null $events */
-    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
+    #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $events;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $url;
 
     public function __construct()

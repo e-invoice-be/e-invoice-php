@@ -8,7 +8,6 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Create a new webhook.
@@ -19,7 +18,7 @@ final class WebhookCreateParams implements BaseModel
     use SdkParams;
 
     /** @var list<string> $events */
-    #[Api(type: new ListOf('string'))]
+    #[Api(list: 'string')]
     public array $events;
 
     #[Api]

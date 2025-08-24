@@ -15,7 +15,7 @@ final class DocumentAttachmentCreate implements BaseModel
     #[Api('file_name')]
     public string $fileName;
 
-    #[Api('file_data', optional: true)]
+    #[Api('file_data', nullable: true, optional: true)]
     public ?string $fileData;
 
     #[Api('file_size', optional: true)]

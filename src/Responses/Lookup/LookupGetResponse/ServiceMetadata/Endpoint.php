@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
@@ -23,7 +22,7 @@ final class Endpoint implements BaseModel
      *
      * @var list<DocumentType> $documentTypes
      */
-    #[Api(type: new ListOf(DocumentType::class))]
+    #[Api(list: DocumentType::class)]
     public array $documentTypes;
 
     /**
@@ -41,7 +40,7 @@ final class Endpoint implements BaseModel
     /**
      * Error message if endpoint lookup failed.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $error;
 
     /**
@@ -49,7 +48,7 @@ final class Endpoint implements BaseModel
      *
      * @var list<Process>|null $processes
      */
-    #[Api(type: new ListOf(Process::class), nullable: true, optional: true)]
+    #[Api(list: Process::class, nullable: true, optional: true)]
     public ?array $processes;
 
     /**

@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Validate;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
 
 /**
@@ -45,7 +44,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     public bool $isValid;
 
     /** @var list<string>|null $supportedDocumentTypes */
-    #[Api('supported_document_types', type: new ListOf('string'), optional: true)]
+    #[Api('supported_document_types', list: 'string', optional: true)]
     public ?array $supportedDocumentTypes;
 
     /**
@@ -79,7 +78,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $supportedDocumentTypes
+     * @param list<string> $supportedDocumentTypes
      */
     public static function with(
         ?BusinessCard $businessCard,

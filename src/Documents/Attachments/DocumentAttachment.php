@@ -24,7 +24,7 @@ final class DocumentAttachment implements BaseModel
     #[Api('file_type', optional: true)]
     public ?string $fileType;
 
-    #[Api('file_url', optional: true)]
+    #[Api('file_url', nullable: true, optional: true)]
     public ?string $fileURL;
 
     /**

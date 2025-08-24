@@ -12,16 +12,16 @@ final class PaymentDetail implements BaseModel
 {
     use SdkModel;
 
-    #[Api('bank_account_number', optional: true)]
+    #[Api('bank_account_number', nullable: true, optional: true)]
     public ?string $bankAccountNumber;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $iban;
 
-    #[Api('payment_reference', optional: true)]
+    #[Api('payment_reference', nullable: true, optional: true)]
     public ?string $paymentReference;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $swift;
 
     public function __construct()

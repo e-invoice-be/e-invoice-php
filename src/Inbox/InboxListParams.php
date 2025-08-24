@@ -21,13 +21,13 @@ final class InboxListParams implements BaseModel
     /**
      * Filter by issue date (from).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?\DateTimeInterface $dateFrom;
 
     /**
      * Filter by issue date (to).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?\DateTimeInterface $dateTo;
 
     /**
@@ -45,13 +45,13 @@ final class InboxListParams implements BaseModel
     /**
      * Search in invoice number, seller/buyer names.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $search;
 
     /**
      * Filter by sender ID.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $sender;
 
     /**
@@ -59,7 +59,7 @@ final class InboxListParams implements BaseModel
      *
      * @var DocumentState::*|null $state
      */
-    #[Api(enum: DocumentState::class, optional: true)]
+    #[Api(enum: DocumentState::class, nullable: true, optional: true)]
     public ?string $state;
 
     /**
@@ -67,7 +67,7 @@ final class InboxListParams implements BaseModel
      *
      * @var DocumentType::*|null $type
      */
-    #[Api(enum: DocumentType::class, optional: true)]
+    #[Api(enum: DocumentType::class, nullable: true, optional: true)]
     public ?string $type;
 
     public function __construct()

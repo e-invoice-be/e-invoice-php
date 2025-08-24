@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\BusinessCard\Entity;
 
 /**
@@ -22,7 +21,7 @@ final class BusinessCard implements BaseModel
      *
      * @var list<Entity> $entities
      */
-    #[Api(type: new ListOf(Entity::class))]
+    #[Api(list: Entity::class)]
     public array $entities;
 
     /**
@@ -40,7 +39,7 @@ final class BusinessCard implements BaseModel
     /**
      * Error message if business card lookup failed.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $error;
 
     /**

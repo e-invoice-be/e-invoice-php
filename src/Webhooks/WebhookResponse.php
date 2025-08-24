@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Webhooks;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Response model for webhook API endpoints.
@@ -20,7 +19,7 @@ final class WebhookResponse implements BaseModel
     public string $id;
 
     /** @var list<string> $events */
-    #[Api(type: new ListOf('string'))]
+    #[Api(list: 'string')]
     public array $events;
 
     #[Api]
@@ -68,7 +67,7 @@ final class WebhookResponse implements BaseModel
         array $events,
         string $secret,
         string $url,
-        ?bool $enabled = null,
+        ?bool $enabled = null
     ): self {
         $obj = new self;
 
