@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse\BusinessCard;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Business entity information in the Peppol network.
@@ -21,25 +20,25 @@ final class Entity implements BaseModel
      *
      * @var list<string>|null $additionalInformation
      */
-    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
+    #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $additionalInformation;
 
     /**
      * ISO 3166-1 alpha-2 country code of the business entity.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $countryCode;
 
     /**
      * Name of the business entity.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
      * ISO 8601 date of when the entity was registered in Peppol.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $registrationDate;
 
     public function __construct()

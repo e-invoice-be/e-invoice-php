@@ -23,16 +23,16 @@ final class Issue implements BaseModel
     #[Api(enum: Type::class)]
     public string $type;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $flag;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $location;
 
-    #[Api('rule_id', optional: true)]
+    #[Api('rule_id', nullable: true, optional: true)]
     public ?string $ruleID;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $test;
 
     /**

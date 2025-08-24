@@ -15,13 +15,13 @@ final class BusinessCard implements BaseModel
 {
     use SdkModel;
 
-    #[Api('country_code', optional: true)]
+    #[Api('country_code', nullable: true, optional: true)]
     public ?string $countryCode;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
-    #[Api('registration_date', optional: true)]
+    #[Api('registration_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $registrationDate;
 
     public function __construct()

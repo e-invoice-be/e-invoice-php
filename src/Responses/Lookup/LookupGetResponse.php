@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Lookup\Certificate;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\BusinessCard;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\DNSInfo;
@@ -41,7 +40,7 @@ final class LookupGetResponse implements BaseModel
      *
      * @var list<Certificate> $certificates
      */
-    #[Api(type: new ListOf(Certificate::class))]
+    #[Api(list: Certificate::class)]
     public array $certificates;
 
     /**
@@ -55,7 +54,7 @@ final class LookupGetResponse implements BaseModel
      *
      * @var list<string> $errors
      */
-    #[Api(type: new ListOf('string'))]
+    #[Api(list: 'string')]
     public array $errors;
 
     /**

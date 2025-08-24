@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoin
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Endpoint;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
@@ -23,7 +22,7 @@ final class Process implements BaseModel
      *
      * @var list<Endpoint> $endpoints
      */
-    #[Api(type: new ListOf(Endpoint::class))]
+    #[Api(list: Endpoint::class)]
     public array $endpoints;
 
     /**

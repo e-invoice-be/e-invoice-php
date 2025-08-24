@@ -13,26 +13,26 @@ final class Item implements BaseModel
 {
     use SdkModel;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public float|string|null $amount;
 
     /** @var null|null $date */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public null $date;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
-    #[Api('product_code', optional: true)]
+    #[Api('product_code', nullable: true, optional: true)]
     public ?string $productCode;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public float|string|null $quantity;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public float|string|null $tax;
 
-    #[Api('tax_rate', optional: true)]
+    #[Api('tax_rate', nullable: true, optional: true)]
     public ?string $taxRate;
 
     /**
@@ -40,10 +40,10 @@ final class Item implements BaseModel
      *
      * @var UnitOfMeasureCode::*|null $unit
      */
-    #[Api(enum: UnitOfMeasureCode::class, optional: true)]
+    #[Api(enum: UnitOfMeasureCode::class, nullable: true, optional: true)]
     public ?string $unit;
 
-    #[Api('unit_price', optional: true)]
+    #[Api('unit_price', nullable: true, optional: true)]
     public float|string|null $unitPrice;
 
     public function __construct()

@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifier;
 
 /**
@@ -20,19 +19,19 @@ final class Entity implements BaseModel
     /**
      * Additional information.
      */
-    #[Api('additional_info', optional: true)]
+    #[Api('additional_info', nullable: true, optional: true)]
     public ?string $additionalInfo;
 
     /**
      * Country code.
      */
-    #[Api('country_code', optional: true)]
+    #[Api('country_code', nullable: true, optional: true)]
     public ?string $countryCode;
 
     /**
      * Geographic information.
      */
-    #[Api('geo_info', optional: true)]
+    #[Api('geo_info', nullable: true, optional: true)]
     public ?string $geoInfo;
 
     /**
@@ -40,25 +39,25 @@ final class Entity implements BaseModel
      *
      * @var list<Identifier>|null $identifiers
      */
-    #[Api(type: new ListOf(Identifier::class), optional: true)]
+    #[Api(list: Identifier::class, optional: true)]
     public ?array $identifiers;
 
     /**
      * Business entity name.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
      * Registration date.
      */
-    #[Api('registration_date', optional: true)]
+    #[Api('registration_date', nullable: true, optional: true)]
     public ?string $registrationDate;
 
     /**
      * Website URL.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $website;
 
     public function __construct()
@@ -72,7 +71,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Identifier>|null $identifiers
+     * @param list<Identifier> $identifiers
      */
     public static function with(
         ?string $additionalInfo = null,

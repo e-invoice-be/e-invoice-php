@@ -26,7 +26,7 @@ final class LookupRetrieveParticipantsParams implements BaseModel
     /**
      * Country code of the company to lookup. If not provided, the search will be global.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $countryCode;
 
     /**

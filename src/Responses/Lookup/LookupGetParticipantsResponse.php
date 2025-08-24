@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Responses\Lookup;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse\Participant;
 
 /**
@@ -46,7 +45,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * @var list<Participant>|null $participants
      */
-    #[Api(type: new ListOf(Participant::class), optional: true)]
+    #[Api(list: Participant::class, optional: true)]
     public ?array $participants;
 
     /**
@@ -80,7 +79,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Participant>|null $participants
+     * @param list<Participant> $participants
      */
     public static function with(
         string $queryTerms,

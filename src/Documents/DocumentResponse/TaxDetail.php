@@ -12,10 +12,10 @@ final class TaxDetail implements BaseModel
 {
     use SdkModel;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $amount;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $rate;
 
     public function __construct()
