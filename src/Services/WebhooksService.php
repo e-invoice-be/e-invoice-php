@@ -8,7 +8,6 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\WebhooksContract;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookCreateParams;
@@ -34,12 +33,9 @@ final class WebhooksService implements WebhooksContract
         $enabled = omit,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
-        $args = Util::array_filter_omit(
-            ['events' => $events, 'url' => $url, 'enabled' => $enabled]
-        );
         [$parsed, $options] = WebhookCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            ['events' => $events, 'url' => $url, 'enabled' => $enabled],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -83,12 +79,9 @@ final class WebhooksService implements WebhooksContract
         $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        $args = Util::array_filter_omit(
-            ['enabled' => $enabled, 'events' => $events, 'url' => $url]
-        );
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            ['enabled' => $enabled, 'events' => $events, 'url' => $url],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'put',

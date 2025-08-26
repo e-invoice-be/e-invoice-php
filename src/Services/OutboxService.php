@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\OutboxContract;
 use EInvoiceAPI\Core\Conversion;
-use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
@@ -32,9 +31,8 @@ final class OutboxService implements OutboxContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        $args = Util::array_filter_omit(['page' => $page, 'pageSize' => $pageSize]);
         [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
-            $args,
+            ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -71,7 +69,7 @@ final class OutboxService implements OutboxContract
         $type = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
             [
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
@@ -82,10 +80,7 @@ final class OutboxService implements OutboxContract
                 'state' => $state,
                 'type' => $type,
             ],
-        );
-        [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

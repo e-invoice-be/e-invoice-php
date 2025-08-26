@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\DocumentsContract;
 use EInvoiceAPI\Core\Conversion;
-use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams;
@@ -127,7 +126,7 @@ final class DocumentsService implements DocumentsContract
         $vendorTaxID = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = DocumentCreateParams::parseRequest(
             [
                 'amountDue' => $amountDue,
                 'attachments' => $attachments,
@@ -171,10 +170,7 @@ final class DocumentsService implements DocumentsContract
                 'vendorName' => $vendorName,
                 'vendorTaxID' => $vendorTaxID,
             ],
-        );
-        [$parsed, $options] = DocumentCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -239,7 +235,7 @@ final class DocumentsService implements DocumentsContract
         $senderPeppolScheme = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = DocumentSendParams::parseRequest(
             [
                 'email' => $email,
                 'receiverPeppolID' => $receiverPeppolID,
@@ -247,10 +243,7 @@ final class DocumentsService implements DocumentsContract
                 'senderPeppolID' => $senderPeppolID,
                 'senderPeppolScheme' => $senderPeppolScheme,
             ],
-        );
-        [$parsed, $options] = DocumentSendParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',

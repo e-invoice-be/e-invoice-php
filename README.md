@@ -60,7 +60,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 ```php
 <?php
 
-use EInvoiceAPI\Errors\APIConnectionError;
+use EInvoiceAPI\Core\Errors\APIConnectionError;
 
 try {
   $documentResponse = $client->documents->create();

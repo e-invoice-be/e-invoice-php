@@ -29,9 +29,8 @@ final class AttachmentsService implements AttachmentsContract
         $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
-        $args = ['documentID' => $documentID];
         [$parsed, $options] = AttachmentRetrieveParams::parseRequest(
-            $args,
+            ['documentID' => $documentID],
             $requestOptions
         );
         $documentID = $parsed['documentID'];
@@ -78,9 +77,8 @@ final class AttachmentsService implements AttachmentsContract
         $documentID,
         ?RequestOptions $requestOptions = null
     ): AttachmentDeleteResponse {
-        $args = ['documentID' => $documentID];
         [$parsed, $options] = AttachmentDeleteParams::parseRequest(
-            $args,
+            ['documentID' => $documentID],
             $requestOptions
         );
         $documentID = $parsed['documentID'];
@@ -105,9 +103,8 @@ final class AttachmentsService implements AttachmentsContract
         $file,
         ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
-        $args = ['file' => $file];
         [$parsed, $options] = AttachmentAddParams::parseRequest(
-            $args,
+            ['file' => $file],
             $requestOptions
         );
         $resp = $this->client->request(
