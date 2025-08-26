@@ -9,6 +9,8 @@ use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 
+use const EInvoiceAPI\Core\OMIT as omit;
+
 interface OutboxContract
 {
     /**
@@ -16,8 +18,8 @@ interface OutboxContract
      * @param int $pageSize Number of items per page
      */
     public function listDraftDocuments(
-        $page = null,
-        $pageSize = null,
+        $page = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
@@ -32,14 +34,14 @@ interface OutboxContract
      * @param DocumentType::* $type Filter by document type
      */
     public function listReceivedDocuments(
-        $dateFrom = null,
-        $dateTo = null,
-        $page = null,
-        $pageSize = null,
-        $search = null,
-        $sender = null,
-        $state = null,
-        $type = null,
+        $dateFrom = omit,
+        $dateTo = omit,
+        $page = omit,
+        $pageSize = omit,
+        $search = omit,
+        $sender = omit,
+        $state = omit,
+        $type = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }

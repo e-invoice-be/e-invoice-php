@@ -8,6 +8,8 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 
+use const EInvoiceAPI\Core\OMIT as omit;
+
 interface WebhooksContract
 {
     /**
@@ -18,7 +20,7 @@ interface WebhooksContract
     public function create(
         $events,
         $url,
-        $enabled = null,
+        $enabled = omit,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
@@ -34,9 +36,9 @@ interface WebhooksContract
      */
     public function update(
         string $webhookID,
-        $enabled = null,
-        $events = null,
-        $url = null,
+        $enabled = omit,
+        $events = omit,
+        $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 
