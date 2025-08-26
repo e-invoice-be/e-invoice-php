@@ -15,6 +15,8 @@ use EInvoiceAPI\Webhooks\WebhookCreateParams;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
+use const EInvoiceAPI\Core\OMIT as omit;
+
 final class WebhooksService implements WebhooksContract
 {
     public function __construct(private Client $client) {}
@@ -29,11 +31,12 @@ final class WebhooksService implements WebhooksContract
     public function create(
         $events,
         $url,
-        $enabled = null,
+        $enabled = omit,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
-        $args = ['events' => $events, 'url' => $url, 'enabled' => $enabled];
-        $args = Util::array_filter_null($args, ['enabled']);
+        $args = Util::array_filter_omit(
+            ['events' => $events, 'url' => $url, 'enabled' => $enabled]
+        );
         [$parsed, $options] = WebhookCreateParams::parseRequest(
             $args,
             $requestOptions
@@ -75,13 +78,14 @@ final class WebhooksService implements WebhooksContract
      */
     public function update(
         string $webhookID,
-        $enabled = null,
-        $events = null,
-        $url = null,
+        $enabled = omit,
+        $events = omit,
+        $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        $args = ['enabled' => $enabled, 'events' => $events, 'url' => $url];
-        $args = Util::array_filter_null($args, ['enabled', 'events', 'url']);
+        $args = Util::array_filter_omit(
+            ['enabled' => $enabled, 'events' => $events, 'url' => $url]
+        );
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
             $args,
             $requestOptions

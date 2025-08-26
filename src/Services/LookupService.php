@@ -14,6 +14,8 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 
+use const EInvoiceAPI\Core\OMIT as omit;
+
 final class LookupService implements LookupContract
 {
     public function __construct(private Client $client) {}
@@ -51,11 +53,12 @@ final class LookupService implements LookupContract
      */
     public function retrieveParticipants(
         $query,
-        $countryCode = null,
+        $countryCode = omit,
         ?RequestOptions $requestOptions = null
     ): LookupGetParticipantsResponse {
-        $args = ['query' => $query, 'countryCode' => $countryCode];
-        $args = Util::array_filter_null($args, ['countryCode']);
+        $args = Util::array_filter_omit(
+            ['query' => $query, 'countryCode' => $countryCode]
+        );
         [$parsed, $options] = LookupRetrieveParticipantsParams::parseRequest(
             $args,
             $requestOptions

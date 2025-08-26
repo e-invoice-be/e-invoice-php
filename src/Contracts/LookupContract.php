@@ -8,6 +8,8 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Responses\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Responses\Lookup\LookupGetResponse;
 
+use const EInvoiceAPI\Core\OMIT as omit;
+
 interface LookupContract
 {
     /**
@@ -24,7 +26,7 @@ interface LookupContract
      */
     public function retrieveParticipants(
         $query,
-        $countryCode = null,
+        $countryCode = omit,
         ?RequestOptions $requestOptions = null
     ): LookupGetParticipantsResponse;
 }

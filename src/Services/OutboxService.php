@@ -15,6 +15,8 @@ use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
 use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
+use const EInvoiceAPI\Core\OMIT as omit;
+
 final class OutboxService implements OutboxContract
 {
     public function __construct(private Client $client) {}
@@ -26,12 +28,11 @@ final class OutboxService implements OutboxContract
      * @param int $pageSize Number of items per page
      */
     public function listDraftDocuments(
-        $page = null,
-        $pageSize = null,
+        $page = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        $args = ['page' => $page, 'pageSize' => $pageSize];
-        $args = Util::array_filter_null($args, ['page', 'pageSize']);
+        $args = Util::array_filter_omit(['page' => $page, 'pageSize' => $pageSize]);
         [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
             $args,
             $requestOptions
@@ -60,37 +61,26 @@ final class OutboxService implements OutboxContract
      * @param DocumentType::* $type Filter by document type
      */
     public function listReceivedDocuments(
-        $dateFrom = null,
-        $dateTo = null,
-        $page = null,
-        $pageSize = null,
-        $search = null,
-        $sender = null,
-        $state = null,
-        $type = null,
+        $dateFrom = omit,
+        $dateTo = omit,
+        $page = omit,
+        $pageSize = omit,
+        $search = omit,
+        $sender = omit,
+        $state = omit,
+        $type = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        $args = [
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'page' => $page,
-            'pageSize' => $pageSize,
-            'search' => $search,
-            'sender' => $sender,
-            'state' => $state,
-            'type' => $type,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'dateFrom',
-                'dateTo',
-                'page',
-                'pageSize',
-                'search',
-                'sender',
-                'state',
-                'type',
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+                'page' => $page,
+                'pageSize' => $pageSize,
+                'search' => $search,
+                'sender' => $sender,
+                'state' => $state,
+                'type' => $type,
             ],
         );
         [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
