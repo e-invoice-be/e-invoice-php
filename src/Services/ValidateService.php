@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\ValidateContract;
 use EInvoiceAPI\Core\Conversion;
-use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
@@ -118,7 +117,7 @@ final class ValidateService implements ValidateContract
         $vendorTaxID = omit,
         ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = ValidateValidateJsonParams::parseRequest(
             [
                 'amountDue' => $amountDue,
                 'attachments' => $attachments,
@@ -162,10 +161,7 @@ final class ValidateService implements ValidateContract
                 'vendorName' => $vendorName,
                 'vendorTaxID' => $vendorTaxID,
             ],
-        );
-        [$parsed, $options] = ValidateValidateJsonParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -187,9 +183,8 @@ final class ValidateService implements ValidateContract
         $peppolID,
         ?RequestOptions $requestOptions = null
     ): ValidateValidatePeppolIDResponse {
-        $args = ['peppolID' => $peppolID];
         [$parsed, $options] = ValidateValidatePeppolIDParams::parseRequest(
-            $args,
+            ['peppolID' => $peppolID],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -215,9 +210,8 @@ final class ValidateService implements ValidateContract
         $file,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
-        $args = ['file' => $file];
         [$parsed, $options] = ValidateValidateUblParams::parseRequest(
-            $args,
+            ['file' => $file],
             $requestOptions
         );
         $resp = $this->client->request(

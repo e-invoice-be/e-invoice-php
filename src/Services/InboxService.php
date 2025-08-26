@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Contracts\InboxContract;
 use EInvoiceAPI\Core\Conversion;
-use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
@@ -45,7 +44,7 @@ final class InboxService implements InboxContract
         $type = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = InboxListParams::parseRequest(
             [
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
@@ -56,8 +55,8 @@ final class InboxService implements InboxContract
                 'state' => $state,
                 'type' => $type,
             ],
+            $requestOptions,
         );
-        [$parsed, $options] = InboxListParams::parseRequest($args, $requestOptions);
         $resp = $this->client->request(
             method: 'get',
             path: 'api/inbox/',
@@ -80,9 +79,8 @@ final class InboxService implements InboxContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        $args = Util::array_filter_omit(['page' => $page, 'pageSize' => $pageSize]);
         [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
-            $args,
+            ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -107,9 +105,8 @@ final class InboxService implements InboxContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        $args = Util::array_filter_omit(['page' => $page, 'pageSize' => $pageSize]);
         [$parsed, $options] = InboxListInvoicesParams::parseRequest(
-            $args,
+            ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(

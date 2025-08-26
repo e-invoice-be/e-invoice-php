@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core;
 
-use EInvoiceAPI\Errors\APIStatusError;
+use EInvoiceAPI\Core\Errors\APIStatusError;
 use EInvoiceAPI\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;

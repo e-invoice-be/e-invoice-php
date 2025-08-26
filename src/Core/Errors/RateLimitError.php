@@ -1,6 +1,6 @@
 <?php
 
-namespace EInvoiceAPI\Errors;
+namespace EInvoiceAPI\Core\Errors;
 
 class RateLimitError extends APIStatusError
 {
