@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Pagination\DocumentsNumberPage;
+use EInvoiceAPI\Core\DocumentsNumberPage;
 use EInvoiceAPI\Core\ServiceContracts\OutboxContract;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
@@ -25,12 +25,14 @@ final class OutboxService implements OutboxContract
      *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function listDraftDocuments(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): DocumentResponse {
+    ): DocumentsNumberPage {
         [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
             ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
@@ -58,6 +60,8 @@ final class OutboxService implements OutboxContract
      * @param string|null $sender Filter by sender ID
      * @param DocumentState::* $state Filter by document state
      * @param DocumentType::* $type Filter by document type
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function listReceivedDocuments(
         $dateFrom = omit,
@@ -69,7 +73,7 @@ final class OutboxService implements OutboxContract
         $state = omit,
         $type = omit,
         ?RequestOptions $requestOptions = null,
-    ): DocumentResponse {
+    ): DocumentsNumberPage {
         [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
             [
                 'dateFrom' => $dateFrom,
