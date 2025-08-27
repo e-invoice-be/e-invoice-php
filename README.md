@@ -74,10 +74,15 @@ use EInvoiceAPI\Client;
 
 $client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
-$pages = $client->inbox->list();
+$page = $client->inbox->list();
 
-foreach ($this->$pages->getItems() as $page) {
-  var_dump($page->id);
+// fetch items from the current page
+foreach ($page->getItems() as $item) {
+  var_dump($item->id);
+}
+// make additional network requests to fetch items from all pages, including and after the current page
+foreach ($page->pagingEachItem() as $item) {
+  var_dump($item->id);
 }
 ```
 
