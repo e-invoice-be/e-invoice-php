@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\ServiceContracts\Documents\UblContract;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
@@ -21,13 +20,12 @@ final class UblService implements UblContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblGetResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/ubl', $documentID],
             options: $requestOptions,
+            convert: UblGetResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(UblGetResponse::class, value: $resp);
     }
 }

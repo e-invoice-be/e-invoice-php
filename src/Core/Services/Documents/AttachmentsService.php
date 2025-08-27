@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Core\ServiceContracts\Documents\AttachmentsContract;
 use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
@@ -35,14 +34,14 @@ final class AttachmentsService implements AttachmentsContract
         );
         $documentID = $parsed['documentID'];
         unset($parsed['documentID']);
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/attachments/%2$s', $documentID, $attachmentID],
             options: $options,
+            convert: DocumentAttachment::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentAttachment::class, value: $resp);
     }
 
     /**
@@ -54,16 +53,12 @@ final class AttachmentsService implements AttachmentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): array {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/attachments', $documentID],
             options: $requestOptions,
-        );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(
-            new ListOf(DocumentAttachment::class),
-            value: $resp
+            convert: new ListOf(DocumentAttachment::class),
         );
     }
 
@@ -83,14 +78,14 @@ final class AttachmentsService implements AttachmentsContract
         );
         $documentID = $parsed['documentID'];
         unset($parsed['documentID']);
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'delete',
             path: ['api/documents/%1$s/attachments/%2$s', $documentID, $attachmentID],
             options: $options,
+            convert: AttachmentDeleteResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(AttachmentDeleteResponse::class, value: $resp);
     }
 
     /**
@@ -107,15 +102,15 @@ final class AttachmentsService implements AttachmentsContract
             ['file' => $file],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/attachments', $documentID],
             headers: ['Content-Type' => 'multipart/form-data'],
             body: (object) $parsed,
             options: $options,
+            convert: DocumentAttachment::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentAttachment::class, value: $resp);
     }
 }

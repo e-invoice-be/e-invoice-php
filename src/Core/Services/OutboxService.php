@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Pagination\DocumentsNumberPage;
 use EInvoiceAPI\Core\ServiceContracts\OutboxContract;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
@@ -35,15 +35,16 @@ final class OutboxService implements OutboxContract
             ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/outbox/drafts',
             query: $parsed,
             options: $options,
+            convert: DocumentResponse::class,
+            page: DocumentsNumberPage::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
@@ -82,14 +83,15 @@ final class OutboxService implements OutboxContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/outbox/',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: DocumentResponse::class,
+            page: DocumentsNumberPage::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }

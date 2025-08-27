@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Pagination\DocumentsNumberPage;
 use EInvoiceAPI\Core\ServiceContracts\InboxContract;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
@@ -57,15 +57,16 @@ final class InboxService implements InboxContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/inbox/',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: DocumentResponse::class,
+            page: DocumentsNumberPage::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
@@ -83,15 +84,16 @@ final class InboxService implements InboxContract
             ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/inbox/credit-notes',
             query: $parsed,
             options: $options,
+            convert: DocumentResponse::class,
+            page: DocumentsNumberPage::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
@@ -109,14 +111,15 @@ final class InboxService implements InboxContract
             ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/inbox/invoices',
             query: $parsed,
             options: $options,
+            convert: DocumentResponse::class,
+            page: DocumentsNumberPage::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }
