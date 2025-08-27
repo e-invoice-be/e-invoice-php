@@ -76,6 +76,8 @@ $client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
 $page = $client->inbox->list();
 
+var_dump($page);
+
 // fetch items from the current page
 foreach ($page->getItems() as $item) {
   var_dump($item->id);
