@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Concerns\SdkPage;
 use EInvoiceAPI\Core\Contracts\BasePage;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
+use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\RequestOptions;
 
 /**
@@ -61,7 +62,10 @@ final class DocumentsNumberPage implements BasePage
         self::__unserialize($data);
 
         if ($this->offsetExists('items')) {
-            $acc = Conversion::coerce($convert, value: $this->offsetGet('items'));
+            $acc = Conversion::coerce(
+                new ListOf($convert),
+                value: $this->offsetGet('items')
+            );
             $this->offsetSet('items', $acc);
         }
     }
