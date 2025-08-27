@@ -1,13 +1,13 @@
 <?php
 
-namespace EInvoiceAPI\Core\Errors;
+namespace EInvoiceAPI\Core\Exceptions;
 
 use Psr\Http\Message\RequestInterface;
 
-class APITimeoutError extends APIConnectionError
+class APITimeoutException extends APIConnectionException
 {
     /** @var string */
-    protected const DESC = 'EInvoiceAPI API Timeout Error';
+    protected const DESC = 'EInvoiceAPI API Timeout Exception';
 
     public function __construct(
         public RequestInterface $request,

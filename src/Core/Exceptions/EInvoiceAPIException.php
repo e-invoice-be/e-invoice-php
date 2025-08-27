@@ -1,8 +1,8 @@
 <?php
 
-namespace EInvoiceAPI\Core\Errors;
+namespace EInvoiceAPI\Core\Exceptions;
 
-class EInvoiceAPIError extends \Exception
+class EInvoiceAPIException extends \Exception
 {
     /** @var string */
     protected const DESC = 'EInvoiceAPI Error';

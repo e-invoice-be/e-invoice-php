@@ -7,7 +7,7 @@ namespace EInvoiceAPI\Core\Concerns;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
-use EInvoiceAPI\Core\Errors\APIStatusError;
+use EInvoiceAPI\Core\Exceptions\APIStatusException;
 use EInvoiceAPI\RequestOptions;
 
 /**
@@ -52,7 +52,7 @@ trait SdkPage
      *
      * @return static of static<Item>
      *
-     * @throws APIStatusError
+     * @throws APIStatusException
      */
     public function getNextPage(): static
     {

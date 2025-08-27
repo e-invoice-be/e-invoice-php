@@ -1,11 +1,11 @@
 <?php
 
-namespace EInvoiceAPI\Core\Errors;
+namespace EInvoiceAPI\Core\Exceptions;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class APIError extends EInvoiceAPIError
+class APIException extends EInvoiceAPIException
 {
     public ?int $status = null;
 

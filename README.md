@@ -83,16 +83,16 @@ foreach ($page->pagingEachItem() as $item) {
 
 ### Handling errors
 
-When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `EInvoiceAPI\Errors\APIError` will be thrown:
+When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `EInvoiceAPI\Core\Exceptions\APIException` will be thrown:
 
 ```php
 <?php
 
-use EInvoiceAPI\Core\Errors\APIConnectionError;
+use EInvoiceAPI\Core\Exceptions\APIConnectionException;
 
 try {
   $documentResponse = $client->documents->create();
-} catch (APIConnectionError $e) {
+} catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
 } catch (RateLimitError $_) {
@@ -105,19 +105,19 @@ try {
 
 Error codes are as follows:
 
-| Cause            | Error Type                 |
-| ---------------- | -------------------------- |
-| HTTP 400         | `BadRequestError`          |
-| HTTP 401         | `AuthenticationError`      |
-| HTTP 403         | `PermissionDeniedError`    |
-| HTTP 404         | `NotFoundError`            |
-| HTTP 409         | `ConflictError`            |
-| HTTP 422         | `UnprocessableEntityError` |
-| HTTP 429         | `RateLimitError`           |
-| HTTP >= 500      | `InternalServerError`      |
-| Other HTTP error | `APIStatusError`           |
-| Timeout          | `APITimeoutError`          |
-| Network error    | `APIConnectionError`       |
+| Cause            | Error Type                     |
+| ---------------- | ------------------------------ |
+| HTTP 400         | `BadRequestException`          |
+| HTTP 401         | `AuthenticationException`      |
+| HTTP 403         | `PermissionDeniedException`    |
+| HTTP 404         | `NotFoundException`            |
+| HTTP 409         | `ConflictException`            |
+| HTTP 422         | `UnprocessableEntityException` |
+| HTTP 429         | `RateLimitException`           |
+| HTTP >= 500      | `InternalServerException`      |
+| Other HTTP error | `APIStatusException`           |
+| Timeout          | `APITimeoutException`          |
+| Network error    | `APIConnectionException`       |
 
 ### Retries
 

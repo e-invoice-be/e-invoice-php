@@ -8,7 +8,7 @@ use EInvoiceAPI\Core\Contracts\BasePage;
 use EInvoiceAPI\Core\Contracts\BaseStream;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
-use EInvoiceAPI\Core\Errors\APIStatusError;
+use EInvoiceAPI\Core\Exceptions\APIStatusException;
 use EInvoiceAPI\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -203,7 +203,7 @@ class BaseClient
         }
 
         if ($code >= 400 && $code < 500) {
-            throw APIStatusError::from(request: $req, response: $rsp);
+            throw APIStatusException::from(request: $req, response: $rsp);
         }
 
         if ($code >= 500 && $retryCount < $opts->maxRetries) {
