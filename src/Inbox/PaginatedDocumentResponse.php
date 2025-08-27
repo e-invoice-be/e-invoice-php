@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Inbox;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Documents\DocumentResponse;
 
 /**
- * @phpstan-type paginated_document_response_alias = array{
+ * @phpstan-type paginated_document_response = array{
  *   items: list<DocumentResponse>,
  *   page: int,
  *   pageSize: int,
@@ -21,10 +20,11 @@ use EInvoiceAPI\Documents\DocumentResponse;
  */
 final class PaginatedDocumentResponse implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<paginated_document_response> */
+    use SdkModel;
 
     /** @var list<DocumentResponse> $items */
-    #[Api(type: new ListOf(DocumentResponse::class))]
+    #[Api(list: DocumentResponse::class)]
     public array $items;
 
     #[Api]

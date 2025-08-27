@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\Attachments;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Add a new attachment to an invoice or credit note.
  *
- * @phpstan-type add_params = array{file: string}
+ * @phpstan-type attachment_add_params = array{file: string}
  */
 final class AttachmentAddParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<attachment_add_params> */
+    use SdkModel;
+    use SdkParams;
 
     #[Api]
     public string $file;

@@ -5,26 +5,30 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Webhooks;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Response model for webhook API endpoints.
  *
- * @phpstan-type webhook_response_alias = array{
- *   id: string, events: list<string>, secret: string, url: string, enabled?: bool
+ * @phpstan-type webhook_response = array{
+ *   id: string,
+ *   events: list<string>,
+ *   secret: string,
+ *   url: string,
+ *   enabled?: bool|null,
  * }
  */
 final class WebhookResponse implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<webhook_response> */
+    use SdkModel;
 
     #[Api]
     public string $id;
 
     /** @var list<string> $events */
-    #[Api(type: new ListOf('string'))]
+    #[Api(list: 'string')]
     public array $events;
 
     #[Api]
@@ -72,7 +76,7 @@ final class WebhookResponse implements BaseModel
         array $events,
         string $secret,
         string $url,
-        ?bool $enabled = null,
+        ?bool $enabled = null
     ): self {
         $obj = new self;
 

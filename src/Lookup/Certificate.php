@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\MapOf;
 
 /**
  * Certificate information for a Peppol endpoint.
@@ -18,7 +17,8 @@ use EInvoiceAPI\Core\Conversion\MapOf;
  */
 final class Certificate implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<certificate_alias> */
+    use SdkModel;
 
     /**
      * Status of the certificate validation: 'success', 'error', or 'pending'.
@@ -29,15 +29,15 @@ final class Certificate implements BaseModel
     /**
      * Details about the certificate including subject, issuer, validity dates, etc.
      *
-     * @var null|array<string, mixed> $details
+     * @var array<string, mixed>|null $details
      */
-    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
+    #[Api(map: 'mixed', nullable: true, optional: true)]
     public ?array $details;
 
     /**
      * Error message if certificate validation failed.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $error;
 
     /**
@@ -65,7 +65,7 @@ final class Certificate implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|array<string, mixed> $details
+     * @param array<string, mixed>|null $details
      */
     public static function with(
         string $status,
@@ -96,7 +96,7 @@ final class Certificate implements BaseModel
     /**
      * Details about the certificate including subject, issuer, validity dates, etc.
      *
-     * @param null|array<string, mixed> $details
+     * @param array<string, mixed>|null $details
      */
     public function withDetails(?array $details): self
     {

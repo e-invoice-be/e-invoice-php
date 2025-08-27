@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Validate\UblDocumentValidation;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
 
@@ -22,7 +22,8 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
  */
 final class Issue implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<issue_alias> */
+    use SdkModel;
 
     #[Api]
     public string $message;
@@ -34,16 +35,16 @@ final class Issue implements BaseModel
     #[Api(enum: Type::class)]
     public string $type;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $flag;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $location;
 
-    #[Api('rule_id', optional: true)]
+    #[Api('rule_id', nullable: true, optional: true)]
     public ?string $ruleID;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $test;
 
     /**

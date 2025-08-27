@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Concerns\SdkEnum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
- *
- * @phpstan-type unit_of_measure_code_alias = UnitOfMeasureCode::*
  */
 final class UnitOfMeasureCode implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const UNIT_OF_MEASURE_CODE_10 = '10';
 

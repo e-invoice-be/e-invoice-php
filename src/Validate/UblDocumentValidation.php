@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
 
 /**
- * @phpstan-type ubl_document_validation_alias = array{
+ * @phpstan-type ubl_document_validation = array{
  *   id: string,
  *   fileName: string|null,
  *   isValid: bool,
@@ -21,7 +20,8 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
  */
 final class UblDocumentValidation implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<ubl_document_validation> */
+    use SdkModel;
 
     #[Api]
     public string $id;
@@ -33,10 +33,10 @@ final class UblDocumentValidation implements BaseModel
     public bool $isValid;
 
     /** @var list<Issue> $issues */
-    #[Api(type: new ListOf(Issue::class))]
+    #[Api(list: Issue::class)]
     public array $issues;
 
-    #[Api('ubl_document', optional: true)]
+    #[Api('ubl_document', nullable: true, optional: true)]
     public ?string $ublDocument;
 
     /**

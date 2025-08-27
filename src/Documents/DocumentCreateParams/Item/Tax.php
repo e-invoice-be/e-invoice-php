@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\DocumentCreateParams\Item;
 
-use EInvoiceAPI\Core\Concerns\Union;
+use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type tax_alias = float|string|null
- */
 final class Tax implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
-     * @return array<string,
-     * Converter|ConverterSource|string,>|list<Converter|ConverterSource|string>
+     * @return list<string|Converter|ConverterSource>|array<string,
+     * string|Converter|ConverterSource,>
      */
     public static function variants(): array
     {

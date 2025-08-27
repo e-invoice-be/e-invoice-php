@@ -5,31 +5,31 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Webhooks;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 
 /**
  * Update a webhook by ID.
  *
- * @phpstan-type update_params = array{
+ * @phpstan-type webhook_update_params = array{
  *   enabled?: bool|null, events?: list<string>|null, url?: string|null
  * }
  */
 final class WebhookUpdateParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<webhook_update_params> */
+    use SdkModel;
+    use SdkParams;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?bool $enabled;
 
-    /** @var null|list<string> $events */
-    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
+    /** @var list<string>|null $events */
+    #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $events;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $url;
 
     public function __construct()
@@ -43,7 +43,7 @@ final class WebhookUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $events
+     * @param list<string>|null $events
      */
     public static function with(
         ?bool $enabled = null,
@@ -68,7 +68,7 @@ final class WebhookUpdateParams implements BaseModel
     }
 
     /**
-     * @param null|list<string> $events
+     * @param list<string>|null $events
      */
     public function withEvents(?array $events): self
     {

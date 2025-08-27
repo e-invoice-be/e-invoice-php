@@ -1,12 +1,5 @@
 # e-invoice.be PHP API library
 
-> [!NOTE]
-> The E Invoice PHP API Library is currently in **beta** and we're excited for you to experiment with it!
->
-> This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
->
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/e-invoice-be/e-invoice-php/issues/new).
-
 This library provides convenient access to the e-invoice REST API from any PHP 8.1.0+ application.
 
 To get an API key, [make a free account](https://app.e-invoice.be/register?ref=php) and register your company.
@@ -39,59 +32,92 @@ To use this package, install via Composer by adding the following to your applic
 
 ## Usage
 
+This library uses named parameters to specify optional arguments.
+Parameters with a default value must be set by name.
+
 ```php
 <?php
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Documents\DocumentCreateParams;
 
 $client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
-$params = (new DocumentCreateParams);
-$documentResponse = $client->documents->create($params);
+$documentResponse = $client->documents->create();
 
 var_dump($documentResponse->id);
 ```
 
-### Handling errors
+### Value Objects
 
-When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `EInvoiceAPI\Errors\APIError` will be thrown:
+It is recommended to use the static `with` constructor `DocumentAttachmentCreate::with(fileName: "file_name", ...)`
+and named parameters to initialize value objects.
+
+However, builders are also provided `(new DocumentAttachmentCreate)->withFileName("file_name")`.
+
+### Pagination
+
+List methods in the E Invoice API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
 
 ```php
 <?php
 
-use EInvoiceAPI\Documents\DocumentCreateParams;
-use EInvoiceAPI\Errors\APIConnectionError;
+use EInvoiceAPI\Client;
 
-$params = (new DocumentCreateParams);
+$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
+
+$page = $client->inbox->list();
+
+var_dump($page);
+
+// fetch items from the current page
+foreach ($page->getItems() as $item) {
+  var_dump($item->id);
+}
+// make additional network requests to fetch items from all pages, including and after the current page
+foreach ($page->pagingEachItem() as $item) {
+  var_dump($item->id);
+}
+```
+
+### Handling errors
+
+When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `EInvoiceAPI\Core\Exceptions\APIException` will be thrown:
+
+```php
+<?php
+
+use EInvoiceAPI\Core\Exceptions\APIConnectionException;
+
 try {
-  $Documents = $client->documents->create($params);
-} catch (APIConnectionError $e) {
-    echo "The server could not be reached", PHP_EOL;
-    var_dump($e->getPrevious());
+  $documentResponse = $client->documents->create();
+} catch (APIConnectionException $e) {
+  echo "The server could not be reached", PHP_EOL;
+  var_dump($e->getPrevious());
 } catch (RateLimitError $_) {
-    echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
+  echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
-    echo "Another non-200-range status code was received", PHP_EOL;
-    var_dump($e->status);
+  echo "Another non-200-range status code was received", PHP_EOL;
+  echo $e->getMessage();
 }
 ```
 
 Error codes are as follows:
 
-| Cause            | Error Type                 |
-| ---------------- | -------------------------- |
-| HTTP 400         | `BadRequestError`          |
-| HTTP 401         | `AuthenticationError`      |
-| HTTP 403         | `PermissionDeniedError`    |
-| HTTP 404         | `NotFoundError`            |
-| HTTP 409         | `ConflictError`            |
-| HTTP 422         | `UnprocessableEntityError` |
-| HTTP 429         | `RateLimitError`           |
-| HTTP >= 500      | `InternalServerError`      |
-| Other HTTP error | `APIStatusError`           |
-| Timeout          | `APITimeoutError`          |
-| Network error    | `APIConnectionError`       |
+| Cause            | Error Type                     |
+| ---------------- | ------------------------------ |
+| HTTP 400         | `BadRequestException`          |
+| HTTP 401         | `AuthenticationException`      |
+| HTTP 403         | `PermissionDeniedException`    |
+| HTTP 404         | `NotFoundException`            |
+| HTTP 409         | `ConflictException`            |
+| HTTP 422         | `UnprocessableEntityException` |
+| HTTP 429         | `RateLimitException`           |
+| HTTP >= 500      | `InternalServerException`      |
+| Other HTTP error | `APIStatusException`           |
+| Timeout          | `APITimeoutException`          |
+| Network error    | `APIConnectionException`       |
 
 ### Retries
 
@@ -106,15 +132,13 @@ You can use the `max_retries` option to configure or disable this:
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Documents\DocumentCreateParams;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
-$params = (new DocumentCreateParams);
 
-// Or, configure per-request:$result = $client
-  ->documents
-  ->create($params, new RequestOptions(maxRetries: 5));
+// Or, configure per-request:
+
+$result = $client->documents->create(new RequestOptions(maxRetries: 5));
 ```
 
 ## Advanced concepts
@@ -131,13 +155,8 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 <?php
 
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Documents\DocumentCreateParams;
 
-$params = (new DocumentCreateParams);
-$documentResponse = $client
-  ->documents
-  ->create(
-  $params,
+$documentResponse = $client->documents->create(
   new RequestOptions(
     extraQueryParams: ["my_query_parameter" => "value"],
     extraBodyParams: ["my_body_parameter" => "value"],

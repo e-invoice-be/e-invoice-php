@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Concerns\SdkEnum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type currency_code_alias = CurrencyCode::*
- */
 final class CurrencyCode implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const EUR = 'EUR';
 

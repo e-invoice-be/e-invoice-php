@@ -3,7 +3,7 @@
 namespace Tests\Core;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -11,7 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 class TestModel implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
 
     #[Api]
     public string $name;
@@ -19,7 +20,7 @@ class TestModel implements BaseModel
     #[Api('age_years')]
     public int $ageYears;
 
-    /** @var null|list<string> */
+    /** @var list<string>|null */
     #[Api(optional: true)]
     public ?array $friends;
 
@@ -27,7 +28,7 @@ class TestModel implements BaseModel
     public ?string $owner;
 
     /**
-     * @param null|list<string> $friends
+     * @param list<string>|null $friends
      */
     public function __construct(
         string $name,

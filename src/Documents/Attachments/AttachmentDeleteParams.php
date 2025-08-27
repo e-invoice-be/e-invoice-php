@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\Attachments;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Delete an attachment from an invoice or credit note.
  *
- * @phpstan-type delete_params = array{documentID: string}
+ * @phpstan-type attachment_delete_params = array{documentID: string}
  */
 final class AttachmentDeleteParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<attachment_delete_params> */
+    use SdkModel;
+    use SdkParams;
 
     #[Api]
     public string $documentID;

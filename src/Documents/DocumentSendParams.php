@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Send an invoice or credit note via Peppol.
  *
- * @phpstan-type send_params = array{
+ * @phpstan-type document_send_params = array{
  *   email?: string|null,
  *   receiverPeppolID?: string|null,
  *   receiverPeppolScheme?: string|null,
@@ -22,22 +22,23 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class DocumentSendParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<document_send_params> */
+    use SdkModel;
+    use SdkParams;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $email;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $receiverPeppolID;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $receiverPeppolScheme;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $senderPeppolID;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $senderPeppolScheme;
 
     public function __construct()

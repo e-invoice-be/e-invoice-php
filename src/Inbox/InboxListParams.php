@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Inbox;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
 
 /**
  * Retrieve a paginated list of received documents with filtering options.
  *
- * @phpstan-type list_params = array{
+ * @phpstan-type inbox_list_params = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,
  *   page?: int,
@@ -26,19 +26,20 @@ use EInvoiceAPI\Documents\DocumentType;
  */
 final class InboxListParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<inbox_list_params> */
+    use SdkModel;
+    use SdkParams;
 
     /**
      * Filter by issue date (from).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?\DateTimeInterface $dateFrom;
 
     /**
      * Filter by issue date (to).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?\DateTimeInterface $dateTo;
 
     /**
@@ -56,29 +57,29 @@ final class InboxListParams implements BaseModel
     /**
      * Search in invoice number, seller/buyer names.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $search;
 
     /**
      * Filter by sender ID.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $sender;
 
     /**
      * Filter by document state.
      *
-     * @var null|DocumentState::* $state
+     * @var DocumentState::*|null $state
      */
-    #[Api(enum: DocumentState::class, optional: true)]
+    #[Api(enum: DocumentState::class, nullable: true, optional: true)]
     public ?string $state;
 
     /**
      * Filter by document type.
      *
-     * @var null|DocumentType::* $type
+     * @var DocumentType::*|null $type
      */
-    #[Api(enum: DocumentType::class, optional: true)]
+    #[Api(enum: DocumentType::class, nullable: true, optional: true)]
     public ?string $type;
 
     public function __construct()

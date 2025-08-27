@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core;
 
-use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -16,7 +16,9 @@ final class Util
 
     public const JSON_ENCODE_FLAGS = JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
 
-    public const JSON_CONTENT_TYPE = '/application\/json/';
+    public const JSON_CONTENT_TYPE = '/^application\/(?:vnd(?:.[^.]+)*+)?json(?!l)/';
+
+    public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
     /**
      * @return array<string, mixed>
@@ -45,11 +47,21 @@ final class Util
     }
 
     /**
-     * @param callable|int|list<int|string>|string $key
+     * @param array<string, mixed> $arr
+     *
+     * @return array<string, mixed>
+     */
+    public static function array_filter_omit(array $arr): array
+    {
+        return array_filter($arr, fn ($v, $_) => OMIT !== $v, mode: ARRAY_FILTER_USE_BOTH);
+    }
+
+    /**
+     * @param string|int|list<string|int>|callable $key
      */
     public static function dig(
         mixed $array,
-        array|callable|int|string $key
+        string|int|array|callable $key
     ): mixed {
         if (is_callable($key)) {
             return $key($array);
@@ -71,9 +83,9 @@ final class Util
     }
 
     /**
-     * @param list<string>|string $path
+     * @param string|list<string> $path
      */
-    public static function parsePath(array|string $path): string
+    public static function parsePath(string|array $path): string
     {
         if (is_string($path)) {
             return $path;
@@ -85,7 +97,7 @@ final class Util
 
         [$template] = $path;
 
-        return sprintf($template, ...array_map('rawurlencode', array_slice($path, 1)));
+        return sprintf($template, ...array_map('rawurlencode', array: array_slice($path, 1)));
     }
 
     /**
@@ -124,7 +136,7 @@ final class Util
     }
 
     /**
-     * @param array<string, null|int|list<int|string>|string> $headers
+     * @param array<string, string|int|list<string|int>|null> $headers
      */
     public static function withSetHeaders(
         RequestInterface $req,
@@ -165,46 +177,8 @@ final class Util
     }
 
     /**
-     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
-     *   mixed
-     * > $body
-     *
-     * @return array{string, \Generator<string>}
-     */
-    public static function encodeMultipartStreaming(mixed $body): array
-    {
-        $boundary = rtrim(strtr(base64_encode(random_bytes(60)), '+/', '-_'), '=');
-        $gen = (function () use ($boundary, $body) {
-            $closing = [];
-
-            try {
-                if (is_array($body) || is_object($body)) {
-                    foreach ((array) $body as $key => $val) {
-                        foreach (static::writeMultipartChunk(boundary: $boundary, key: $key, val: $val, closing: $closing) as $chunk) {
-                            yield $chunk;
-                        }
-                    }
-                } else {
-                    foreach (static::writeMultipartChunk(boundary: $boundary, key: null, val: $body, closing: $closing) as $chunk) {
-                        yield $chunk;
-                    }
-                }
-
-                yield "--{$boundary}--\r\n";
-            } finally {
-                foreach ($closing as $c) {
-                    $c();
-                }
-            }
-        })();
-
-        return [$boundary, $gen];
-    }
-
-    /**
-     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
-     *   mixed
-     * > $body
+     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
+     * mixed,>|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -265,13 +239,13 @@ final class Util
     /**
      * @param \Iterator<string> $lines
      *
-     * @return \Iterator<
+     * @return \Generator<
      *   array{
-     *     event?: null|string, data?: null|string, id?: null|string, retry?: null|int
+     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
      *   },
      * >
      */
-    public static function decodeSSE(\Iterator $lines): \Iterator
+    public static function decodeSSE(\Iterator $lines): \Generator
     {
         $blank = ['event' => null, 'data' => null, 'id' => null, 'retry' => null];
         $acc = [];
@@ -328,18 +302,38 @@ final class Util
         }
     }
 
-    public static function decodeContent(MessageInterface $rsp): mixed
+    public static function decodeJson(string $json): mixed
     {
+        return json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
+    }
+
+    public static function decodeContent(ResponseInterface $rsp): mixed
+    {
+        if (204 == $rsp->getStatusCode()) {
+            return null;
+        }
+
         $content_type = $rsp->getHeaderLine('Content-Type');
         $body = $rsp->getBody();
 
-        if (preg_match(self::JSON_CONTENT_TYPE, $content_type)) {
+        if (preg_match(self::JSON_CONTENT_TYPE, subject: $content_type)) {
             $json = $body->getContents();
 
-            return json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
+            return self::decodeJson($json);
         }
 
-        if (str_contains($content_type, 'text/event-stream')) {
+        if (preg_match(self::JSONL_CONTENT_TYPE, subject: $content_type)) {
+            $it = self::streamIterator($body);
+            $lines = self::decodeLines($it);
+
+            return (function () use ($lines) {
+                foreach ($lines as $line) {
+                    yield static::decodeJson($line);
+                }
+            })();
+        }
+
+        if (str_contains($content_type, needle: 'text/event-stream')) {
             $it = self::streamIterator($body);
             $lines = self::decodeLines($it);
 
@@ -347,6 +341,11 @@ final class Util
         }
 
         return self::streamIterator($body);
+    }
+
+    public static function prettyEncodeJson(mixed $obj): string
+    {
+        return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
     /**
@@ -406,5 +405,41 @@ final class Util
         foreach (self::writeMultipartContent($val, closing: $closing) as $chunk) {
             yield $chunk;
         }
+    }
+
+    /**
+     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
+     * mixed,>|null $body
+     *
+     * @return array{string, \Generator<string>}
+     */
+    private static function encodeMultipartStreaming(mixed $body): array
+    {
+        $boundary = rtrim(strtr(base64_encode(random_bytes(60)), '+/', '-_'), '=');
+        $gen = (function () use ($boundary, $body) {
+            $closing = [];
+
+            try {
+                if (is_array($body) || is_object($body)) {
+                    foreach ((array) $body as $key => $val) {
+                        foreach (static::writeMultipartChunk(boundary: $boundary, key: $key, val: $val, closing: $closing) as $chunk) {
+                            yield $chunk;
+                        }
+                    }
+                } else {
+                    foreach (static::writeMultipartChunk(boundary: $boundary, key: null, val: $body, closing: $closing) as $chunk) {
+                        yield $chunk;
+                    }
+                }
+
+                yield "--{$boundary}--\r\n";
+            } finally {
+                foreach ($closing as $c) {
+                    $c();
+                }
+            }
+        })();
+
+        return [$boundary, $gen];
     }
 }

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace EInvoiceAPI;
 
 use EInvoiceAPI\Core\BaseClient;
-use EInvoiceAPI\Documents\DocumentsService;
-use EInvoiceAPI\Inbox\InboxService;
-use EInvoiceAPI\Lookup\LookupService;
-use EInvoiceAPI\Outbox\OutboxService;
-use EInvoiceAPI\Validate\ValidateService;
-use EInvoiceAPI\Webhooks\WebhooksService;
+use EInvoiceAPI\Core\Services\DocumentsService;
+use EInvoiceAPI\Core\Services\InboxService;
+use EInvoiceAPI\Core\Services\LookupService;
+use EInvoiceAPI\Core\Services\OutboxService;
+use EInvoiceAPI\Core\Services\ValidateService;
+use EInvoiceAPI\Core\Services\WebhooksService;
 
 class Client extends BaseClient
 {

@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\DocumentCreateParams;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type tax_detail_alias = array{
- *   amount?: float|string|null, rate?: string|null
- * }
+ * @phpstan-type tax_detail = array{amount?: float|string|null, rate?: string|null}
  */
 final class TaxDetail implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<tax_detail> */
+    use SdkModel;
 
-    #[Api(optional: true)]
-    public null|float|string $amount;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $amount;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $rate;
 
     public function __construct()
@@ -35,7 +34,7 @@ final class TaxDetail implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        null|float|string $amount = null,
+        float|string|null $amount = null,
         ?string $rate = null
     ): self {
         $obj = new self;
@@ -46,7 +45,7 @@ final class TaxDetail implements BaseModel
         return $obj;
     }
 
-    public function withAmount(null|float|string $amount): self
+    public function withAmount(float|string|null $amount): self
     {
         $obj = clone $this;
         $obj->amount = $amount;

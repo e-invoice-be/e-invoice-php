@@ -5,21 +5,22 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\Attachments;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type document_attachment_alias = array{
+ * @phpstan-type document_attachment = array{
  *   id: string,
  *   fileName: string,
- *   fileSize?: int,
- *   fileType?: string,
+ *   fileSize?: int|null,
+ *   fileType?: string|null,
  *   fileURL?: string|null,
  * }
  */
 final class DocumentAttachment implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<document_attachment> */
+    use SdkModel;
 
     #[Api]
     public string $id;
@@ -33,7 +34,7 @@ final class DocumentAttachment implements BaseModel
     #[Api('file_type', optional: true)]
     public ?string $fileType;
 
-    #[Api('file_url', optional: true)]
+    #[Api('file_url', nullable: true, optional: true)]
     public ?string $fileURL;
 
     /**

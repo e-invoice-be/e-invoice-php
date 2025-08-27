@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\DocumentResponse;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type tax_detail_alias = array{amount?: string|null, rate?: string|null}
+ * @phpstan-type tax_detail = array{amount?: string|null, rate?: string|null}
  */
 final class TaxDetail implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<tax_detail> */
+    use SdkModel;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $amount;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $rate;
 
     public function __construct()

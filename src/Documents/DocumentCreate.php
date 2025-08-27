@@ -5,28 +5,27 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Documents\DocumentCreate\Item;
 use EInvoiceAPI\Documents\DocumentCreate\TaxDetail;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
- * @phpstan-type document_create_alias = array{
+ * @phpstan-type document_create = array{
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   currency?: CurrencyCode::*,
+ *   currency?: CurrencyCode::*|null,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerTaxID?: string|null,
- *   direction?: DocumentDirection::*,
- *   documentType?: DocumentType::*,
+ *   direction?: DocumentDirection::*|null,
+ *   documentType?: DocumentType::*|null,
  *   dueDate?: \DateTimeInterface|null,
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
@@ -45,7 +44,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   serviceStartDate?: \DateTimeInterface|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
- *   state?: DocumentState::*,
+ *   state?: DocumentState::*|null,
  *   subtotal?: float|string|null,
  *   taxDetails?: list<TaxDetail>|null,
  *   totalDiscount?: float|string|null,
@@ -59,155 +58,147 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class DocumentCreate implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<document_create> */
+    use SdkModel;
 
-    #[Api('amount_due', optional: true)]
-    public null|float|string $amountDue;
+    #[Api('amount_due', nullable: true, optional: true)]
+    public float|string|null $amountDue;
 
-    /** @var null|list<DocumentAttachmentCreate> $attachments */
-    #[Api(
-        type: new ListOf(DocumentAttachmentCreate::class),
-        nullable: true,
-        optional: true,
-    )]
+    /** @var list<DocumentAttachmentCreate>|null $attachments */
+    #[Api(list: DocumentAttachmentCreate::class, nullable: true, optional: true)]
     public ?array $attachments;
 
-    #[Api('billing_address', optional: true)]
+    #[Api('billing_address', nullable: true, optional: true)]
     public ?string $billingAddress;
 
-    #[Api('billing_address_recipient', optional: true)]
+    #[Api('billing_address_recipient', nullable: true, optional: true)]
     public ?string $billingAddressRecipient;
 
     /**
      * Currency of the invoice.
      *
-     * @var null|CurrencyCode::* $currency
+     * @var CurrencyCode::*|null $currency
      */
     #[Api(enum: CurrencyCode::class, optional: true)]
     public ?string $currency;
 
-    #[Api('customer_address', optional: true)]
+    #[Api('customer_address', nullable: true, optional: true)]
     public ?string $customerAddress;
 
-    #[Api('customer_address_recipient', optional: true)]
+    #[Api('customer_address_recipient', nullable: true, optional: true)]
     public ?string $customerAddressRecipient;
 
-    #[Api('customer_email', optional: true)]
+    #[Api('customer_email', nullable: true, optional: true)]
     public ?string $customerEmail;
 
-    #[Api('customer_id', optional: true)]
+    #[Api('customer_id', nullable: true, optional: true)]
     public ?string $customerID;
 
-    #[Api('customer_name', optional: true)]
+    #[Api('customer_name', nullable: true, optional: true)]
     public ?string $customerName;
 
-    #[Api('customer_tax_id', optional: true)]
+    #[Api('customer_tax_id', nullable: true, optional: true)]
     public ?string $customerTaxID;
 
-    /** @var null|DocumentDirection::* $direction */
+    /** @var DocumentDirection::*|null $direction */
     #[Api(enum: DocumentDirection::class, optional: true)]
     public ?string $direction;
 
-    /** @var null|DocumentType::* $documentType */
+    /** @var DocumentType::*|null $documentType */
     #[Api('document_type', enum: DocumentType::class, optional: true)]
     public ?string $documentType;
 
-    #[Api('due_date', optional: true)]
+    #[Api('due_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $dueDate;
 
-    #[Api('invoice_date', optional: true)]
+    #[Api('invoice_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $invoiceDate;
 
-    #[Api('invoice_id', optional: true)]
+    #[Api('invoice_id', nullable: true, optional: true)]
     public ?string $invoiceID;
 
-    #[Api('invoice_total', optional: true)]
-    public null|float|string $invoiceTotal;
+    #[Api('invoice_total', nullable: true, optional: true)]
+    public float|string|null $invoiceTotal;
 
-    /** @var null|list<Item> $items */
-    #[Api(type: new ListOf(Item::class), nullable: true, optional: true)]
+    /** @var list<Item>|null $items */
+    #[Api(list: Item::class, nullable: true, optional: true)]
     public ?array $items;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $note;
 
-    /** @var null|list<PaymentDetailCreate> $paymentDetails */
+    /** @var list<PaymentDetailCreate>|null $paymentDetails */
     #[Api(
         'payment_details',
-        type: new ListOf(PaymentDetailCreate::class),
+        list: PaymentDetailCreate::class,
         nullable: true,
         optional: true,
     )]
     public ?array $paymentDetails;
 
-    #[Api('payment_term', optional: true)]
+    #[Api('payment_term', nullable: true, optional: true)]
     public ?string $paymentTerm;
 
-    #[Api('previous_unpaid_balance', optional: true)]
-    public null|float|string $previousUnpaidBalance;
+    #[Api('previous_unpaid_balance', nullable: true, optional: true)]
+    public float|string|null $previousUnpaidBalance;
 
-    #[Api('purchase_order', optional: true)]
+    #[Api('purchase_order', nullable: true, optional: true)]
     public ?string $purchaseOrder;
 
-    #[Api('remittance_address', optional: true)]
+    #[Api('remittance_address', nullable: true, optional: true)]
     public ?string $remittanceAddress;
 
-    #[Api('remittance_address_recipient', optional: true)]
+    #[Api('remittance_address_recipient', nullable: true, optional: true)]
     public ?string $remittanceAddressRecipient;
 
-    #[Api('service_address', optional: true)]
+    #[Api('service_address', nullable: true, optional: true)]
     public ?string $serviceAddress;
 
-    #[Api('service_address_recipient', optional: true)]
+    #[Api('service_address_recipient', nullable: true, optional: true)]
     public ?string $serviceAddressRecipient;
 
-    #[Api('service_end_date', optional: true)]
+    #[Api('service_end_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $serviceEndDate;
 
-    #[Api('service_start_date', optional: true)]
+    #[Api('service_start_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $serviceStartDate;
 
-    #[Api('shipping_address', optional: true)]
+    #[Api('shipping_address', nullable: true, optional: true)]
     public ?string $shippingAddress;
 
-    #[Api('shipping_address_recipient', optional: true)]
+    #[Api('shipping_address_recipient', nullable: true, optional: true)]
     public ?string $shippingAddressRecipient;
 
-    /** @var null|DocumentState::* $state */
+    /** @var DocumentState::*|null $state */
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
-    #[Api(optional: true)]
-    public null|float|string $subtotal;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $subtotal;
 
-    /** @var null|list<TaxDetail> $taxDetails */
-    #[Api(
-        'tax_details',
-        type: new ListOf(TaxDetail::class),
-        nullable: true,
-        optional: true,
-    )]
+    /** @var list<TaxDetail>|null $taxDetails */
+    #[Api('tax_details', list: TaxDetail::class, nullable: true, optional: true)]
     public ?array $taxDetails;
 
-    #[Api('total_discount', optional: true)]
-    public null|float|string $totalDiscount;
+    #[Api('total_discount', nullable: true, optional: true)]
+    public float|string|null $totalDiscount;
 
-    #[Api('total_tax', optional: true)]
-    public null|float|string $totalTax;
+    #[Api('total_tax', nullable: true, optional: true)]
+    public float|string|null $totalTax;
 
-    #[Api('vendor_address', optional: true)]
+    #[Api('vendor_address', nullable: true, optional: true)]
     public ?string $vendorAddress;
 
-    #[Api('vendor_address_recipient', optional: true)]
+    #[Api('vendor_address_recipient', nullable: true, optional: true)]
     public ?string $vendorAddressRecipient;
 
-    #[Api('vendor_email', optional: true)]
+    #[Api('vendor_email', nullable: true, optional: true)]
     public ?string $vendorEmail;
 
-    #[Api('vendor_name', optional: true)]
+    #[Api('vendor_name', nullable: true, optional: true)]
     public ?string $vendorName;
 
-    #[Api('vendor_tax_id', optional: true)]
+    #[Api('vendor_tax_id', nullable: true, optional: true)]
     public ?string $vendorTaxID;
 
     public function __construct()
@@ -221,17 +212,17 @@ final class DocumentCreate implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<DocumentAttachmentCreate> $attachments
+     * @param list<DocumentAttachmentCreate>|null $attachments
      * @param CurrencyCode::* $currency
      * @param DocumentDirection::* $direction
      * @param DocumentType::* $documentType
-     * @param null|list<Item> $items
-     * @param null|list<PaymentDetailCreate> $paymentDetails
+     * @param list<Item>|null $items
+     * @param list<PaymentDetailCreate>|null $paymentDetails
      * @param DocumentState::* $state
-     * @param null|list<TaxDetail> $taxDetails
+     * @param list<TaxDetail>|null $taxDetails
      */
     public static function with(
-        null|float|string $amountDue = null,
+        float|string|null $amountDue = null,
         ?array $attachments = null,
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
@@ -247,12 +238,12 @@ final class DocumentCreate implements BaseModel
         ?\DateTimeInterface $dueDate = null,
         ?\DateTimeInterface $invoiceDate = null,
         ?string $invoiceID = null,
-        null|float|string $invoiceTotal = null,
+        float|string|null $invoiceTotal = null,
         ?array $items = null,
         ?string $note = null,
         ?array $paymentDetails = null,
         ?string $paymentTerm = null,
-        null|float|string $previousUnpaidBalance = null,
+        float|string|null $previousUnpaidBalance = null,
         ?string $purchaseOrder = null,
         ?string $remittanceAddress = null,
         ?string $remittanceAddressRecipient = null,
@@ -263,10 +254,10 @@ final class DocumentCreate implements BaseModel
         ?string $shippingAddress = null,
         ?string $shippingAddressRecipient = null,
         ?string $state = null,
-        null|float|string $subtotal = null,
+        float|string|null $subtotal = null,
         ?array $taxDetails = null,
-        null|float|string $totalDiscount = null,
-        null|float|string $totalTax = null,
+        float|string|null $totalDiscount = null,
+        float|string|null $totalTax = null,
         ?string $vendorAddress = null,
         ?string $vendorAddressRecipient = null,
         ?string $vendorEmail = null,
@@ -320,7 +311,7 @@ final class DocumentCreate implements BaseModel
         return $obj;
     }
 
-    public function withAmountDue(null|float|string $amountDue): self
+    public function withAmountDue(float|string|null $amountDue): self
     {
         $obj = clone $this;
         $obj->amountDue = $amountDue;
@@ -329,7 +320,7 @@ final class DocumentCreate implements BaseModel
     }
 
     /**
-     * @param null|list<DocumentAttachmentCreate> $attachments
+     * @param list<DocumentAttachmentCreate>|null $attachments
      */
     public function withAttachments(?array $attachments): self
     {
@@ -464,7 +455,7 @@ final class DocumentCreate implements BaseModel
         return $obj;
     }
 
-    public function withInvoiceTotal(null|float|string $invoiceTotal): self
+    public function withInvoiceTotal(float|string|null $invoiceTotal): self
     {
         $obj = clone $this;
         $obj->invoiceTotal = $invoiceTotal;
@@ -473,7 +464,7 @@ final class DocumentCreate implements BaseModel
     }
 
     /**
-     * @param null|list<Item> $items
+     * @param list<Item>|null $items
      */
     public function withItems(?array $items): self
     {
@@ -492,7 +483,7 @@ final class DocumentCreate implements BaseModel
     }
 
     /**
-     * @param null|list<PaymentDetailCreate> $paymentDetails
+     * @param list<PaymentDetailCreate>|null $paymentDetails
      */
     public function withPaymentDetails(?array $paymentDetails): self
     {
@@ -511,7 +502,7 @@ final class DocumentCreate implements BaseModel
     }
 
     public function withPreviousUnpaidBalance(
-        null|float|string $previousUnpaidBalance
+        float|string|null $previousUnpaidBalance
     ): self {
         $obj = clone $this;
         $obj->previousUnpaidBalance = $previousUnpaidBalance;
@@ -607,7 +598,7 @@ final class DocumentCreate implements BaseModel
         return $obj;
     }
 
-    public function withSubtotal(null|float|string $subtotal): self
+    public function withSubtotal(float|string|null $subtotal): self
     {
         $obj = clone $this;
         $obj->subtotal = $subtotal;
@@ -616,7 +607,7 @@ final class DocumentCreate implements BaseModel
     }
 
     /**
-     * @param null|list<TaxDetail> $taxDetails
+     * @param list<TaxDetail>|null $taxDetails
      */
     public function withTaxDetails(?array $taxDetails): self
     {
@@ -626,7 +617,7 @@ final class DocumentCreate implements BaseModel
         return $obj;
     }
 
-    public function withTotalDiscount(null|float|string $totalDiscount): self
+    public function withTotalDiscount(float|string|null $totalDiscount): self
     {
         $obj = clone $this;
         $obj->totalDiscount = $totalDiscount;
@@ -634,7 +625,7 @@ final class DocumentCreate implements BaseModel
         return $obj;
     }
 
-    public function withTotalTax(null|float|string $totalTax): self
+    public function withTotalTax(float|string|null $totalTax): self
     {
         $obj = clone $this;
         $obj->totalTax = $totalTax;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Outbox;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
@@ -14,7 +14,7 @@ use EInvoiceAPI\Inbox\DocumentState;
 /**
  * Retrieve a paginated list of received documents with filtering options.
  *
- * @phpstan-type list_received_documents_params = array{
+ * @phpstan-type outbox_list_received_documents_params = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,
  *   page?: int,
@@ -27,19 +27,20 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class OutboxListReceivedDocumentsParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<outbox_list_received_documents_params> */
+    use SdkModel;
+    use SdkParams;
 
     /**
      * Filter by issue date (from).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?\DateTimeInterface $dateFrom;
 
     /**
      * Filter by issue date (to).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?\DateTimeInterface $dateTo;
 
     /**
@@ -57,29 +58,29 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     /**
      * Search in invoice number, seller/buyer names.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $search;
 
     /**
      * Filter by sender ID.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $sender;
 
     /**
      * Filter by document state.
      *
-     * @var null|DocumentState::* $state
+     * @var DocumentState::*|null $state
      */
-    #[Api(enum: DocumentState::class, optional: true)]
+    #[Api(enum: DocumentState::class, nullable: true, optional: true)]
     public ?string $state;
 
     /**
      * Filter by document type.
      *
-     * @var null|DocumentType::* $type
+     * @var DocumentType::*|null $type
      */
-    #[Api(enum: DocumentType::class, optional: true)]
+    #[Api(enum: DocumentType::class, nullable: true, optional: true)]
     public ?string $type;
 
     public function __construct()

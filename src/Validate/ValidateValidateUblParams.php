@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Validate the correctness of a UBL document.
  *
- * @phpstan-type validate_ubl_params = array{file: string}
+ * @phpstan-type validate_validate_ubl_params = array{file: string}
  */
 final class ValidateValidateUblParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<validate_validate_ubl_params> */
+    use SdkModel;
+    use SdkParams;
 
     #[Api]
     public string $file;

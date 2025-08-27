@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
  *
- * @phpstan-type retrieve_params = array{peppolID: string}
+ * @phpstan-type lookup_retrieve_params = array{peppolID: string}
  */
 final class LookupRetrieveParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<lookup_retrieve_params> */
+    use SdkModel;
+    use SdkParams;
 
     /**
      * Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.

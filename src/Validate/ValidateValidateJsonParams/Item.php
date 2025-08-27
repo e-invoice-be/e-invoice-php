@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Validate\ValidateValidateJsonParams;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
@@ -18,46 +18,47 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   quantity?: float|string|null,
  *   tax?: float|string|null,
  *   taxRate?: string|null,
- *   unit?: UnitOfMeasureCode::*,
+ *   unit?: UnitOfMeasureCode::*|null,
  *   unitPrice?: float|string|null,
  * }
  */
 final class Item implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<item_alias> */
+    use SdkModel;
 
-    #[Api(optional: true)]
-    public null|float|string $amount;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $amount;
 
     /** @var null|null $date */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public null $date;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
-    #[Api('product_code', optional: true)]
+    #[Api('product_code', nullable: true, optional: true)]
     public ?string $productCode;
 
-    #[Api(optional: true)]
-    public null|float|string $quantity;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $quantity;
 
-    #[Api(optional: true)]
-    public null|float|string $tax;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $tax;
 
-    #[Api('tax_rate', optional: true)]
+    #[Api('tax_rate', nullable: true, optional: true)]
     public ?string $taxRate;
 
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
      *
-     * @var null|UnitOfMeasureCode::* $unit
+     * @var UnitOfMeasureCode::*|null $unit
      */
-    #[Api(enum: UnitOfMeasureCode::class, optional: true)]
+    #[Api(enum: UnitOfMeasureCode::class, nullable: true, optional: true)]
     public ?string $unit;
 
-    #[Api('unit_price', optional: true)]
-    public null|float|string $unitPrice;
+    #[Api('unit_price', nullable: true, optional: true)]
+    public float|string|null $unitPrice;
 
     public function __construct()
     {
@@ -73,15 +74,15 @@ final class Item implements BaseModel
      * @param UnitOfMeasureCode::* $unit
      */
     public static function with(
-        null|float|string $amount = null,
+        float|string|null $amount = null,
         null $date = null,
         ?string $description = null,
         ?string $productCode = null,
-        null|float|string $quantity = null,
-        null|float|string $tax = null,
+        float|string|null $quantity = null,
+        float|string|null $tax = null,
         ?string $taxRate = null,
         ?string $unit = null,
-        null|float|string $unitPrice = null,
+        float|string|null $unitPrice = null,
     ): self {
         $obj = new self;
 
@@ -98,7 +99,7 @@ final class Item implements BaseModel
         return $obj;
     }
 
-    public function withAmount(null|float|string $amount): self
+    public function withAmount(float|string|null $amount): self
     {
         $obj = clone $this;
         $obj->amount = $amount;
@@ -133,7 +134,7 @@ final class Item implements BaseModel
         return $obj;
     }
 
-    public function withQuantity(null|float|string $quantity): self
+    public function withQuantity(float|string|null $quantity): self
     {
         $obj = clone $this;
         $obj->quantity = $quantity;
@@ -141,7 +142,7 @@ final class Item implements BaseModel
         return $obj;
     }
 
-    public function withTax(null|float|string $tax): self
+    public function withTax(float|string|null $tax): self
     {
         $obj = clone $this;
         $obj->tax = $tax;
@@ -170,7 +171,7 @@ final class Item implements BaseModel
         return $obj;
     }
 
-    public function withUnitPrice(null|float|string $unitPrice): self
+    public function withUnitPrice(float|string|null $unitPrice): self
     {
         $obj = clone $this;
         $obj->unitPrice = $unitPrice;

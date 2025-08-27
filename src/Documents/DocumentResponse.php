@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\Documents\DocumentResponse\Item;
 use EInvoiceAPI\Documents\DocumentResponse\PaymentDetail;
@@ -15,28 +14,28 @@ use EInvoiceAPI\Documents\DocumentResponse\TaxDetail;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
- * @phpstan-type document_response_alias = array{
+ * @phpstan-type document_response = array{
  *   id: string,
  *   amountDue?: string|null,
- *   attachments?: list<DocumentAttachment>,
+ *   attachments?: list<DocumentAttachment>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   currency?: CurrencyCode::*,
+ *   currency?: CurrencyCode::*|null,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerTaxID?: string|null,
- *   direction?: DocumentDirection::*,
- *   documentType?: DocumentType::*,
+ *   direction?: DocumentDirection::*|null,
+ *   documentType?: DocumentType::*|null,
  *   dueDate?: \DateTimeInterface|null,
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: string|null,
- *   items?: list<Item>,
+ *   items?: list<Item>|null,
  *   note?: string|null,
- *   paymentDetails?: list<PaymentDetail>,
+ *   paymentDetails?: list<PaymentDetail>|null,
  *   paymentTerm?: string|null,
  *   previousUnpaidBalance?: string|null,
  *   purchaseOrder?: string|null,
@@ -48,9 +47,9 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   serviceStartDate?: \DateTimeInterface|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
- *   state?: DocumentState::*,
+ *   state?: DocumentState::*|null,
  *   subtotal?: string|null,
- *   taxDetails?: list<TaxDetail>,
+ *   taxDetails?: list<TaxDetail>|null,
  *   totalDiscount?: string|null,
  *   totalTax?: string|null,
  *   vendorAddress?: string|null,
@@ -62,148 +61,145 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class DocumentResponse implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<document_response> */
+    use SdkModel;
 
     #[Api]
     public string $id;
 
-    #[Api('amount_due', optional: true)]
+    #[Api('amount_due', nullable: true, optional: true)]
     public ?string $amountDue;
 
-    /** @var null|list<DocumentAttachment> $attachments */
-    #[Api(type: new ListOf(DocumentAttachment::class), optional: true)]
+    /** @var list<DocumentAttachment>|null $attachments */
+    #[Api(list: DocumentAttachment::class, optional: true)]
     public ?array $attachments;
 
-    #[Api('billing_address', optional: true)]
+    #[Api('billing_address', nullable: true, optional: true)]
     public ?string $billingAddress;
 
-    #[Api('billing_address_recipient', optional: true)]
+    #[Api('billing_address_recipient', nullable: true, optional: true)]
     public ?string $billingAddressRecipient;
 
     /**
      * Currency of the invoice.
      *
-     * @var null|CurrencyCode::* $currency
+     * @var CurrencyCode::*|null $currency
      */
     #[Api(enum: CurrencyCode::class, optional: true)]
     public ?string $currency;
 
-    #[Api('customer_address', optional: true)]
+    #[Api('customer_address', nullable: true, optional: true)]
     public ?string $customerAddress;
 
-    #[Api('customer_address_recipient', optional: true)]
+    #[Api('customer_address_recipient', nullable: true, optional: true)]
     public ?string $customerAddressRecipient;
 
-    #[Api('customer_email', optional: true)]
+    #[Api('customer_email', nullable: true, optional: true)]
     public ?string $customerEmail;
 
-    #[Api('customer_id', optional: true)]
+    #[Api('customer_id', nullable: true, optional: true)]
     public ?string $customerID;
 
-    #[Api('customer_name', optional: true)]
+    #[Api('customer_name', nullable: true, optional: true)]
     public ?string $customerName;
 
-    #[Api('customer_tax_id', optional: true)]
+    #[Api('customer_tax_id', nullable: true, optional: true)]
     public ?string $customerTaxID;
 
-    /** @var null|DocumentDirection::* $direction */
+    /** @var DocumentDirection::*|null $direction */
     #[Api(enum: DocumentDirection::class, optional: true)]
     public ?string $direction;
 
-    /** @var null|DocumentType::* $documentType */
+    /** @var DocumentType::*|null $documentType */
     #[Api('document_type', enum: DocumentType::class, optional: true)]
     public ?string $documentType;
 
-    #[Api('due_date', optional: true)]
+    #[Api('due_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $dueDate;
 
-    #[Api('invoice_date', optional: true)]
+    #[Api('invoice_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $invoiceDate;
 
-    #[Api('invoice_id', optional: true)]
+    #[Api('invoice_id', nullable: true, optional: true)]
     public ?string $invoiceID;
 
-    #[Api('invoice_total', optional: true)]
+    #[Api('invoice_total', nullable: true, optional: true)]
     public ?string $invoiceTotal;
 
-    /** @var null|list<Item> $items */
-    #[Api(type: new ListOf(Item::class), optional: true)]
+    /** @var list<Item>|null $items */
+    #[Api(list: Item::class, optional: true)]
     public ?array $items;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $note;
 
-    /** @var null|list<PaymentDetail> $paymentDetails */
-    #[Api(
-        'payment_details',
-        type: new ListOf(PaymentDetail::class),
-        optional: true
-    )]
+    /** @var list<PaymentDetail>|null $paymentDetails */
+    #[Api('payment_details', list: PaymentDetail::class, optional: true)]
     public ?array $paymentDetails;
 
-    #[Api('payment_term', optional: true)]
+    #[Api('payment_term', nullable: true, optional: true)]
     public ?string $paymentTerm;
 
-    #[Api('previous_unpaid_balance', optional: true)]
+    #[Api('previous_unpaid_balance', nullable: true, optional: true)]
     public ?string $previousUnpaidBalance;
 
-    #[Api('purchase_order', optional: true)]
+    #[Api('purchase_order', nullable: true, optional: true)]
     public ?string $purchaseOrder;
 
-    #[Api('remittance_address', optional: true)]
+    #[Api('remittance_address', nullable: true, optional: true)]
     public ?string $remittanceAddress;
 
-    #[Api('remittance_address_recipient', optional: true)]
+    #[Api('remittance_address_recipient', nullable: true, optional: true)]
     public ?string $remittanceAddressRecipient;
 
-    #[Api('service_address', optional: true)]
+    #[Api('service_address', nullable: true, optional: true)]
     public ?string $serviceAddress;
 
-    #[Api('service_address_recipient', optional: true)]
+    #[Api('service_address_recipient', nullable: true, optional: true)]
     public ?string $serviceAddressRecipient;
 
-    #[Api('service_end_date', optional: true)]
+    #[Api('service_end_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $serviceEndDate;
 
-    #[Api('service_start_date', optional: true)]
+    #[Api('service_start_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $serviceStartDate;
 
-    #[Api('shipping_address', optional: true)]
+    #[Api('shipping_address', nullable: true, optional: true)]
     public ?string $shippingAddress;
 
-    #[Api('shipping_address_recipient', optional: true)]
+    #[Api('shipping_address_recipient', nullable: true, optional: true)]
     public ?string $shippingAddressRecipient;
 
-    /** @var null|DocumentState::* $state */
+    /** @var DocumentState::*|null $state */
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $subtotal;
 
-    /** @var null|list<TaxDetail> $taxDetails */
-    #[Api('tax_details', type: new ListOf(TaxDetail::class), optional: true)]
+    /** @var list<TaxDetail>|null $taxDetails */
+    #[Api('tax_details', list: TaxDetail::class, optional: true)]
     public ?array $taxDetails;
 
-    #[Api('total_discount', optional: true)]
+    #[Api('total_discount', nullable: true, optional: true)]
     public ?string $totalDiscount;
 
-    #[Api('total_tax', optional: true)]
+    #[Api('total_tax', nullable: true, optional: true)]
     public ?string $totalTax;
 
-    #[Api('vendor_address', optional: true)]
+    #[Api('vendor_address', nullable: true, optional: true)]
     public ?string $vendorAddress;
 
-    #[Api('vendor_address_recipient', optional: true)]
+    #[Api('vendor_address_recipient', nullable: true, optional: true)]
     public ?string $vendorAddressRecipient;
 
-    #[Api('vendor_email', optional: true)]
+    #[Api('vendor_email', nullable: true, optional: true)]
     public ?string $vendorEmail;
 
-    #[Api('vendor_name', optional: true)]
+    #[Api('vendor_name', nullable: true, optional: true)]
     public ?string $vendorName;
 
-    #[Api('vendor_tax_id', optional: true)]
+    #[Api('vendor_tax_id', nullable: true, optional: true)]
     public ?string $vendorTaxID;
 
     /**
@@ -231,14 +227,14 @@ final class DocumentResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<DocumentAttachment> $attachments
+     * @param list<DocumentAttachment> $attachments
      * @param CurrencyCode::* $currency
      * @param DocumentDirection::* $direction
      * @param DocumentType::* $documentType
-     * @param null|list<Item> $items
-     * @param null|list<PaymentDetail> $paymentDetails
+     * @param list<Item> $items
+     * @param list<PaymentDetail> $paymentDetails
      * @param DocumentState::* $state
-     * @param null|list<TaxDetail> $taxDetails
+     * @param list<TaxDetail> $taxDetails
      */
     public static function with(
         string $id,

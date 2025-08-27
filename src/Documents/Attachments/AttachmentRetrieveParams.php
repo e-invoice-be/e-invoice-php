@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\Attachments;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
-use EInvoiceAPI\Core\Concerns\Params;
+use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
  *
- * @phpstan-type retrieve_params = array{documentID: string}
+ * @phpstan-type attachment_retrieve_params = array{documentID: string}
  */
 final class AttachmentRetrieveParams implements BaseModel
 {
-    use Model;
-    use Params;
+    /** @use SdkModel<attachment_retrieve_params> */
+    use SdkModel;
+    use SdkParams;
 
     #[Api]
     public string $documentID;

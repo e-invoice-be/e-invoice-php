@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
-use EInvoiceAPI\Core\Concerns\Model;
+use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type payment_detail_create_alias = array{
+ * @phpstan-type payment_detail_create = array{
  *   bankAccountNumber?: string|null,
  *   iban?: string|null,
  *   paymentReference?: string|null,
@@ -18,18 +18,19 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class PaymentDetailCreate implements BaseModel
 {
-    use Model;
+    /** @use SdkModel<payment_detail_create> */
+    use SdkModel;
 
-    #[Api('bank_account_number', optional: true)]
+    #[Api('bank_account_number', nullable: true, optional: true)]
     public ?string $bankAccountNumber;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $iban;
 
-    #[Api('payment_reference', optional: true)]
+    #[Api('payment_reference', nullable: true, optional: true)]
     public ?string $paymentReference;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $swift;
 
     public function __construct()

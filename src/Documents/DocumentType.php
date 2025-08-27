@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Concerns\Enum;
+use EInvoiceAPI\Core\Concerns\SdkEnum;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type document_type_alias = DocumentType::*
- */
 final class DocumentType implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const INVOICE = 'INVOICE';
 
