@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\ServiceContracts\DocumentsContract;
 use EInvoiceAPI\Core\Services\Documents\AttachmentsService;
 use EInvoiceAPI\Core\Services\Documents\UblService;
@@ -172,15 +171,15 @@ final class DocumentsService implements DocumentsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'api/documents/',
             body: (object) $parsed,
             options: $options,
+            convert: DocumentResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
@@ -190,14 +189,13 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s', $documentID],
             options: $requestOptions,
+            convert: DocumentResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 
     /**
@@ -207,14 +205,13 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentDeleteResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'delete',
             path: ['api/documents/%1$s', $documentID],
             options: $requestOptions,
+            convert: DocumentDeleteResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentDeleteResponse::class, value: $resp);
     }
 
     /**
@@ -245,14 +242,14 @@ final class DocumentsService implements DocumentsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/send', $documentID],
             query: $parsed,
             options: $options,
+            convert: DocumentResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DocumentResponse::class, value: $resp);
     }
 }

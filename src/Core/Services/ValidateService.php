@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\ServiceContracts\ValidateContract;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -163,15 +162,15 @@ final class ValidateService implements ValidateContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'api/validate/json',
             body: (object) $parsed,
             options: $options,
+            convert: UblDocumentValidation::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(UblDocumentValidation::class, value: $resp);
     }
 
     /**
@@ -187,17 +186,14 @@ final class ValidateService implements ValidateContract
             ['peppolID' => $peppolID],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/validate/peppol-id',
             query: $parsed,
             options: $options,
-        );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(
-            ValidateValidatePeppolIDResponse::class,
-            value: $resp
+            convert: ValidateValidatePeppolIDResponse::class,
         );
     }
 
@@ -214,15 +210,15 @@ final class ValidateService implements ValidateContract
             ['file' => $file],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'api/validate/ubl',
             headers: ['Content-Type' => 'multipart/form-data'],
             body: (object) $parsed,
             options: $options,
+            convert: UblDocumentValidation::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(UblDocumentValidation::class, value: $resp);
     }
 }

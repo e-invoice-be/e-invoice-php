@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\ServiceContracts\LookupContract;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
@@ -32,15 +31,15 @@ final class LookupService implements LookupContract
             ['peppolID' => $peppolID],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/lookup',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: LookupGetResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(LookupGetResponse::class, value: $resp);
     }
 
     /**
@@ -58,17 +57,14 @@ final class LookupService implements LookupContract
             ['query' => $query, 'countryCode' => $countryCode],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'api/lookup/participants',
             query: $parsed,
             options: $options,
-        );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(
-            LookupGetParticipantsResponse::class,
-            value: $resp
+            convert: LookupGetParticipantsResponse::class,
         );
     }
 }

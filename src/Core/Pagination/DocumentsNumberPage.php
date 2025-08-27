@@ -36,7 +36,7 @@ final class DocumentsNumberPage extends AbstractPage
         $this->total = $body['total'] ?? 0;
     }
 
-    public function nextPageRequestOptions(): PageRequestOptions
+    public function nextRequest(): PageRequestOptions
     {
         $currentPage = $this->page ?? 1;
 
