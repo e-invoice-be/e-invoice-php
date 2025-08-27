@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\ServiceContracts;
 
+use EInvoiceAPI\Core\DocumentsNumberPage;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
@@ -22,6 +23,8 @@ interface InboxContract
      * @param string|null $sender Filter by sender ID
      * @param DocumentState::* $state Filter by document state
      * @param DocumentType::* $type Filter by document type
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function list(
         $dateFrom = omit,
@@ -33,25 +36,29 @@ interface InboxContract
         $state = omit,
         $type = omit,
         ?RequestOptions $requestOptions = null,
-    ): DocumentResponse;
+    ): DocumentsNumberPage;
 
     /**
      * @param int $page Page number
      * @param int $pageSize Number of items per page
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function listCreditNotes(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): DocumentResponse;
+    ): DocumentsNumberPage;
 
     /**
      * @param int $page Page number
      * @param int $pageSize Number of items per page
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function listInvoices(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): DocumentResponse;
+    ): DocumentsNumberPage;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Concerns;
 
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Contracts\BasePage;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\CoerceState;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
@@ -244,7 +245,7 @@ trait SdkModel
      */
     private static function serialize(mixed $value): mixed
     {
-        if ($value instanceof BaseModel) {
+        if ($value instanceof BaseModel || $value instanceof BasePage) {
             return $value->toArray();
         }
 

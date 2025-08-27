@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Pagination\DocumentsNumberPage;
+use EInvoiceAPI\Core\DocumentsNumberPage;
 use EInvoiceAPI\Core\ServiceContracts\InboxContract;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
@@ -32,6 +32,8 @@ final class InboxService implements InboxContract
      * @param string|null $sender Filter by sender ID
      * @param DocumentState::* $state Filter by document state
      * @param DocumentType::* $type Filter by document type
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function list(
         $dateFrom = omit,
@@ -43,7 +45,7 @@ final class InboxService implements InboxContract
         $state = omit,
         $type = omit,
         ?RequestOptions $requestOptions = null,
-    ): DocumentResponse {
+    ): DocumentsNumberPage {
         [$parsed, $options] = InboxListParams::parseRequest(
             [
                 'dateFrom' => $dateFrom,
@@ -74,12 +76,14 @@ final class InboxService implements InboxContract
      *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function listCreditNotes(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): DocumentResponse {
+    ): DocumentsNumberPage {
         [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
             ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
@@ -101,12 +105,14 @@ final class InboxService implements InboxContract
      *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
      */
     public function listInvoices(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): DocumentResponse {
+    ): DocumentsNumberPage {
         [$parsed, $options] = InboxListInvoicesParams::parseRequest(
             ['page' => $page, 'pageSize' => $pageSize],
             $requestOptions
