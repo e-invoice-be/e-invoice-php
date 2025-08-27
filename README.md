@@ -50,6 +50,7 @@ use EInvoiceAPI\Client;
 $client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
 
 $documentResponse = $client->documents->create();
+
 var_dump($documentResponse->id);
 ```
 
@@ -59,6 +60,26 @@ It is recommended to use the static `with` constructor `DocumentAttachmentCreate
 and named parameters to initialize value objects.
 
 However, builders are also provided `(new DocumentAttachmentCreate)->withFileName("file_name")`.
+
+### Pagination
+
+List methods in the E Invoice API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```php
+<?php
+
+use EInvoiceAPI\Client;
+
+$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
+
+$pages = $client->inbox->list();
+
+foreach ($this->$pages->getItems() as $page) {
+  var_dump($page->id);
+}
+```
 
 ### Handling errors
 
@@ -116,6 +137,7 @@ use EInvoiceAPI\RequestOptions;
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
+
 $result = $client->documents->create(new RequestOptions(maxRetries: 5));
 ```
 
