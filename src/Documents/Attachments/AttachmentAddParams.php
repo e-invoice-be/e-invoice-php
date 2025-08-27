@@ -11,9 +11,12 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Add a new attachment to an invoice or credit note.
+ *
+ * @phpstan-type attachment_add_params = array{file: string}
  */
 final class AttachmentAddParams implements BaseModel
 {
+    /** @use SdkModel<attachment_add_params> */
     use SdkModel;
     use SdkParams;
 

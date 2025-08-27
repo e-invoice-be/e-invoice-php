@@ -11,9 +11,14 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Retrieve a paginated list of draft documents with filtering options.
+ *
+ * @phpstan-type outbox_list_draft_documents_params = array{
+ *   page?: int, pageSize?: int
+ * }
  */
 final class OutboxListDraftDocumentsParams implements BaseModel
 {
+    /** @use SdkModel<outbox_list_draft_documents_params> */
     use SdkModel;
     use SdkParams;
 

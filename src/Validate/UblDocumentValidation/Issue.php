@@ -9,8 +9,20 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
 
+/**
+ * @phpstan-type issue_alias = array{
+ *   message: string,
+ *   schematron: string,
+ *   type: Type::*,
+ *   flag?: string|null,
+ *   location?: string|null,
+ *   ruleID?: string|null,
+ *   test?: string|null,
+ * }
+ */
 final class Issue implements BaseModel
 {
+    /** @use SdkModel<issue_alias> */
     use SdkModel;
 
     #[Api]

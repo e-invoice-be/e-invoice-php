@@ -11,9 +11,20 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
 
 /**
  * Represents a business entity.
+ *
+ * @phpstan-type entity_alias = array{
+ *   additionalInfo?: string|null,
+ *   countryCode?: string|null,
+ *   geoInfo?: string|null,
+ *   identifiers?: list<Identifier>|null,
+ *   name?: string|null,
+ *   registrationDate?: string|null,
+ *   website?: string|null,
+ * }
  */
 final class Entity implements BaseModel
 {
+    /** @use SdkModel<entity_alias> */
     use SdkModel;
 
     /**

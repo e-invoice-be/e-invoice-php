@@ -8,8 +8,23 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type ubl_get_response = array{
+ *   id: string,
+ *   fileName: string,
+ *   fileHash?: string|null,
+ *   fileSize?: int|null,
+ *   receiverPeppolID?: string|null,
+ *   receiverPeppolScheme?: string|null,
+ *   senderPeppolID?: string|null,
+ *   senderPeppolScheme?: string|null,
+ *   signedURL?: string|null,
+ *   validatedAt?: \DateTimeInterface|null,
+ * }
+ */
 final class UblGetResponse implements BaseModel
 {
+    /** @use SdkModel<ubl_get_response> */
     use SdkModel;
 
     #[Api]

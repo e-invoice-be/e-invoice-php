@@ -8,8 +8,12 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type attachment_delete_response = array{isDeleted: bool}
+ */
 final class AttachmentDeleteResponse implements BaseModel
 {
+    /** @use SdkModel<attachment_delete_response> */
     use SdkModel;
 
     #[Api('is_deleted')]

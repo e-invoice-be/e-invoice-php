@@ -13,9 +13,21 @@ use EInvoiceAPI\Inbox\DocumentState;
 
 /**
  * Retrieve a paginated list of received documents with filtering options.
+ *
+ * @phpstan-type outbox_list_received_documents_params = array{
+ *   dateFrom?: \DateTimeInterface|null,
+ *   dateTo?: \DateTimeInterface|null,
+ *   page?: int,
+ *   pageSize?: int,
+ *   search?: string|null,
+ *   sender?: string|null,
+ *   state?: DocumentState::*,
+ *   type?: DocumentType::*,
+ * }
  */
 final class OutboxListReceivedDocumentsParams implements BaseModel
 {
+    /** @use SdkModel<outbox_list_received_documents_params> */
     use SdkModel;
     use SdkParams;
 

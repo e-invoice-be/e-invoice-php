@@ -13,12 +13,20 @@ use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\RequestOptions;
 
 /**
+ * @phpstan-type documents_number_page = array{
+ *   items?: list<STAINLESS_FIXME_Item>|null,
+ *   page?: int|null,
+ *   pageSize?: int|null,
+ *   total?: int|null,
+ * }
+ *
  * @template TItem
  *
  * @implements BasePage<TItem>
  */
 final class DocumentsNumberPage implements BasePage
 {
+    /** @use SdkModel<documents_number_page> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

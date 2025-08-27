@@ -13,8 +13,55 @@ use EInvoiceAPI\Documents\DocumentResponse\PaymentDetail;
 use EInvoiceAPI\Documents\DocumentResponse\TaxDetail;
 use EInvoiceAPI\Inbox\DocumentState;
 
+/**
+ * @phpstan-type document_response = array{
+ *   id: string,
+ *   amountDue?: string|null,
+ *   attachments?: list<DocumentAttachment>|null,
+ *   billingAddress?: string|null,
+ *   billingAddressRecipient?: string|null,
+ *   currency?: CurrencyCode::*|null,
+ *   customerAddress?: string|null,
+ *   customerAddressRecipient?: string|null,
+ *   customerEmail?: string|null,
+ *   customerID?: string|null,
+ *   customerName?: string|null,
+ *   customerTaxID?: string|null,
+ *   direction?: DocumentDirection::*|null,
+ *   documentType?: DocumentType::*|null,
+ *   dueDate?: \DateTimeInterface|null,
+ *   invoiceDate?: \DateTimeInterface|null,
+ *   invoiceID?: string|null,
+ *   invoiceTotal?: string|null,
+ *   items?: list<Item>|null,
+ *   note?: string|null,
+ *   paymentDetails?: list<PaymentDetail>|null,
+ *   paymentTerm?: string|null,
+ *   previousUnpaidBalance?: string|null,
+ *   purchaseOrder?: string|null,
+ *   remittanceAddress?: string|null,
+ *   remittanceAddressRecipient?: string|null,
+ *   serviceAddress?: string|null,
+ *   serviceAddressRecipient?: string|null,
+ *   serviceEndDate?: \DateTimeInterface|null,
+ *   serviceStartDate?: \DateTimeInterface|null,
+ *   shippingAddress?: string|null,
+ *   shippingAddressRecipient?: string|null,
+ *   state?: DocumentState::*|null,
+ *   subtotal?: string|null,
+ *   taxDetails?: list<TaxDetail>|null,
+ *   totalDiscount?: string|null,
+ *   totalTax?: string|null,
+ *   vendorAddress?: string|null,
+ *   vendorAddressRecipient?: string|null,
+ *   vendorEmail?: string|null,
+ *   vendorName?: string|null,
+ *   vendorTaxID?: string|null,
+ * }
+ */
 final class DocumentResponse implements BaseModel
 {
+    /** @use SdkModel<document_response> */
     use SdkModel;
 
     #[Api]

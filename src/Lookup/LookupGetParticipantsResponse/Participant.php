@@ -12,9 +12,17 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
 
 /**
  * Represents a Peppol participant with their details.
+ *
+ * @phpstan-type participant_alias = array{
+ *   peppolID: string,
+ *   peppolScheme: string,
+ *   documentTypes?: list<DocumentType>|null,
+ *   entities?: list<Entity>|null,
+ * }
  */
 final class Participant implements BaseModel
 {
+    /** @use SdkModel<participant_alias> */
     use SdkModel;
 
     /**

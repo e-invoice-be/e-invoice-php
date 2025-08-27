@@ -8,8 +8,18 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type document_attachment = array{
+ *   id: string,
+ *   fileName: string,
+ *   fileSize?: int|null,
+ *   fileType?: string|null,
+ *   fileURL?: string|null,
+ * }
+ */
 final class DocumentAttachment implements BaseModel
 {
+    /** @use SdkModel<document_attachment> */
     use SdkModel;
 
     #[Api]
