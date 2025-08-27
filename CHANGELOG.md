@@ -1,5 +1,50 @@
 # Changelog
 
+## 0.2.0 (2025-08-27)
+
+Full Changelog: [v0.1.1...v0.2.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.1.1...v0.2.0)
+
+### ⚠ BREAKING CHANGES
+
+* rename errors to exceptions
+* pagination field rename, and basic streaming docs
+* **refactor:** namespacing cleanup
+* **refactor:** clean up pagination, errors, as well as request methods
+
+### Features
+
+* **client:** add streaming ([05b1eff](https://github.com/e-invoice-be/e-invoice-php/commit/05b1eff719c3724fc1f4d79c33beb224bb65a9af))
+* **client:** improve error handling ([0a964b4](https://github.com/e-invoice-be/e-invoice-php/commit/0a964b44724dc37035a7dbb6a0ac41ba14c3d974))
+* **client:** use named parameters in methods ([e1b2c44](https://github.com/e-invoice-be/e-invoice-php/commit/e1b2c4486c6ddf1122dd391d75a8a7f12cd619d8))
+* ensure `-&gt;toArray()` benefits from structural typing ([0edf57b](https://github.com/e-invoice-be/e-invoice-php/commit/0edf57bab9faa433b9f164dd1d64a6a518fa7222))
+* pagination field rename, and basic streaming docs ([11c1194](https://github.com/e-invoice-be/e-invoice-php/commit/11c11941b8a3b8c33ea13e1989aaee8932affe17))
+* **php:** differentiate null and omit ([db376b7](https://github.com/e-invoice-be/e-invoice-php/commit/db376b722261d282c0a64ef09b068e738ae32d35))
+* **php:** rename internal types ([3491227](https://github.com/e-invoice-be/e-invoice-php/commit/349122719a51fe48d76576c906dc4d9d887200e0))
+* **refactor:** clean up pagination, errors, as well as request methods ([e61a72b](https://github.com/e-invoice-be/e-invoice-php/commit/e61a72b4a8ee8239d770f9be64bdd69458604694))
+* **refactor:** namespacing cleanup ([009f98c](https://github.com/e-invoice-be/e-invoice-php/commit/009f98c7cf6548e42b1fff665a3e5c570b35d2ae))
+* rename errors to exceptions ([7f7d82c](https://github.com/e-invoice-be/e-invoice-php/commit/7f7d82c0c14e4e3a734a241509a64a6561bf4475))
+
+
+### Bug Fixes
+
+* add create release workflow ([2da8d92](https://github.com/e-invoice-be/e-invoice-php/commit/2da8d92b8ae813682991e27af1a6e1e7f956ee44))
+* basic pagination should work ([f09ee2c](https://github.com/e-invoice-be/e-invoice-php/commit/f09ee2c22760fcd2152daf4015b6100ae3d4ce82))
+* **client:** elide null named parameters ([68d0125](https://github.com/e-invoice-be/e-invoice-php/commit/68d012510c6719ae8843e04414f9207803372163))
+* minor bugs ([f0a3c9e](https://github.com/e-invoice-be/e-invoice-php/commit/f0a3c9eb4b69a52f1af4fa79d362cfc1b9c6ae98))
+* streaming internals ([083ff3f](https://github.com/e-invoice-be/e-invoice-php/commit/083ff3fa2acb87f6703b62d65c55778bd35a0aec))
+* Update README.md ([57a738e](https://github.com/e-invoice-be/e-invoice-php/commit/57a738e1b6095b0dcbf2195b6a1a46ad84e7524f))
+
+
+### Chores
+
+* **docs:** improve pagination examples ([ca9e9b3](https://github.com/e-invoice-be/e-invoice-php/commit/ca9e9b317502dae01309e1db4eaea2e0f4033ed8))
+* **doc:** small improvement to pagination example ([ccb6fb3](https://github.com/e-invoice-be/e-invoice-php/commit/ccb6fb397ad1cd8462ca2efc1d2f4b7d523a534b))
+* improve model annotations ([9445b34](https://github.com/e-invoice-be/e-invoice-php/commit/9445b340c4a174913b210183a8ce8cbff5795ea6))
+* **internal:** refactored internal codepaths ([7fcbd17](https://github.com/e-invoice-be/e-invoice-php/commit/7fcbd17872b9512d7ba2f361a20b4e903938fb58))
+* intuitively order union types ([887ddad](https://github.com/e-invoice-be/e-invoice-php/commit/887ddad6d446c7ad1ff1b7bd713f73c3c87cb94d))
+* readme improvements ([9c71e12](https://github.com/e-invoice-be/e-invoice-php/commit/9c71e12c1889edc2e2a60e2b1843f0bd9a2e4b1a))
+* remove type aliases ([94cd564](https://github.com/e-invoice-be/e-invoice-php/commit/94cd564497db34caab38f0c52db1f0ac75f0865c))
+
 ## 0.1.1 (2025-08-14)
 
 Full Changelog: [v0.1.0...v0.1.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.1.0...v0.1.1)
