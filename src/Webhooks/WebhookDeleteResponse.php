@@ -10,9 +10,12 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Model for webhook deletion.
+ *
+ * @phpstan-type webhook_delete_response = array{isDeleted: bool}
  */
 final class WebhookDeleteResponse implements BaseModel
 {
+    /** @use SdkModel<webhook_delete_response> */
     use SdkModel;
 
     #[Api('is_deleted')]

@@ -11,9 +11,14 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Update a webhook by ID.
+ *
+ * @phpstan-type webhook_update_params = array{
+ *   enabled?: bool|null, events?: list<string>|null, url?: string|null
+ * }
  */
 final class WebhookUpdateParams implements BaseModel
 {
+    /** @use SdkModel<webhook_update_params> */
     use SdkModel;
     use SdkParams;
 

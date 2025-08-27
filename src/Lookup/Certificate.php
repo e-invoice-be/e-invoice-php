@@ -10,9 +10,14 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Certificate information for a Peppol endpoint.
+ *
+ * @phpstan-type certificate_alias = array{
+ *   status: string, details?: array<string, mixed>|null, error?: string|null
+ * }
  */
 final class Certificate implements BaseModel
 {
+    /** @use SdkModel<certificate_alias> */
     use SdkModel;
 
     /**

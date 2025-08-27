@@ -10,9 +10,18 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Response model for webhook API endpoints.
+ *
+ * @phpstan-type webhook_response = array{
+ *   id: string,
+ *   events: list<string>,
+ *   secret: string,
+ *   url: string,
+ *   enabled?: bool|null,
+ * }
  */
 final class WebhookResponse implements BaseModel
 {
+    /** @use SdkModel<webhook_response> */
     use SdkModel;
 
     #[Api]

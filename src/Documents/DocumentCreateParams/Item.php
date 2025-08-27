@@ -9,8 +9,22 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
+/**
+ * @phpstan-type item_alias = array{
+ *   amount?: float|string|null,
+ *   date?: null|null,
+ *   description?: string|null,
+ *   productCode?: string|null,
+ *   quantity?: float|string|null,
+ *   tax?: float|string|null,
+ *   taxRate?: string|null,
+ *   unit?: UnitOfMeasureCode::*|null,
+ *   unitPrice?: float|string|null,
+ * }
+ */
 final class Item implements BaseModel
 {
+    /** @use SdkModel<item_alias> */
     use SdkModel;
 
     #[Api(nullable: true, optional: true)]

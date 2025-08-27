@@ -10,9 +10,17 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Business entity information in the Peppol network.
+ *
+ * @phpstan-type entity_alias = array{
+ *   additionalInformation?: list<string>|null,
+ *   countryCode?: string|null,
+ *   name?: string|null,
+ *   registrationDate?: string|null,
+ * }
  */
 final class Entity implements BaseModel
 {
+    /** @use SdkModel<entity_alias> */
     use SdkModel;
 
     /**

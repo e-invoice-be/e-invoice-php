@@ -11,9 +11,12 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Delete an attachment from an invoice or credit note.
+ *
+ * @phpstan-type attachment_delete_params = array{documentID: string}
  */
 final class AttachmentDeleteParams implements BaseModel
 {
+    /** @use SdkModel<attachment_delete_params> */
     use SdkModel;
     use SdkParams;
 

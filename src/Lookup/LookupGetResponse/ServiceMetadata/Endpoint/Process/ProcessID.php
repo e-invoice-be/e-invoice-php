@@ -10,9 +10,12 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * Identifier of the process.
+ *
+ * @phpstan-type process_id = array{scheme: string, value: string}
  */
 final class ProcessID implements BaseModel
 {
+    /** @use SdkModel<process_id> */
     use SdkModel;
 
     /**
