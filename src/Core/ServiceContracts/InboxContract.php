@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Core\ServiceContracts;
 
-use EInvoiceAPI\Core\DocumentsNumberPage;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 

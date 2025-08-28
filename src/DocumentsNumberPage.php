@@ -1,16 +1,15 @@
 <?php
 
-namespace EInvoiceAPI\Core;
+namespace EInvoiceAPI;
 
-use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkPage;
 use EInvoiceAPI\Core\Contracts\BasePage;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\RequestOptions;
 
 /**
  * @phpstan-type documents_number_page = array{
