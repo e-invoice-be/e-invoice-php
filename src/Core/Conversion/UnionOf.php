@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @internal
+ */
 final class UnionOf implements Converter
 {
     /**
