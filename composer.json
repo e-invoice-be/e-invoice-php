@@ -24,7 +24,6 @@
     "sort-packages": true
   },
   "description": "E Invoice PHP SDK",
-  "license": "APACHE-2.0",
   "name": "e-invoice-be/e-invoice",
   "require": {
     "php": "^8.1",
