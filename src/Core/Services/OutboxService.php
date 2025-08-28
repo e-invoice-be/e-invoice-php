@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\DocumentsNumberPage;
 use EInvoiceAPI\Core\ServiceContracts\OutboxContract;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
 use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
