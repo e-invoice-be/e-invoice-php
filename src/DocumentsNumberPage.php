@@ -5,6 +5,7 @@ namespace EInvoiceAPI;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkPage;
+use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Contracts\BasePage;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
@@ -23,7 +24,7 @@ use EInvoiceAPI\Core\Conversion\ListOf;
  *
  * @implements BasePage<TItem>
  */
-final class DocumentsNumberPage implements BasePage
+final class DocumentsNumberPage implements BaseModel, BasePage
 {
     /** @use SdkModel<documents_number_page> */
     use SdkModel;
@@ -66,6 +67,7 @@ final class DocumentsNumberPage implements BasePage
             return;
         }
 
+        // @phpstan-ignore-next-line
         self::__unserialize($data);
 
         if ($this->offsetExists('items')) {
@@ -73,6 +75,7 @@ final class DocumentsNumberPage implements BasePage
                 new ListOf($convert),
                 value: $this->offsetGet('items')
             );
+            // @phpstan-ignore-next-line
             $this->offsetSet('items', $acc);
         }
     }
