@@ -20,6 +20,8 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
 /**
  * Validate if the JSON document can be converted to a valid UBL document.
  *
+ * @see EInvoiceAPI\Validate->validateJson
+ *
  * @phpstan-type validate_validate_json_params = array{
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,

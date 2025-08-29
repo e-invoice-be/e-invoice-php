@@ -9,6 +9,9 @@ use EInvoiceAPI\RequestOptions;
 
 interface UblContract
 {
+    /**
+     * @api
+     */
     public function get(
         string $documentID,
         ?RequestOptions $requestOptions = null

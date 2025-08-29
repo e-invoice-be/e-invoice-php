@@ -21,6 +21,8 @@ use const EInvoiceAPI\Core\OMIT as omit;
 interface ValidateContract
 {
     /**
+     * @api
+     *
      * @param float|string|null $amountDue
      * @param list<DocumentAttachmentCreate>|null $attachments
      * @param string|null $billingAddress
@@ -109,6 +111,8 @@ interface ValidateContract
     ): UblDocumentValidation;
 
     /**
+     * @api
+     *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
     public function validatePeppolID(
@@ -117,6 +121,8 @@ interface ValidateContract
     ): ValidateValidatePeppolIDResponse;
 
     /**
+     * @api
+     *
      * @param string $file
      */
     public function validateUbl(

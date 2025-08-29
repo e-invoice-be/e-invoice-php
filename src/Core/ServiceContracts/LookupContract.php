@@ -13,6 +13,8 @@ use const EInvoiceAPI\Core\OMIT as omit;
 interface LookupContract
 {
     /**
+     * @api
+     *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
     public function retrieve(
@@ -21,6 +23,8 @@ interface LookupContract
     ): LookupGetResponse;
 
     /**
+     * @api
+     *
      * @param string $query Query to lookup
      * @param string|null $countryCode Country code of the company to lookup. If not provided, the search will be global.
      */

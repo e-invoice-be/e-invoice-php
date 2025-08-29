@@ -16,16 +16,34 @@ class Client extends BaseClient
 {
     public string $apiKey;
 
+    /**
+     * @api
+     */
     public DocumentsService $documents;
 
+    /**
+     * @api
+     */
     public InboxService $inbox;
 
+    /**
+     * @api
+     */
     public OutboxService $outbox;
 
+    /**
+     * @api
+     */
     public ValidateService $validate;
 
+    /**
+     * @api
+     */
     public LookupService $lookup;
 
+    /**
+     * @api
+     */
     public WebhooksService $webhooks;
 
     public function __construct(?string $apiKey = null, ?string $baseUrl = null)

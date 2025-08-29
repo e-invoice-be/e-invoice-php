@@ -12,6 +12,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Create a new webhook.
  *
+ * @see EInvoiceAPI\Webhooks->create
+ *
  * @phpstan-type webhook_create_params = array{
  *   events: list<string>, url: string, enabled?: bool
  * }

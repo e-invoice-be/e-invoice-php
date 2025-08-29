@@ -26,8 +26,14 @@ use const EInvoiceAPI\Core\OMIT as omit;
 
 final class DocumentsService implements DocumentsContract
 {
+    /**
+     * @@api
+     */
     public AttachmentsService $attachments;
 
+    /**
+     * @@api
+     */
     public UblService $ubl;
 
     public function __construct(private Client $client)
@@ -37,7 +43,9 @@ final class DocumentsService implements DocumentsContract
     }
 
     /**
-     * Create a new invoice or credit note.
+     * @api
+     *
+     * Create a new invoice or credit note
      *
      * @param float|string|null $amountDue
      * @param list<DocumentAttachmentCreate>|null $attachments
@@ -183,7 +191,9 @@ final class DocumentsService implements DocumentsContract
     }
 
     /**
-     * Get an invoice or credit note by ID.
+     * @api
+     *
+     * Get an invoice or credit note by ID
      */
     public function retrieve(
         string $documentID,
@@ -199,7 +209,9 @@ final class DocumentsService implements DocumentsContract
     }
 
     /**
-     * Delete an invoice or credit note.
+     * @api
+     *
+     * Delete an invoice or credit note
      */
     public function delete(
         string $documentID,
@@ -215,7 +227,9 @@ final class DocumentsService implements DocumentsContract
     }
 
     /**
-     * Send an invoice or credit note via Peppol.
+     * @api
+     *
+     * Send an invoice or credit note via Peppol
      *
      * @param string|null $email
      * @param string|null $receiverPeppolID

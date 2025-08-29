@@ -20,7 +20,9 @@ final class WebhooksService implements WebhooksContract
     public function __construct(private Client $client) {}
 
     /**
-     * Create a new webhook.
+     * @api
+     *
+     * Create a new webhook
      *
      * @param list<string> $events
      * @param string $url
@@ -48,7 +50,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Get a webhook by ID.
+     * @api
+     *
+     * Get a webhook by ID
      */
     public function retrieve(
         string $webhookID,
@@ -64,7 +68,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Update a webhook by ID.
+     * @api
+     *
+     * Update a webhook by ID
      *
      * @param bool|null $enabled
      * @param list<string>|null $events
@@ -93,7 +99,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Get all webhooks for the current tenant.
+     * @api
+     *
+     * Get all webhooks for the current tenant
      *
      * @return list<WebhookResponse>
      */
@@ -109,7 +117,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Delete a webhook.
+     * @api
+     *
+     * Delete a webhook
      */
     public function delete(
         string $webhookID,

@@ -28,7 +28,9 @@ final class ValidateService implements ValidateContract
     public function __construct(private Client $client) {}
 
     /**
-     * Validate if the JSON document can be converted to a valid UBL document.
+     * @api
+     *
+     * Validate if the JSON document can be converted to a valid UBL document
      *
      * @param float|string|null $amountDue
      * @param list<DocumentAttachmentCreate>|null $attachments
@@ -174,6 +176,8 @@ final class ValidateService implements ValidateContract
     }
 
     /**
+     * @api
+     *
      * Validate if a Peppol ID exists in the Peppol network and retrieve supported document types. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
@@ -198,7 +202,9 @@ final class ValidateService implements ValidateContract
     }
 
     /**
-     * Validate the correctness of a UBL document.
+     * @api
+     *
+     * Validate the correctness of a UBL document
      *
      * @param string $file
      */

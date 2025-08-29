@@ -21,6 +21,8 @@ final class OutboxService implements OutboxContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * Retrieve a paginated list of draft documents with filtering options.
      *
      * @param int $page Page number
@@ -50,6 +52,8 @@ final class OutboxService implements OutboxContract
     }
 
     /**
+     * @api
+     *
      * Retrieve a paginated list of received documents with filtering options.
      *
      * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)

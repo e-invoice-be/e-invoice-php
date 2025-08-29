@@ -12,6 +12,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
  *
+ * @see EInvoiceAPI\Documents\Attachments->retrieve
+ *
  * @phpstan-type attachment_retrieve_params = array{documentID: string}
  */
 final class AttachmentRetrieveParams implements BaseModel

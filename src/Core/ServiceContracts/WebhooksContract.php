@@ -13,6 +13,8 @@ use const EInvoiceAPI\Core\OMIT as omit;
 interface WebhooksContract
 {
     /**
+     * @api
+     *
      * @param list<string> $events
      * @param string $url
      * @param bool $enabled
@@ -24,12 +26,17 @@ interface WebhooksContract
         ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
     /**
+     * @api
+     *
      * @param bool|null $enabled
      * @param list<string>|null $events
      * @param string|null $url
@@ -43,12 +50,17 @@ interface WebhooksContract
     ): WebhookResponse;
 
     /**
+     * @api
+     *
      * @return list<WebhookResponse>
      */
     public function list(
         ?RequestOptions $requestOptions = null
     ): array;
 
+    /**
+     * @api
+     */
     public function delete(
         string $webhookID,
         ?RequestOptions $requestOptions = null
