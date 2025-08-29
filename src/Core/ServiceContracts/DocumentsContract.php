@@ -21,6 +21,8 @@ use const EInvoiceAPI\Core\OMIT as omit;
 interface DocumentsContract
 {
     /**
+     * @api
+     *
      * @param float|string|null $amountDue
      * @param list<DocumentAttachmentCreate>|null $attachments
      * @param string|null $billingAddress
@@ -108,17 +110,25 @@ interface DocumentsContract
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
+    /**
+     * @api
+     */
     public function delete(
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentDeleteResponse;
 
     /**
+     * @api
+     *
      * @param string|null $email
      * @param string|null $receiverPeppolID
      * @param string|null $receiverPeppolScheme

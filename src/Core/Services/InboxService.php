@@ -22,6 +22,8 @@ final class InboxService implements InboxContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * Retrieve a paginated list of received documents with filtering options.
      *
      * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
@@ -72,6 +74,8 @@ final class InboxService implements InboxContract
     }
 
     /**
+     * @api
+     *
      * Retrieve a paginated list of received credit notes with filtering options.
      *
      * @param int $page Page number
@@ -101,6 +105,8 @@ final class InboxService implements InboxContract
     }
 
     /**
+     * @api
+     *
      * Retrieve a paginated list of received invoices with filtering options.
      *
      * @param int $page Page number

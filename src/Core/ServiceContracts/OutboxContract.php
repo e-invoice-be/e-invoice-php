@@ -15,6 +15,8 @@ use const EInvoiceAPI\Core\OMIT as omit;
 interface OutboxContract
 {
     /**
+     * @api
+     *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
      *
@@ -27,6 +29,8 @@ interface OutboxContract
     ): DocumentsNumberPage;
 
     /**
+     * @api
+     *
      * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
      * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
      * @param int $page Page number

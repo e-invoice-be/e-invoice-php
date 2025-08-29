@@ -14,6 +14,8 @@ use EInvoiceAPI\Inbox\DocumentState;
 /**
  * Retrieve a paginated list of received documents with filtering options.
  *
+ * @see EInvoiceAPI\Outbox->listReceivedDocuments
+ *
  * @phpstan-type outbox_list_received_documents_params = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,

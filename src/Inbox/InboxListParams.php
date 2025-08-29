@@ -13,6 +13,8 @@ use EInvoiceAPI\Documents\DocumentType;
 /**
  * Retrieve a paginated list of received documents with filtering options.
  *
+ * @see EInvoiceAPI\Inbox->list
+ *
  * @phpstan-type inbox_list_params = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,

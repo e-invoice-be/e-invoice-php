@@ -12,6 +12,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Send an invoice or credit note via Peppol.
  *
+ * @see EInvoiceAPI\Documents->send
+ *
  * @phpstan-type document_send_params = array{
  *   email?: string|null,
  *   receiverPeppolID?: string|null,

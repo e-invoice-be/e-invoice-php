@@ -12,6 +12,8 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Validate the correctness of a UBL document.
  *
+ * @see EInvoiceAPI\Validate->validateUbl
+ *
  * @phpstan-type validate_validate_ubl_params = array{file: string}
  */
 final class ValidateValidateUblParams implements BaseModel

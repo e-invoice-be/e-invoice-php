@@ -11,6 +11,8 @@ use EInvoiceAPI\RequestOptions;
 interface AttachmentsContract
 {
     /**
+     * @api
+     *
      * @param string $documentID
      */
     public function retrieve(
@@ -20,6 +22,8 @@ interface AttachmentsContract
     ): DocumentAttachment;
 
     /**
+     * @api
+     *
      * @return list<DocumentAttachment>
      */
     public function list(
@@ -28,6 +32,8 @@ interface AttachmentsContract
     ): array;
 
     /**
+     * @api
+     *
      * @param string $documentID
      */
     public function delete(
@@ -37,6 +43,8 @@ interface AttachmentsContract
     ): AttachmentDeleteResponse;
 
     /**
+     * @api
+     *
      * @param string $file
      */
     public function add(

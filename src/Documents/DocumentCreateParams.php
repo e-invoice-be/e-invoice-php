@@ -15,6 +15,8 @@ use EInvoiceAPI\Inbox\DocumentState;
 /**
  * Create a new invoice or credit note.
  *
+ * @see EInvoiceAPI\Documents->create
+ *
  * @phpstan-type document_create_params = array{
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,

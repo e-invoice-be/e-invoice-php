@@ -19,7 +19,9 @@ final class AttachmentsService implements AttachmentsContract
     public function __construct(private Client $client) {}
 
     /**
-     * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
+     * @api
+     *
+     * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
      * @param string $documentID
      */
@@ -45,7 +47,9 @@ final class AttachmentsService implements AttachmentsContract
     }
 
     /**
-     * Get all attachments for an invoice or credit note.
+     * @api
+     *
+     * Get all attachments for an invoice or credit note
      *
      * @return list<DocumentAttachment>
      */
@@ -63,7 +67,9 @@ final class AttachmentsService implements AttachmentsContract
     }
 
     /**
-     * Delete an attachment from an invoice or credit note.
+     * @api
+     *
+     * Delete an attachment from an invoice or credit note
      *
      * @param string $documentID
      */
@@ -89,7 +95,9 @@ final class AttachmentsService implements AttachmentsContract
     }
 
     /**
-     * Add a new attachment to an invoice or credit note.
+     * @api
+     *
+     * Add a new attachment to an invoice or credit note
      *
      * @param string $file
      */

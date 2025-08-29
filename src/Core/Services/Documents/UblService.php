@@ -14,7 +14,9 @@ final class UblService implements UblContract
     public function __construct(private Client $client) {}
 
     /**
-     * Get the UBL for an invoice or credit note.
+     * @api
+     *
+     * Get the UBL for an invoice or credit note
      */
     public function get(
         string $documentID,
