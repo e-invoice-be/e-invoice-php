@@ -56,7 +56,7 @@ class Client extends BaseClient
             'E_INVOICE_BASE_URL'
         ) ?: 'https://api.e-invoice.be';
 
-        $options = new RequestOptions(
+        $options = RequestOptions::with(
             uriFactory: Psr17FactoryDiscovery::findUriFactory(),
             streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
             requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
