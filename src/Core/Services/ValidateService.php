@@ -25,6 +25,9 @@ use const EInvoiceAPI\Core\OMIT as omit;
 
 final class ValidateService implements ValidateContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

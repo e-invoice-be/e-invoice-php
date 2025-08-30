@@ -16,6 +16,9 @@ use EInvoiceAPI\RequestOptions;
 
 final class AttachmentsService implements AttachmentsContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

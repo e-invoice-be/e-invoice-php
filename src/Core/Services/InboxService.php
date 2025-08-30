@@ -19,6 +19,9 @@ use const EInvoiceAPI\Core\OMIT as omit;
 
 final class InboxService implements InboxContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

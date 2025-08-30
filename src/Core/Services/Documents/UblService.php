@@ -11,6 +11,9 @@ use EInvoiceAPI\RequestOptions;
 
 final class UblService implements UblContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
