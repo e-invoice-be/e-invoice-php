@@ -46,6 +46,8 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     public ?int $total;
 
     /**
+     * @internal
+     *
      * @param array{
      *   method: string,
      *   path: string,
@@ -61,7 +63,7 @@ final class DocumentsNumberPage implements BaseModel, BasePage
         private RequestOptions $options,
         mixed $data,
     ) {
-        self::introspect();
+        $this->initialize();
 
         if (!is_array($data)) {
             return;
@@ -88,6 +90,8 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     }
 
     /**
+     * @internal
+     *
      * @return array{
      *   array{
      *     method: string,

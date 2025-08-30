@@ -36,6 +36,9 @@ final class DocumentsService implements DocumentsContract
      */
     public UblService $ubl;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->attachments = new AttachmentsService($this->client);

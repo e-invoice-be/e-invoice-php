@@ -18,6 +18,9 @@ use const EInvoiceAPI\Core\OMIT as omit;
 
 final class OutboxService implements OutboxContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
