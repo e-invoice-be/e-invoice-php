@@ -11,6 +11,8 @@ use EInvoiceAPI\Core\Services\LookupService;
 use EInvoiceAPI\Core\Services\OutboxService;
 use EInvoiceAPI\Core\Services\ValidateService;
 use EInvoiceAPI\Core\Services\WebhooksService;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 
 class Client extends BaseClient
 {
@@ -54,12 +56,19 @@ class Client extends BaseClient
             'E_INVOICE_BASE_URL'
         ) ?: 'https://api.e-invoice.be';
 
+        $options = new RequestOptions(
+            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+            transporter: Psr18ClientDiscovery::find(),
+        );
+
         parent::__construct(
             headers: [
                 'Content-Type' => 'application/json', 'Accept' => 'application/json',
             ],
             baseUrl: $base,
-            options: new RequestOptions,
+            options: $options,
         );
 
         $this->documents = new DocumentsService($this);
