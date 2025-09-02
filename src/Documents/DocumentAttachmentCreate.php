@@ -24,6 +24,9 @@ final class DocumentAttachmentCreate implements BaseModel
     #[Api('file_name')]
     public string $fileName;
 
+    /**
+     * Base64 encoded file data.
+     */
     #[Api('file_data', nullable: true, optional: true)]
     public ?string $fileData;
 
@@ -82,6 +85,9 @@ final class DocumentAttachmentCreate implements BaseModel
         return $obj;
     }
 
+    /**
+     * Base64 encoded file data.
+     */
     public function withFileData(?string $fileData): self
     {
         $obj = clone $this;
