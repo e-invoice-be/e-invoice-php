@@ -10,7 +10,18 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new ValidateValidateUblParams); // set properties as needed
+ * $client->validate->validateUbl(...$params->toArray());
+ * ```
  * Validate the correctness of a UBL document.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->validate->validateUbl(...$params->toArray());`
  *
  * @see EInvoiceAPI\Validate->validateUbl
  *

@@ -13,7 +13,18 @@ use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new DocumentCreateParams); // set properties as needed
+ * $client->documents->create(...$params->toArray());
+ * ```
  * Create a new invoice or credit note.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->documents->create(...$params->toArray());`
  *
  * @see EInvoiceAPI\Documents->create
  *

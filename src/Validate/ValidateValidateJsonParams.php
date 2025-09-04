@@ -18,7 +18,18 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new ValidateValidateJsonParams); // set properties as needed
+ * $client->validate->validateJson(...$params->toArray());
+ * ```
  * Validate if the JSON document can be converted to a valid UBL document.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->validate->validateJson(...$params->toArray());`
  *
  * @see EInvoiceAPI\Validate->validateJson
  *
