@@ -10,7 +10,18 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new InboxListCreditNotesParams); // set properties as needed
+ * $client->inbox->listCreditNotes(...$params->toArray());
+ * ```
  * Retrieve a paginated list of received credit notes with filtering options.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->inbox->listCreditNotes(...$params->toArray());`
  *
  * @see EInvoiceAPI\Inbox->listCreditNotes
  *

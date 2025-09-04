@@ -10,7 +10,18 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new LookupRetrieveParticipantsParams); // set properties as needed
+ * $client->lookup->retrieveParticipants(...$params->toArray());
+ * ```
  * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->lookup->retrieveParticipants(...$params->toArray());`
  *
  * @see EInvoiceAPI\Lookup->retrieveParticipants
  *
