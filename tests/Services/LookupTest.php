@@ -35,7 +35,7 @@ final class LookupTest extends TestCase
 
         $result = $this->client->lookup->retrieve('peppol_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class LookupTest extends TestCase
 
         $result = $this->client->lookup->retrieve('peppol_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -59,7 +59,7 @@ final class LookupTest extends TestCase
 
         $result = $this->client->lookup->retrieveParticipants(query: 'query');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -71,6 +71,6 @@ final class LookupTest extends TestCase
 
         $result = $this->client->lookup->retrieveParticipants(query: 'query');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
