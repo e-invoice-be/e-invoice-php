@@ -35,7 +35,7 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->create();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->retrieve('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -59,7 +59,7 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->delete('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -71,6 +71,6 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->send('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

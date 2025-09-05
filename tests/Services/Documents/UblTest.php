@@ -35,6 +35,6 @@ final class UblTest extends TestCase
 
         $result = $this->client->documents->ubl->get('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
