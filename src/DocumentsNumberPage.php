@@ -11,10 +11,11 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\DocumentsNumberPage\Item;
 
 /**
  * @phpstan-type documents_number_page = array{
- *   items?: list<STAINLESS_FIXME_Item>|null,
+ *   items?: list<Item>|null,
  *   page?: int|null,
  *   pageSize?: int|null,
  *   total?: int|null,
@@ -33,7 +34,7 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $items */
-    #[Api(list: STAINLESS_FIXME_Item::class, optional: true)]
+    #[Api(list: Item::class, optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
