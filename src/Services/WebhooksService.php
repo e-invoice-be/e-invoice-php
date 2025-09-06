@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Services;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\Core\ServiceContracts\WebhooksContract;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\WebhooksContract;
 use EInvoiceAPI\Webhooks\WebhookCreateParams;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\ServiceContracts\Documents;
+namespace EInvoiceAPI\ServiceContracts\Documents;
 
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;

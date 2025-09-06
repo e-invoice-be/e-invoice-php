@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Services\Documents;
+namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\ServiceContracts\Documents\UblContract;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\Documents\UblContract;
 
 final class UblService implements UblContract
 {

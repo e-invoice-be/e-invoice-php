@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Services;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\ServiceContracts\DocumentsContract;
-use EInvoiceAPI\Core\Services\Documents\AttachmentsService;
-use EInvoiceAPI\Core\Services\Documents\UblService;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams;
@@ -21,6 +18,9 @@ use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Documents\PaymentDetailCreate;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\DocumentsContract;
+use EInvoiceAPI\Services\Documents\AttachmentsService;
+use EInvoiceAPI\Services\Documents\UblService;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 
