@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\ServiceContracts;
+namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;

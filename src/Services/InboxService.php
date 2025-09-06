@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Services;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\ServiceContracts\InboxContract;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -14,6 +13,7 @@ use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
 use EInvoiceAPI\Inbox\InboxListInvoicesParams;
 use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\InboxContract;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 

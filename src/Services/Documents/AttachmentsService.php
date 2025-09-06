@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Services\Documents;
+namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\Core\ServiceContracts\Documents\AttachmentsContract;
 use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\Documents\AttachmentsContract;
 
 final class AttachmentsService implements AttachmentsContract
 {

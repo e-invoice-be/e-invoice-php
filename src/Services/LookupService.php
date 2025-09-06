@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Services;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\ServiceContracts\LookupContract;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
 use EInvoiceAPI\Lookup\LookupRetrieveParams;
 use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\LookupContract;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 
