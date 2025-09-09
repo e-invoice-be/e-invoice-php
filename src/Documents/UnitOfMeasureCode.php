@@ -4,195 +4,190 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Concerns\SdkEnum;
-use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
  */
-final class UnitOfMeasureCode implements ConverterSource
+enum UnitOfMeasureCode: string
 {
-    use SdkEnum;
+    case UNIT_OF_MEASURE_CODE_10 = '10';
 
-    public const UNIT_OF_MEASURE_CODE_10 = '10';
+    case UNIT_OF_MEASURE_CODE_11 = '11';
 
-    public const UNIT_OF_MEASURE_CODE_11 = '11';
+    case UNIT_OF_MEASURE_CODE_13 = '13';
 
-    public const UNIT_OF_MEASURE_CODE_13 = '13';
+    case UNIT_OF_MEASURE_CODE_14 = '14';
 
-    public const UNIT_OF_MEASURE_CODE_14 = '14';
+    case UNIT_OF_MEASURE_CODE_15 = '15';
 
-    public const UNIT_OF_MEASURE_CODE_15 = '15';
+    case UNIT_OF_MEASURE_CODE_20 = '20';
 
-    public const UNIT_OF_MEASURE_CODE_20 = '20';
+    case UNIT_OF_MEASURE_CODE_21 = '21';
 
-    public const UNIT_OF_MEASURE_CODE_21 = '21';
+    case UNIT_OF_MEASURE_CODE_22 = '22';
 
-    public const UNIT_OF_MEASURE_CODE_22 = '22';
+    case UNIT_OF_MEASURE_CODE_23 = '23';
 
-    public const UNIT_OF_MEASURE_CODE_23 = '23';
+    case UNIT_OF_MEASURE_CODE_24 = '24';
 
-    public const UNIT_OF_MEASURE_CODE_24 = '24';
+    case UNIT_OF_MEASURE_CODE_25 = '25';
 
-    public const UNIT_OF_MEASURE_CODE_25 = '25';
+    case UNIT_OF_MEASURE_CODE_27 = '27';
 
-    public const UNIT_OF_MEASURE_CODE_27 = '27';
+    case UNIT_OF_MEASURE_CODE_28 = '28';
 
-    public const UNIT_OF_MEASURE_CODE_28 = '28';
+    case UNIT_OF_MEASURE_CODE_33 = '33';
 
-    public const UNIT_OF_MEASURE_CODE_33 = '33';
+    case UNIT_OF_MEASURE_CODE_34 = '34';
 
-    public const UNIT_OF_MEASURE_CODE_34 = '34';
+    case UNIT_OF_MEASURE_CODE_35 = '35';
 
-    public const UNIT_OF_MEASURE_CODE_35 = '35';
+    case UNIT_OF_MEASURE_CODE_37 = '37';
 
-    public const UNIT_OF_MEASURE_CODE_37 = '37';
+    case UNIT_OF_MEASURE_CODE_38 = '38';
 
-    public const UNIT_OF_MEASURE_CODE_38 = '38';
+    case UNIT_OF_MEASURE_CODE_40 = '40';
 
-    public const UNIT_OF_MEASURE_CODE_40 = '40';
+    case UNIT_OF_MEASURE_CODE_41 = '41';
 
-    public const UNIT_OF_MEASURE_CODE_41 = '41';
+    case UNIT_OF_MEASURE_CODE_56 = '56';
 
-    public const UNIT_OF_MEASURE_CODE_56 = '56';
+    case UNIT_OF_MEASURE_CODE_57 = '57';
 
-    public const UNIT_OF_MEASURE_CODE_57 = '57';
+    case UNIT_OF_MEASURE_CODE_58 = '58';
 
-    public const UNIT_OF_MEASURE_CODE_58 = '58';
+    case UNIT_OF_MEASURE_CODE_59 = '59';
 
-    public const UNIT_OF_MEASURE_CODE_59 = '59';
+    case UNIT_OF_MEASURE_CODE_60 = '60';
 
-    public const UNIT_OF_MEASURE_CODE_60 = '60';
+    case UNIT_OF_MEASURE_CODE_61 = '61';
 
-    public const UNIT_OF_MEASURE_CODE_61 = '61';
+    case UNIT_OF_MEASURE_CODE_74 = '74';
 
-    public const UNIT_OF_MEASURE_CODE_74 = '74';
+    case UNIT_OF_MEASURE_CODE_77 = '77';
 
-    public const UNIT_OF_MEASURE_CODE_77 = '77';
+    case UNIT_OF_MEASURE_CODE_80 = '80';
 
-    public const UNIT_OF_MEASURE_CODE_80 = '80';
+    case UNIT_OF_MEASURE_CODE_81 = '81';
 
-    public const UNIT_OF_MEASURE_CODE_81 = '81';
+    case UNIT_OF_MEASURE_CODE_85 = '85';
 
-    public const UNIT_OF_MEASURE_CODE_85 = '85';
+    case UNIT_OF_MEASURE_CODE_87 = '87';
 
-    public const UNIT_OF_MEASURE_CODE_87 = '87';
+    case UNIT_OF_MEASURE_CODE_89 = '89';
 
-    public const UNIT_OF_MEASURE_CODE_89 = '89';
+    case UNIT_OF_MEASURE_CODE_91 = '91';
 
-    public const UNIT_OF_MEASURE_CODE_91 = '91';
+    case UNIT_OF_MEASURE_CODE_1_I = '1I';
 
-    public const UNIT_OF_MEASURE_CODE_1_I = '1I';
+    case EA = 'EA';
 
-    public const EA = 'EA';
+    case E01 = 'E01';
 
-    public const E01 = 'E01';
+    case E07 = 'E07';
 
-    public const E07 = 'E07';
+    case E09 = 'E09';
 
-    public const E09 = 'E09';
+    case E10 = 'E10';
 
-    public const E10 = 'E10';
+    case E12 = 'E12';
 
-    public const E12 = 'E12';
+    case E14 = 'E14';
 
-    public const E14 = 'E14';
+    case E17 = 'E17';
 
-    public const E17 = 'E17';
+    case E20 = 'E20';
 
-    public const E20 = 'E20';
+    case E23 = 'E23';
 
-    public const E23 = 'E23';
+    case E25 = 'E25';
 
-    public const E25 = 'E25';
+    case E27 = 'E27';
 
-    public const E27 = 'E27';
+    case E31 = 'E31';
 
-    public const E31 = 'E31';
+    case E34 = 'E34';
 
-    public const E34 = 'E34';
+    case E35 = 'E35';
 
-    public const E35 = 'E35';
+    case E36 = 'E36';
 
-    public const E36 = 'E36';
+    case E37 = 'E37';
 
-    public const E37 = 'E37';
+    case E38 = 'E38';
 
-    public const E38 = 'E38';
+    case E39 = 'E39';
 
-    public const E39 = 'E39';
+    case E40 = 'E40';
 
-    public const E40 = 'E40';
+    case E41 = 'E41';
 
-    public const E41 = 'E41';
+    case E42 = 'E42';
 
-    public const E42 = 'E42';
+    case E43 = 'E43';
 
-    public const E43 = 'E43';
+    case E44 = 'E44';
 
-    public const E44 = 'E44';
+    case E45 = 'E45';
 
-    public const E45 = 'E45';
+    case E46 = 'E46';
 
-    public const E46 = 'E46';
+    case E47 = 'E47';
 
-    public const E47 = 'E47';
+    case E48 = 'E48';
 
-    public const E48 = 'E48';
+    case E49 = 'E49';
 
-    public const E49 = 'E49';
+    case E50 = 'E50';
 
-    public const E50 = 'E50';
+    case E51 = 'E51';
 
-    public const E51 = 'E51';
+    case E52 = 'E52';
 
-    public const E52 = 'E52';
+    case E53 = 'E53';
 
-    public const E53 = 'E53';
+    case E54 = 'E54';
 
-    public const E54 = 'E54';
+    case E55 = 'E55';
 
-    public const E55 = 'E55';
+    case E56 = 'E56';
 
-    public const E56 = 'E56';
+    case E57 = 'E57';
 
-    public const E57 = 'E57';
+    case E58 = 'E58';
 
-    public const E58 = 'E58';
+    case E60 = 'E60';
 
-    public const E60 = 'E60';
+    case E62 = 'E62';
 
-    public const E62 = 'E62';
+    case E65 = 'E65';
 
-    public const E65 = 'E65';
+    case E66 = 'E66';
 
-    public const E66 = 'E66';
+    case E67 = 'E67';
 
-    public const E67 = 'E67';
+    case E69 = 'E69';
 
-    public const E69 = 'E69';
+    case E70 = 'E70';
 
-    public const E70 = 'E70';
+    case E71 = 'E71';
 
-    public const E71 = 'E71';
+    case E73 = 'E73';
 
-    public const E73 = 'E73';
+    case E75 = 'E75';
 
-    public const E75 = 'E75';
+    case E76 = 'E76';
 
-    public const E76 = 'E76';
+    case UNIT_OF_MEASURE_CODE_2_A = '2A';
 
-    public const UNIT_OF_MEASURE_CODE_2_A = '2A';
+    case UNIT_OF_MEASURE_CODE_2_B = '2B';
 
-    public const UNIT_OF_MEASURE_CODE_2_B = '2B';
+    case UNIT_OF_MEASURE_CODE_2_C = '2C';
 
-    public const UNIT_OF_MEASURE_CODE_2_C = '2C';
+    case ZZ = 'ZZ';
 
-    public const ZZ = 'ZZ';
+    case NAR = 'NAR';
 
-    public const NAR = 'NAR';
+    case C62 = 'C62';
 
-    public const C62 = 'C62';
-
-    public const LTR = 'LTR';
+    case LTR = 'LTR';
 }

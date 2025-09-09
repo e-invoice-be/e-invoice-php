@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Concerns\SdkEnum;
-use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
-
-final class DocumentType implements ConverterSource
+enum DocumentType: string
 {
-    use SdkEnum;
+    case INVOICE = 'INVOICE';
 
-    public const INVOICE = 'INVOICE';
+    case CREDIT_NOTE = 'CREDIT_NOTE';
 
-    public const CREDIT_NOTE = 'CREDIT_NOTE';
-
-    public const DEBIT_NOTE = 'DEBIT_NOTE';
+    case DEBIT_NOTE = 'DEBIT_NOTE';
 }

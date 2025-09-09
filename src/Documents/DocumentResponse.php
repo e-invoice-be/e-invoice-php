@@ -20,15 +20,15 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   attachments?: list<DocumentAttachment>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   currency?: CurrencyCode::*|null,
+ *   currency?: value-of<CurrencyCode>|null,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerTaxID?: string|null,
- *   direction?: DocumentDirection::*|null,
- *   documentType?: DocumentType::*|null,
+ *   direction?: value-of<DocumentDirection>|null,
+ *   documentType?: value-of<DocumentType>|null,
  *   dueDate?: \DateTimeInterface|null,
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
@@ -47,7 +47,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   serviceStartDate?: \DateTimeInterface|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
- *   state?: DocumentState::*|null,
+ *   state?: value-of<DocumentState>|null,
  *   subtotal?: string|null,
  *   taxDetails?: list<TaxDetail>|null,
  *   totalDiscount?: string|null,
@@ -83,7 +83,7 @@ final class DocumentResponse implements BaseModel
     /**
      * Currency of the invoice.
      *
-     * @var CurrencyCode::*|null $currency
+     * @var value-of<CurrencyCode>|null $currency
      */
     #[Api(enum: CurrencyCode::class, optional: true)]
     public ?string $currency;
@@ -106,11 +106,11 @@ final class DocumentResponse implements BaseModel
     #[Api('customer_tax_id', nullable: true, optional: true)]
     public ?string $customerTaxID;
 
-    /** @var DocumentDirection::*|null $direction */
+    /** @var value-of<DocumentDirection>|null $direction */
     #[Api(enum: DocumentDirection::class, optional: true)]
     public ?string $direction;
 
-    /** @var DocumentType::*|null $documentType */
+    /** @var value-of<DocumentType>|null $documentType */
     #[Api('document_type', enum: DocumentType::class, optional: true)]
     public ?string $documentType;
 
@@ -170,7 +170,7 @@ final class DocumentResponse implements BaseModel
     #[Api('shipping_address_recipient', nullable: true, optional: true)]
     public ?string $shippingAddressRecipient;
 
-    /** @var DocumentState::*|null $state */
+    /** @var value-of<DocumentState>|null $state */
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
@@ -227,12 +227,12 @@ final class DocumentResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<DocumentAttachment> $attachments
-     * @param CurrencyCode::* $currency
-     * @param DocumentDirection::* $direction
-     * @param DocumentType::* $documentType
+     * @param CurrencyCode|value-of<CurrencyCode> $currency
+     * @param DocumentDirection|value-of<DocumentDirection> $direction
+     * @param DocumentType|value-of<DocumentType> $documentType
      * @param list<Item> $items
      * @param list<PaymentDetail> $paymentDetails
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState> $state
      * @param list<TaxDetail> $taxDetails
      */
     public static function with(
@@ -241,15 +241,15 @@ final class DocumentResponse implements BaseModel
         ?array $attachments = null,
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
-        ?string $currency = null,
+        CurrencyCode|string|null $currency = null,
         ?string $customerAddress = null,
         ?string $customerAddressRecipient = null,
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
         ?string $customerTaxID = null,
-        ?string $direction = null,
-        ?string $documentType = null,
+        DocumentDirection|string|null $direction = null,
+        DocumentType|string|null $documentType = null,
         ?\DateTimeInterface $dueDate = null,
         ?\DateTimeInterface $invoiceDate = null,
         ?string $invoiceID = null,
@@ -268,7 +268,7 @@ final class DocumentResponse implements BaseModel
         ?\DateTimeInterface $serviceStartDate = null,
         ?string $shippingAddress = null,
         ?string $shippingAddressRecipient = null,
-        ?string $state = null,
+        DocumentState|string|null $state = null,
         ?string $subtotal = null,
         ?array $taxDetails = null,
         ?string $totalDiscount = null,
@@ -287,15 +287,15 @@ final class DocumentResponse implements BaseModel
         null !== $attachments && $obj->attachments = $attachments;
         null !== $billingAddress && $obj->billingAddress = $billingAddress;
         null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
-        null !== $currency && $obj->currency = $currency;
+        null !== $currency && $obj->currency = $currency instanceof CurrencyCode ? $currency->value : $currency;
         null !== $customerAddress && $obj->customerAddress = $customerAddress;
         null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
         null !== $customerEmail && $obj->customerEmail = $customerEmail;
         null !== $customerID && $obj->customerID = $customerID;
         null !== $customerName && $obj->customerName = $customerName;
         null !== $customerTaxID && $obj->customerTaxID = $customerTaxID;
-        null !== $direction && $obj->direction = $direction;
-        null !== $documentType && $obj->documentType = $documentType;
+        null !== $direction && $obj->direction = $direction instanceof DocumentDirection ? $direction->value : $direction;
+        null !== $documentType && $obj->documentType = $documentType instanceof DocumentType ? $documentType->value : $documentType;
         null !== $dueDate && $obj->dueDate = $dueDate;
         null !== $invoiceDate && $obj->invoiceDate = $invoiceDate;
         null !== $invoiceID && $obj->invoiceID = $invoiceID;
@@ -314,7 +314,7 @@ final class DocumentResponse implements BaseModel
         null !== $serviceStartDate && $obj->serviceStartDate = $serviceStartDate;
         null !== $shippingAddress && $obj->shippingAddress = $shippingAddress;
         null !== $shippingAddressRecipient && $obj->shippingAddressRecipient = $shippingAddressRecipient;
-        null !== $state && $obj->state = $state;
+        null !== $state && $obj->state = $state instanceof DocumentState ? $state->value : $state;
         null !== $subtotal && $obj->subtotal = $subtotal;
         null !== $taxDetails && $obj->taxDetails = $taxDetails;
         null !== $totalDiscount && $obj->totalDiscount = $totalDiscount;
@@ -375,12 +375,12 @@ final class DocumentResponse implements BaseModel
     /**
      * Currency of the invoice.
      *
-     * @param CurrencyCode::* $currency
+     * @param CurrencyCode|value-of<CurrencyCode> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(CurrencyCode|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof CurrencyCode ? $currency->value : $currency;
 
         return $obj;
     }
@@ -435,23 +435,23 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param DocumentDirection::* $direction
+     * @param DocumentDirection|value-of<DocumentDirection> $direction
      */
-    public function withDirection(string $direction): self
+    public function withDirection(DocumentDirection|string $direction): self
     {
         $obj = clone $this;
-        $obj->direction = $direction;
+        $obj->direction = $direction instanceof DocumentDirection ? $direction->value : $direction;
 
         return $obj;
     }
 
     /**
-     * @param DocumentType::* $documentType
+     * @param DocumentType|value-of<DocumentType> $documentType
      */
-    public function withDocumentType(string $documentType): self
+    public function withDocumentType(DocumentType|string $documentType): self
     {
         $obj = clone $this;
-        $obj->documentType = $documentType;
+        $obj->documentType = $documentType instanceof DocumentType ? $documentType->value : $documentType;
 
         return $obj;
     }
@@ -613,12 +613,12 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState> $state
      */
-    public function withState(string $state): self
+    public function withState(DocumentState|string $state): self
     {
         $obj = clone $this;
-        $obj->state = $state;
+        $obj->state = $state instanceof DocumentState ? $state->value : $state;
 
         return $obj;
     }

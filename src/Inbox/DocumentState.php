@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Inbox;
 
-use EInvoiceAPI\Core\Concerns\SdkEnum;
-use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
-
-final class DocumentState implements ConverterSource
+enum DocumentState: string
 {
-    use SdkEnum;
+    case DRAFT = 'DRAFT';
 
-    public const DRAFT = 'DRAFT';
+    case TRANSIT = 'TRANSIT';
 
-    public const TRANSIT = 'TRANSIT';
+    case FAILED = 'FAILED';
 
-    public const FAILED = 'FAILED';
+    case SENT = 'SENT';
 
-    public const SENT = 'SENT';
-
-    public const RECEIVED = 'RECEIVED';
+    case RECEIVED = 'RECEIVED';
 }

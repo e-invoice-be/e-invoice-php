@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Concerns\SdkEnum;
-use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
-
-final class DocumentDirection implements ConverterSource
+enum DocumentDirection: string
 {
-    use SdkEnum;
+    case INBOUND = 'INBOUND';
 
-    public const INBOUND = 'INBOUND';
-
-    public const OUTBOUND = 'OUTBOUND';
+    case OUTBOUND = 'OUTBOUND';
 }
