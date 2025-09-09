@@ -13,7 +13,7 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
  * @phpstan-type issue_alias = array{
  *   message: string,
  *   schematron: string,
- *   type: Type::*,
+ *   type: value-of<Type>,
  *   flag?: string|null,
  *   location?: string|null,
  *   ruleID?: string|null,
@@ -31,7 +31,7 @@ final class Issue implements BaseModel
     #[Api]
     public string $schematron;
 
-    /** @var Type::* $type */
+    /** @var value-of<Type> $type */
     #[Api(enum: Type::class)]
     public string $type;
 
@@ -71,12 +71,12 @@ final class Issue implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $message,
         string $schematron,
-        string $type,
+        Type|string $type,
         ?string $flag = null,
         ?string $location = null,
         ?string $ruleID = null,
@@ -86,7 +86,7 @@ final class Issue implements BaseModel
 
         $obj->message = $message;
         $obj->schematron = $schematron;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         null !== $flag && $obj->flag = $flag;
         null !== $location && $obj->location = $location;
@@ -113,12 +113,12 @@ final class Issue implements BaseModel
     }
 
     /**
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
-    public function withType(string $type): self
+    public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }

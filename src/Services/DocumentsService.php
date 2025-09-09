@@ -54,15 +54,15 @@ final class DocumentsService implements DocumentsContract
      * @param list<DocumentAttachmentCreate>|null $attachments
      * @param string|null $billingAddress
      * @param string|null $billingAddressRecipient
-     * @param CurrencyCode::* $currency Currency of the invoice
+     * @param CurrencyCode|value-of<CurrencyCode> $currency Currency of the invoice
      * @param string|null $customerAddress
      * @param string|null $customerAddressRecipient
      * @param string|null $customerEmail
      * @param string|null $customerID
      * @param string|null $customerName
      * @param string|null $customerTaxID
-     * @param DocumentDirection::* $direction
-     * @param DocumentType::* $documentType
+     * @param DocumentDirection|value-of<DocumentDirection> $direction
+     * @param DocumentType|value-of<DocumentType> $documentType
      * @param \DateTimeInterface|null $dueDate
      * @param \DateTimeInterface|null $invoiceDate
      * @param string|null $invoiceID
@@ -81,7 +81,7 @@ final class DocumentsService implements DocumentsContract
      * @param \DateTimeInterface|null $serviceStartDate
      * @param string|null $shippingAddress
      * @param string|null $shippingAddressRecipient
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState> $state
      * @param float|string|null $subtotal
      * @param list<TaxDetail>|null $taxDetails
      * @param float|string|null $totalDiscount

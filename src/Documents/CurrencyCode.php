@@ -4,40 +4,35 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Concerns\SdkEnum;
-use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
-
-final class CurrencyCode implements ConverterSource
+enum CurrencyCode: string
 {
-    use SdkEnum;
+    case EUR = 'EUR';
 
-    public const EUR = 'EUR';
+    case USD = 'USD';
 
-    public const USD = 'USD';
+    case GBP = 'GBP';
 
-    public const GBP = 'GBP';
+    case JPY = 'JPY';
 
-    public const JPY = 'JPY';
+    case CHF = 'CHF';
 
-    public const CHF = 'CHF';
+    case CAD = 'CAD';
 
-    public const CAD = 'CAD';
+    case AUD = 'AUD';
 
-    public const AUD = 'AUD';
+    case NZD = 'NZD';
 
-    public const NZD = 'NZD';
+    case CNY = 'CNY';
 
-    public const CNY = 'CNY';
+    case INR = 'INR';
 
-    public const INR = 'INR';
+    case SEK = 'SEK';
 
-    public const SEK = 'SEK';
+    case NOK = 'NOK';
 
-    public const NOK = 'NOK';
+    case DKK = 'DKK';
 
-    public const DKK = 'DKK';
+    case SGD = 'SGD';
 
-    public const SGD = 'SGD';
-
-    public const HKD = 'HKD';
+    case HKD = 'HKD';
 }

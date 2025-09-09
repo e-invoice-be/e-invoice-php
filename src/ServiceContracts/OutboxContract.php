@@ -37,8 +37,8 @@ interface OutboxContract
      * @param int $pageSize Number of items per page
      * @param string|null $search Search in invoice number, seller/buyer names
      * @param string|null $sender Filter by sender ID
-     * @param DocumentState::* $state Filter by document state
-     * @param DocumentType::* $type Filter by document type
+     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
+     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
      *
      * @return DocumentsNumberPage<DocumentResponse>
      */
