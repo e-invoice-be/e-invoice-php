@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
@@ -18,6 +19,8 @@ interface WebhooksContract
      * @param list<string> $events
      * @param string $url
      * @param bool $enabled
+     *
+     * @return WebhookResponse<HasRawResponse>
      */
     public function create(
         $events,
@@ -28,6 +31,8 @@ interface WebhooksContract
 
     /**
      * @api
+     *
+     * @return WebhookResponse<HasRawResponse>
      */
     public function retrieve(
         string $webhookID,
@@ -40,6 +45,8 @@ interface WebhooksContract
      * @param bool|null $enabled
      * @param list<string>|null $events
      * @param string|null $url
+     *
+     * @return WebhookResponse<HasRawResponse>
      */
     public function update(
         string $webhookID,
@@ -60,6 +67,8 @@ interface WebhooksContract
 
     /**
      * @api
+     *
+     * @return WebhookDeleteResponse<HasRawResponse>
      */
     public function delete(
         string $webhookID,

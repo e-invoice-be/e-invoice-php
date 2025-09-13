@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
@@ -76,6 +77,8 @@ final class ValidateService implements ValidateContract
      * @param string|null $vendorEmail
      * @param string|null $vendorName
      * @param string|null $vendorTaxID
+     *
+     * @return UblDocumentValidation<HasRawResponse>
      */
     public function validateJson(
         $amountDue = omit,
@@ -184,6 +187,8 @@ final class ValidateService implements ValidateContract
      * Validate if a Peppol ID exists in the Peppol network and retrieve supported document types. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
+     *
+     * @return ValidateValidatePeppolIDResponse<HasRawResponse>
      */
     public function validatePeppolID(
         $peppolID,
@@ -210,6 +215,8 @@ final class ValidateService implements ValidateContract
      * Validate the correctness of a UBL document
      *
      * @param string $file
+     *
+     * @return UblDocumentValidation<HasRawResponse>
      */
     public function validateUbl(
         $file,

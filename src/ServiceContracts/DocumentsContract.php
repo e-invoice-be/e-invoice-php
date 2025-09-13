@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item;
@@ -64,6 +65,8 @@ interface DocumentsContract
      * @param string|null $vendorEmail
      * @param string|null $vendorName
      * @param string|null $vendorTaxID
+     *
+     * @return DocumentResponse<HasRawResponse>
      */
     public function create(
         $amountDue = omit,
@@ -112,6 +115,8 @@ interface DocumentsContract
 
     /**
      * @api
+     *
+     * @return DocumentResponse<HasRawResponse>
      */
     public function retrieve(
         string $documentID,
@@ -120,6 +125,8 @@ interface DocumentsContract
 
     /**
      * @api
+     *
+     * @return DocumentDeleteResponse<HasRawResponse>
      */
     public function delete(
         string $documentID,
@@ -134,6 +141,8 @@ interface DocumentsContract
      * @param string|null $receiverPeppolScheme
      * @param string|null $senderPeppolID
      * @param string|null $senderPeppolScheme
+     *
+     * @return DocumentResponse<HasRawResponse>
      */
     public function send(
         string $documentID,

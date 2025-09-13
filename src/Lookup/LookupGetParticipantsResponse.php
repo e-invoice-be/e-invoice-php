@@ -17,8 +17,12 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
  *   searchDate: string,
  *   totalCount: int,
  *   usedCount: int,
- *   participants?: list<Participant>|null,
+ *   participants?: list<Participant>,
  * }
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class LookupGetParticipantsResponse implements BaseModel
 {

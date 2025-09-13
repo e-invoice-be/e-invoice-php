@@ -12,6 +12,10 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * Model for webhook deletion.
  *
  * @phpstan-type webhook_delete_response = array{isDeleted: bool}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class WebhookDeleteResponse implements BaseModel
 {
