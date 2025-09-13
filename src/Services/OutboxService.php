@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -32,14 +33,34 @@ final class OutboxService implements OutboxContract
      * @param int $pageSize Number of items per page
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listDraftDocuments(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage {
+        $params = ['page' => $page, 'pageSize' => $pageSize];
+
+        return $this->listDraftDocumentsRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listDraftDocumentsRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage {
         [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
-            ['page' => $page, 'pageSize' => $pageSize],
+            $params,
             $requestOptions
         );
 
@@ -69,6 +90,8 @@ final class OutboxService implements OutboxContract
      * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listReceivedDocuments(
         $dateFrom = omit,
@@ -81,18 +104,36 @@ final class OutboxService implements OutboxContract
         $type = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage {
+        $params = [
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'search' => $search,
+            'sender' => $sender,
+            'state' => $state,
+            'type' => $type,
+        ];
+
+        return $this->listReceivedDocumentsRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listReceivedDocumentsRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage {
         [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
-            [
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-                'page' => $page,
-                'pageSize' => $pageSize,
-                'search' => $search,
-                'sender' => $sender,
-                'state' => $state,
-                'type' => $type,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -27,6 +28,8 @@ interface InboxContract
      * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $dateFrom = omit,
@@ -43,14 +46,14 @@ interface InboxContract
     /**
      * @api
      *
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
+     * @param array<string, mixed> $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
-    public function listCreditNotes(
-        $page = omit,
-        $pageSize = omit,
+    public function listRaw(
+        array $params,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage;
 
@@ -61,10 +64,56 @@ interface InboxContract
      * @param int $pageSize Number of items per page
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listCreditNotes(
+        $page = omit,
+        $pageSize = omit,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listCreditNotesRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage;
+
+    /**
+     * @api
+     *
+     * @param int $page Page number
+     * @param int $pageSize Number of items per page
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listInvoices(
         $page = omit,
         $pageSize = omit,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listInvoicesRaw(
+        array $params,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage;
 }

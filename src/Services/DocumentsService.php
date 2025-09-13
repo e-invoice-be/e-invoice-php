@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -94,6 +95,8 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $vendorTaxID
      *
      * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $amountDue = omit,
@@ -139,51 +142,69 @@ final class DocumentsService implements DocumentsContract
         $vendorTaxID = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
+        $params = [
+            'amountDue' => $amountDue,
+            'attachments' => $attachments,
+            'billingAddress' => $billingAddress,
+            'billingAddressRecipient' => $billingAddressRecipient,
+            'currency' => $currency,
+            'customerAddress' => $customerAddress,
+            'customerAddressRecipient' => $customerAddressRecipient,
+            'customerEmail' => $customerEmail,
+            'customerID' => $customerID,
+            'customerName' => $customerName,
+            'customerTaxID' => $customerTaxID,
+            'direction' => $direction,
+            'documentType' => $documentType,
+            'dueDate' => $dueDate,
+            'invoiceDate' => $invoiceDate,
+            'invoiceID' => $invoiceID,
+            'invoiceTotal' => $invoiceTotal,
+            'items' => $items,
+            'note' => $note,
+            'paymentDetails' => $paymentDetails,
+            'paymentTerm' => $paymentTerm,
+            'previousUnpaidBalance' => $previousUnpaidBalance,
+            'purchaseOrder' => $purchaseOrder,
+            'remittanceAddress' => $remittanceAddress,
+            'remittanceAddressRecipient' => $remittanceAddressRecipient,
+            'serviceAddress' => $serviceAddress,
+            'serviceAddressRecipient' => $serviceAddressRecipient,
+            'serviceEndDate' => $serviceEndDate,
+            'serviceStartDate' => $serviceStartDate,
+            'shippingAddress' => $shippingAddress,
+            'shippingAddressRecipient' => $shippingAddressRecipient,
+            'state' => $state,
+            'subtotal' => $subtotal,
+            'taxDetails' => $taxDetails,
+            'totalDiscount' => $totalDiscount,
+            'totalTax' => $totalTax,
+            'vendorAddress' => $vendorAddress,
+            'vendorAddressRecipient' => $vendorAddressRecipient,
+            'vendorEmail' => $vendorEmail,
+            'vendorName' => $vendorName,
+            'vendorTaxID' => $vendorTaxID,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentResponse {
         [$parsed, $options] = DocumentCreateParams::parseRequest(
-            [
-                'amountDue' => $amountDue,
-                'attachments' => $attachments,
-                'billingAddress' => $billingAddress,
-                'billingAddressRecipient' => $billingAddressRecipient,
-                'currency' => $currency,
-                'customerAddress' => $customerAddress,
-                'customerAddressRecipient' => $customerAddressRecipient,
-                'customerEmail' => $customerEmail,
-                'customerID' => $customerID,
-                'customerName' => $customerName,
-                'customerTaxID' => $customerTaxID,
-                'direction' => $direction,
-                'documentType' => $documentType,
-                'dueDate' => $dueDate,
-                'invoiceDate' => $invoiceDate,
-                'invoiceID' => $invoiceID,
-                'invoiceTotal' => $invoiceTotal,
-                'items' => $items,
-                'note' => $note,
-                'paymentDetails' => $paymentDetails,
-                'paymentTerm' => $paymentTerm,
-                'previousUnpaidBalance' => $previousUnpaidBalance,
-                'purchaseOrder' => $purchaseOrder,
-                'remittanceAddress' => $remittanceAddress,
-                'remittanceAddressRecipient' => $remittanceAddressRecipient,
-                'serviceAddress' => $serviceAddress,
-                'serviceAddressRecipient' => $serviceAddressRecipient,
-                'serviceEndDate' => $serviceEndDate,
-                'serviceStartDate' => $serviceStartDate,
-                'shippingAddress' => $shippingAddress,
-                'shippingAddressRecipient' => $shippingAddressRecipient,
-                'state' => $state,
-                'subtotal' => $subtotal,
-                'taxDetails' => $taxDetails,
-                'totalDiscount' => $totalDiscount,
-                'totalTax' => $totalTax,
-                'vendorAddress' => $vendorAddress,
-                'vendorAddressRecipient' => $vendorAddressRecipient,
-                'vendorEmail' => $vendorEmail,
-                'vendorName' => $vendorName,
-                'vendorTaxID' => $vendorTaxID,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -202,9 +223,28 @@ final class DocumentsService implements DocumentsContract
      * Get an invoice or credit note by ID
      *
      * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): DocumentResponse {
+        $params = [];
+
+        return $this->retrieveRaw($documentID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $documentID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         // @phpstan-ignore-next-line;
@@ -222,9 +262,28 @@ final class DocumentsService implements DocumentsContract
      * Delete an invoice or credit note
      *
      * @return DocumentDeleteResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function delete(
         string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): DocumentDeleteResponse {
+        $params = [];
+
+        return $this->deleteRaw($documentID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return DocumentDeleteResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $documentID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): DocumentDeleteResponse {
         // @phpstan-ignore-next-line;
@@ -248,6 +307,8 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $senderPeppolScheme
      *
      * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function send(
         string $documentID,
@@ -258,15 +319,34 @@ final class DocumentsService implements DocumentsContract
         $senderPeppolScheme = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse {
+        $params = [
+            'email' => $email,
+            'receiverPeppolID' => $receiverPeppolID,
+            'receiverPeppolScheme' => $receiverPeppolScheme,
+            'senderPeppolID' => $senderPeppolID,
+            'senderPeppolScheme' => $senderPeppolScheme,
+        ];
+
+        return $this->sendRaw($documentID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function sendRaw(
+        string $documentID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentResponse {
         [$parsed, $options] = DocumentSendParams::parseRequest(
-            [
-                'email' => $email,
-                'receiverPeppolID' => $receiverPeppolID,
-                'receiverPeppolScheme' => $receiverPeppolScheme,
-                'senderPeppolID' => $senderPeppolID,
-                'senderPeppolScheme' => $senderPeppolScheme,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

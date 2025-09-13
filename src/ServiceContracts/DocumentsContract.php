@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -67,6 +68,8 @@ interface DocumentsContract
      * @param string|null $vendorTaxID
      *
      * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $amountDue = omit,
@@ -116,7 +119,23 @@ interface DocumentsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentResponse;
+
+    /**
+     * @api
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $documentID,
@@ -126,11 +145,39 @@ interface DocumentsContract
     /**
      * @api
      *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $documentID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentResponse;
+
+    /**
+     * @api
+     *
      * @return DocumentDeleteResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function delete(
         string $documentID,
         ?RequestOptions $requestOptions = null
+    ): DocumentDeleteResponse;
+
+    /**
+     * @api
+     *
+     * @return DocumentDeleteResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $documentID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentDeleteResponse;
 
     /**
@@ -143,6 +190,8 @@ interface DocumentsContract
      * @param string|null $senderPeppolScheme
      *
      * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function send(
         string $documentID,
@@ -151,6 +200,21 @@ interface DocumentsContract
         $receiverPeppolScheme = omit,
         $senderPeppolID = omit,
         $senderPeppolScheme = omit,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function sendRaw(
+        string $documentID,
+        array $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
 }
