@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -39,6 +40,8 @@ final class InboxService implements InboxContract
      * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $dateFrom = omit,
@@ -51,18 +54,36 @@ final class InboxService implements InboxContract
         $type = omit,
         ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage {
+        $params = [
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'search' => $search,
+            'sender' => $sender,
+            'state' => $state,
+            'type' => $type,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage {
         [$parsed, $options] = InboxListParams::parseRequest(
-            [
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-                'page' => $page,
-                'pageSize' => $pageSize,
-                'search' => $search,
-                'sender' => $sender,
-                'state' => $state,
-                'type' => $type,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -85,14 +106,34 @@ final class InboxService implements InboxContract
      * @param int $pageSize Number of items per page
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listCreditNotes(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage {
+        $params = ['page' => $page, 'pageSize' => $pageSize];
+
+        return $this->listCreditNotesRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listCreditNotesRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage {
         [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
-            ['page' => $page, 'pageSize' => $pageSize],
+            $params,
             $requestOptions
         );
 
@@ -116,14 +157,34 @@ final class InboxService implements InboxContract
      * @param int $pageSize Number of items per page
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listInvoices(
         $page = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage {
+        $params = ['page' => $page, 'pageSize' => $pageSize];
+
+        return $this->listInvoicesRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listInvoicesRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage {
         [$parsed, $options] = InboxListInvoicesParams::parseRequest(
-            ['page' => $page, 'pageSize' => $pageSize],
+            $params,
             $requestOptions
         );
 

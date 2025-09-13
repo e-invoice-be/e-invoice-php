@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -21,10 +22,26 @@ interface OutboxContract
      * @param int $pageSize Number of items per page
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listDraftDocuments(
         $page = omit,
         $pageSize = omit,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listDraftDocumentsRaw(
+        array $params,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage;
 
@@ -41,6 +58,8 @@ interface OutboxContract
      * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listReceivedDocuments(
         $dateFrom = omit,
@@ -52,5 +71,19 @@ interface OutboxContract
         $state = omit,
         $type = omit,
         ?RequestOptions $requestOptions = null,
+    ): DocumentsNumberPage;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listReceivedDocumentsRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage;
 }

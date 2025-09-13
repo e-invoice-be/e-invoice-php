@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -79,6 +80,8 @@ final class ValidateService implements ValidateContract
      * @param string|null $vendorTaxID
      *
      * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validateJson(
         $amountDue = omit,
@@ -124,51 +127,69 @@ final class ValidateService implements ValidateContract
         $vendorTaxID = omit,
         ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation {
+        $params = [
+            'amountDue' => $amountDue,
+            'attachments' => $attachments,
+            'billingAddress' => $billingAddress,
+            'billingAddressRecipient' => $billingAddressRecipient,
+            'currency' => $currency,
+            'customerAddress' => $customerAddress,
+            'customerAddressRecipient' => $customerAddressRecipient,
+            'customerEmail' => $customerEmail,
+            'customerID' => $customerID,
+            'customerName' => $customerName,
+            'customerTaxID' => $customerTaxID,
+            'direction' => $direction,
+            'documentType' => $documentType,
+            'dueDate' => $dueDate,
+            'invoiceDate' => $invoiceDate,
+            'invoiceID' => $invoiceID,
+            'invoiceTotal' => $invoiceTotal,
+            'items' => $items,
+            'note' => $note,
+            'paymentDetails' => $paymentDetails,
+            'paymentTerm' => $paymentTerm,
+            'previousUnpaidBalance' => $previousUnpaidBalance,
+            'purchaseOrder' => $purchaseOrder,
+            'remittanceAddress' => $remittanceAddress,
+            'remittanceAddressRecipient' => $remittanceAddressRecipient,
+            'serviceAddress' => $serviceAddress,
+            'serviceAddressRecipient' => $serviceAddressRecipient,
+            'serviceEndDate' => $serviceEndDate,
+            'serviceStartDate' => $serviceStartDate,
+            'shippingAddress' => $shippingAddress,
+            'shippingAddressRecipient' => $shippingAddressRecipient,
+            'state' => $state,
+            'subtotal' => $subtotal,
+            'taxDetails' => $taxDetails,
+            'totalDiscount' => $totalDiscount,
+            'totalTax' => $totalTax,
+            'vendorAddress' => $vendorAddress,
+            'vendorAddressRecipient' => $vendorAddressRecipient,
+            'vendorEmail' => $vendorEmail,
+            'vendorName' => $vendorName,
+            'vendorTaxID' => $vendorTaxID,
+        ];
+
+        return $this->validateJsonRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateJsonRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation {
         [$parsed, $options] = ValidateValidateJsonParams::parseRequest(
-            [
-                'amountDue' => $amountDue,
-                'attachments' => $attachments,
-                'billingAddress' => $billingAddress,
-                'billingAddressRecipient' => $billingAddressRecipient,
-                'currency' => $currency,
-                'customerAddress' => $customerAddress,
-                'customerAddressRecipient' => $customerAddressRecipient,
-                'customerEmail' => $customerEmail,
-                'customerID' => $customerID,
-                'customerName' => $customerName,
-                'customerTaxID' => $customerTaxID,
-                'direction' => $direction,
-                'documentType' => $documentType,
-                'dueDate' => $dueDate,
-                'invoiceDate' => $invoiceDate,
-                'invoiceID' => $invoiceID,
-                'invoiceTotal' => $invoiceTotal,
-                'items' => $items,
-                'note' => $note,
-                'paymentDetails' => $paymentDetails,
-                'paymentTerm' => $paymentTerm,
-                'previousUnpaidBalance' => $previousUnpaidBalance,
-                'purchaseOrder' => $purchaseOrder,
-                'remittanceAddress' => $remittanceAddress,
-                'remittanceAddressRecipient' => $remittanceAddressRecipient,
-                'serviceAddress' => $serviceAddress,
-                'serviceAddressRecipient' => $serviceAddressRecipient,
-                'serviceEndDate' => $serviceEndDate,
-                'serviceStartDate' => $serviceStartDate,
-                'shippingAddress' => $shippingAddress,
-                'shippingAddressRecipient' => $shippingAddressRecipient,
-                'state' => $state,
-                'subtotal' => $subtotal,
-                'taxDetails' => $taxDetails,
-                'totalDiscount' => $totalDiscount,
-                'totalTax' => $totalTax,
-                'vendorAddress' => $vendorAddress,
-                'vendorAddressRecipient' => $vendorAddressRecipient,
-                'vendorEmail' => $vendorEmail,
-                'vendorName' => $vendorName,
-                'vendorTaxID' => $vendorTaxID,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -189,13 +210,33 @@ final class ValidateService implements ValidateContract
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      *
      * @return ValidateValidatePeppolIDResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validatePeppolID(
         $peppolID,
         ?RequestOptions $requestOptions = null
     ): ValidateValidatePeppolIDResponse {
+        $params = ['peppolID' => $peppolID];
+
+        return $this->validatePeppolIDRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return ValidateValidatePeppolIDResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validatePeppolIDRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): ValidateValidatePeppolIDResponse {
         [$parsed, $options] = ValidateValidatePeppolIDParams::parseRequest(
-            ['peppolID' => $peppolID],
+            $params,
             $requestOptions
         );
 
@@ -217,13 +258,33 @@ final class ValidateService implements ValidateContract
      * @param string $file
      *
      * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validateUbl(
         $file,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
+        $params = ['file' => $file];
+
+        return $this->validateUblRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateUblRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation {
         [$parsed, $options] = ValidateValidateUblParams::parseRequest(
-            ['file' => $file],
+            $params,
             $requestOptions
         );
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -67,6 +68,8 @@ interface ValidateContract
      * @param string|null $vendorTaxID
      *
      * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validateJson(
         $amountDue = omit,
@@ -116,9 +119,25 @@ interface ValidateContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateJsonRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation;
+
+    /**
+     * @api
+     *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      *
      * @return ValidateValidatePeppolIDResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validatePeppolID(
         $peppolID,
@@ -128,12 +147,42 @@ interface ValidateContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return ValidateValidatePeppolIDResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validatePeppolIDRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): ValidateValidatePeppolIDResponse;
+
+    /**
+     * @api
+     *
      * @param string $file
      *
      * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validateUbl(
         $file,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateUblRaw(
+        array $params,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation;
 }
