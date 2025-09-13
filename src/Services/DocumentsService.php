@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams;
@@ -41,8 +42,8 @@ final class DocumentsService implements DocumentsContract
      */
     public function __construct(private Client $client)
     {
-        $this->attachments = new AttachmentsService($this->client);
-        $this->ubl = new UblService($this->client);
+        $this->attachments = new AttachmentsService($client);
+        $this->ubl = new UblService($client);
     }
 
     /**
@@ -91,6 +92,8 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $vendorEmail
      * @param string|null $vendorName
      * @param string|null $vendorTaxID
+     *
+     * @return DocumentResponse<HasRawResponse>
      */
     public function create(
         $amountDue = omit,
@@ -197,6 +200,8 @@ final class DocumentsService implements DocumentsContract
      * @api
      *
      * Get an invoice or credit note by ID
+     *
+     * @return DocumentResponse<HasRawResponse>
      */
     public function retrieve(
         string $documentID,
@@ -215,6 +220,8 @@ final class DocumentsService implements DocumentsContract
      * @api
      *
      * Delete an invoice or credit note
+     *
+     * @return DocumentDeleteResponse<HasRawResponse>
      */
     public function delete(
         string $documentID,
@@ -239,6 +246,8 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $receiverPeppolScheme
      * @param string|null $senderPeppolID
      * @param string|null $senderPeppolScheme
+     *
+     * @return DocumentResponse<HasRawResponse>
      */
     public function send(
         string $documentID,

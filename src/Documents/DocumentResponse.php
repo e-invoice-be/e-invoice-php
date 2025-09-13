@@ -17,25 +17,25 @@ use EInvoiceAPI\Inbox\DocumentState;
  * @phpstan-type document_response = array{
  *   id: string,
  *   amountDue?: string|null,
- *   attachments?: list<DocumentAttachment>|null,
+ *   attachments?: list<DocumentAttachment>,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   currency?: value-of<CurrencyCode>|null,
+ *   currency?: value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerTaxID?: string|null,
- *   direction?: value-of<DocumentDirection>|null,
- *   documentType?: value-of<DocumentType>|null,
+ *   direction?: value-of<DocumentDirection>,
+ *   documentType?: value-of<DocumentType>,
  *   dueDate?: \DateTimeInterface|null,
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: string|null,
- *   items?: list<Item>|null,
+ *   items?: list<Item>,
  *   note?: string|null,
- *   paymentDetails?: list<PaymentDetail>|null,
+ *   paymentDetails?: list<PaymentDetail>,
  *   paymentTerm?: string|null,
  *   previousUnpaidBalance?: string|null,
  *   purchaseOrder?: string|null,
@@ -47,9 +47,9 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   serviceStartDate?: \DateTimeInterface|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
- *   state?: value-of<DocumentState>|null,
+ *   state?: value-of<DocumentState>,
  *   subtotal?: string|null,
- *   taxDetails?: list<TaxDetail>|null,
+ *   taxDetails?: list<TaxDetail>,
  *   totalDiscount?: string|null,
  *   totalTax?: string|null,
  *   vendorAddress?: string|null,
@@ -58,6 +58,10 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   vendorName?: string|null,
  *   vendorTaxID?: string|null,
  * }
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class DocumentResponse implements BaseModel
 {

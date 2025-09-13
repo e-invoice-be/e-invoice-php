@@ -12,12 +12,12 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * Response model for webhook API endpoints.
  *
  * @phpstan-type webhook_response = array{
- *   id: string,
- *   events: list<string>,
- *   secret: string,
- *   url: string,
- *   enabled?: bool|null,
+ *   id: string, events: list<string>, secret: string, url: string, enabled?: bool
  * }
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class WebhookResponse implements BaseModel
 {

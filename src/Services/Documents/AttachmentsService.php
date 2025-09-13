@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
@@ -27,6 +28,8 @@ final class AttachmentsService implements AttachmentsContract
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
      * @param string $documentID
+     *
+     * @return DocumentAttachment<HasRawResponse>
      */
     public function retrieve(
         string $attachmentID,
@@ -75,6 +78,8 @@ final class AttachmentsService implements AttachmentsContract
      * Delete an attachment from an invoice or credit note
      *
      * @param string $documentID
+     *
+     * @return AttachmentDeleteResponse<HasRawResponse>
      */
     public function delete(
         string $attachmentID,
@@ -103,6 +108,8 @@ final class AttachmentsService implements AttachmentsContract
      * Add a new attachment to an invoice or credit note
      *
      * @param string $file
+     *
+     * @return DocumentAttachment<HasRawResponse>
      */
     public function add(
         string $documentID,

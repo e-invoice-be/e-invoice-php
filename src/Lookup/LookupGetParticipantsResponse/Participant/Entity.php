@@ -16,7 +16,7 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
  *   additionalInfo?: string|null,
  *   countryCode?: string|null,
  *   geoInfo?: string|null,
- *   identifiers?: list<Identifier>|null,
+ *   identifiers?: list<Identifier>,
  *   name?: string|null,
  *   registrationDate?: string|null,
  *   website?: string|null,

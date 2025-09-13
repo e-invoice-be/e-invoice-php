@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\UblContract;
@@ -20,6 +21,8 @@ final class UblService implements UblContract
      * @api
      *
      * Get the UBL for an invoice or credit note
+     *
+     * @return UblGetResponse<HasRawResponse>
      */
     public function get(
         string $documentID,

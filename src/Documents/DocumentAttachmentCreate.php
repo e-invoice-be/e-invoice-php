@@ -10,10 +10,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type document_attachment_create = array{
- *   fileName: string,
- *   fileData?: string|null,
- *   fileSize?: int|null,
- *   fileType?: string|null,
+ *   fileName: string, fileData?: string|null, fileSize?: int, fileType?: string
  * }
  */
 final class DocumentAttachmentCreate implements BaseModel
