@@ -18,7 +18,7 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   quantity?: float|string|null,
  *   tax?: float|string|null,
  *   taxRate?: string|null,
- *   unit?: UnitOfMeasureCode::*|null,
+ *   unit?: value-of<UnitOfMeasureCode>|null,
  *   unitPrice?: float|string|null,
  * }
  */
@@ -52,7 +52,7 @@ final class Item implements BaseModel
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
      *
-     * @var UnitOfMeasureCode::*|null $unit
+     * @var value-of<UnitOfMeasureCode>|null $unit
      */
     #[Api(enum: UnitOfMeasureCode::class, nullable: true, optional: true)]
     public ?string $unit;
@@ -62,8 +62,7 @@ final class Item implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**
@@ -71,7 +70,7 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param UnitOfMeasureCode::* $unit
+     * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
     public static function with(
         float|string|null $amount = null,
@@ -81,7 +80,7 @@ final class Item implements BaseModel
         float|string|null $quantity = null,
         float|string|null $tax = null,
         ?string $taxRate = null,
-        ?string $unit = null,
+        UnitOfMeasureCode|string|null $unit = null,
         float|string|null $unitPrice = null,
     ): self {
         $obj = new self;
@@ -93,7 +92,7 @@ final class Item implements BaseModel
         null !== $quantity && $obj->quantity = $quantity;
         null !== $tax && $obj->tax = $tax;
         null !== $taxRate && $obj->taxRate = $taxRate;
-        null !== $unit && $obj->unit = $unit;
+        null !== $unit && $obj->unit = $unit instanceof UnitOfMeasureCode ? $unit->value : $unit;
         null !== $unitPrice && $obj->unitPrice = $unitPrice;
 
         return $obj;
@@ -161,12 +160,12 @@ final class Item implements BaseModel
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
      *
-     * @param UnitOfMeasureCode::* $unit
+     * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
-    public function withUnit(string $unit): self
+    public function withUnit(UnitOfMeasureCode|string|null $unit): self
     {
         $obj = clone $this;
-        $obj->unit = $unit;
+        $obj->unit = $unit instanceof UnitOfMeasureCode ? $unit->value : $unit;
 
         return $obj;
     }

@@ -1,20 +1,21 @@
 <?php
 
-namespace EInvoiceAPI\Core;
+namespace EInvoiceAPI;
 
-use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkPage;
+use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Contracts\BasePage;
+use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\DocumentsNumberPage\Item;
 
 /**
  * @phpstan-type documents_number_page = array{
- *   items?: list<STAINLESS_FIXME_Item>|null,
+ *   items?: list<Item>|null,
  *   page?: int|null,
  *   pageSize?: int|null,
  *   total?: int|null,
@@ -24,7 +25,7 @@ use EInvoiceAPI\RequestOptions;
  *
  * @implements BasePage<TItem>
  */
-final class DocumentsNumberPage implements BasePage
+final class DocumentsNumberPage implements BaseModel, BasePage
 {
     /** @use SdkModel<documents_number_page> */
     use SdkModel;
@@ -33,7 +34,7 @@ final class DocumentsNumberPage implements BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $items */
-    #[Api(list: STAINLESS_FIXME_Item::class, optional: true)]
+    #[Api(list: Item::class, optional: true)]
     public ?array $items;
 
     #[Api(optional: true)]
@@ -46,6 +47,8 @@ final class DocumentsNumberPage implements BasePage
     public ?int $total;
 
     /**
+     * @internal
+     *
      * @param array{
      *   method: string,
      *   path: string,
@@ -61,12 +64,13 @@ final class DocumentsNumberPage implements BasePage
         private RequestOptions $options,
         mixed $data,
     ) {
-        self::introspect();
+        $this->initialize();
 
         if (!is_array($data)) {
             return;
         }
 
+        // @phpstan-ignore-next-line
         self::__unserialize($data);
 
         if ($this->offsetExists('items')) {
@@ -74,6 +78,7 @@ final class DocumentsNumberPage implements BasePage
                 new ListOf($convert),
                 value: $this->offsetGet('items')
             );
+            // @phpstan-ignore-next-line
             $this->offsetSet('items', $acc);
         }
     }
@@ -86,6 +91,8 @@ final class DocumentsNumberPage implements BasePage
     }
 
     /**
+     * @internal
+     *
      * @return array{
      *   array{
      *     method: string,

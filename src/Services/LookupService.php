@@ -2,33 +2,62 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\Services;
+namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\ServiceContracts\LookupContract;
+use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
 use EInvoiceAPI\Lookup\LookupRetrieveParams;
 use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\LookupContract;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 
 final class LookupService implements LookupContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
+     *
+     * @return LookupGetResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         $peppolID,
         ?RequestOptions $requestOptions = null
     ): LookupGetResponse {
+        $params = ['peppolID' => $peppolID];
+
+        return $this->retrieveRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return LookupGetResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LookupGetResponse {
         [$parsed, $options] = LookupRetrieveParams::parseRequest(
-            ['peppolID' => $peppolID],
+            $params,
             $requestOptions
         );
 
@@ -43,18 +72,42 @@ final class LookupService implements LookupContract
     }
 
     /**
+     * @api
+     *
      * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
      *
      * @param string $query Query to lookup
      * @param string|null $countryCode Country code of the company to lookup. If not provided, the search will be global.
+     *
+     * @return LookupGetParticipantsResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieveParticipants(
         $query,
         $countryCode = omit,
         ?RequestOptions $requestOptions = null
     ): LookupGetParticipantsResponse {
+        $params = ['query' => $query, 'countryCode' => $countryCode];
+
+        return $this->retrieveParticipantsRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return LookupGetParticipantsResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveParticipantsRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LookupGetParticipantsResponse {
         [$parsed, $options] = LookupRetrieveParticipantsParams::parseRequest(
-            ['query' => $query, 'countryCode' => $countryCode],
+            $params,
             $requestOptions
         );
 

@@ -12,10 +12,14 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @phpstan-type document_attachment = array{
  *   id: string,
  *   fileName: string,
- *   fileSize?: int|null,
- *   fileType?: string|null,
+ *   fileSize?: int,
+ *   fileType?: string,
  *   fileURL?: string|null,
  * }
+ * When used in a response, this type parameter can define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class DocumentAttachment implements BaseModel
 {
@@ -53,8 +57,7 @@ final class DocumentAttachment implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

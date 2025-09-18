@@ -18,22 +18,35 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new ValidateValidateJsonParams); // set properties as needed
+ * $client->validate->validateJson(...$params->toArray());
+ * ```
  * Validate if the JSON document can be converted to a valid UBL document.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->validate->validateJson(...$params->toArray());`
+ *
+ * @see EInvoiceAPI\Validate->validateJson
  *
  * @phpstan-type validate_validate_json_params = array{
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   currency?: CurrencyCode::*,
+ *   currency?: CurrencyCode|value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerTaxID?: string|null,
- *   direction?: DocumentDirection::*,
- *   documentType?: DocumentType::*,
+ *   direction?: DocumentDirection|value-of<DocumentDirection>,
+ *   documentType?: DocumentType|value-of<DocumentType>,
  *   dueDate?: \DateTimeInterface|null,
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
@@ -52,7 +65,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
  *   serviceStartDate?: \DateTimeInterface|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
- *   state?: DocumentState::*,
+ *   state?: DocumentState|value-of<DocumentState>,
  *   subtotal?: float|string|null,
  *   taxDetails?: list<TaxDetail>|null,
  *   totalDiscount?: float|string|null,
@@ -86,7 +99,7 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * Currency of the invoice.
      *
-     * @var CurrencyCode::*|null $currency
+     * @var value-of<CurrencyCode>|null $currency
      */
     #[Api(enum: CurrencyCode::class, optional: true)]
     public ?string $currency;
@@ -109,11 +122,11 @@ final class ValidateValidateJsonParams implements BaseModel
     #[Api('customer_tax_id', nullable: true, optional: true)]
     public ?string $customerTaxID;
 
-    /** @var DocumentDirection::*|null $direction */
+    /** @var value-of<DocumentDirection>|null $direction */
     #[Api(enum: DocumentDirection::class, optional: true)]
     public ?string $direction;
 
-    /** @var DocumentType::*|null $documentType */
+    /** @var value-of<DocumentType>|null $documentType */
     #[Api('document_type', enum: DocumentType::class, optional: true)]
     public ?string $documentType;
 
@@ -178,7 +191,7 @@ final class ValidateValidateJsonParams implements BaseModel
     #[Api('shipping_address_recipient', nullable: true, optional: true)]
     public ?string $shippingAddressRecipient;
 
-    /** @var DocumentState::*|null $state */
+    /** @var value-of<DocumentState>|null $state */
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
@@ -212,8 +225,7 @@ final class ValidateValidateJsonParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**
@@ -222,12 +234,12 @@ final class ValidateValidateJsonParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<DocumentAttachmentCreate>|null $attachments
-     * @param CurrencyCode::* $currency
-     * @param DocumentDirection::* $direction
-     * @param DocumentType::* $documentType
+     * @param CurrencyCode|value-of<CurrencyCode> $currency
+     * @param DocumentDirection|value-of<DocumentDirection> $direction
+     * @param DocumentType|value-of<DocumentType> $documentType
      * @param list<Item>|null $items
      * @param list<PaymentDetailCreate>|null $paymentDetails
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState> $state
      * @param list<TaxDetail>|null $taxDetails
      */
     public static function with(
@@ -235,15 +247,15 @@ final class ValidateValidateJsonParams implements BaseModel
         ?array $attachments = null,
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
-        ?string $currency = null,
+        CurrencyCode|string|null $currency = null,
         ?string $customerAddress = null,
         ?string $customerAddressRecipient = null,
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
         ?string $customerTaxID = null,
-        ?string $direction = null,
-        ?string $documentType = null,
+        DocumentDirection|string|null $direction = null,
+        DocumentType|string|null $documentType = null,
         ?\DateTimeInterface $dueDate = null,
         ?\DateTimeInterface $invoiceDate = null,
         ?string $invoiceID = null,
@@ -262,7 +274,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?\DateTimeInterface $serviceStartDate = null,
         ?string $shippingAddress = null,
         ?string $shippingAddressRecipient = null,
-        ?string $state = null,
+        DocumentState|string|null $state = null,
         float|string|null $subtotal = null,
         ?array $taxDetails = null,
         float|string|null $totalDiscount = null,
@@ -279,15 +291,15 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $attachments && $obj->attachments = $attachments;
         null !== $billingAddress && $obj->billingAddress = $billingAddress;
         null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
-        null !== $currency && $obj->currency = $currency;
+        null !== $currency && $obj->currency = $currency instanceof CurrencyCode ? $currency->value : $currency;
         null !== $customerAddress && $obj->customerAddress = $customerAddress;
         null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
         null !== $customerEmail && $obj->customerEmail = $customerEmail;
         null !== $customerID && $obj->customerID = $customerID;
         null !== $customerName && $obj->customerName = $customerName;
         null !== $customerTaxID && $obj->customerTaxID = $customerTaxID;
-        null !== $direction && $obj->direction = $direction;
-        null !== $documentType && $obj->documentType = $documentType;
+        null !== $direction && $obj->direction = $direction instanceof DocumentDirection ? $direction->value : $direction;
+        null !== $documentType && $obj->documentType = $documentType instanceof DocumentType ? $documentType->value : $documentType;
         null !== $dueDate && $obj->dueDate = $dueDate;
         null !== $invoiceDate && $obj->invoiceDate = $invoiceDate;
         null !== $invoiceID && $obj->invoiceID = $invoiceID;
@@ -306,7 +318,7 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $serviceStartDate && $obj->serviceStartDate = $serviceStartDate;
         null !== $shippingAddress && $obj->shippingAddress = $shippingAddress;
         null !== $shippingAddressRecipient && $obj->shippingAddressRecipient = $shippingAddressRecipient;
-        null !== $state && $obj->state = $state;
+        null !== $state && $obj->state = $state instanceof DocumentState ? $state->value : $state;
         null !== $subtotal && $obj->subtotal = $subtotal;
         null !== $taxDetails && $obj->taxDetails = $taxDetails;
         null !== $totalDiscount && $obj->totalDiscount = $totalDiscount;
@@ -359,12 +371,12 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * Currency of the invoice.
      *
-     * @param CurrencyCode::* $currency
+     * @param CurrencyCode|value-of<CurrencyCode> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(CurrencyCode|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof CurrencyCode ? $currency->value : $currency;
 
         return $obj;
     }
@@ -419,23 +431,23 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * @param DocumentDirection::* $direction
+     * @param DocumentDirection|value-of<DocumentDirection> $direction
      */
-    public function withDirection(string $direction): self
+    public function withDirection(DocumentDirection|string $direction): self
     {
         $obj = clone $this;
-        $obj->direction = $direction;
+        $obj->direction = $direction instanceof DocumentDirection ? $direction->value : $direction;
 
         return $obj;
     }
 
     /**
-     * @param DocumentType::* $documentType
+     * @param DocumentType|value-of<DocumentType> $documentType
      */
-    public function withDocumentType(string $documentType): self
+    public function withDocumentType(DocumentType|string $documentType): self
     {
         $obj = clone $this;
-        $obj->documentType = $documentType;
+        $obj->documentType = $documentType instanceof DocumentType ? $documentType->value : $documentType;
 
         return $obj;
     }
@@ -597,12 +609,12 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState> $state
      */
-    public function withState(string $state): self
+    public function withState(DocumentState|string $state): self
     {
         $obj = clone $this;
-        $obj->state = $state;
+        $obj->state = $state instanceof DocumentState ? $state->value : $state;
 
         return $obj;
     }

@@ -17,6 +17,10 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
  *   issues: list<Issue>,
  *   ublDocument?: string|null,
  * }
+ * When used in a response, this type parameter can define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class UblDocumentValidation implements BaseModel
 {
@@ -59,8 +63,7 @@ final class UblDocumentValidation implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

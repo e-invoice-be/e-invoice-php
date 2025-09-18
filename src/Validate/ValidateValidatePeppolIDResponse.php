@@ -20,8 +20,12 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
  *   businessCardValid: bool,
  *   dnsValid: bool,
  *   isValid: bool,
- *   supportedDocumentTypes?: list<string>|null,
+ *   supportedDocumentTypes?: list<string>,
  * }
+ * When used in a response, this type parameter can define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class ValidateValidatePeppolIDResponse implements BaseModel
 {
@@ -78,8 +82,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

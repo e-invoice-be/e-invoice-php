@@ -11,7 +11,20 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new InboxListParams); // set properties as needed
+ * $client->inbox->list(...$params->toArray());
+ * ```
  * Retrieve a paginated list of received documents with filtering options.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->inbox->list(...$params->toArray());`
+ *
+ * @see EInvoiceAPI\Inbox->list
  *
  * @phpstan-type inbox_list_params = array{
  *   dateFrom?: \DateTimeInterface|null,
@@ -20,8 +33,8 @@ use EInvoiceAPI\Documents\DocumentType;
  *   pageSize?: int,
  *   search?: string|null,
  *   sender?: string|null,
- *   state?: DocumentState::*,
- *   type?: DocumentType::*,
+ *   state?: null|DocumentState|value-of<DocumentState>,
+ *   type?: null|DocumentType|value-of<DocumentType>,
  * }
  */
 final class InboxListParams implements BaseModel
@@ -69,7 +82,7 @@ final class InboxListParams implements BaseModel
     /**
      * Filter by document state.
      *
-     * @var DocumentState::*|null $state
+     * @var value-of<DocumentState>|null $state
      */
     #[Api(enum: DocumentState::class, nullable: true, optional: true)]
     public ?string $state;
@@ -77,15 +90,14 @@ final class InboxListParams implements BaseModel
     /**
      * Filter by document type.
      *
-     * @var DocumentType::*|null $type
+     * @var value-of<DocumentType>|null $type
      */
     #[Api(enum: DocumentType::class, nullable: true, optional: true)]
     public ?string $type;
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**
@@ -93,8 +105,8 @@ final class InboxListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DocumentState::* $state
-     * @param DocumentType::* $type
+     * @param DocumentState|value-of<DocumentState>|null $state
+     * @param DocumentType|value-of<DocumentType>|null $type
      */
     public static function with(
         ?\DateTimeInterface $dateFrom = null,
@@ -103,8 +115,8 @@ final class InboxListParams implements BaseModel
         ?int $pageSize = null,
         ?string $search = null,
         ?string $sender = null,
-        ?string $state = null,
-        ?string $type = null,
+        DocumentState|string|null $state = null,
+        DocumentType|string|null $type = null,
     ): self {
         $obj = new self;
 
@@ -114,8 +126,8 @@ final class InboxListParams implements BaseModel
         null !== $pageSize && $obj->pageSize = $pageSize;
         null !== $search && $obj->search = $search;
         null !== $sender && $obj->sender = $sender;
-        null !== $state && $obj->state = $state;
-        null !== $type && $obj->type = $type;
+        null !== $state && $obj->state = $state instanceof DocumentState ? $state->value : $state;
+        null !== $type && $obj->type = $type instanceof DocumentType ? $type->value : $type;
 
         return $obj;
     }
@@ -189,12 +201,12 @@ final class InboxListParams implements BaseModel
     /**
      * Filter by document state.
      *
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState>|null $state
      */
-    public function withState(string $state): self
+    public function withState(DocumentState|string|null $state): self
     {
         $obj = clone $this;
-        $obj->state = $state;
+        $obj->state = $state instanceof DocumentState ? $state->value : $state;
 
         return $obj;
     }
@@ -202,12 +214,12 @@ final class InboxListParams implements BaseModel
     /**
      * Filter by document type.
      *
-     * @param DocumentType::* $type
+     * @param DocumentType|value-of<DocumentType>|null $type
      */
-    public function withType(string $type): self
+    public function withType(DocumentType|string|null $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof DocumentType ? $type->value : $type;
 
         return $obj;
     }

@@ -2,38 +2,42 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\ServiceContracts;
+namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
+use EInvoiceAPI\Documents\DocumentCreateParams\Item;
+use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
+use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Documents\PaymentDetailCreate;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Validate\UblDocumentValidation;
-use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
-use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
-use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 
-interface ValidateContract
+interface DocumentsContract
 {
     /**
+     * @api
+     *
      * @param float|string|null $amountDue
      * @param list<DocumentAttachmentCreate>|null $attachments
      * @param string|null $billingAddress
      * @param string|null $billingAddressRecipient
-     * @param CurrencyCode::* $currency Currency of the invoice
+     * @param CurrencyCode|value-of<CurrencyCode> $currency Currency of the invoice
      * @param string|null $customerAddress
      * @param string|null $customerAddressRecipient
      * @param string|null $customerEmail
      * @param string|null $customerID
      * @param string|null $customerName
      * @param string|null $customerTaxID
-     * @param DocumentDirection::* $direction
-     * @param DocumentType::* $documentType
+     * @param DocumentDirection|value-of<DocumentDirection> $direction
+     * @param DocumentType|value-of<DocumentType> $documentType
      * @param \DateTimeInterface|null $dueDate
      * @param \DateTimeInterface|null $invoiceDate
      * @param string|null $invoiceID
@@ -52,7 +56,7 @@ interface ValidateContract
      * @param \DateTimeInterface|null $serviceStartDate
      * @param string|null $shippingAddress
      * @param string|null $shippingAddressRecipient
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState> $state
      * @param float|string|null $subtotal
      * @param list<TaxDetail>|null $taxDetails
      * @param float|string|null $totalDiscount
@@ -62,8 +66,12 @@ interface ValidateContract
      * @param string|null $vendorEmail
      * @param string|null $vendorName
      * @param string|null $vendorTaxID
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
-    public function validateJson(
+    public function create(
         $amountDue = omit,
         $attachments = omit,
         $billingAddress = omit,
@@ -106,21 +114,107 @@ interface ValidateContract
         $vendorName = omit,
         $vendorTaxID = omit,
         ?RequestOptions $requestOptions = null,
-    ): UblDocumentValidation;
+    ): DocumentResponse;
 
     /**
-     * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
-    public function validatePeppolID(
-        $peppolID,
+    public function createRaw(
+        array $params,
         ?RequestOptions $requestOptions = null
-    ): ValidateValidatePeppolIDResponse;
+    ): DocumentResponse;
 
     /**
-     * @param string $file
+     * @api
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
-    public function validateUbl(
-        $file,
+    public function retrieve(
+        string $documentID,
         ?RequestOptions $requestOptions = null
-    ): UblDocumentValidation;
+    ): DocumentResponse;
+
+    /**
+     * @api
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $documentID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentResponse;
+
+    /**
+     * @api
+     *
+     * @return DocumentDeleteResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function delete(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): DocumentDeleteResponse;
+
+    /**
+     * @api
+     *
+     * @return DocumentDeleteResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $documentID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentDeleteResponse;
+
+    /**
+     * @api
+     *
+     * @param string|null $email
+     * @param string|null $receiverPeppolID
+     * @param string|null $receiverPeppolScheme
+     * @param string|null $senderPeppolID
+     * @param string|null $senderPeppolScheme
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function send(
+        string $documentID,
+        $email = omit,
+        $receiverPeppolID = omit,
+        $receiverPeppolScheme = omit,
+        $senderPeppolID = omit,
+        $senderPeppolScheme = omit,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function sendRaw(
+        string $documentID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentResponse;
 }

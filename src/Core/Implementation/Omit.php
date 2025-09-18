@@ -7,7 +7,7 @@ namespace EInvoiceAPI\Core\Implementation;
 /**
  * @internal
  */
-enum Omittable
+enum Omit
 {
-    case OMIT;
+    case omit;
 }

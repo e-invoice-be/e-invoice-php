@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.3.0 (2025-09-16)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.2.0...v0.3.0)
+
+### ⚠ BREAKING CHANGES
+
+* expose services and service contracts
+* use builders for RequestOptions
+
+### Features
+
+* **api:** api update ([fb31cc3](https://github.com/e-invoice-be/e-invoice-php/commit/fb31cc345928aafbf7694a1864d00fc4414c33bc))
+* **api:** api update ([1092982](https://github.com/e-invoice-be/e-invoice-php/commit/10929823b9df5d79849ab84d4047039aab67ba49))
+* **client:** add raw methods ([f68bad0](https://github.com/e-invoice-be/e-invoice-php/commit/f68bad09a1caf90bbb0275281821fda91935ca70))
+* **client:** support raw responses ([c3d771f](https://github.com/e-invoice-be/e-invoice-php/commit/c3d771f9691a82c15c3aba941109e2ed28f501cd))
+* **client:** use real enums ([1c9b5f8](https://github.com/e-invoice-be/e-invoice-php/commit/1c9b5f8f067e09ee6f3e4de4f185643f152021a4))
+* expose services and service contracts ([73de172](https://github.com/e-invoice-be/e-invoice-php/commit/73de172a4bb05355dc5fc8709f31b4785026a5fa))
+* expose streams and pages in the public namespace ([02150d7](https://github.com/e-invoice-be/e-invoice-php/commit/02150d7b2b63e7ee327bae30a1398721aaa9ed39))
+* use builders for RequestOptions ([f2318ec](https://github.com/e-invoice-be/e-invoice-php/commit/f2318ec3d2dc5be8c840b6d2b8118ccac1d977a9))
+
+
+### Bug Fixes
+
+* decorate with enum label for all enum classes ([6567dec](https://github.com/e-invoice-be/e-invoice-php/commit/6567dec3480cb67d2af902b009ae227ea11c4777))
+* remove inaccurate `license` field in composer.json ([5340780](https://github.com/e-invoice-be/e-invoice-php/commit/534078014be251560dae247cfd50ee2437592cbb))
+
+
+### Chores
+
+* add additional php doc tags ([cbb1ffe](https://github.com/e-invoice-be/e-invoice-php/commit/cbb1ffe983c2e6c8750731726646c695ec770b99))
+* cleanup streaming ([01149ff](https://github.com/e-invoice-be/e-invoice-php/commit/01149ffaf2758e9d33b10ef77164ec98390c608e))
+* document parameter object usage ([0a434ad](https://github.com/e-invoice-be/e-invoice-php/commit/0a434ad22b0fd27533cc2756f4320510e2d0031b))
+* fix lints in UnionOf ([25cae84](https://github.com/e-invoice-be/e-invoice-php/commit/25cae848098d8eeea656720cd6dffe15fcaacd20))
+* **internal:** refactor base client internals ([bb0297a](https://github.com/e-invoice-be/e-invoice-php/commit/bb0297a0a91cc17a650253c15a3ce2ff4f8e2fb7))
+* make more targeted phpstan ignores ([12a2562](https://github.com/e-invoice-be/e-invoice-php/commit/12a2562015632a7a08a7dd75c9042ac2d274a5c3))
+* refactor request options ([2c522e8](https://github.com/e-invoice-be/e-invoice-php/commit/2c522e825a7caaab6b2bc8f2d6f86cd6b9282f48))
+* **refactor:** simplify base page interface ([75258eb](https://github.com/e-invoice-be/e-invoice-php/commit/75258ebcdc82bdc05480933e6d39853913e2157a))
+* remove `php-http/multipart-stream-builder` as a required dependency ([c105a5f](https://github.com/e-invoice-be/e-invoice-php/commit/c105a5f69d2a9731462f85dc0f89c8c3cc24ac9e))
+* simplify model initialization ([d9d0ff1](https://github.com/e-invoice-be/e-invoice-php/commit/d9d0ff114e3370f64235a31e1a9e1b0b03783b64))
+
 ## 0.2.0 (2025-08-27)
 
 Full Changelog: [v0.1.1...v0.2.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.1.1...v0.2.0)

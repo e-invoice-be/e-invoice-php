@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\ServiceContracts;
+namespace EInvoiceAPI\ServiceContracts;
 
-use EInvoiceAPI\Core\DocumentsNumberPage;
+use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 
@@ -15,10 +16,14 @@ use const EInvoiceAPI\Core\OMIT as omit;
 interface OutboxContract
 {
     /**
+     * @api
+     *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listDraftDocuments(
         $page = omit,
@@ -27,16 +32,34 @@ interface OutboxContract
     ): DocumentsNumberPage;
 
     /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listDraftDocumentsRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentsNumberPage;
+
+    /**
+     * @api
+     *
      * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
      * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
      * @param int $page Page number
      * @param int $pageSize Number of items per page
      * @param string|null $search Search in invoice number, seller/buyer names
      * @param string|null $sender Filter by sender ID
-     * @param DocumentState::* $state Filter by document state
-     * @param DocumentType::* $type Filter by document type
+     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
+     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
      *
      * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
      */
     public function listReceivedDocuments(
         $dateFrom = omit,
@@ -48,5 +71,19 @@ interface OutboxContract
         $state = omit,
         $type = omit,
         ?RequestOptions $requestOptions = null,
+    ): DocumentsNumberPage;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DocumentsNumberPage<DocumentResponse>
+     *
+     * @throws APIException
+     */
+    public function listReceivedDocumentsRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage;
 }

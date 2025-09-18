@@ -38,7 +38,7 @@ final class AttachmentsTest extends TestCase
             'document_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -53,7 +53,7 @@ final class AttachmentsTest extends TestCase
             'document_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -65,7 +65,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->list('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -80,7 +80,7 @@ final class AttachmentsTest extends TestCase
             'document_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -95,7 +95,7 @@ final class AttachmentsTest extends TestCase
             'document_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -107,7 +107,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add('document_id', 'file');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -119,6 +119,6 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add('document_id', 'file');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

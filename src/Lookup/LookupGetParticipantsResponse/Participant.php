@@ -16,8 +16,8 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
  * @phpstan-type participant_alias = array{
  *   peppolID: string,
  *   peppolScheme: string,
- *   documentTypes?: list<DocumentType>|null,
- *   entities?: list<Entity>|null,
+ *   documentTypes?: list<DocumentType>,
+ *   entities?: list<Entity>,
  * }
  */
 final class Participant implements BaseModel
@@ -69,8 +69,7 @@ final class Participant implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

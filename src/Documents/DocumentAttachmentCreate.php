@@ -10,10 +10,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type document_attachment_create = array{
- *   fileName: string,
- *   fileData?: string|null,
- *   fileSize?: int|null,
- *   fileType?: string|null,
+ *   fileName: string, fileData?: string|null, fileSize?: int, fileType?: string
  * }
  */
 final class DocumentAttachmentCreate implements BaseModel
@@ -24,6 +21,9 @@ final class DocumentAttachmentCreate implements BaseModel
     #[Api('file_name')]
     public string $fileName;
 
+    /**
+     * Base64 encoded file data.
+     */
     #[Api('file_data', nullable: true, optional: true)]
     public ?string $fileData;
 
@@ -49,8 +49,7 @@ final class DocumentAttachmentCreate implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**
@@ -83,6 +82,9 @@ final class DocumentAttachmentCreate implements BaseModel
         return $obj;
     }
 
+    /**
+     * Base64 encoded file data.
+     */
     public function withFileData(?string $fileData): self
     {
         $obj = clone $this;

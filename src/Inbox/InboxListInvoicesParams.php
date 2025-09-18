@@ -10,7 +10,20 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new InboxListInvoicesParams); // set properties as needed
+ * $client->inbox->listInvoices(...$params->toArray());
+ * ```
  * Retrieve a paginated list of received invoices with filtering options.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->inbox->listInvoices(...$params->toArray());`
+ *
+ * @see EInvoiceAPI\Inbox->listInvoices
  *
  * @phpstan-type inbox_list_invoices_params = array{page?: int, pageSize?: int}
  */
@@ -34,8 +47,7 @@ final class InboxListInvoicesParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

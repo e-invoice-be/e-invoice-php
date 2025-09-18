@@ -10,7 +10,20 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new WebhookUpdateParams); // set properties as needed
+ * $client->webhooks->update(...$params->toArray());
+ * ```
  * Update a webhook by ID.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->webhooks->update(...$params->toArray());`
+ *
+ * @see EInvoiceAPI\Webhooks->update
  *
  * @phpstan-type webhook_update_params = array{
  *   enabled?: bool|null, events?: list<string>|null, url?: string|null
@@ -34,8 +47,7 @@ final class WebhookUpdateParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

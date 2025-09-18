@@ -35,7 +35,7 @@ final class OutboxTest extends TestCase
 
         $result = $this->client->outbox->listDraftDocuments();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,6 +47,6 @@ final class OutboxTest extends TestCase
 
         $result = $this->client->outbox->listReceivedDocuments();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

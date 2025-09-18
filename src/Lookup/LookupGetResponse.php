@@ -34,6 +34,10 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
  *   serviceMetadata: ServiceMetadata,
  *   status: string,
  * }
+ * When used in a response, this type parameter can define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class LookupGetResponse implements BaseModel
 {
@@ -125,8 +129,7 @@ final class LookupGetResponse implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

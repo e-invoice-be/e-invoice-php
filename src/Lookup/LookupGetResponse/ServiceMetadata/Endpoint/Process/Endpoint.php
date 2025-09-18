@@ -92,8 +92,7 @@ final class Endpoint implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**
@@ -151,7 +150,7 @@ final class Endpoint implements BaseModel
     /**
      * Certificate information for a Peppol endpoint.
      */
-    public function withCertificate(Certificate $certificate): self
+    public function withCertificate(?Certificate $certificate): self
     {
         $obj = clone $this;
         $obj->certificate = $certificate;

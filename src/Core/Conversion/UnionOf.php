@@ -9,6 +9,9 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @internal
+ */
 final class UnionOf implements Converter
 {
     /**
@@ -62,7 +65,7 @@ final class UnionOf implements Converter
 
     public function dump(mixed $value, DumpState $state): mixed
     {
-        if (!is_null($target = $this->resolveVariant(value: $value))) {
+        if (null !== ($target = $this->resolveVariant(value: $value))) {
             return Conversion::dump($target, value: $value, state: $state);
         }
 
@@ -82,8 +85,15 @@ final class UnionOf implements Converter
             return $value::class;
         }
 
-        if (!is_null($this->discriminator) && is_array($value) && array_key_exists($this->discriminator, array: $value)) {
+        if (
+            null !== $this->discriminator
+            && is_array($value)
+            && array_key_exists($this->discriminator, array: $value)
+        ) {
             $discriminator = $value[$this->discriminator];
+            if (!is_string($discriminator)) {
+                return null;
+            }
 
             return $this->variants[$discriminator] ?? null;
         }

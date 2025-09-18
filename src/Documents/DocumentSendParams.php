@@ -10,7 +10,20 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new DocumentSendParams); // set properties as needed
+ * $client->documents->send(...$params->toArray());
+ * ```
  * Send an invoice or credit note via Peppol.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->documents->send(...$params->toArray());`
+ *
+ * @see EInvoiceAPI\Documents->send
  *
  * @phpstan-type document_send_params = array{
  *   email?: string|null,
@@ -43,8 +56,7 @@ final class DocumentSendParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

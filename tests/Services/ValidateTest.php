@@ -35,7 +35,7 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validateJson();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validatePeppolID('peppol_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -59,7 +59,7 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validatePeppolID('peppol_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -71,7 +71,7 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validateUbl('file');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -83,6 +83,6 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validateUbl('file');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

@@ -2,38 +2,42 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Core\ServiceContracts;
+namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
-use EInvoiceAPI\Documents\DocumentCreateParams\Item;
-use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
-use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
-use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Documents\PaymentDetailCreate;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Validate\UblDocumentValidation;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
+use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 
-interface DocumentsContract
+interface ValidateContract
 {
     /**
+     * @api
+     *
      * @param float|string|null $amountDue
      * @param list<DocumentAttachmentCreate>|null $attachments
      * @param string|null $billingAddress
      * @param string|null $billingAddressRecipient
-     * @param CurrencyCode::* $currency Currency of the invoice
+     * @param CurrencyCode|value-of<CurrencyCode> $currency Currency of the invoice
      * @param string|null $customerAddress
      * @param string|null $customerAddressRecipient
      * @param string|null $customerEmail
      * @param string|null $customerID
      * @param string|null $customerName
      * @param string|null $customerTaxID
-     * @param DocumentDirection::* $direction
-     * @param DocumentType::* $documentType
+     * @param DocumentDirection|value-of<DocumentDirection> $direction
+     * @param DocumentType|value-of<DocumentType> $documentType
      * @param \DateTimeInterface|null $dueDate
      * @param \DateTimeInterface|null $invoiceDate
      * @param string|null $invoiceID
@@ -52,7 +56,7 @@ interface DocumentsContract
      * @param \DateTimeInterface|null $serviceStartDate
      * @param string|null $shippingAddress
      * @param string|null $shippingAddressRecipient
-     * @param DocumentState::* $state
+     * @param DocumentState|value-of<DocumentState> $state
      * @param float|string|null $subtotal
      * @param list<TaxDetail>|null $taxDetails
      * @param float|string|null $totalDiscount
@@ -62,8 +66,12 @@ interface DocumentsContract
      * @param string|null $vendorEmail
      * @param string|null $vendorName
      * @param string|null $vendorTaxID
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
      */
-    public function create(
+    public function validateJson(
         $amountDue = omit,
         $attachments = omit,
         $billingAddress = omit,
@@ -106,32 +114,75 @@ interface DocumentsContract
         $vendorName = omit,
         $vendorTaxID = omit,
         ?RequestOptions $requestOptions = null,
-    ): DocumentResponse;
-
-    public function retrieve(
-        string $documentID,
-        ?RequestOptions $requestOptions = null
-    ): DocumentResponse;
-
-    public function delete(
-        string $documentID,
-        ?RequestOptions $requestOptions = null
-    ): DocumentDeleteResponse;
+    ): UblDocumentValidation;
 
     /**
-     * @param string|null $email
-     * @param string|null $receiverPeppolID
-     * @param string|null $receiverPeppolScheme
-     * @param string|null $senderPeppolID
-     * @param string|null $senderPeppolScheme
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
      */
-    public function send(
-        string $documentID,
-        $email = omit,
-        $receiverPeppolID = omit,
-        $receiverPeppolScheme = omit,
-        $senderPeppolID = omit,
-        $senderPeppolScheme = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DocumentResponse;
+    public function validateJsonRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation;
+
+    /**
+     * @api
+     *
+     * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
+     *
+     * @return ValidateValidatePeppolIDResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validatePeppolID(
+        $peppolID,
+        ?RequestOptions $requestOptions = null
+    ): ValidateValidatePeppolIDResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return ValidateValidatePeppolIDResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validatePeppolIDRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): ValidateValidatePeppolIDResponse;
+
+    /**
+     * @api
+     *
+     * @param string $file
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateUbl(
+        $file,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return UblDocumentValidation<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateUblRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation;
 }

@@ -35,7 +35,7 @@ final class InboxTest extends TestCase
 
         $result = $this->client->inbox->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class InboxTest extends TestCase
 
         $result = $this->client->inbox->listCreditNotes();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -59,6 +59,6 @@ final class InboxTest extends TestCase
 
         $result = $this->client->inbox->listInvoices();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
