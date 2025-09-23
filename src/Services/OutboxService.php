@@ -78,7 +78,7 @@ final class OutboxService implements OutboxContract
     /**
      * @api
      *
-     * Retrieve a paginated list of received documents with filtering options.
+     * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
      *
      * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
      * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
