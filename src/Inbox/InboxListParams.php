@@ -17,7 +17,7 @@ use EInvoiceAPI\Documents\DocumentType;
  * $params = (new InboxListParams); // set properties as needed
  * $client->inbox->list(...$params->toArray());
  * ```
- * Retrieve a paginated list of received documents with filtering options.
+ * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
  *
  * @method toArray()
  *   Returns the parameters as an associative array suitable for passing to the client method.
