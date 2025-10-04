@@ -291,15 +291,15 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $attachments && $obj->attachments = $attachments;
         null !== $billingAddress && $obj->billingAddress = $billingAddress;
         null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
-        null !== $currency && $obj->currency = $currency instanceof CurrencyCode ? $currency->value : $currency;
+        null !== $currency && $obj['currency'] = $currency;
         null !== $customerAddress && $obj->customerAddress = $customerAddress;
         null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
         null !== $customerEmail && $obj->customerEmail = $customerEmail;
         null !== $customerID && $obj->customerID = $customerID;
         null !== $customerName && $obj->customerName = $customerName;
         null !== $customerTaxID && $obj->customerTaxID = $customerTaxID;
-        null !== $direction && $obj->direction = $direction instanceof DocumentDirection ? $direction->value : $direction;
-        null !== $documentType && $obj->documentType = $documentType instanceof DocumentType ? $documentType->value : $documentType;
+        null !== $direction && $obj['direction'] = $direction;
+        null !== $documentType && $obj['documentType'] = $documentType;
         null !== $dueDate && $obj->dueDate = $dueDate;
         null !== $invoiceDate && $obj->invoiceDate = $invoiceDate;
         null !== $invoiceID && $obj->invoiceID = $invoiceID;
@@ -318,7 +318,7 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $serviceStartDate && $obj->serviceStartDate = $serviceStartDate;
         null !== $shippingAddress && $obj->shippingAddress = $shippingAddress;
         null !== $shippingAddressRecipient && $obj->shippingAddressRecipient = $shippingAddressRecipient;
-        null !== $state && $obj->state = $state instanceof DocumentState ? $state->value : $state;
+        null !== $state && $obj['state'] = $state;
         null !== $subtotal && $obj->subtotal = $subtotal;
         null !== $taxDetails && $obj->taxDetails = $taxDetails;
         null !== $totalDiscount && $obj->totalDiscount = $totalDiscount;
@@ -376,7 +376,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCurrency(CurrencyCode|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof CurrencyCode ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -436,7 +436,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withDirection(DocumentDirection|string $direction): self
     {
         $obj = clone $this;
-        $obj->direction = $direction instanceof DocumentDirection ? $direction->value : $direction;
+        $obj['direction'] = $direction;
 
         return $obj;
     }
@@ -447,7 +447,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withDocumentType(DocumentType|string $documentType): self
     {
         $obj = clone $this;
-        $obj->documentType = $documentType instanceof DocumentType ? $documentType->value : $documentType;
+        $obj['documentType'] = $documentType;
 
         return $obj;
     }
@@ -614,7 +614,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withState(DocumentState|string $state): self
     {
         $obj = clone $this;
-        $obj->state = $state instanceof DocumentState ? $state->value : $state;
+        $obj['state'] = $state;
 
         return $obj;
     }

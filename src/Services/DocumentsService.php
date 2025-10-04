@@ -6,7 +6,6 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams;
@@ -93,8 +92,6 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $vendorEmail
      * @param string|null $vendorName
      * @param string|null $vendorTaxID
-     *
-     * @return DocumentResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -194,8 +191,6 @@ final class DocumentsService implements DocumentsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return DocumentResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -222,29 +217,10 @@ final class DocumentsService implements DocumentsContract
      *
      * Get an invoice or credit note by ID
      *
-     * @return DocumentResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $documentID,
-        ?RequestOptions $requestOptions = null
-    ): DocumentResponse {
-        $params = [];
-
-        return $this->retrieveRaw($documentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return DocumentResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $documentID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         // @phpstan-ignore-next-line;
@@ -261,29 +237,10 @@ final class DocumentsService implements DocumentsContract
      *
      * Delete an invoice or credit note
      *
-     * @return DocumentDeleteResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
         string $documentID,
-        ?RequestOptions $requestOptions = null
-    ): DocumentDeleteResponse {
-        $params = [];
-
-        return $this->deleteRaw($documentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return DocumentDeleteResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $documentID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): DocumentDeleteResponse {
         // @phpstan-ignore-next-line;
@@ -305,8 +262,6 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $receiverPeppolScheme
      * @param string|null $senderPeppolID
      * @param string|null $senderPeppolScheme
-     *
-     * @return DocumentResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -334,8 +289,6 @@ final class DocumentsService implements DocumentsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DocumentResponse<HasRawResponse>
      *
      * @throws APIException
      */

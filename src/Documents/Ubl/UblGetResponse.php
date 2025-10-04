@@ -6,7 +6,9 @@ namespace EInvoiceAPI\Documents\Ubl;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type ubl_get_response = array{
@@ -21,15 +23,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *   signedURL?: string|null,
  *   validatedAt?: \DateTimeInterface|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class UblGetResponse implements BaseModel
+final class UblGetResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<ubl_get_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $id;

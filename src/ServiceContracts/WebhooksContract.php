@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
@@ -21,8 +20,6 @@ interface WebhooksContract
      * @param string $url
      * @param bool $enabled
      *
-     * @return WebhookResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -37,8 +34,6 @@ interface WebhooksContract
      *
      * @param array<string, mixed> $params
      *
-     * @return WebhookResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -48,8 +43,6 @@ interface WebhooksContract
 
     /**
      * @api
-     *
-     * @return WebhookResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -61,24 +54,9 @@ interface WebhooksContract
     /**
      * @api
      *
-     * @return WebhookResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $webhookID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): WebhookResponse;
-
-    /**
-     * @api
-     *
      * @param bool|null $enabled
      * @param list<string>|null $events
      * @param string|null $url
-     *
-     * @return WebhookResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -94,8 +72,6 @@ interface WebhooksContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return WebhookResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -119,37 +95,10 @@ interface WebhooksContract
     /**
      * @api
      *
-     * @return list<WebhookResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): array;
-
-    /**
-     * @api
-     *
-     * @return WebhookDeleteResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): WebhookDeleteResponse;
-
-    /**
-     * @api
-     *
-     * @return WebhookDeleteResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookDeleteResponse;
 }

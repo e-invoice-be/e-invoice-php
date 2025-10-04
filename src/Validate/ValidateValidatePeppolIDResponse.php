@@ -6,7 +6,9 @@ namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
 
 /**
@@ -22,15 +24,13 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
  *   isValid: bool,
  *   supportedDocumentTypes?: list<string>,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class ValidateValidatePeppolIDResponse implements BaseModel
+final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<validate_validate_peppol_id_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Business card information for the Peppol ID.

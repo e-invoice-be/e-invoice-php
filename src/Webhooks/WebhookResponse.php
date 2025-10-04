@@ -6,7 +6,9 @@ namespace EInvoiceAPI\Webhooks;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * Response model for webhook API endpoints.
@@ -14,15 +16,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @phpstan-type webhook_response = array{
  *   id: string, events: list<string>, secret: string, url: string, enabled?: bool
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class WebhookResponse implements BaseModel
+final class WebhookResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<webhook_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $id;

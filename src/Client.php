@@ -52,9 +52,7 @@ class Client extends BaseClient
     {
         $this->apiKey = (string) ($apiKey ?? getenv('E_INVOICE_API_KEY'));
 
-        $base = $baseUrl ?? getenv(
-            'E_INVOICE_BASE_URL'
-        ) ?: 'https://api.e-invoice.be';
+        $baseUrl ??= getenv('E_INVOICE_BASE_URL') ?: 'https://api.e-invoice.be';
 
         $options = RequestOptions::with(
             uriFactory: Psr17FactoryDiscovery::findUriFactory(),
@@ -67,7 +65,7 @@ class Client extends BaseClient
             headers: [
                 'Content-Type' => 'application/json', 'Accept' => 'application/json',
             ],
-            baseUrl: $base,
+            baseUrl: $baseUrl,
             options: $options,
         );
 

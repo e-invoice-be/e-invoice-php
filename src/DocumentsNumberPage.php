@@ -11,7 +11,9 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\DocumentsNumberPage\Item;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type documents_number_page = array{
@@ -62,9 +64,11 @@ final class DocumentsNumberPage implements BaseModel, BasePage
         private Client $client,
         private array $request,
         private RequestOptions $options,
-        mixed $data,
+        ResponseInterface $response,
     ) {
         $this->initialize();
+
+        $data = Util::decodeContent($response);
 
         if (!is_array($data)) {
             return;

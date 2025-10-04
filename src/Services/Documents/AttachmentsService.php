@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Services\Documents;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
@@ -30,8 +29,6 @@ final class AttachmentsService implements AttachmentsContract
      *
      * @param string $documentID
      *
-     * @return DocumentAttachment<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
@@ -48,8 +45,6 @@ final class AttachmentsService implements AttachmentsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DocumentAttachment<HasRawResponse>
      *
      * @throws APIException
      */
@@ -87,23 +82,6 @@ final class AttachmentsService implements AttachmentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): array {
-        $params = [];
-
-        return $this->listRaw($documentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return list<DocumentAttachment>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        string $documentID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): array {
         // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'get',
@@ -119,8 +97,6 @@ final class AttachmentsService implements AttachmentsContract
      * Delete an attachment from an invoice or credit note
      *
      * @param string $documentID
-     *
-     * @return AttachmentDeleteResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -138,8 +114,6 @@ final class AttachmentsService implements AttachmentsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return AttachmentDeleteResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -171,8 +145,6 @@ final class AttachmentsService implements AttachmentsContract
      *
      * @param string $file
      *
-     * @return DocumentAttachment<HasRawResponse>
-     *
      * @throws APIException
      */
     public function add(
@@ -189,8 +161,6 @@ final class AttachmentsService implements AttachmentsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DocumentAttachment<HasRawResponse>
      *
      * @throws APIException
      */

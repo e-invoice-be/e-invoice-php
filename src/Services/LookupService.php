@@ -6,7 +6,6 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
 use EInvoiceAPI\Lookup\LookupRetrieveParams;
@@ -30,8 +29,6 @@ final class LookupService implements LookupContract
      *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      *
-     * @return LookupGetResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
@@ -47,8 +44,6 @@ final class LookupService implements LookupContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return LookupGetResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -79,8 +74,6 @@ final class LookupService implements LookupContract
      * @param string $query Query to lookup
      * @param string|null $countryCode Country code of the company to lookup. If not provided, the search will be global.
      *
-     * @return LookupGetParticipantsResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieveParticipants(
@@ -97,8 +90,6 @@ final class LookupService implements LookupContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return LookupGetParticipantsResponse<HasRawResponse>
      *
      * @throws APIException
      */
