@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
@@ -67,8 +66,6 @@ interface ValidateContract
      * @param string|null $vendorName
      * @param string|null $vendorTaxID
      *
-     * @return UblDocumentValidation<HasRawResponse>
-     *
      * @throws APIException
      */
     public function validateJson(
@@ -121,8 +118,6 @@ interface ValidateContract
      *
      * @param array<string, mixed> $params
      *
-     * @return UblDocumentValidation<HasRawResponse>
-     *
      * @throws APIException
      */
     public function validateJsonRaw(
@@ -134,8 +129,6 @@ interface ValidateContract
      * @api
      *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
-     *
-     * @return ValidateValidatePeppolIDResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -149,8 +142,6 @@ interface ValidateContract
      *
      * @param array<string, mixed> $params
      *
-     * @return ValidateValidatePeppolIDResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function validatePeppolIDRaw(
@@ -163,8 +154,6 @@ interface ValidateContract
      *
      * @param string $file
      *
-     * @return UblDocumentValidation<HasRawResponse>
-     *
      * @throws APIException
      */
     public function validateUbl(
@@ -176,8 +165,6 @@ interface ValidateContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return UblDocumentValidation<HasRawResponse>
      *
      * @throws APIException
      */

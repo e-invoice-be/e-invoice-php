@@ -6,7 +6,9 @@ namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
 
 /**
@@ -17,15 +19,13 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
  *   issues: list<Issue>,
  *   ublDocument?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class UblDocumentValidation implements BaseModel
+final class UblDocumentValidation implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<ubl_document_validation> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $id;

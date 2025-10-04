@@ -92,7 +92,7 @@ final class Item implements BaseModel
         null !== $quantity && $obj->quantity = $quantity;
         null !== $tax && $obj->tax = $tax;
         null !== $taxRate && $obj->taxRate = $taxRate;
-        null !== $unit && $obj->unit = $unit instanceof UnitOfMeasureCode ? $unit->value : $unit;
+        null !== $unit && $obj['unit'] = $unit;
         null !== $unitPrice && $obj->unitPrice = $unitPrice;
 
         return $obj;
@@ -165,7 +165,7 @@ final class Item implements BaseModel
     public function withUnit(UnitOfMeasureCode|string|null $unit): self
     {
         $obj = clone $this;
-        $obj->unit = $unit instanceof UnitOfMeasureCode ? $unit->value : $unit;
+        $obj['unit'] = $unit;
 
         return $obj;
     }
