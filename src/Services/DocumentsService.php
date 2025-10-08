@@ -8,6 +8,7 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
+use EInvoiceAPI\Documents\DocumentCreateFromPdfParams;
 use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentCreateParams\Allowance;
 use EInvoiceAPI\Documents\DocumentCreateParams\Charge;
@@ -17,6 +18,7 @@ use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
 use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentSendParams;
 use EInvoiceAPI\Documents\DocumentType;
@@ -26,6 +28,7 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\DocumentsContract;
 use EInvoiceAPI\Services\Documents\AttachmentsService;
 use EInvoiceAPI\Services\Documents\UblService;
+use EInvoiceAPI\Validate\UblDocumentValidation;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 
@@ -277,6 +280,61 @@ final class DocumentsService implements DocumentsContract
     /**
      * @api
      *
+     * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
+     *
+     * @param string $file
+     * @param string|null $customerTaxID
+     * @param string|null $vendorTaxID
+     *
+     * @throws APIException
+     */
+    public function createFromPdf(
+        $file,
+        $customerTaxID = omit,
+        $vendorTaxID = omit,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentNewFromPdfResponse {
+        $params = [
+            'file' => $file,
+            'customerTaxID' => $customerTaxID,
+            'vendorTaxID' => $vendorTaxID,
+        ];
+
+        return $this->createFromPdfRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function createFromPdfRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentNewFromPdfResponse {
+        [$parsed, $options] = DocumentCreateFromPdfParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $query_params = array_flip(['customer_tax_id', 'vendor_tax_id']);
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'post',
+            path: 'api/documents/pdf',
+            query: array_diff_key($parsed, $query_params),
+            headers: ['Content-Type' => 'multipart/form-data'],
+            body: (object) array_diff_key($parsed, $query_params),
+            options: $options,
+            convert: DocumentNewFromPdfResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
      * Send an invoice or credit note via Peppol
      *
      * @param string|null $email
@@ -331,6 +389,26 @@ final class DocumentsService implements DocumentsContract
             query: $parsed,
             options: $options,
             convert: DocumentResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Validate a UBL document according to Peppol BIS Billing 3.0
+     *
+     * @throws APIException
+     */
+    public function validate(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation {
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'post',
+            path: ['api/documents/%1$s/validate', $documentID],
+            options: $requestOptions,
+            convert: UblDocumentValidation::class,
         );
     }
 }

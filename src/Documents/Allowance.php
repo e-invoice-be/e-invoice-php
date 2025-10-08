@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Documents\DocumentResponse\Item;
+namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Documents\DocumentResponse\Item\Charge\TaxCode;
+use EInvoiceAPI\Documents\Allowance\TaxCode;
 
 /**
- * A charge is an additional fee for example for late payment, late delivery, etc.
+ * An allowance is a discount for example for early payment, volume discount, etc.
  *
- * @phpstan-type charge_alias = array{
+ * @phpstan-type allowance_alias = array{
  *   amount?: string|null,
  *   baseAmount?: string|null,
  *   multiplierFactor?: string|null,
@@ -22,37 +22,37 @@ use EInvoiceAPI\Documents\DocumentResponse\Item\Charge\TaxCode;
  *   taxRate?: string|null,
  * }
  */
-final class Charge implements BaseModel
+final class Allowance implements BaseModel
 {
-    /** @use SdkModel<charge_alias> */
+    /** @use SdkModel<allowance_alias> */
     use SdkModel;
 
     /**
-     * The charge amount, without VAT. Must be rounded to maximum 2 decimals.
+     * The allowance amount, without VAT. Must be rounded to maximum 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $amount;
 
     /**
-     * The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals.
+     * The base amount that may be used, in conjunction with the allowance percentage, to calculate the allowance amount. Must be rounded to maximum 2 decimals.
      */
     #[Api('base_amount', nullable: true, optional: true)]
     public ?string $baseAmount;
 
     /**
-     * The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20.
+     * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20.
      */
     #[Api('multiplier_factor', nullable: true, optional: true)]
     public ?string $multiplierFactor;
 
     /**
-     * The reason for the charge.
+     * The reason for the allowance.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $reason;
 
     /**
-     * The code for the charge reason.
+     * The code for the allowance reason.
      */
     #[Api('reason_code', nullable: true, optional: true)]
     public ?string $reasonCode;
@@ -70,7 +70,7 @@ final class Charge implements BaseModel
     public ?string $taxCode;
 
     /**
-     * The VAT rate, represented as percentage that applies to the charge.
+     * The VAT rate, represented as percentage that applies to the allowance.
      */
     #[Api('tax_rate', nullable: true, optional: true)]
     public ?string $taxRate;
@@ -110,7 +110,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * The charge amount, without VAT. Must be rounded to maximum 2 decimals.
+     * The allowance amount, without VAT. Must be rounded to maximum 2 decimals.
      */
     public function withAmount(?string $amount): self
     {
@@ -121,7 +121,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals.
+     * The base amount that may be used, in conjunction with the allowance percentage, to calculate the allowance amount. Must be rounded to maximum 2 decimals.
      */
     public function withBaseAmount(?string $baseAmount): self
     {
@@ -132,7 +132,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20.
+     * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20.
      */
     public function withMultiplierFactor(?string $multiplierFactor): self
     {
@@ -143,7 +143,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * The reason for the charge.
+     * The reason for the allowance.
      */
     public function withReason(?string $reason): self
     {
@@ -154,7 +154,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * The code for the charge reason.
+     * The code for the allowance reason.
      */
     public function withReasonCode(?string $reasonCode): self
     {
@@ -182,7 +182,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * The VAT rate, represented as percentage that applies to the charge.
+     * The VAT rate, represented as percentage that applies to the allowance.
      */
     public function withTaxRate(?string $taxRate): self
     {

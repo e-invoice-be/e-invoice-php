@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Documents\DocumentResponse\Item\Charge;
+namespace EInvoiceAPI\Documents\Allowance;
 
 /**
  * Duty or tax or fee category codes (Subset of UNCL5305).

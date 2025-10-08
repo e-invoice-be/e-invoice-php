@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EInvoiceAPI\Documents\DocumentResponse;
+namespace EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
