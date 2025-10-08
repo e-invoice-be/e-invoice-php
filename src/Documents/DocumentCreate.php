@@ -8,7 +8,9 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentCreate\Item;
+use EInvoiceAPI\Documents\DocumentCreate\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreate\TaxDetail;
+use EInvoiceAPI\Documents\DocumentCreate\Vatex;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
@@ -46,9 +48,12 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   shippingAddressRecipient?: string|null,
  *   state?: value-of<DocumentState>,
  *   subtotal?: float|string|null,
+ *   taxCode?: value-of<TaxCode>,
  *   taxDetails?: list<TaxDetail>|null,
  *   totalDiscount?: float|string|null,
  *   totalTax?: float|string|null,
+ *   vatex?: value-of<Vatex>|null,
+ *   vatexNote?: string|null,
  *   vendorAddress?: string|null,
  *   vendorAddressRecipient?: string|null,
  *   vendorEmail?: string|null,
@@ -176,6 +181,14 @@ final class DocumentCreate implements BaseModel
     #[Api(nullable: true, optional: true)]
     public float|string|null $subtotal;
 
+    /**
+     * Tax category code of the invoice.
+     *
+     * @var value-of<TaxCode>|null $taxCode
+     */
+    #[Api('tax_code', enum: TaxCode::class, optional: true)]
+    public ?string $taxCode;
+
     /** @var list<TaxDetail>|null $taxDetails */
     #[Api('tax_details', list: TaxDetail::class, nullable: true, optional: true)]
     public ?array $taxDetails;
@@ -185,6 +198,23 @@ final class DocumentCreate implements BaseModel
 
     #[Api('total_tax', nullable: true, optional: true)]
     public float|string|null $totalTax;
+
+    /**
+     * VATEX code list for VAT exemption reasons.
+     *
+     * Agency: CEF
+     * Identifier: vatex
+     *
+     * @var value-of<Vatex>|null $vatex
+     */
+    #[Api(enum: Vatex::class, nullable: true, optional: true)]
+    public ?string $vatex;
+
+    /**
+     * VAT exemption note of the invoice.
+     */
+    #[Api('vatex_note', nullable: true, optional: true)]
+    public ?string $vatexNote;
 
     #[Api('vendor_address', nullable: true, optional: true)]
     public ?string $vendorAddress;
@@ -218,7 +248,9 @@ final class DocumentCreate implements BaseModel
      * @param list<Item>|null $items
      * @param list<PaymentDetailCreate>|null $paymentDetails
      * @param DocumentState|value-of<DocumentState> $state
+     * @param TaxCode|value-of<TaxCode> $taxCode
      * @param list<TaxDetail>|null $taxDetails
+     * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
         float|string|null $amountDue = null,
@@ -254,9 +286,12 @@ final class DocumentCreate implements BaseModel
         ?string $shippingAddressRecipient = null,
         DocumentState|string|null $state = null,
         float|string|null $subtotal = null,
+        TaxCode|string|null $taxCode = null,
         ?array $taxDetails = null,
         float|string|null $totalDiscount = null,
         float|string|null $totalTax = null,
+        Vatex|string|null $vatex = null,
+        ?string $vatexNote = null,
         ?string $vendorAddress = null,
         ?string $vendorAddressRecipient = null,
         ?string $vendorEmail = null,
@@ -298,9 +333,12 @@ final class DocumentCreate implements BaseModel
         null !== $shippingAddressRecipient && $obj->shippingAddressRecipient = $shippingAddressRecipient;
         null !== $state && $obj['state'] = $state;
         null !== $subtotal && $obj->subtotal = $subtotal;
+        null !== $taxCode && $obj['taxCode'] = $taxCode;
         null !== $taxDetails && $obj->taxDetails = $taxDetails;
         null !== $totalDiscount && $obj->totalDiscount = $totalDiscount;
         null !== $totalTax && $obj->totalTax = $totalTax;
+        null !== $vatex && $obj['vatex'] = $vatex;
+        null !== $vatexNote && $obj->vatexNote = $vatexNote;
         null !== $vendorAddress && $obj->vendorAddress = $vendorAddress;
         null !== $vendorAddressRecipient && $obj->vendorAddressRecipient = $vendorAddressRecipient;
         null !== $vendorEmail && $obj->vendorEmail = $vendorEmail;
@@ -606,6 +644,19 @@ final class DocumentCreate implements BaseModel
     }
 
     /**
+     * Tax category code of the invoice.
+     *
+     * @param TaxCode|value-of<TaxCode> $taxCode
+     */
+    public function withTaxCode(TaxCode|string $taxCode): self
+    {
+        $obj = clone $this;
+        $obj['taxCode'] = $taxCode;
+
+        return $obj;
+    }
+
+    /**
      * @param list<TaxDetail>|null $taxDetails
      */
     public function withTaxDetails(?array $taxDetails): self
@@ -628,6 +679,33 @@ final class DocumentCreate implements BaseModel
     {
         $obj = clone $this;
         $obj->totalTax = $totalTax;
+
+        return $obj;
+    }
+
+    /**
+     * VATEX code list for VAT exemption reasons.
+     *
+     * Agency: CEF
+     * Identifier: vatex
+     *
+     * @param Vatex|value-of<Vatex>|null $vatex
+     */
+    public function withVatex(Vatex|string|null $vatex): self
+    {
+        $obj = clone $this;
+        $obj['vatex'] = $vatex;
+
+        return $obj;
+    }
+
+    /**
+     * VAT exemption note of the invoice.
+     */
+    public function withVatexNote(?string $vatexNote): self
+    {
+        $obj = clone $this;
+        $obj->vatexNote = $vatexNote;
 
         return $obj;
     }
