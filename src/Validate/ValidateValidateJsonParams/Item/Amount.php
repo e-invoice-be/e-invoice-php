@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals.
+ */
 final class Amount implements ConverterSource
 {
     use SdkUnion;

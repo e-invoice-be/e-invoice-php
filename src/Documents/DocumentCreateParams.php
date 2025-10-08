@@ -8,6 +8,8 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Documents\DocumentCreateParams\Allowance;
+use EInvoiceAPI\Documents\DocumentCreateParams\Charge;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item;
 use EInvoiceAPI\Documents\DocumentCreateParams\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
@@ -31,10 +33,12 @@ use EInvoiceAPI\Inbox\DocumentState;
  * @see EInvoiceAPI\Documents->create
  *
  * @phpstan-type document_create_params = array{
+ *   allowances?: list<Allowance>|null,
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
+ *   charges?: list<Charge>|null,
  *   currency?: CurrencyCode|value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
@@ -48,7 +52,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: float|string|null,
- *   items?: list<Item>|null,
+ *   items?: list<Item>,
  *   note?: string|null,
  *   paymentDetails?: list<PaymentDetailCreate>|null,
  *   paymentTerm?: string|null,
@@ -83,6 +87,13 @@ final class DocumentCreateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /** @var list<Allowance>|null $allowances */
+    #[Api(list: Allowance::class, nullable: true, optional: true)]
+    public ?array $allowances;
+
+    /**
+     * The amount due of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('amount_due', nullable: true, optional: true)]
     public float|string|null $amountDue;
 
@@ -95,6 +106,10 @@ final class DocumentCreateParams implements BaseModel
 
     #[Api('billing_address_recipient', nullable: true, optional: true)]
     public ?string $billingAddressRecipient;
+
+    /** @var list<Charge>|null $charges */
+    #[Api(list: Charge::class, nullable: true, optional: true)]
+    public ?array $charges;
 
     /**
      * Currency of the invoice.
@@ -139,11 +154,18 @@ final class DocumentCreateParams implements BaseModel
     #[Api('invoice_id', nullable: true, optional: true)]
     public ?string $invoiceID;
 
+    /**
+     * The total amount of the invoice (so invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('invoice_total', nullable: true, optional: true)]
     public float|string|null $invoiceTotal;
 
-    /** @var list<Item>|null $items */
-    #[Api(list: Item::class, nullable: true, optional: true)]
+    /**
+     * At least one line item is required.
+     *
+     * @var list<Item>|null $items
+     */
+    #[Api(list: Item::class, optional: true)]
     public ?array $items;
 
     #[Api(nullable: true, optional: true)]
@@ -161,6 +183,9 @@ final class DocumentCreateParams implements BaseModel
     #[Api('payment_term', nullable: true, optional: true)]
     public ?string $paymentTerm;
 
+    /**
+     * The previous unpaid balance of the invoice, if any. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('previous_unpaid_balance', nullable: true, optional: true)]
     public float|string|null $previousUnpaidBalance;
 
@@ -195,6 +220,9 @@ final class DocumentCreateParams implements BaseModel
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
+    /**
+     * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api(nullable: true, optional: true)]
     public float|string|null $subtotal;
 
@@ -210,9 +238,15 @@ final class DocumentCreateParams implements BaseModel
     #[Api('tax_details', list: TaxDetail::class, nullable: true, optional: true)]
     public ?array $taxDetails;
 
+    /**
+     * The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('total_discount', nullable: true, optional: true)]
     public float|string|null $totalDiscount;
 
+    /**
+     * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('total_tax', nullable: true, optional: true)]
     public float|string|null $totalTax;
 
@@ -258,11 +292,13 @@ final class DocumentCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<Allowance>|null $allowances
      * @param list<DocumentAttachmentCreate>|null $attachments
+     * @param list<Charge>|null $charges
      * @param CurrencyCode|value-of<CurrencyCode> $currency
      * @param DocumentDirection|value-of<DocumentDirection> $direction
      * @param DocumentType|value-of<DocumentType> $documentType
-     * @param list<Item>|null $items
+     * @param list<Item> $items
      * @param list<PaymentDetailCreate>|null $paymentDetails
      * @param DocumentState|value-of<DocumentState> $state
      * @param TaxCode|value-of<TaxCode> $taxCode
@@ -270,10 +306,12 @@ final class DocumentCreateParams implements BaseModel
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
+        ?array $allowances = null,
         float|string|null $amountDue = null,
         ?array $attachments = null,
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
+        ?array $charges = null,
         CurrencyCode|string|null $currency = null,
         ?string $customerAddress = null,
         ?string $customerAddressRecipient = null,
@@ -317,10 +355,12 @@ final class DocumentCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
+        null !== $allowances && $obj->allowances = $allowances;
         null !== $amountDue && $obj->amountDue = $amountDue;
         null !== $attachments && $obj->attachments = $attachments;
         null !== $billingAddress && $obj->billingAddress = $billingAddress;
         null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
+        null !== $charges && $obj->charges = $charges;
         null !== $currency && $obj['currency'] = $currency;
         null !== $customerAddress && $obj->customerAddress = $customerAddress;
         null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
@@ -365,6 +405,20 @@ final class DocumentCreateParams implements BaseModel
         return $obj;
     }
 
+    /**
+     * @param list<Allowance>|null $allowances
+     */
+    public function withAllowances(?array $allowances): self
+    {
+        $obj = clone $this;
+        $obj->allowances = $allowances;
+
+        return $obj;
+    }
+
+    /**
+     * The amount due of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withAmountDue(float|string|null $amountDue): self
     {
         $obj = clone $this;
@@ -397,6 +451,17 @@ final class DocumentCreateParams implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->billingAddressRecipient = $billingAddressRecipient;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<Charge>|null $charges
+     */
+    public function withCharges(?array $charges): self
+    {
+        $obj = clone $this;
+        $obj->charges = $charges;
 
         return $obj;
     }
@@ -509,6 +574,9 @@ final class DocumentCreateParams implements BaseModel
         return $obj;
     }
 
+    /**
+     * The total amount of the invoice (so invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
+     */
     public function withInvoiceTotal(float|string|null $invoiceTotal): self
     {
         $obj = clone $this;
@@ -518,9 +586,11 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * @param list<Item>|null $items
+     * At least one line item is required.
+     *
+     * @param list<Item> $items
      */
-    public function withItems(?array $items): self
+    public function withItems(array $items): self
     {
         $obj = clone $this;
         $obj->items = $items;
@@ -555,6 +625,9 @@ final class DocumentCreateParams implements BaseModel
         return $obj;
     }
 
+    /**
+     * The previous unpaid balance of the invoice, if any. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withPreviousUnpaidBalance(
         float|string|null $previousUnpaidBalance
     ): self {
@@ -652,6 +725,9 @@ final class DocumentCreateParams implements BaseModel
         return $obj;
     }
 
+    /**
+     * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withSubtotal(float|string|null $subtotal): self
     {
         $obj = clone $this;
@@ -684,6 +760,9 @@ final class DocumentCreateParams implements BaseModel
         return $obj;
     }
 
+    /**
+     * The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals.
+     */
     public function withTotalDiscount(float|string|null $totalDiscount): self
     {
         $obj = clone $this;
@@ -692,6 +771,9 @@ final class DocumentCreateParams implements BaseModel
         return $obj;
     }
 
+    /**
+     * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withTotalTax(float|string|null $totalTax): self
     {
         $obj = clone $this;
