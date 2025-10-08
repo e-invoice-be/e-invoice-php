@@ -15,11 +15,13 @@ use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
 use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Documents\PaymentDetailCreate;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Validate\UblDocumentValidation;
 
 use const EInvoiceAPI\Core\OMIT as omit;
 
@@ -165,6 +167,34 @@ interface DocumentsContract
     /**
      * @api
      *
+     * @param string $file
+     * @param string|null $customerTaxID
+     * @param string|null $vendorTaxID
+     *
+     * @throws APIException
+     */
+    public function createFromPdf(
+        $file,
+        $customerTaxID = omit,
+        $vendorTaxID = omit,
+        ?RequestOptions $requestOptions = null,
+    ): DocumentNewFromPdfResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function createFromPdfRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentNewFromPdfResponse;
+
+    /**
+     * @api
+     *
      * @param string|null $email
      * @param string|null $receiverPeppolID
      * @param string|null $receiverPeppolScheme
@@ -195,4 +225,14 @@ interface DocumentsContract
         array $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function validate(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): UblDocumentValidation;
 }
