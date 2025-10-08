@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
+use EInvoiceAPI\Documents\DocumentResponse\Allowance;
+use EInvoiceAPI\Documents\DocumentResponse\Charge;
 use EInvoiceAPI\Documents\DocumentResponse\Item;
 use EInvoiceAPI\Documents\DocumentResponse\PaymentDetail;
 use EInvoiceAPI\Documents\DocumentResponse\TaxCode;
@@ -20,10 +22,12 @@ use EInvoiceAPI\Inbox\DocumentState;
 /**
  * @phpstan-type document_response = array{
  *   id: string,
+ *   allowances?: list<Allowance>|null,
  *   amountDue?: string|null,
- *   attachments?: list<DocumentAttachment>,
+ *   attachments?: list<DocumentAttachment>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
+ *   charges?: list<Charge>|null,
  *   currency?: value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
@@ -37,9 +41,9 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: string|null,
- *   items?: list<Item>,
+ *   items?: list<Item>|null,
  *   note?: string|null,
- *   paymentDetails?: list<PaymentDetail>,
+ *   paymentDetails?: list<PaymentDetail>|null,
  *   paymentTerm?: string|null,
  *   previousUnpaidBalance?: string|null,
  *   purchaseOrder?: string|null,
@@ -54,7 +58,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   state?: value-of<DocumentState>,
  *   subtotal?: string|null,
  *   taxCode?: value-of<TaxCode>,
- *   taxDetails?: list<TaxDetail>,
+ *   taxDetails?: list<TaxDetail>|null,
  *   totalDiscount?: string|null,
  *   totalTax?: string|null,
  *   vatex?: value-of<Vatex>|null,
@@ -76,11 +80,18 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     #[Api]
     public string $id;
 
+    /** @var list<Allowance>|null $allowances */
+    #[Api(list: Allowance::class, nullable: true, optional: true)]
+    public ?array $allowances;
+
+    /**
+     * The amount due of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('amount_due', nullable: true, optional: true)]
     public ?string $amountDue;
 
     /** @var list<DocumentAttachment>|null $attachments */
-    #[Api(list: DocumentAttachment::class, optional: true)]
+    #[Api(list: DocumentAttachment::class, nullable: true, optional: true)]
     public ?array $attachments;
 
     #[Api('billing_address', nullable: true, optional: true)]
@@ -88,6 +99,10 @@ final class DocumentResponse implements BaseModel, ResponseConverter
 
     #[Api('billing_address_recipient', nullable: true, optional: true)]
     public ?string $billingAddressRecipient;
+
+    /** @var list<Charge>|null $charges */
+    #[Api(list: Charge::class, nullable: true, optional: true)]
+    public ?array $charges;
 
     /**
      * Currency of the invoice.
@@ -132,23 +147,34 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     #[Api('invoice_id', nullable: true, optional: true)]
     public ?string $invoiceID;
 
+    /**
+     * The total amount of the invoice (so invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('invoice_total', nullable: true, optional: true)]
     public ?string $invoiceTotal;
 
     /** @var list<Item>|null $items */
-    #[Api(list: Item::class, optional: true)]
+    #[Api(list: Item::class, nullable: true, optional: true)]
     public ?array $items;
 
     #[Api(nullable: true, optional: true)]
     public ?string $note;
 
     /** @var list<PaymentDetail>|null $paymentDetails */
-    #[Api('payment_details', list: PaymentDetail::class, optional: true)]
+    #[Api(
+        'payment_details',
+        list: PaymentDetail::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $paymentDetails;
 
     #[Api('payment_term', nullable: true, optional: true)]
     public ?string $paymentTerm;
 
+    /**
+     * The previous unpaid balance of the invoice, if any. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('previous_unpaid_balance', nullable: true, optional: true)]
     public ?string $previousUnpaidBalance;
 
@@ -183,6 +209,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     #[Api(enum: DocumentState::class, optional: true)]
     public ?string $state;
 
+    /**
+     * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api(nullable: true, optional: true)]
     public ?string $subtotal;
 
@@ -195,12 +224,18 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     public ?string $taxCode;
 
     /** @var list<TaxDetail>|null $taxDetails */
-    #[Api('tax_details', list: TaxDetail::class, optional: true)]
+    #[Api('tax_details', list: TaxDetail::class, nullable: true, optional: true)]
     public ?array $taxDetails;
 
+    /**
+     * The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('total_discount', nullable: true, optional: true)]
     public ?string $totalDiscount;
 
+    /**
+     * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     #[Api('total_tax', nullable: true, optional: true)]
     public ?string $totalTax;
 
@@ -260,23 +295,27 @@ final class DocumentResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentAttachment> $attachments
+     * @param list<Allowance>|null $allowances
+     * @param list<DocumentAttachment>|null $attachments
+     * @param list<Charge>|null $charges
      * @param CurrencyCode|value-of<CurrencyCode> $currency
      * @param DocumentDirection|value-of<DocumentDirection> $direction
      * @param DocumentType|value-of<DocumentType> $documentType
-     * @param list<Item> $items
-     * @param list<PaymentDetail> $paymentDetails
+     * @param list<Item>|null $items
+     * @param list<PaymentDetail>|null $paymentDetails
      * @param DocumentState|value-of<DocumentState> $state
      * @param TaxCode|value-of<TaxCode> $taxCode
-     * @param list<TaxDetail> $taxDetails
+     * @param list<TaxDetail>|null $taxDetails
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
         string $id,
+        ?array $allowances = null,
         ?string $amountDue = null,
         ?array $attachments = null,
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
+        ?array $charges = null,
         CurrencyCode|string|null $currency = null,
         ?string $customerAddress = null,
         ?string $customerAddressRecipient = null,
@@ -322,10 +361,12 @@ final class DocumentResponse implements BaseModel, ResponseConverter
 
         $obj->id = $id;
 
+        null !== $allowances && $obj->allowances = $allowances;
         null !== $amountDue && $obj->amountDue = $amountDue;
         null !== $attachments && $obj->attachments = $attachments;
         null !== $billingAddress && $obj->billingAddress = $billingAddress;
         null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
+        null !== $charges && $obj->charges = $charges;
         null !== $currency && $obj['currency'] = $currency;
         null !== $customerAddress && $obj->customerAddress = $customerAddress;
         null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
@@ -378,6 +419,20 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         return $obj;
     }
 
+    /**
+     * @param list<Allowance>|null $allowances
+     */
+    public function withAllowances(?array $allowances): self
+    {
+        $obj = clone $this;
+        $obj->allowances = $allowances;
+
+        return $obj;
+    }
+
+    /**
+     * The amount due of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withAmountDue(?string $amountDue): self
     {
         $obj = clone $this;
@@ -387,9 +442,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * @param list<DocumentAttachment> $attachments
+     * @param list<DocumentAttachment>|null $attachments
      */
-    public function withAttachments(array $attachments): self
+    public function withAttachments(?array $attachments): self
     {
         $obj = clone $this;
         $obj->attachments = $attachments;
@@ -410,6 +465,17 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = clone $this;
         $obj->billingAddressRecipient = $billingAddressRecipient;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<Charge>|null $charges
+     */
+    public function withCharges(?array $charges): self
+    {
+        $obj = clone $this;
+        $obj->charges = $charges;
 
         return $obj;
     }
@@ -522,6 +588,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         return $obj;
     }
 
+    /**
+     * The total amount of the invoice (so invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
+     */
     public function withInvoiceTotal(?string $invoiceTotal): self
     {
         $obj = clone $this;
@@ -531,9 +600,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * @param list<Item> $items
+     * @param list<Item>|null $items
      */
-    public function withItems(array $items): self
+    public function withItems(?array $items): self
     {
         $obj = clone $this;
         $obj->items = $items;
@@ -550,9 +619,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * @param list<PaymentDetail> $paymentDetails
+     * @param list<PaymentDetail>|null $paymentDetails
      */
-    public function withPaymentDetails(array $paymentDetails): self
+    public function withPaymentDetails(?array $paymentDetails): self
     {
         $obj = clone $this;
         $obj->paymentDetails = $paymentDetails;
@@ -568,6 +637,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         return $obj;
     }
 
+    /**
+     * The previous unpaid balance of the invoice, if any. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withPreviousUnpaidBalance(
         ?string $previousUnpaidBalance
     ): self {
@@ -665,6 +737,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         return $obj;
     }
 
+    /**
+     * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withSubtotal(?string $subtotal): self
     {
         $obj = clone $this;
@@ -687,9 +762,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * @param list<TaxDetail> $taxDetails
+     * @param list<TaxDetail>|null $taxDetails
      */
-    public function withTaxDetails(array $taxDetails): self
+    public function withTaxDetails(?array $taxDetails): self
     {
         $obj = clone $this;
         $obj->taxDetails = $taxDetails;
@@ -697,6 +772,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         return $obj;
     }
 
+    /**
+     * The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals.
+     */
     public function withTotalDiscount(?string $totalDiscount): self
     {
         $obj = clone $this;
@@ -705,6 +783,9 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         return $obj;
     }
 
+    /**
+     * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals.
+     */
     public function withTotalTax(?string $totalTax): self
     {
         $obj = clone $this;

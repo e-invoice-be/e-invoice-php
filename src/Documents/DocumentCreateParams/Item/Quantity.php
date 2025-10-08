@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals.
+ */
 final class Quantity implements ConverterSource
 {
     use SdkUnion;
