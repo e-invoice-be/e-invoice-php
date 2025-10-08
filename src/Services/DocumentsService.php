@@ -10,7 +10,9 @@ use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item;
+use EInvoiceAPI\Documents\DocumentCreateParams\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\TaxDetail;
+use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
 use EInvoiceAPI\Documents\DocumentResponse;
@@ -84,9 +86,15 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $shippingAddressRecipient
      * @param DocumentState|value-of<DocumentState> $state
      * @param float|string|null $subtotal
+     * @param TaxCode|value-of<TaxCode> $taxCode Tax category code of the invoice
      * @param list<TaxDetail>|null $taxDetails
      * @param float|string|null $totalDiscount
      * @param float|string|null $totalTax
+     * @param Vatex|value-of<Vatex>|null $vatex VATEX code list for VAT exemption reasons
+     *
+     * Agency: CEF
+     * Identifier: vatex
+     * @param string|null $vatexNote VAT exemption note of the invoice
      * @param string|null $vendorAddress
      * @param string|null $vendorAddressRecipient
      * @param string|null $vendorEmail
@@ -129,9 +137,12 @@ final class DocumentsService implements DocumentsContract
         $shippingAddressRecipient = omit,
         $state = omit,
         $subtotal = omit,
+        $taxCode = omit,
         $taxDetails = omit,
         $totalDiscount = omit,
         $totalTax = omit,
+        $vatex = omit,
+        $vatexNote = omit,
         $vendorAddress = omit,
         $vendorAddressRecipient = omit,
         $vendorEmail = omit,
@@ -173,9 +184,12 @@ final class DocumentsService implements DocumentsContract
             'shippingAddressRecipient' => $shippingAddressRecipient,
             'state' => $state,
             'subtotal' => $subtotal,
+            'taxCode' => $taxCode,
             'taxDetails' => $taxDetails,
             'totalDiscount' => $totalDiscount,
             'totalTax' => $totalTax,
+            'vatex' => $vatex,
+            'vatexNote' => $vatexNote,
             'vendorAddress' => $vendorAddress,
             'vendorAddressRecipient' => $vendorAddressRecipient,
             'vendorEmail' => $vendorEmail,
