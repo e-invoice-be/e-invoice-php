@@ -779,8 +779,6 @@ enum UnitOfMeasureCode: string
 
     case C61 = 'C61';
 
-    case C62 = 'C62';
-
     case C63 = 'C63';
 
     case C64 = 'C64';
@@ -2068,6 +2066,8 @@ enum UnitOfMeasureCode: string
     case ZZ = 'ZZ';
 
     case NAR = 'NAR';
+
+    case C62 = 'C62';
 
     case LTR = 'LTR';
 }
