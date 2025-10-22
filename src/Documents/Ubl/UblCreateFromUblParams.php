@@ -10,18 +10,7 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new UblCreateFromUblParams); // set properties as needed
- * $client->documents.ubl->createFromUbl(...$params->toArray());
- * ```
  * Create a new invoice or credit note from a UBL file.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->documents.ubl->createFromUbl(...$params->toArray());`
  *
  * @see EInvoiceAPI\Documents\Ubl->createFromUbl
  *

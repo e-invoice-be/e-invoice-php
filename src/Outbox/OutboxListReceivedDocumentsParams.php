@@ -12,18 +12,7 @@ use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new OutboxListReceivedDocumentsParams); // set properties as needed
- * $client->outbox->listReceivedDocuments(...$params->toArray());
- * ```
  * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->outbox->listReceivedDocuments(...$params->toArray());`
  *
  * @see EInvoiceAPI\Outbox->listReceivedDocuments
  *

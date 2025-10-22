@@ -11,18 +11,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new InboxListParams); // set properties as needed
- * $client->inbox->list(...$params->toArray());
- * ```
  * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->inbox->list(...$params->toArray());`
  *
  * @see EInvoiceAPI\Inbox->list
  *
