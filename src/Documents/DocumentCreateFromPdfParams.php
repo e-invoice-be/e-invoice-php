@@ -10,18 +10,7 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new DocumentCreateFromPdfParams); // set properties as needed
- * $client->documents->createFromPdf(...$params->toArray());
- * ```
  * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->documents->createFromPdf(...$params->toArray());`
  *
  * @see EInvoiceAPI\Documents->createFromPdf
  *

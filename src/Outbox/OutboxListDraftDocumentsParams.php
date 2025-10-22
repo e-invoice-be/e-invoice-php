@@ -10,18 +10,7 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new OutboxListDraftDocumentsParams); // set properties as needed
- * $client->outbox->listDraftDocuments(...$params->toArray());
- * ```
  * Retrieve a paginated list of draft documents with filtering options.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->outbox->listDraftDocuments(...$params->toArray());`
  *
  * @see EInvoiceAPI\Outbox->listDraftDocuments
  *
