@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.4.0 (2025-10-22)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.3.0...v0.4.0)
+
+### ⚠ BREAKING CHANGES
+
+* remove confusing `toArray()` alias to `__serialize()` in favour of `toProperties()`
+
+### Features
+
+* **api:** api update ([edfcdbd](https://github.com/e-invoice-be/e-invoice-php/commit/edfcdbdeb615cf6d5109ce1ea9aa2d366f942b9a))
+* **api:** api update ([924bfc9](https://github.com/e-invoice-be/e-invoice-php/commit/924bfc954769184bea0bc67dd5f84dc68999fad3))
+* **api:** api update ([1185fcf](https://github.com/e-invoice-be/e-invoice-php/commit/1185fcf1417be33be06fc56b86286221d54c7a3f))
+* **api:** api update ([fd20f9b](https://github.com/e-invoice-be/e-invoice-php/commit/fd20f9bae2d3f7357b582c3381973fd5e3858f27))
+* **api:** manual updates ([9af7aff](https://github.com/e-invoice-be/e-invoice-php/commit/9af7aff97f84d99d810148849ffb2ac07891544f))
+* remove confusing `toArray()` alias to `__serialize()` in favour of `toProperties()` ([8de0c78](https://github.com/e-invoice-be/e-invoice-php/commit/8de0c78e08fef9d21866808bbf9fb410e9af087d))
+
+
+### Bug Fixes
+
+* **ci:** release doctor workflow ([9a0e39f](https://github.com/e-invoice-be/e-invoice-php/commit/9a0e39feadc9ee95bfc898e0505d5e66a437685c))
+* inverted retry condition ([59e2405](https://github.com/e-invoice-be/e-invoice-php/commit/59e24051a8efd09d80a6364e169b12bfedf06f1b))
+
+
+### Chores
+
+* add license ([4791908](https://github.com/e-invoice-be/e-invoice-php/commit/4791908982e34823fb31c3daa3394a486cd20e0b))
+* **docs:** update readme formatting ([500976a](https://github.com/e-invoice-be/e-invoice-php/commit/500976a044dceea488779884abf2f84ce4e8f9b9))
+* refactor methods ([337b487](https://github.com/e-invoice-be/e-invoice-php/commit/337b487980f61feabd0d8bc559eb2aae811e280a))
+
 ## 0.3.0 (2025-09-16)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.2.0...v0.3.0)

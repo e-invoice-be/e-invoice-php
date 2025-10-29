@@ -63,6 +63,30 @@ final class DocumentsTest extends TestCase
     }
 
     #[Test]
+    public function testCreateFromPdf(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->documents->createFromPdf(file: 'file');
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
+
+    #[Test]
+    public function testCreateFromPdfWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->documents->createFromPdf(file: 'file');
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
+
+    #[Test]
     public function testSend(): void
     {
         if (UnsupportedMockTests::$skip) {
@@ -70,6 +94,18 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->send('document_id');
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
+
+    #[Test]
+    public function testValidate(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->documents->validate('document_id');
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

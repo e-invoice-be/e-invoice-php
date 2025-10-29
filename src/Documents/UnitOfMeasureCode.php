@@ -9,75 +9,75 @@ namespace EInvoiceAPI\Documents;
  */
 enum UnitOfMeasureCode: string
 {
-    case UNIT_OF_MEASURE_CODE_10 = '10';
+    case _10 = '10';
 
-    case UNIT_OF_MEASURE_CODE_11 = '11';
+    case _11 = '11';
 
-    case UNIT_OF_MEASURE_CODE_13 = '13';
+    case _13 = '13';
 
-    case UNIT_OF_MEASURE_CODE_14 = '14';
+    case _14 = '14';
 
-    case UNIT_OF_MEASURE_CODE_15 = '15';
+    case _15 = '15';
 
-    case UNIT_OF_MEASURE_CODE_20 = '20';
+    case _20 = '20';
 
-    case UNIT_OF_MEASURE_CODE_21 = '21';
+    case _21 = '21';
 
-    case UNIT_OF_MEASURE_CODE_22 = '22';
+    case _22 = '22';
 
-    case UNIT_OF_MEASURE_CODE_23 = '23';
+    case _23 = '23';
 
-    case UNIT_OF_MEASURE_CODE_24 = '24';
+    case _24 = '24';
 
-    case UNIT_OF_MEASURE_CODE_25 = '25';
+    case _25 = '25';
 
-    case UNIT_OF_MEASURE_CODE_27 = '27';
+    case _27 = '27';
 
-    case UNIT_OF_MEASURE_CODE_28 = '28';
+    case _28 = '28';
 
-    case UNIT_OF_MEASURE_CODE_33 = '33';
+    case _33 = '33';
 
-    case UNIT_OF_MEASURE_CODE_34 = '34';
+    case _34 = '34';
 
-    case UNIT_OF_MEASURE_CODE_35 = '35';
+    case _35 = '35';
 
-    case UNIT_OF_MEASURE_CODE_37 = '37';
+    case _37 = '37';
 
-    case UNIT_OF_MEASURE_CODE_38 = '38';
+    case _38 = '38';
 
-    case UNIT_OF_MEASURE_CODE_40 = '40';
+    case _40 = '40';
 
-    case UNIT_OF_MEASURE_CODE_41 = '41';
+    case _41 = '41';
 
-    case UNIT_OF_MEASURE_CODE_56 = '56';
+    case _56 = '56';
 
-    case UNIT_OF_MEASURE_CODE_57 = '57';
+    case _57 = '57';
 
-    case UNIT_OF_MEASURE_CODE_58 = '58';
+    case _58 = '58';
 
-    case UNIT_OF_MEASURE_CODE_59 = '59';
+    case _59 = '59';
 
-    case UNIT_OF_MEASURE_CODE_60 = '60';
+    case _60 = '60';
 
-    case UNIT_OF_MEASURE_CODE_61 = '61';
+    case _61 = '61';
 
-    case UNIT_OF_MEASURE_CODE_74 = '74';
+    case _74 = '74';
 
-    case UNIT_OF_MEASURE_CODE_77 = '77';
+    case _77 = '77';
 
-    case UNIT_OF_MEASURE_CODE_80 = '80';
+    case _80 = '80';
 
-    case UNIT_OF_MEASURE_CODE_81 = '81';
+    case _81 = '81';
 
-    case UNIT_OF_MEASURE_CODE_85 = '85';
+    case _85 = '85';
 
-    case UNIT_OF_MEASURE_CODE_87 = '87';
+    case _87 = '87';
 
-    case UNIT_OF_MEASURE_CODE_89 = '89';
+    case _89 = '89';
 
-    case UNIT_OF_MEASURE_CODE_91 = '91';
+    case _91 = '91';
 
-    case UNIT_OF_MEASURE_CODE_1_I = '1I';
+    case _1_I = '1I';
 
     case EA = 'EA';
 
@@ -177,83 +177,83 @@ enum UnitOfMeasureCode: string
 
     case E76 = 'E76';
 
-    case UNIT_OF_MEASURE_CODE_2_A = '2A';
+    case _2_A = '2A';
 
-    case UNIT_OF_MEASURE_CODE_2_B = '2B';
+    case _2_B = '2B';
 
-    case UNIT_OF_MEASURE_CODE_2_C = '2C';
+    case _2_C = '2C';
 
-    case UNIT_OF_MEASURE_CODE_2_G = '2G';
+    case _2_G = '2G';
 
-    case UNIT_OF_MEASURE_CODE_2_H = '2H';
+    case _2_H = '2H';
 
-    case UNIT_OF_MEASURE_CODE_2_I = '2I';
+    case _2_I = '2I';
 
-    case UNIT_OF_MEASURE_CODE_2_J = '2J';
+    case _2_J = '2J';
 
-    case UNIT_OF_MEASURE_CODE_2_K = '2K';
+    case _2_K = '2K';
 
-    case UNIT_OF_MEASURE_CODE_2_L = '2L';
+    case _2_L = '2L';
 
-    case UNIT_OF_MEASURE_CODE_2_M = '2M';
+    case _2_M = '2M';
 
-    case UNIT_OF_MEASURE_CODE_2_N = '2N';
+    case _2_N = '2N';
 
-    case UNIT_OF_MEASURE_CODE_2_P = '2P';
+    case _2_P = '2P';
 
-    case UNIT_OF_MEASURE_CODE_2_Q = '2Q';
+    case _2_Q = '2Q';
 
-    case UNIT_OF_MEASURE_CODE_2_R = '2R';
+    case _2_R = '2R';
 
-    case UNIT_OF_MEASURE_CODE_2_U = '2U';
+    case _2_U = '2U';
 
-    case UNIT_OF_MEASURE_CODE_2_X = '2X';
+    case _2_X = '2X';
 
-    case UNIT_OF_MEASURE_CODE_2_Y = '2Y';
+    case _2_Y = '2Y';
 
-    case UNIT_OF_MEASURE_CODE_2_Z = '2Z';
+    case _2_Z = '2Z';
 
-    case UNIT_OF_MEASURE_CODE_3_B = '3B';
+    case _3_B = '3B';
 
-    case UNIT_OF_MEASURE_CODE_3_C = '3C';
+    case _3_C = '3C';
 
-    case UNIT_OF_MEASURE_CODE_4_C = '4C';
+    case _4_C = '4C';
 
-    case UNIT_OF_MEASURE_CODE_4_G = '4G';
+    case _4_G = '4G';
 
-    case UNIT_OF_MEASURE_CODE_4_H = '4H';
+    case _4_H = '4H';
 
-    case UNIT_OF_MEASURE_CODE_4_K = '4K';
+    case _4_K = '4K';
 
-    case UNIT_OF_MEASURE_CODE_4_L = '4L';
+    case _4_L = '4L';
 
-    case UNIT_OF_MEASURE_CODE_4_M = '4M';
+    case _4_M = '4M';
 
-    case UNIT_OF_MEASURE_CODE_4_N = '4N';
+    case _4_N = '4N';
 
-    case UNIT_OF_MEASURE_CODE_4_O = '4O';
+    case _4_O = '4O';
 
-    case UNIT_OF_MEASURE_CODE_4_P = '4P';
+    case _4_P = '4P';
 
-    case UNIT_OF_MEASURE_CODE_4_Q = '4Q';
+    case _4_Q = '4Q';
 
-    case UNIT_OF_MEASURE_CODE_4_R = '4R';
+    case _4_R = '4R';
 
-    case UNIT_OF_MEASURE_CODE_4_T = '4T';
+    case _4_T = '4T';
 
-    case UNIT_OF_MEASURE_CODE_4_U = '4U';
+    case _4_U = '4U';
 
-    case UNIT_OF_MEASURE_CODE_4_W = '4W';
+    case _4_W = '4W';
 
-    case UNIT_OF_MEASURE_CODE_4_X = '4X';
+    case _4_X = '4X';
 
-    case UNIT_OF_MEASURE_CODE_5_A = '5A';
+    case _5_A = '5A';
 
-    case UNIT_OF_MEASURE_CODE_5_B = '5B';
+    case _5_B = '5B';
 
-    case UNIT_OF_MEASURE_CODE_5_E = '5E';
+    case _5_E = '5E';
 
-    case UNIT_OF_MEASURE_CODE_5_J = '5J';
+    case _5_J = '5J';
 
     case A10 = 'A10';
 
@@ -778,8 +778,6 @@ enum UnitOfMeasureCode: string
     case C60 = 'C60';
 
     case C61 = 'C61';
-
-    case C62 = 'C62';
 
     case C63 = 'C63';
 
@@ -2068,6 +2066,8 @@ enum UnitOfMeasureCode: string
     case ZZ = 'ZZ';
 
     case NAR = 'NAR';
+
+    case C62 = 'C62';
 
     case LTR = 'LTR';
 }

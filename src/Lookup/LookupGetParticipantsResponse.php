@@ -6,7 +6,9 @@ namespace EInvoiceAPI\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
 
 /**
@@ -19,15 +21,13 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
  *   usedCount: int,
  *   participants?: list<Participant>,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class LookupGetParticipantsResponse implements BaseModel
+final class LookupGetParticipantsResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<lookup_get_participants_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Query terms used for search.

@@ -7,7 +7,6 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\WebhooksContract;
 use EInvoiceAPI\Webhooks\WebhookCreateParams;
@@ -33,8 +32,6 @@ final class WebhooksService implements WebhooksContract
      * @param string $url
      * @param bool $enabled
      *
-     * @return WebhookResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -52,8 +49,6 @@ final class WebhooksService implements WebhooksContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return WebhookResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -81,29 +76,10 @@ final class WebhooksService implements WebhooksContract
      *
      * Get a webhook by ID
      *
-     * @return WebhookResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): WebhookResponse {
-        $params = [];
-
-        return $this->retrieveRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return WebhookResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
         // @phpstan-ignore-next-line;
@@ -124,8 +100,6 @@ final class WebhooksService implements WebhooksContract
      * @param list<string>|null $events
      * @param string|null $url
      *
-     * @return WebhookResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function update(
@@ -144,8 +118,6 @@ final class WebhooksService implements WebhooksContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return WebhookResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -180,22 +152,6 @@ final class WebhooksService implements WebhooksContract
      */
     public function list(?RequestOptions $requestOptions = null): array
     {
-        $params = [];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return list<WebhookResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): array {
         // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'get',
@@ -210,29 +166,10 @@ final class WebhooksService implements WebhooksContract
      *
      * Delete a webhook
      *
-     * @return WebhookDeleteResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): WebhookDeleteResponse {
-        $params = [];
-
-        return $this->deleteRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return WebhookDeleteResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookDeleteResponse {
         // @phpstan-ignore-next-line;

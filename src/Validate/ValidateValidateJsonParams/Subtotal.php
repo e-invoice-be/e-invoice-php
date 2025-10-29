@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
+ */
 final class Subtotal implements ConverterSource
 {
     use SdkUnion;

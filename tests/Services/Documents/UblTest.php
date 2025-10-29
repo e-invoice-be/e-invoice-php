@@ -27,6 +27,30 @@ final class UblTest extends TestCase
     }
 
     #[Test]
+    public function testCreateFromUbl(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->documents->ubl->createFromUbl('file');
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
+
+    #[Test]
+    public function testCreateFromUblWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->documents->ubl->createFromUbl('file');
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
+
+    #[Test]
     public function testGet(): void
     {
         if (UnsupportedMockTests::$skip) {

@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * The previous unpaid balance of the invoice, if any. Must be positive and rounded to maximum 2 decimals.
+ */
 final class PreviousUnpaidBalance implements ConverterSource
 {
     use SdkUnion;

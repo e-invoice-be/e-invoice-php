@@ -6,7 +6,9 @@ namespace EInvoiceAPI\Documents\Attachments;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type document_attachment = array{
@@ -16,15 +18,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *   fileType?: string,
  *   fileURL?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class DocumentAttachment implements BaseModel
+final class DocumentAttachment implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<document_attachment> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $id;

@@ -6,19 +6,19 @@ namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type document_delete_response = array{isDeleted: bool}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class DocumentDeleteResponse implements BaseModel
+final class DocumentDeleteResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<document_delete_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('is_deleted')]
     public bool $isDeleted;

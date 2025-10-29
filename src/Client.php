@@ -8,6 +8,7 @@ use EInvoiceAPI\Core\BaseClient;
 use EInvoiceAPI\Services\DocumentsService;
 use EInvoiceAPI\Services\InboxService;
 use EInvoiceAPI\Services\LookupService;
+use EInvoiceAPI\Services\MeService;
 use EInvoiceAPI\Services\OutboxService;
 use EInvoiceAPI\Services\ValidateService;
 use EInvoiceAPI\Services\WebhooksService;
@@ -46,15 +47,18 @@ class Client extends BaseClient
     /**
      * @api
      */
+    public MeService $me;
+
+    /**
+     * @api
+     */
     public WebhooksService $webhooks;
 
     public function __construct(?string $apiKey = null, ?string $baseUrl = null)
     {
         $this->apiKey = (string) ($apiKey ?? getenv('E_INVOICE_API_KEY'));
 
-        $base = $baseUrl ?? getenv(
-            'E_INVOICE_BASE_URL'
-        ) ?: 'https://api.e-invoice.be';
+        $baseUrl ??= getenv('E_INVOICE_BASE_URL') ?: 'https://api.e-invoice.be';
 
         $options = RequestOptions::with(
             uriFactory: Psr17FactoryDiscovery::findUriFactory(),
@@ -67,7 +71,7 @@ class Client extends BaseClient
             headers: [
                 'Content-Type' => 'application/json', 'Accept' => 'application/json',
             ],
-            baseUrl: $base,
+            baseUrl: $baseUrl,
             options: $options,
         );
 
@@ -76,6 +80,7 @@ class Client extends BaseClient
         $this->outbox = new OutboxService($this);
         $this->validate = new ValidateService($this);
         $this->lookup = new LookupService($this);
+        $this->me = new MeService($this);
         $this->webhooks = new WebhooksService($this);
     }
 

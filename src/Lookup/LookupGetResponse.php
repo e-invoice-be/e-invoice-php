@@ -6,7 +6,9 @@ namespace EInvoiceAPI\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard;
 use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo;
 use EInvoiceAPI\Lookup\LookupGetResponse\QueryMetadata;
@@ -34,15 +36,13 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
  *   serviceMetadata: ServiceMetadata,
  *   status: string,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class LookupGetResponse implements BaseModel
+final class LookupGetResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<lookup_get_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Business card information for the Peppol participant.

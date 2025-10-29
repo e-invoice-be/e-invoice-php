@@ -10,18 +10,7 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new AttachmentRetrieveParams); // set properties as needed
- * $client->documents.attachments->retrieve(...$params->toArray());
- * ```
  * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->documents.attachments->retrieve(...$params->toArray());`
  *
  * @see EInvoiceAPI\Documents\Attachments->retrieve
  *

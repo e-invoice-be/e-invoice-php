@@ -6,7 +6,8 @@ namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\Ubl\UblCreateFromUblParams;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\UblContract;
@@ -21,31 +22,57 @@ final class UblService implements UblContract
     /**
      * @api
      *
-     * Get the UBL for an invoice or credit note
+     * Create a new invoice or credit note from a UBL file
      *
-     * @return UblGetResponse<HasRawResponse>
+     * @param string $file
      *
      * @throws APIException
      */
-    public function get(
-        string $documentID,
+    public function createFromUbl(
+        $file,
         ?RequestOptions $requestOptions = null
-    ): UblGetResponse {
-        $params = [];
+    ): DocumentResponse {
+        $params = ['file' => $file];
 
-        return $this->getRaw($documentID, $params, $requestOptions);
+        return $this->createFromUblRaw($params, $requestOptions);
     }
 
     /**
      * @api
      *
-     * @return UblGetResponse<HasRawResponse>
+     * @param array<string, mixed> $params
      *
      * @throws APIException
      */
-    public function getRaw(
+    public function createFromUblRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DocumentResponse {
+        [$parsed, $options] = UblCreateFromUblParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'post',
+            path: 'api/documents/ubl',
+            headers: ['Content-Type' => 'multipart/form-data'],
+            body: (object) $parsed,
+            options: $options,
+            convert: DocumentResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Get the UBL for an invoice or credit note
+     *
+     * @throws APIException
+     */
+    public function get(
         string $documentID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): UblGetResponse {
         // @phpstan-ignore-next-line;

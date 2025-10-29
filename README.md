@@ -137,7 +137,6 @@ use EInvoiceAPI\RequestOptions;
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
-
 $result = $client->documents->create(
   requestOptions: RequestOptions::with(maxRetries: 5)
 );

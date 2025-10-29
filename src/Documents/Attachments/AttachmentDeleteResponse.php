@@ -6,19 +6,19 @@ namespace EInvoiceAPI\Documents\Attachments;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
+use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type attachment_delete_response = array{isDeleted: bool}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class AttachmentDeleteResponse implements BaseModel
+final class AttachmentDeleteResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<attachment_delete_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('is_deleted')]
     public bool $isDeleted;

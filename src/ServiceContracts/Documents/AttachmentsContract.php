@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts\Documents;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\Implementation\HasRawResponse;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
@@ -16,8 +15,6 @@ interface AttachmentsContract
      * @api
      *
      * @param string $documentID
-     *
-     * @return DocumentAttachment<HasRawResponse>
      *
      * @throws APIException
      */
@@ -31,8 +28,6 @@ interface AttachmentsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DocumentAttachment<HasRawResponse>
      *
      * @throws APIException
      */
@@ -57,22 +52,7 @@ interface AttachmentsContract
     /**
      * @api
      *
-     * @return list<DocumentAttachment>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        string $documentID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
-    ): array;
-
-    /**
-     * @api
-     *
      * @param string $documentID
-     *
-     * @return AttachmentDeleteResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -87,8 +67,6 @@ interface AttachmentsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return AttachmentDeleteResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function deleteRaw(
@@ -102,8 +80,6 @@ interface AttachmentsContract
      *
      * @param string $file
      *
-     * @return DocumentAttachment<HasRawResponse>
-     *
      * @throws APIException
      */
     public function add(
@@ -116,8 +92,6 @@ interface AttachmentsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DocumentAttachment<HasRawResponse>
      *
      * @throws APIException
      */

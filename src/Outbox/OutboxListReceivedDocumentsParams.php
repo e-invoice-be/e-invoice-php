@@ -12,18 +12,7 @@ use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new OutboxListReceivedDocumentsParams); // set properties as needed
- * $client->outbox->listReceivedDocuments(...$params->toArray());
- * ```
- * Retrieve a paginated list of received documents with filtering options.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->outbox->listReceivedDocuments(...$params->toArray());`
+ * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
  *
  * @see EInvoiceAPI\Outbox->listReceivedDocuments
  *
@@ -127,8 +116,8 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
         null !== $pageSize && $obj->pageSize = $pageSize;
         null !== $search && $obj->search = $search;
         null !== $sender && $obj->sender = $sender;
-        null !== $state && $obj->state = $state instanceof DocumentState ? $state->value : $state;
-        null !== $type && $obj->type = $type instanceof DocumentType ? $type->value : $type;
+        null !== $state && $obj['state'] = $state;
+        null !== $type && $obj['type'] = $type;
 
         return $obj;
     }
@@ -207,7 +196,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withState(DocumentState|string|null $state): self
     {
         $obj = clone $this;
-        $obj->state = $state instanceof DocumentState ? $state->value : $state;
+        $obj['state'] = $state;
 
         return $obj;
     }
@@ -220,7 +209,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withType(DocumentType|string|null $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof DocumentType ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

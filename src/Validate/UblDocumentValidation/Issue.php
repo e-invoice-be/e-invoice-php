@@ -86,7 +86,7 @@ final class Issue implements BaseModel
 
         $obj->message = $message;
         $obj->schematron = $schematron;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         null !== $flag && $obj->flag = $flag;
         null !== $location && $obj->location = $location;
@@ -118,7 +118,7 @@ final class Issue implements BaseModel
     public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }
