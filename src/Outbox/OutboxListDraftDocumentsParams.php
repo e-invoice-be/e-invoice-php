@@ -14,13 +14,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Outbox->listDraftDocuments
  *
- * @phpstan-type outbox_list_draft_documents_params = array{
+ * @phpstan-type OutboxListDraftDocumentsParamsShape = array{
  *   page?: int, pageSize?: int
  * }
  */
 final class OutboxListDraftDocumentsParams implements BaseModel
 {
-    /** @use SdkModel<outbox_list_draft_documents_params> */
+    /** @use SdkModel<OutboxListDraftDocumentsParamsShape> */
     use SdkModel;
     use SdkParams;
 

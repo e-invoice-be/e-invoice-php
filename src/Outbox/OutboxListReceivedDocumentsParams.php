@@ -16,7 +16,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *
  * @see EInvoiceAPI\Outbox->listReceivedDocuments
  *
- * @phpstan-type outbox_list_received_documents_params = array{
+ * @phpstan-type OutboxListReceivedDocumentsParamsShape = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,
  *   page?: int,
@@ -29,7 +29,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class OutboxListReceivedDocumentsParams implements BaseModel
 {
-    /** @use SdkModel<outbox_list_received_documents_params> */
+    /** @use SdkModel<OutboxListReceivedDocumentsParamsShape> */
     use SdkModel;
     use SdkParams;
 

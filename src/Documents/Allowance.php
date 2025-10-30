@@ -12,7 +12,7 @@ use EInvoiceAPI\Documents\Allowance\TaxCode;
 /**
  * An allowance is a discount for example for early payment, volume discount, etc.
  *
- * @phpstan-type allowance_alias = array{
+ * @phpstan-type AllowanceShape = array{
  *   amount?: string|null,
  *   baseAmount?: string|null,
  *   multiplierFactor?: string|null,
@@ -24,7 +24,7 @@ use EInvoiceAPI\Documents\Allowance\TaxCode;
  */
 final class Allowance implements BaseModel
 {
-    /** @use SdkModel<allowance_alias> */
+    /** @use SdkModel<AllowanceShape> */
     use SdkModel;
 
     /**

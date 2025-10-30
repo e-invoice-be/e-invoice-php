@@ -14,13 +14,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Documents->createFromPdf
  *
- * @phpstan-type document_create_from_pdf_params = array{
+ * @phpstan-type DocumentCreateFromPdfParamsShape = array{
  *   file: string, customerTaxID?: string|null, vendorTaxID?: string|null
  * }
  */
 final class DocumentCreateFromPdfParams implements BaseModel
 {
-    /** @use SdkModel<document_create_from_pdf_params> */
+    /** @use SdkModel<DocumentCreateFromPdfParamsShape> */
     use SdkModel;
     use SdkParams;
 

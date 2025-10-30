@@ -14,13 +14,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Webhooks->update
  *
- * @phpstan-type webhook_update_params = array{
+ * @phpstan-type WebhookUpdateParamsShape = array{
  *   enabled?: bool|null, events?: list<string>|null, url?: string|null
  * }
  */
 final class WebhookUpdateParams implements BaseModel
 {
-    /** @use SdkModel<webhook_update_params> */
+    /** @use SdkModel<WebhookUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

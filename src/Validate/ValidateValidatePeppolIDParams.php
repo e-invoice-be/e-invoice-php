@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Validate->validatePeppolID
  *
- * @phpstan-type validate_validate_peppol_id_params = array{peppolID: string}
+ * @phpstan-type ValidateValidatePeppolIDParamsShape = array{peppolID: string}
  */
 final class ValidateValidatePeppolIDParams implements BaseModel
 {
-    /** @use SdkModel<validate_validate_peppol_id_params> */
+    /** @use SdkModel<ValidateValidatePeppolIDParamsShape> */
     use SdkModel;
     use SdkParams;
 

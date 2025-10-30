@@ -10,7 +10,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentResponse;
 
 /**
- * @phpstan-type paginated_document_response = array{
+ * @phpstan-type PaginatedDocumentResponseShape = array{
  *   items: list<DocumentResponse>,
  *   page: int,
  *   pageSize: int,
@@ -20,7 +20,7 @@ use EInvoiceAPI\Documents\DocumentResponse;
  */
 final class PaginatedDocumentResponse implements BaseModel
 {
-    /** @use SdkModel<paginated_document_response> */
+    /** @use SdkModel<PaginatedDocumentResponseShape> */
     use SdkModel;
 
     /** @var list<DocumentResponse> $items */

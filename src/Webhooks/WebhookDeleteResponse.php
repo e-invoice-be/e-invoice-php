@@ -13,11 +13,11 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 /**
  * Model for webhook deletion.
  *
- * @phpstan-type webhook_delete_response = array{isDeleted: bool}
+ * @phpstan-type WebhookDeleteResponseShape = array{isDeleted: bool}
  */
 final class WebhookDeleteResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<webhook_delete_response> */
+    /** @use SdkModel<WebhookDeleteResponseShape> */
     use SdkModel;
 
     use SdkResponse;

@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Documents\Ubl->createFromUbl
  *
- * @phpstan-type ubl_create_from_ubl_params = array{file: string}
+ * @phpstan-type UblCreateFromUblParamsShape = array{file: string}
  */
 final class UblCreateFromUblParams implements BaseModel
 {
-    /** @use SdkModel<ubl_create_from_ubl_params> */
+    /** @use SdkModel<UblCreateFromUblParamsShape> */
     use SdkModel;
     use SdkParams;
 

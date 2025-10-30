@@ -20,7 +20,7 @@ use EInvoiceAPI\Documents\DocumentResponse\Vatex;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
- * @phpstan-type document_response = array{
+ * @phpstan-type DocumentResponseShape = array{
  *   id: string,
  *   allowances?: list<Allowance>|null,
  *   amountDue?: string|null,
@@ -72,7 +72,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class DocumentResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<document_response> */
+    /** @use SdkModel<DocumentResponseShape> */
     use SdkModel;
 
     use SdkResponse;

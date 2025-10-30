@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Business card information for the Peppol ID.
  *
- * @phpstan-type business_card = array{
+ * @phpstan-type BusinessCardShape = array{
  *   countryCode?: string|null,
  *   name?: string|null,
  *   registrationDate?: \DateTimeInterface|null,
@@ -19,7 +19,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class BusinessCard implements BaseModel
 {
-    /** @use SdkModel<business_card> */
+    /** @use SdkModel<BusinessCardShape> */
     use SdkModel;
 
     #[Api('country_code', nullable: true, optional: true)]

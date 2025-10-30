@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Documents->send
  *
- * @phpstan-type document_send_params = array{
+ * @phpstan-type DocumentSendParamsShape = array{
  *   email?: string|null,
  *   receiverPeppolID?: string|null,
  *   receiverPeppolScheme?: string|null,
@@ -24,7 +24,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class DocumentSendParams implements BaseModel
 {
-    /** @use SdkModel<document_send_params> */
+    /** @use SdkModel<DocumentSendParamsShape> */
     use SdkModel;
     use SdkParams;
 

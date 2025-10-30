@@ -26,7 +26,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *
  * @see EInvoiceAPI\Validate->validateJson
  *
- * @phpstan-type validate_validate_json_params = array{
+ * @phpstan-type ValidateValidateJsonParamsShape = array{
  *   allowances?: list<Allowance>|null,
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
@@ -77,7 +77,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  */
 final class ValidateValidateJsonParams implements BaseModel
 {
-    /** @use SdkModel<validate_validate_json_params> */
+    /** @use SdkModel<ValidateValidateJsonParamsShape> */
     use SdkModel;
     use SdkParams;
 
