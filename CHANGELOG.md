@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2025-10-30)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* use pascal case for phpstan typedefs ([5ceb38f](https://github.com/e-invoice-be/e-invoice-php/commit/5ceb38f37c1a7e8ece8e0a6b2a379d37f6d82f78))
+
 ## 0.4.0 (2025-10-22)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.3.0...v0.4.0)
