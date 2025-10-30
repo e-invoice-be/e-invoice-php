@@ -11,11 +11,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * DNS record information for a Peppol participant.
  *
- * @phpstan-type dns_record = array{ip: string}
+ * @phpstan-type DNSRecordShape = array{ip: string}
  */
 final class DNSRecord implements BaseModel
 {
-    /** @use SdkModel<dns_record> */
+    /** @use SdkModel<DNSRecordShape> */
     use SdkModel;
 
     /**

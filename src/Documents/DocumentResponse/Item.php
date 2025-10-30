@@ -12,7 +12,7 @@ use EInvoiceAPI\Documents\Charge;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
 /**
- * @phpstan-type item_alias = array{
+ * @phpstan-type ItemShape = array{
  *   allowances?: list<Allowance>|null,
  *   amount?: string|null,
  *   charges?: list<Charge>|null,
@@ -28,7 +28,7 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  */
 final class Item implements BaseModel
 {
-    /** @use SdkModel<item_alias> */
+    /** @use SdkModel<ItemShape> */
     use SdkModel;
 
     /**

@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Validate->validateUbl
  *
- * @phpstan-type validate_validate_ubl_params = array{file: string}
+ * @phpstan-type ValidateValidateUblParamsShape = array{file: string}
  */
 final class ValidateValidateUblParams implements BaseModel
 {
-    /** @use SdkModel<validate_validate_ubl_params> */
+    /** @use SdkModel<ValidateValidateUblParamsShape> */
     use SdkModel;
     use SdkParams;
 

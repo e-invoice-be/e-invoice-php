@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Lookup->retrieve
  *
- * @phpstan-type lookup_retrieve_params = array{peppolID: string}
+ * @phpstan-type LookupRetrieveParamsShape = array{peppolID: string}
  */
 final class LookupRetrieveParams implements BaseModel
 {
-    /** @use SdkModel<lookup_retrieve_params> */
+    /** @use SdkModel<LookupRetrieveParamsShape> */
     use SdkModel;
     use SdkParams;
 

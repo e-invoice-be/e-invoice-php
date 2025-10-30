@@ -11,11 +11,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Represents a business identifier.
  *
- * @phpstan-type identifier_alias = array{scheme: string, value: string}
+ * @phpstan-type IdentifierShape = array{scheme: string, value: string}
  */
 final class Identifier implements BaseModel
 {
-    /** @use SdkModel<identifier_alias> */
+    /** @use SdkModel<IdentifierShape> */
     use SdkModel;
 
     /**

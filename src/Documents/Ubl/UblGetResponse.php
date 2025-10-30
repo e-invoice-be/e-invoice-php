@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type ubl_get_response = array{
+ * @phpstan-type UblGetResponseShape = array{
  *   id: string,
  *   fileName: string,
  *   fileHash?: string|null,
@@ -26,7 +26,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
  */
 final class UblGetResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<ubl_get_response> */
+    /** @use SdkModel<UblGetResponseShape> */
     use SdkModel;
 
     use SdkResponse;

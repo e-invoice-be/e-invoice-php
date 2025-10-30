@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Me\MeGetResponse\Plan;
 
 /**
- * @phpstan-type me_get_response = array{
+ * @phpstan-type MeGetResponseShape = array{
  *   creditBalance: int,
  *   name: string,
  *   plan: value-of<Plan>,
@@ -33,7 +33,7 @@ use EInvoiceAPI\Me\MeGetResponse\Plan;
  */
 final class MeGetResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<me_get_response> */
+    /** @use SdkModel<MeGetResponseShape> */
     use SdkModel;
 
     use SdkResponse;

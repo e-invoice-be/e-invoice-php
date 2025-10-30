@@ -12,7 +12,7 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
 /**
  * Represents a business entity.
  *
- * @phpstan-type entity_alias = array{
+ * @phpstan-type EntityShape = array{
  *   additionalInfo?: string|null,
  *   countryCode?: string|null,
  *   geoInfo?: string|null,
@@ -24,7 +24,7 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
  */
 final class Entity implements BaseModel
 {
-    /** @use SdkModel<entity_alias> */
+    /** @use SdkModel<EntityShape> */
     use SdkModel;
 
     /**

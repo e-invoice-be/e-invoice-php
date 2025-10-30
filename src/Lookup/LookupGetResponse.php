@@ -26,7 +26,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
  *     service metadata with supported document types and processes, business card information
  *     with organization details, and certificate data.
  *
- * @phpstan-type lookup_get_response = array{
+ * @phpstan-type LookupGetResponseShape = array{
  *   businessCard: BusinessCard,
  *   certificates: list<Certificate>,
  *   dnsInfo: DNSInfo,
@@ -39,7 +39,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
  */
 final class LookupGetResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<lookup_get_response> */
+    /** @use SdkModel<LookupGetResponseShape> */
     use SdkModel;
 
     use SdkResponse;

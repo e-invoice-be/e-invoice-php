@@ -15,7 +15,7 @@ use EInvoiceAPI\Documents\DocumentType;
  *
  * @see EInvoiceAPI\Inbox->list
  *
- * @phpstan-type inbox_list_params = array{
+ * @phpstan-type InboxListParamsShape = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,
  *   page?: int,
@@ -28,7 +28,7 @@ use EInvoiceAPI\Documents\DocumentType;
  */
 final class InboxListParams implements BaseModel
 {
-    /** @use SdkModel<inbox_list_params> */
+    /** @use SdkModel<InboxListParamsShape> */
     use SdkModel;
     use SdkParams;
 

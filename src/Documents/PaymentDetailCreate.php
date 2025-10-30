@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type payment_detail_create = array{
+ * @phpstan-type PaymentDetailCreateShape = array{
  *   bankAccountNumber?: string|null,
  *   iban?: string|null,
  *   paymentReference?: string|null,
@@ -18,7 +18,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class PaymentDetailCreate implements BaseModel
 {
-    /** @use SdkModel<payment_detail_create> */
+    /** @use SdkModel<PaymentDetailCreateShape> */
     use SdkModel;
 
     #[Api('bank_account_number', nullable: true, optional: true)]

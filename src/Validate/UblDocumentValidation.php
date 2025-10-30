@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
 
 /**
- * @phpstan-type ubl_document_validation = array{
+ * @phpstan-type UblDocumentValidationShape = array{
  *   id: string,
  *   fileName: string|null,
  *   isValid: bool,
@@ -22,7 +22,7 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
  */
 final class UblDocumentValidation implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<ubl_document_validation> */
+    /** @use SdkModel<UblDocumentValidationShape> */
     use SdkModel;
 
     use SdkResponse;

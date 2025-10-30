@@ -16,7 +16,7 @@ use EInvoiceAPI\DocumentsNumberPage\Item;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-type documents_number_page = array{
+ * @phpstan-type DocumentsNumberPageShape = array{
  *   items?: list<Item>|null,
  *   page?: int|null,
  *   pageSize?: int|null,
@@ -29,7 +29,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class DocumentsNumberPage implements BaseModel, BasePage
 {
-    /** @use SdkModel<documents_number_page> */
+    /** @use SdkModel<DocumentsNumberPageShape> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

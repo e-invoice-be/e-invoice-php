@@ -21,7 +21,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *
  * @see EInvoiceAPI\Documents->create
  *
- * @phpstan-type document_create_params = array{
+ * @phpstan-type DocumentCreateParamsShape = array{
  *   allowances?: list<Allowance>|null,
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
@@ -72,7 +72,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class DocumentCreateParams implements BaseModel
 {
-    /** @use SdkModel<document_create_params> */
+    /** @use SdkModel<DocumentCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

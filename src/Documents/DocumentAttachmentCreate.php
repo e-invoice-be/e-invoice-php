@@ -9,13 +9,13 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type document_attachment_create = array{
+ * @phpstan-type DocumentAttachmentCreateShape = array{
  *   fileName: string, fileData?: string|null, fileSize?: int, fileType?: string
  * }
  */
 final class DocumentAttachmentCreate implements BaseModel
 {
-    /** @use SdkModel<document_attachment_create> */
+    /** @use SdkModel<DocumentAttachmentCreateShape> */
     use SdkModel;
 
     #[Api('file_name')]

@@ -16,7 +16,7 @@ use EInvoiceAPI\Documents\DocumentNewFromPdfResponse\Vatex;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
- * @phpstan-type document_new_from_pdf_response = array{
+ * @phpstan-type DocumentNewFromPdfResponseShape = array{
  *   allowances?: list<Allowance>|null,
  *   amountDue?: string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
@@ -69,7 +69,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class DocumentNewFromPdfResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<document_new_from_pdf_response> */
+    /** @use SdkModel<DocumentNewFromPdfResponseShape> */
     use SdkModel;
 
     use SdkResponse;

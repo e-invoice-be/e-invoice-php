@@ -14,13 +14,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Lookup->retrieveParticipants
  *
- * @phpstan-type lookup_retrieve_participants_params = array{
+ * @phpstan-type LookupRetrieveParticipantsParamsShape = array{
  *   query: string, countryCode?: string|null
  * }
  */
 final class LookupRetrieveParticipantsParams implements BaseModel
 {
-    /** @use SdkModel<lookup_retrieve_participants_params> */
+    /** @use SdkModel<LookupRetrieveParticipantsParamsShape> */
     use SdkModel;
     use SdkParams;
 
