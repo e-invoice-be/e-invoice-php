@@ -12,7 +12,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge;
 
 /**
- * @phpstan-type item_alias = array{
+ * @phpstan-type ItemShape = array{
  *   allowances?: list<Allowance>|null,
  *   amount?: float|string|null,
  *   charges?: list<Charge>|null,
@@ -28,7 +28,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge;
  */
 final class Item implements BaseModel
 {
-    /** @use SdkModel<item_alias> */
+    /** @use SdkModel<ItemShape> */
     use SdkModel;
 
     /**

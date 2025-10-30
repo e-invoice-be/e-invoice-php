@@ -16,7 +16,7 @@ use EInvoiceAPI\Documents\DocumentCreate\Vatex;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
- * @phpstan-type document_create = array{
+ * @phpstan-type DocumentCreateShape = array{
  *   allowances?: list<Allowance>|null,
  *   amountDue?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
@@ -67,7 +67,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  */
 final class DocumentCreate implements BaseModel
 {
-    /** @use SdkModel<document_create> */
+    /** @use SdkModel<DocumentCreateShape> */
     use SdkModel;
 
     /** @var list<Allowance>|null $allowances */

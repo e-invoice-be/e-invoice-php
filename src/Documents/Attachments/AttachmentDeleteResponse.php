@@ -11,11 +11,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type attachment_delete_response = array{isDeleted: bool}
+ * @phpstan-type AttachmentDeleteResponseShape = array{isDeleted: bool}
  */
 final class AttachmentDeleteResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<attachment_delete_response> */
+    /** @use SdkModel<AttachmentDeleteResponseShape> */
     use SdkModel;
 
     use SdkResponse;

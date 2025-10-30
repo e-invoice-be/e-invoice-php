@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Documents\Attachments->delete
  *
- * @phpstan-type attachment_delete_params = array{documentID: string}
+ * @phpstan-type AttachmentDeleteParamsShape = array{documentID: string}
  */
 final class AttachmentDeleteParams implements BaseModel
 {
-    /** @use SdkModel<attachment_delete_params> */
+    /** @use SdkModel<AttachmentDeleteParamsShape> */
     use SdkModel;
     use SdkParams;
 

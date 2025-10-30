@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type document_attachment = array{
+ * @phpstan-type DocumentAttachmentShape = array{
  *   id: string,
  *   fileName: string,
  *   fileSize?: int,
@@ -21,7 +21,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
  */
 final class DocumentAttachment implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<document_attachment> */
+    /** @use SdkModel<DocumentAttachmentShape> */
     use SdkModel;
 
     use SdkResponse;

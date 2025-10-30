@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Documents\Attachments->add
  *
- * @phpstan-type attachment_add_params = array{file: string}
+ * @phpstan-type AttachmentAddParamsShape = array{file: string}
  */
 final class AttachmentAddParams implements BaseModel
 {
-    /** @use SdkModel<attachment_add_params> */
+    /** @use SdkModel<AttachmentAddParamsShape> */
     use SdkModel;
     use SdkParams;
 

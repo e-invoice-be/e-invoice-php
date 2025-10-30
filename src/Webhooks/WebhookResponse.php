@@ -13,13 +13,13 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 /**
  * Response model for webhook API endpoints.
  *
- * @phpstan-type webhook_response = array{
+ * @phpstan-type WebhookResponseShape = array{
  *   id: string, events: list<string>, secret: string, url: string, enabled?: bool
  * }
  */
 final class WebhookResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<webhook_response> */
+    /** @use SdkModel<WebhookResponseShape> */
     use SdkModel;
 
     use SdkResponse;

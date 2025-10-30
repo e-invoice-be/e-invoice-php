@@ -12,7 +12,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
 /**
  * Business card information for the Peppol participant.
  *
- * @phpstan-type business_card = array{
+ * @phpstan-type BusinessCardShape = array{
  *   entities: list<Entity>,
  *   queryTimeMs: float,
  *   status: string,
@@ -21,7 +21,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
  */
 final class BusinessCard implements BaseModel
 {
-    /** @use SdkModel<business_card> */
+    /** @use SdkModel<BusinessCardShape> */
     use SdkModel;
 
     /**

@@ -12,7 +12,7 @@ use EInvoiceAPI\Lookup\Certificate;
 /**
  * Endpoint information for a specific Peppol process.
  *
- * @phpstan-type endpoint_alias = array{
+ * @phpstan-type EndpointShape = array{
  *   address: string,
  *   transportProfile: string,
  *   certificate?: Certificate|null,
@@ -25,7 +25,7 @@ use EInvoiceAPI\Lookup\Certificate;
  */
 final class Endpoint implements BaseModel
 {
-    /** @use SdkModel<endpoint_alias> */
+    /** @use SdkModel<EndpointShape> */
     use SdkModel;
 
     /**

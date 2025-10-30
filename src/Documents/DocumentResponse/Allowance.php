@@ -10,7 +10,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentResponse\Allowance\TaxCode;
 
 /**
- * @phpstan-type allowance_alias = array{
+ * @phpstan-type AllowanceShape = array{
  *   amount?: string|null,
  *   baseAmount?: string|null,
  *   multiplierFactor?: string|null,
@@ -22,7 +22,7 @@ use EInvoiceAPI\Documents\DocumentResponse\Allowance\TaxCode;
  */
 final class Allowance implements BaseModel
 {
-    /** @use SdkModel<allowance_alias> */
+    /** @use SdkModel<AllowanceShape> */
     use SdkModel;
 
     /**

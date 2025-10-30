@@ -10,7 +10,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode;
 
 /**
- * @phpstan-type charge_alias = array{
+ * @phpstan-type ChargeShape = array{
  *   amount?: string|null,
  *   baseAmount?: string|null,
  *   multiplierFactor?: string|null,
@@ -22,7 +22,7 @@ use EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode;
  */
 final class Charge implements BaseModel
 {
-    /** @use SdkModel<charge_alias> */
+    /** @use SdkModel<ChargeShape> */
     use SdkModel;
 
     /**

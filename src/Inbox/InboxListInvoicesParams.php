@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Inbox->listInvoices
  *
- * @phpstan-type inbox_list_invoices_params = array{page?: int, pageSize?: int}
+ * @phpstan-type InboxListInvoicesParamsShape = array{page?: int, pageSize?: int}
  */
 final class InboxListInvoicesParams implements BaseModel
 {
-    /** @use SdkModel<inbox_list_invoices_params> */
+    /** @use SdkModel<InboxListInvoicesParamsShape> */
     use SdkModel;
     use SdkParams;
 

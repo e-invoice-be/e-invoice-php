@@ -9,11 +9,11 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type tax_detail = array{amount?: string|null, rate?: string|null}
+ * @phpstan-type TaxDetailShape = array{amount?: string|null, rate?: string|null}
  */
 final class TaxDetail implements BaseModel
 {
-    /** @use SdkModel<tax_detail> */
+    /** @use SdkModel<TaxDetailShape> */
     use SdkModel;
 
     #[Api(nullable: true, optional: true)]

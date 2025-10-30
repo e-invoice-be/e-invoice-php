@@ -14,11 +14,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Inbox->listCreditNotes
  *
- * @phpstan-type inbox_list_credit_notes_params = array{page?: int, pageSize?: int}
+ * @phpstan-type InboxListCreditNotesParamsShape = array{
+ *   page?: int, pageSize?: int
+ * }
  */
 final class InboxListCreditNotesParams implements BaseModel
 {
-    /** @use SdkModel<inbox_list_credit_notes_params> */
+    /** @use SdkModel<InboxListCreditNotesParamsShape> */
     use SdkModel;
     use SdkParams;
 

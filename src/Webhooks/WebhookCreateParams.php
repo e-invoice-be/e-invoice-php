@@ -14,13 +14,13 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Webhooks->create
  *
- * @phpstan-type webhook_create_params = array{
+ * @phpstan-type WebhookCreateParamsShape = array{
  *   events: list<string>, url: string, enabled?: bool
  * }
  */
 final class WebhookCreateParams implements BaseModel
 {
-    /** @use SdkModel<webhook_create_params> */
+    /** @use SdkModel<WebhookCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

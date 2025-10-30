@@ -14,11 +14,11 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Documents\Attachments->retrieve
  *
- * @phpstan-type attachment_retrieve_params = array{documentID: string}
+ * @phpstan-type AttachmentRetrieveParamsShape = array{documentID: string}
  */
 final class AttachmentRetrieveParams implements BaseModel
 {
-    /** @use SdkModel<attachment_retrieve_params> */
+    /** @use SdkModel<AttachmentRetrieveParamsShape> */
     use SdkModel;
     use SdkParams;
 

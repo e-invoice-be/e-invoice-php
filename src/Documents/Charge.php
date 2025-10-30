@@ -12,7 +12,7 @@ use EInvoiceAPI\Documents\Charge\TaxCode;
 /**
  * A charge is an additional fee for example for late payment, late delivery, etc.
  *
- * @phpstan-type charge_alias = array{
+ * @phpstan-type ChargeShape = array{
  *   amount?: string|null,
  *   baseAmount?: string|null,
  *   multiplierFactor?: string|null,
@@ -24,7 +24,7 @@ use EInvoiceAPI\Documents\Charge\TaxCode;
  */
 final class Charge implements BaseModel
 {
-    /** @use SdkModel<charge_alias> */
+    /** @use SdkModel<ChargeShape> */
     use SdkModel;
 
     /**

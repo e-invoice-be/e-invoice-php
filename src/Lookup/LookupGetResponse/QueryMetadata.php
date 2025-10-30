@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Metadata about the query that was performed.
  *
- * @phpstan-type query_metadata = array{
+ * @phpstan-type QueryMetadataShape = array{
  *   identifierScheme: string,
  *   identifierValue: string,
  *   smlDomain: string,
@@ -21,7 +21,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  */
 final class QueryMetadata implements BaseModel
 {
-    /** @use SdkModel<query_metadata> */
+    /** @use SdkModel<QueryMetadataShape> */
     use SdkModel;
 
     /**

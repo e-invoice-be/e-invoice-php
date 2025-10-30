@@ -12,7 +12,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 /**
  * Service metadata information for the Peppol participant.
  *
- * @phpstan-type service_metadata = array{
+ * @phpstan-type ServiceMetadataShape = array{
  *   endpoints: list<Endpoint>,
  *   queryTimeMs: float,
  *   status: string,
@@ -21,7 +21,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
  */
 final class ServiceMetadata implements BaseModel
 {
-    /** @use SdkModel<service_metadata> */
+    /** @use SdkModel<ServiceMetadataShape> */
     use SdkModel;
 
     /**

@@ -17,7 +17,7 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
  * This model represents the validation result of a Peppol ID in the Peppol network,
  * including whether the ID is valid and what document types it supports.
  *
- * @phpstan-type validate_validate_peppol_id_response = array{
+ * @phpstan-type ValidateValidatePeppolIDResponseShape = array{
  *   businessCard: BusinessCard|null,
  *   businessCardValid: bool,
  *   dnsValid: bool,
@@ -27,7 +27,7 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
  */
 final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<validate_validate_peppol_id_response> */
+    /** @use SdkModel<ValidateValidatePeppolIDResponseShape> */
     use SdkModel;
 
     use SdkResponse;
