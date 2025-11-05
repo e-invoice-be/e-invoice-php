@@ -57,7 +57,7 @@ trait SdkPage
     public function getNextPage(): static
     {
         $next = $this->nextRequest();
-        if (!$next) {
+        if ($next === null) {
             throw new \RuntimeException(
                 'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.'
             );

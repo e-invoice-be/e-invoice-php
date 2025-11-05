@@ -106,12 +106,26 @@ final class DocumentsNumberPage implements BaseModel, BasePage
      *     body: mixed,
      *   },
      *   RequestOptions,
-     * }
+     * }|null
      */
-    public function nextRequest(): array
+    public function nextRequest(): ?array
     {
         $currentPage = $this->page ?? 1;
+        $pageSize = $this->pageSize ?? 0;
+        $total = $this->total ?? 0;
+
+        // Check if there are more pages
+        if ($pageSize === 0 || $total === 0) {
+            return null;
+        }
+
+        $totalPages = (int) ceil($total / $pageSize);
+        if ($currentPage >= $totalPages) {
+            return null;
+        }
+
         $nextRequest = $this->request;
+        $nextRequest['query']['page'] = $currentPage + 1;
 
         return [$nextRequest, $this->options];
     }
