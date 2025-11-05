@@ -8,7 +8,7 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ItemShape = array{}
+ * @phpstan-type ItemShape = array<string, mixed>
  */
 final class Item implements BaseModel
 {

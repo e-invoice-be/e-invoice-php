@@ -106,9 +106,9 @@ final class DocumentsNumberPage implements BaseModel, BasePage
      *     body: mixed,
      *   },
      *   RequestOptions,
-     * }|null
+     * }
      */
-    public function nextRequest(): ?array
+    public function nextRequest(): array
     {
         $currentPage = $this->page ?? 1;
         $nextRequest = $this->request;
