@@ -16,7 +16,7 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   allowances?: list<Allowance>|null,
  *   amount?: float|string|null,
  *   charges?: list<Charge>|null,
- *   date?: null|null,
+ *   date?: \DateTimeInterface|null,
  *   description?: string|null,
  *   productCode?: string|null,
  *   quantity?: float|string|null,
@@ -53,9 +53,8 @@ final class Item implements BaseModel
     #[Api(list: Charge::class, nullable: true, optional: true)]
     public ?array $charges;
 
-    /** @var null|null $date */
     #[Api(nullable: true, optional: true)]
-    public null $date;
+    public ?\DateTimeInterface $date;
 
     /**
      * The description of the line item.
@@ -119,7 +118,7 @@ final class Item implements BaseModel
         ?array $allowances = null,
         float|string|null $amount = null,
         ?array $charges = null,
-        null $date = null,
+        ?\DateTimeInterface $date = null,
         ?string $description = null,
         ?string $productCode = null,
         float|string|null $quantity = null,
@@ -182,10 +181,7 @@ final class Item implements BaseModel
         return $obj;
     }
 
-    /**
-     * @param null|null $date
-     */
-    public function withDate(null $date): self
+    public function withDate(?\DateTimeInterface $date): self
     {
         $obj = clone $this;
         $obj->date = $date;
