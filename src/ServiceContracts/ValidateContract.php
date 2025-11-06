@@ -65,7 +65,7 @@ interface ValidateContract
      * @param float|string|null $subtotal The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals
      * @param TaxCode|value-of<TaxCode> $taxCode Tax category code of the invoice
      * @param list<TaxDetail>|null $taxDetails
-     * @param float|string|null $totalDiscount The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals
+     * @param float|string|null $totalDiscount The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals
      * @param float|string|null $totalTax The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
      * @param Vatex|value-of<Vatex>|null $vatex VATEX code list for VAT exemption reasons
      *
