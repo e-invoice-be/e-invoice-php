@@ -228,7 +228,7 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     public ?array $taxDetails;
 
     /**
-     * The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals.
+     * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals.
      */
     #[Api('total_discount', nullable: true, optional: true)]
     public ?string $totalDiscount;
@@ -773,7 +773,7 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * The total financial discount of the invoice (so discounts not subject to VAT). Must be positive and rounded to maximum 2 decimals.
+     * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals.
      */
     public function withTotalDiscount(?string $totalDiscount): self
     {
