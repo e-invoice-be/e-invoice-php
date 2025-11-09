@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * The amount due of the invoice. Must be positive and rounded to maximum 2 decimals.
+ * The amount due for payment. Must be positive and rounded to maximum 2 decimals.
  */
 final class AmountDue implements ConverterSource
 {

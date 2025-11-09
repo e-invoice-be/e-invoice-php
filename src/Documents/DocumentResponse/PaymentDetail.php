@@ -21,15 +21,27 @@ final class PaymentDetail implements BaseModel
     /** @use SdkModel<PaymentDetailShape> */
     use SdkModel;
 
+    /**
+     * Bank account number (for non-IBAN accounts).
+     */
     #[Api('bank_account_number', nullable: true, optional: true)]
     public ?string $bankAccountNumber;
 
+    /**
+     * International Bank Account Number for payment transfers.
+     */
     #[Api(nullable: true, optional: true)]
     public ?string $iban;
 
+    /**
+     * Structured payment reference or communication (e.g., structured communication for Belgian bank transfers).
+     */
     #[Api('payment_reference', nullable: true, optional: true)]
     public ?string $paymentReference;
 
+    /**
+     * SWIFT/BIC code of the bank.
+     */
     #[Api(nullable: true, optional: true)]
     public ?string $swift;
 
@@ -59,6 +71,9 @@ final class PaymentDetail implements BaseModel
         return $obj;
     }
 
+    /**
+     * Bank account number (for non-IBAN accounts).
+     */
     public function withBankAccountNumber(?string $bankAccountNumber): self
     {
         $obj = clone $this;
@@ -67,6 +82,9 @@ final class PaymentDetail implements BaseModel
         return $obj;
     }
 
+    /**
+     * International Bank Account Number for payment transfers.
+     */
     public function withIban(?string $iban): self
     {
         $obj = clone $this;
@@ -75,6 +93,9 @@ final class PaymentDetail implements BaseModel
         return $obj;
     }
 
+    /**
+     * Structured payment reference or communication (e.g., structured communication for Belgian bank transfers).
+     */
     public function withPaymentReference(?string $paymentReference): self
     {
         $obj = clone $this;
@@ -83,6 +104,9 @@ final class PaymentDetail implements BaseModel
         return $obj;
     }
 
+    /**
+     * SWIFT/BIC code of the bank.
+     */
     public function withSwift(?string $swift): self
     {
         $obj = clone $this;
