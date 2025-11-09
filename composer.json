@@ -27,7 +27,6 @@
     "preferred-install": "dist",
     "sort-packages": true
   },
-  "description": "E Invoice PHP SDK",
   "name": "e-invoice-be/e-invoice",
   "description": "e-invoice.be Peppol API",
   "require": {
