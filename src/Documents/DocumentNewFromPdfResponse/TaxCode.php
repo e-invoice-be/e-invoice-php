@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 
 /**
- * Tax category code of the invoice.
+ * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt).
  */
 enum TaxCode: string
 {

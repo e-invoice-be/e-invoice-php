@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * The total tax of the invoice. Must be positive and rounded to maximum 2 decimals.
+ * The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals.
  */
 final class TotalTax implements ConverterSource
 {
