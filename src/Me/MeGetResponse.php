@@ -23,6 +23,7 @@ use EInvoiceAPI\Me\MeGetResponse\Plan;
  *   companyEmail?: string|null,
  *   companyName?: string|null,
  *   companyNumber?: string|null,
+ *   companyTaxID?: string|null,
  *   companyZip?: string|null,
  *   description?: string|null,
  *   ibans?: list<string>|null,
@@ -62,7 +63,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public ?string $bccRecipientEmail;
 
     /**
-     * Address of the company.
+     * Address of the company. Must be in the form of `Street Name Street Number`.
      */
     #[Api('company_address', nullable: true, optional: true)]
     public ?string $companyAddress;
@@ -86,16 +87,22 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public ?string $companyEmail;
 
     /**
-     * Name of the company.
+     * Name of the company. Must include the company type. For example: `BV`, `NV`, `CVBA`, `VOF`.
      */
     #[Api('company_name', nullable: true, optional: true)]
     public ?string $companyName;
 
     /**
-     * Company number.
+     * Company number. For Belgium this is the CBE number or their EUID (European Unique Identifier) number.
      */
     #[Api('company_number', nullable: true, optional: true)]
     public ?string $companyNumber;
+
+    /**
+     * Company tax ID. For Belgium this is the VAT number. Must include the country prefix.
+     */
+    #[Api('company_tax_id', nullable: true, optional: true)]
+    public ?string $companyTaxID;
 
     /**
      * Zip code of the company.
@@ -173,6 +180,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
         ?string $companyEmail = null,
         ?string $companyName = null,
         ?string $companyNumber = null,
+        ?string $companyTaxID = null,
         ?string $companyZip = null,
         ?string $description = null,
         ?array $ibans = null,
@@ -193,6 +201,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
         null !== $companyEmail && $obj->companyEmail = $companyEmail;
         null !== $companyName && $obj->companyName = $companyName;
         null !== $companyNumber && $obj->companyNumber = $companyNumber;
+        null !== $companyTaxID && $obj->companyTaxID = $companyTaxID;
         null !== $companyZip && $obj->companyZip = $companyZip;
         null !== $description && $obj->description = $description;
         null !== $ibans && $obj->ibans = $ibans;
@@ -247,7 +256,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * Address of the company.
+     * Address of the company. Must be in the form of `Street Name Street Number`.
      */
     public function withCompanyAddress(?string $companyAddress): self
     {
@@ -291,7 +300,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * Name of the company.
+     * Name of the company. Must include the company type. For example: `BV`, `NV`, `CVBA`, `VOF`.
      */
     public function withCompanyName(?string $companyName): self
     {
@@ -302,12 +311,23 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * Company number.
+     * Company number. For Belgium this is the CBE number or their EUID (European Unique Identifier) number.
      */
     public function withCompanyNumber(?string $companyNumber): self
     {
         $obj = clone $this;
         $obj->companyNumber = $companyNumber;
+
+        return $obj;
+    }
+
+    /**
+     * Company tax ID. For Belgium this is the VAT number. Must include the country prefix.
+     */
+    public function withCompanyTaxID(?string $companyTaxID): self
+    {
+        $obj = clone $this;
+        $obj->companyTaxID = $companyTaxID;
 
         return $obj;
     }

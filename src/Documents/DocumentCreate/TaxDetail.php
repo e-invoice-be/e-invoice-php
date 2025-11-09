@@ -18,9 +18,15 @@ final class TaxDetail implements BaseModel
     /** @use SdkModel<TaxDetailShape> */
     use SdkModel;
 
+    /**
+     * The tax amount for this tax category. Must be rounded to maximum 2 decimals.
+     */
     #[Api(nullable: true, optional: true)]
     public float|string|null $amount;
 
+    /**
+     * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00').
+     */
     #[Api(nullable: true, optional: true)]
     public ?string $rate;
 
@@ -46,6 +52,9 @@ final class TaxDetail implements BaseModel
         return $obj;
     }
 
+    /**
+     * The tax amount for this tax category. Must be rounded to maximum 2 decimals.
+     */
     public function withAmount(float|string|null $amount): self
     {
         $obj = clone $this;
@@ -54,6 +63,9 @@ final class TaxDetail implements BaseModel
         return $obj;
     }
 
+    /**
+     * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00').
+     */
     public function withRate(?string $rate): self
     {
         $obj = clone $this;

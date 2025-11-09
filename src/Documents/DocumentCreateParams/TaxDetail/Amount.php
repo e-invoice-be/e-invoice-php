@@ -8,6 +8,9 @@ use EInvoiceAPI\Core\Concerns\SdkUnion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * The tax amount for this tax category. Must be rounded to maximum 2 decimals.
+ */
 final class Amount implements ConverterSource
 {
     use SdkUnion;
