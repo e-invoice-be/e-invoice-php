@@ -33,7 +33,7 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->outbox->listDraftDocuments();
+        $result = $this->client->outbox->listDraftDocuments([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -45,7 +45,7 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->outbox->listReceivedDocuments();
+        $result = $this->client->outbox->listReceivedDocuments([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

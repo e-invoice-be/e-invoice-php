@@ -16,10 +16,10 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @phpstan-type DocumentSendParamsShape = array{
  *   email?: string|null,
- *   receiverPeppolID?: string|null,
- *   receiverPeppolScheme?: string|null,
- *   senderPeppolID?: string|null,
- *   senderPeppolScheme?: string|null,
+ *   receiver_peppol_id?: string|null,
+ *   receiver_peppol_scheme?: string|null,
+ *   sender_peppol_id?: string|null,
+ *   sender_peppol_scheme?: string|null,
  * }
  */
 final class DocumentSendParams implements BaseModel
@@ -32,16 +32,16 @@ final class DocumentSendParams implements BaseModel
     public ?string $email;
 
     #[Api(nullable: true, optional: true)]
-    public ?string $receiverPeppolID;
+    public ?string $receiver_peppol_id;
 
     #[Api(nullable: true, optional: true)]
-    public ?string $receiverPeppolScheme;
+    public ?string $receiver_peppol_scheme;
 
     #[Api(nullable: true, optional: true)]
-    public ?string $senderPeppolID;
+    public ?string $sender_peppol_id;
 
     #[Api(nullable: true, optional: true)]
-    public ?string $senderPeppolScheme;
+    public ?string $sender_peppol_scheme;
 
     public function __construct()
     {
@@ -55,18 +55,18 @@ final class DocumentSendParams implements BaseModel
      */
     public static function with(
         ?string $email = null,
-        ?string $receiverPeppolID = null,
-        ?string $receiverPeppolScheme = null,
-        ?string $senderPeppolID = null,
-        ?string $senderPeppolScheme = null,
+        ?string $receiver_peppol_id = null,
+        ?string $receiver_peppol_scheme = null,
+        ?string $sender_peppol_id = null,
+        ?string $sender_peppol_scheme = null,
     ): self {
         $obj = new self;
 
         null !== $email && $obj->email = $email;
-        null !== $receiverPeppolID && $obj->receiverPeppolID = $receiverPeppolID;
-        null !== $receiverPeppolScheme && $obj->receiverPeppolScheme = $receiverPeppolScheme;
-        null !== $senderPeppolID && $obj->senderPeppolID = $senderPeppolID;
-        null !== $senderPeppolScheme && $obj->senderPeppolScheme = $senderPeppolScheme;
+        null !== $receiver_peppol_id && $obj->receiver_peppol_id = $receiver_peppol_id;
+        null !== $receiver_peppol_scheme && $obj->receiver_peppol_scheme = $receiver_peppol_scheme;
+        null !== $sender_peppol_id && $obj->sender_peppol_id = $sender_peppol_id;
+        null !== $sender_peppol_scheme && $obj->sender_peppol_scheme = $sender_peppol_scheme;
 
         return $obj;
     }
@@ -82,7 +82,7 @@ final class DocumentSendParams implements BaseModel
     public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
         $obj = clone $this;
-        $obj->receiverPeppolID = $receiverPeppolID;
+        $obj->receiver_peppol_id = $receiverPeppolID;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class DocumentSendParams implements BaseModel
         ?string $receiverPeppolScheme
     ): self {
         $obj = clone $this;
-        $obj->receiverPeppolScheme = $receiverPeppolScheme;
+        $obj->receiver_peppol_scheme = $receiverPeppolScheme;
 
         return $obj;
     }
@@ -99,7 +99,7 @@ final class DocumentSendParams implements BaseModel
     public function withSenderPeppolID(?string $senderPeppolID): self
     {
         $obj = clone $this;
-        $obj->senderPeppolID = $senderPeppolID;
+        $obj->sender_peppol_id = $senderPeppolID;
 
         return $obj;
     }
@@ -107,7 +107,7 @@ final class DocumentSendParams implements BaseModel
     public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
         $obj = clone $this;
-        $obj->senderPeppolScheme = $senderPeppolScheme;
+        $obj->sender_peppol_scheme = $senderPeppolScheme;
 
         return $obj;
     }

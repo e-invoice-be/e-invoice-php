@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Validate->validatePeppolID
  *
- * @phpstan-type ValidateValidatePeppolIDParamsShape = array{peppolID: string}
+ * @phpstan-type ValidateValidatePeppolIDParamsShape = array{peppol_id: string}
  */
 final class ValidateValidatePeppolIDParams implements BaseModel
 {
@@ -26,14 +26,14 @@ final class ValidateValidatePeppolIDParams implements BaseModel
      * Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
     #[Api]
-    public string $peppolID;
+    public string $peppol_id;
 
     /**
      * `new ValidateValidatePeppolIDParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ValidateValidatePeppolIDParams::with(peppolID: ...)
+     * ValidateValidatePeppolIDParams::with(peppol_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -52,11 +52,11 @@ final class ValidateValidatePeppolIDParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $peppolID): self
+    public static function with(string $peppol_id): self
     {
         $obj = new self;
 
-        $obj->peppolID = $peppolID;
+        $obj->peppol_id = $peppol_id;
 
         return $obj;
     }
@@ -67,7 +67,7 @@ final class ValidateValidatePeppolIDParams implements BaseModel
     public function withPeppolID(string $peppolID): self
     {
         $obj = clone $this;
-        $obj->peppolID = $peppolID;
+        $obj->peppol_id = $peppolID;
 
         return $obj;
     }

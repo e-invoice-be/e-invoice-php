@@ -6,114 +6,53 @@ namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
-use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\Inbox\DocumentState;
+use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
+use EInvoiceAPI\Inbox\InboxListInvoicesParams;
+use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
-
-use const EInvoiceAPI\Core\OMIT as omit;
 
 interface InboxContract
 {
     /**
      * @api
      *
-     * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
-     * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
-     * @param string|null $search Search in invoice number, seller/buyer names
-     * @param string|null $sender Filter by sender ID
-     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
-     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
+     * @param array<mixed>|InboxListParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function list(
-        $dateFrom = omit,
-        $dateTo = omit,
-        $page = omit,
-        $pageSize = omit,
-        $search = omit,
-        $sender = omit,
-        $state = omit,
-        $type = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DocumentsNumberPage;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|InboxListParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage;
 
     /**
      * @api
      *
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
+     * @param array<mixed>|InboxListCreditNotesParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function listCreditNotes(
-        $page = omit,
-        $pageSize = omit,
-        ?RequestOptions $requestOptions = null
+        array|InboxListCreditNotesParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listCreditNotesRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): DocumentsNumberPage;
-
-    /**
-     * @api
-     *
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
+     * @param array<mixed>|InboxListInvoicesParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function listInvoices(
-        $page = omit,
-        $pageSize = omit,
-        ?RequestOptions $requestOptions = null
-    ): DocumentsNumberPage;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listInvoicesRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListInvoicesParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage;
 }

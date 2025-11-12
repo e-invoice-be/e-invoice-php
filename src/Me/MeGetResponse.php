@@ -13,23 +13,23 @@ use EInvoiceAPI\Me\MeGetResponse\Plan;
 
 /**
  * @phpstan-type MeGetResponseShape = array{
- *   creditBalance: int,
+ *   credit_balance: int,
  *   name: string,
  *   plan: value-of<Plan>,
- *   bccRecipientEmail?: string|null,
- *   companyAddress?: string|null,
- *   companyCity?: string|null,
- *   companyCountry?: string|null,
- *   companyEmail?: string|null,
- *   companyName?: string|null,
- *   companyNumber?: string|null,
- *   companyTaxID?: string|null,
- *   companyZip?: string|null,
+ *   bcc_recipient_email?: string|null,
+ *   company_address?: string|null,
+ *   company_city?: string|null,
+ *   company_country?: string|null,
+ *   company_email?: string|null,
+ *   company_name?: string|null,
+ *   company_number?: string|null,
+ *   company_tax_id?: string|null,
+ *   company_zip?: string|null,
  *   description?: string|null,
  *   ibans?: list<string>|null,
- *   peppolIDs?: list<string>|null,
- *   smpRegistration?: bool|null,
- *   smpRegistrationDate?: \DateTimeInterface|null,
+ *   peppol_ids?: list<string>|null,
+ *   smp_registration?: bool|null,
+ *   smp_registration_date?: \DateTimeInterface|null,
  * }
  */
 final class MeGetResponse implements BaseModel, ResponseConverter
@@ -42,8 +42,8 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     /**
      * Credit balance of the tenant.
      */
-    #[Api('credit_balance')]
-    public int $creditBalance;
+    #[Api]
+    public int $credit_balance;
 
     #[Api]
     public string $name;
@@ -59,56 +59,56 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     /**
      * BCC recipient email to deliver documents.
      */
-    #[Api('bcc_recipient_email', nullable: true, optional: true)]
-    public ?string $bccRecipientEmail;
+    #[Api(nullable: true, optional: true)]
+    public ?string $bcc_recipient_email;
 
     /**
      * Address of the company. Must be in the form of `Street Name Street Number`.
      */
-    #[Api('company_address', nullable: true, optional: true)]
-    public ?string $companyAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_address;
 
     /**
      * City of the company.
      */
-    #[Api('company_city', nullable: true, optional: true)]
-    public ?string $companyCity;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_city;
 
     /**
      * Country of the company.
      */
-    #[Api('company_country', nullable: true, optional: true)]
-    public ?string $companyCountry;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_country;
 
     /**
      * Email of the company.
      */
-    #[Api('company_email', nullable: true, optional: true)]
-    public ?string $companyEmail;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_email;
 
     /**
      * Name of the company. Must include the company type. For example: `BV`, `NV`, `CVBA`, `VOF`.
      */
-    #[Api('company_name', nullable: true, optional: true)]
-    public ?string $companyName;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_name;
 
     /**
      * Company number. For Belgium this is the CBE number or their EUID (European Unique Identifier) number.
      */
-    #[Api('company_number', nullable: true, optional: true)]
-    public ?string $companyNumber;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_number;
 
     /**
      * Company tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
-    #[Api('company_tax_id', nullable: true, optional: true)]
-    public ?string $companyTaxID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_tax_id;
 
     /**
      * Zip code of the company.
      */
-    #[Api('company_zip', nullable: true, optional: true)]
-    public ?string $companyZip;
+    #[Api(nullable: true, optional: true)]
+    public ?string $company_zip;
 
     #[Api(nullable: true, optional: true)]
     public ?string $description;
@@ -124,29 +124,29 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     /**
      * Peppol IDs of the tenant.
      *
-     * @var list<string>|null $peppolIDs
+     * @var list<string>|null $peppol_ids
      */
-    #[Api('peppol_ids', list: 'string', nullable: true, optional: true)]
-    public ?array $peppolIDs;
+    #[Api(list: 'string', nullable: true, optional: true)]
+    public ?array $peppol_ids;
 
     /**
      * Whether the tenant is registered on our SMP.
      */
-    #[Api('smp_registration', nullable: true, optional: true)]
-    public ?bool $smpRegistration;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $smp_registration;
 
     /**
      * Date when the tenant was registered on SMP.
      */
-    #[Api('smp_registration_date', nullable: true, optional: true)]
-    public ?\DateTimeInterface $smpRegistrationDate;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $smp_registration_date;
 
     /**
      * `new MeGetResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MeGetResponse::with(creditBalance: ..., name: ..., plan: ...)
+     * MeGetResponse::with(credit_balance: ..., name: ..., plan: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -167,47 +167,47 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      *
      * @param Plan|value-of<Plan> $plan
      * @param list<string>|null $ibans
-     * @param list<string>|null $peppolIDs
+     * @param list<string>|null $peppol_ids
      */
     public static function with(
-        int $creditBalance,
+        int $credit_balance,
         string $name,
         Plan|string $plan,
-        ?string $bccRecipientEmail = null,
-        ?string $companyAddress = null,
-        ?string $companyCity = null,
-        ?string $companyCountry = null,
-        ?string $companyEmail = null,
-        ?string $companyName = null,
-        ?string $companyNumber = null,
-        ?string $companyTaxID = null,
-        ?string $companyZip = null,
+        ?string $bcc_recipient_email = null,
+        ?string $company_address = null,
+        ?string $company_city = null,
+        ?string $company_country = null,
+        ?string $company_email = null,
+        ?string $company_name = null,
+        ?string $company_number = null,
+        ?string $company_tax_id = null,
+        ?string $company_zip = null,
         ?string $description = null,
         ?array $ibans = null,
-        ?array $peppolIDs = null,
-        ?bool $smpRegistration = null,
-        ?\DateTimeInterface $smpRegistrationDate = null,
+        ?array $peppol_ids = null,
+        ?bool $smp_registration = null,
+        ?\DateTimeInterface $smp_registration_date = null,
     ): self {
         $obj = new self;
 
-        $obj->creditBalance = $creditBalance;
+        $obj->credit_balance = $credit_balance;
         $obj->name = $name;
         $obj['plan'] = $plan;
 
-        null !== $bccRecipientEmail && $obj->bccRecipientEmail = $bccRecipientEmail;
-        null !== $companyAddress && $obj->companyAddress = $companyAddress;
-        null !== $companyCity && $obj->companyCity = $companyCity;
-        null !== $companyCountry && $obj->companyCountry = $companyCountry;
-        null !== $companyEmail && $obj->companyEmail = $companyEmail;
-        null !== $companyName && $obj->companyName = $companyName;
-        null !== $companyNumber && $obj->companyNumber = $companyNumber;
-        null !== $companyTaxID && $obj->companyTaxID = $companyTaxID;
-        null !== $companyZip && $obj->companyZip = $companyZip;
+        null !== $bcc_recipient_email && $obj->bcc_recipient_email = $bcc_recipient_email;
+        null !== $company_address && $obj->company_address = $company_address;
+        null !== $company_city && $obj->company_city = $company_city;
+        null !== $company_country && $obj->company_country = $company_country;
+        null !== $company_email && $obj->company_email = $company_email;
+        null !== $company_name && $obj->company_name = $company_name;
+        null !== $company_number && $obj->company_number = $company_number;
+        null !== $company_tax_id && $obj->company_tax_id = $company_tax_id;
+        null !== $company_zip && $obj->company_zip = $company_zip;
         null !== $description && $obj->description = $description;
         null !== $ibans && $obj->ibans = $ibans;
-        null !== $peppolIDs && $obj->peppolIDs = $peppolIDs;
-        null !== $smpRegistration && $obj->smpRegistration = $smpRegistration;
-        null !== $smpRegistrationDate && $obj->smpRegistrationDate = $smpRegistrationDate;
+        null !== $peppol_ids && $obj->peppol_ids = $peppol_ids;
+        null !== $smp_registration && $obj->smp_registration = $smp_registration;
+        null !== $smp_registration_date && $obj->smp_registration_date = $smp_registration_date;
 
         return $obj;
     }
@@ -218,7 +218,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCreditBalance(int $creditBalance): self
     {
         $obj = clone $this;
-        $obj->creditBalance = $creditBalance;
+        $obj->credit_balance = $creditBalance;
 
         return $obj;
     }
@@ -250,7 +250,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withBccRecipientEmail(?string $bccRecipientEmail): self
     {
         $obj = clone $this;
-        $obj->bccRecipientEmail = $bccRecipientEmail;
+        $obj->bcc_recipient_email = $bccRecipientEmail;
 
         return $obj;
     }
@@ -261,7 +261,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyAddress(?string $companyAddress): self
     {
         $obj = clone $this;
-        $obj->companyAddress = $companyAddress;
+        $obj->company_address = $companyAddress;
 
         return $obj;
     }
@@ -272,7 +272,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyCity(?string $companyCity): self
     {
         $obj = clone $this;
-        $obj->companyCity = $companyCity;
+        $obj->company_city = $companyCity;
 
         return $obj;
     }
@@ -283,7 +283,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyCountry(?string $companyCountry): self
     {
         $obj = clone $this;
-        $obj->companyCountry = $companyCountry;
+        $obj->company_country = $companyCountry;
 
         return $obj;
     }
@@ -294,7 +294,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyEmail(?string $companyEmail): self
     {
         $obj = clone $this;
-        $obj->companyEmail = $companyEmail;
+        $obj->company_email = $companyEmail;
 
         return $obj;
     }
@@ -305,7 +305,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyName(?string $companyName): self
     {
         $obj = clone $this;
-        $obj->companyName = $companyName;
+        $obj->company_name = $companyName;
 
         return $obj;
     }
@@ -316,7 +316,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyNumber(?string $companyNumber): self
     {
         $obj = clone $this;
-        $obj->companyNumber = $companyNumber;
+        $obj->company_number = $companyNumber;
 
         return $obj;
     }
@@ -327,7 +327,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyTaxID(?string $companyTaxID): self
     {
         $obj = clone $this;
-        $obj->companyTaxID = $companyTaxID;
+        $obj->company_tax_id = $companyTaxID;
 
         return $obj;
     }
@@ -338,7 +338,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyZip(?string $companyZip): self
     {
         $obj = clone $this;
-        $obj->companyZip = $companyZip;
+        $obj->company_zip = $companyZip;
 
         return $obj;
     }
@@ -372,7 +372,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withPeppolIDs(?array $peppolIDs): self
     {
         $obj = clone $this;
-        $obj->peppolIDs = $peppolIDs;
+        $obj->peppol_ids = $peppolIDs;
 
         return $obj;
     }
@@ -383,7 +383,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withSmpRegistration(?bool $smpRegistration): self
     {
         $obj = clone $this;
-        $obj->smpRegistration = $smpRegistration;
+        $obj->smp_registration = $smpRegistration;
 
         return $obj;
     }
@@ -395,7 +395,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
         ?\DateTimeInterface $smpRegistrationDate
     ): self {
         $obj = clone $this;
-        $obj->smpRegistrationDate = $smpRegistrationDate;
+        $obj->smp_registration_date = $smpRegistrationDate;
 
         return $obj;
     }

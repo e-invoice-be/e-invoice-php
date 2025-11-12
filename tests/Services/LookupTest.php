@@ -33,7 +33,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieve('peppol_id');
+        $result = $this->client->lookup->retrieve(['peppol_id' => 'peppol_id']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -45,7 +45,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieve('peppol_id');
+        $result = $this->client->lookup->retrieve(['peppol_id' => 'peppol_id']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -57,7 +57,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieveParticipants(query: 'query');
+        $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -69,7 +69,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieveParticipants(query: 'query');
+        $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

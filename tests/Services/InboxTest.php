@@ -33,7 +33,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->list();
+        $result = $this->client->inbox->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -45,7 +45,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->listCreditNotes();
+        $result = $this->client->inbox->listCreditNotes([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -57,7 +57,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->listInvoices();
+        $result = $this->client->inbox->listInvoices([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

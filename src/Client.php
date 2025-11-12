@@ -94,7 +94,7 @@ class Client extends BaseClient
         $this->webhooks = new WebhooksService($this);
     }
 
-    /** @return array<string, string> */
+    /** @return array<string,string> */
     protected function authHeaders(): array
     {
         return $this->apiKey ? ['Authorization' => "Bearer {$this->apiKey}"] : [];

@@ -19,7 +19,7 @@ use Psr\Http\Message\ResponseInterface;
  * @phpstan-type DocumentsNumberPageShape = array{
  *   items?: list<Item>|null,
  *   page?: int|null,
- *   pageSize?: int|null,
+ *   page_size?: int|null,
  *   total?: int|null,
  * }
  *
@@ -42,8 +42,8 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     #[Api(optional: true)]
     public ?int $page;
 
-    #[Api('page_size', optional: true)]
-    public ?int $pageSize;
+    #[Api(optional: true)]
+    public ?int $page_size;
 
     #[Api(optional: true)]
     public ?int $total;
@@ -54,8 +54,8 @@ final class DocumentsNumberPage implements BaseModel, BasePage
      * @param array{
      *   method: string,
      *   path: string,
-     *   query: array<string, mixed>,
-     *   headers: array<string, string|list<string>|null>,
+     *   query: array<string,mixed>,
+     *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
      * } $request
      */
@@ -101,8 +101,8 @@ final class DocumentsNumberPage implements BaseModel, BasePage
      *   array{
      *     method: string,
      *     path: string,
-     *     query: array<string, mixed>,
-     *     headers: array<string, string|list<string>|null>,
+     *     query: array<string,mixed>,
+     *     headers: array<string,string|list<string>|null>,
      *     body: mixed,
      *   },
      *   RequestOptions,

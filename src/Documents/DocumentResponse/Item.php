@@ -18,12 +18,12 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   charges?: list<Charge>|null,
  *   date?: null|null,
  *   description?: string|null,
- *   productCode?: string|null,
+ *   product_code?: string|null,
  *   quantity?: string|null,
  *   tax?: string|null,
- *   taxRate?: string|null,
+ *   tax_rate?: string|null,
  *   unit?: value-of<UnitOfMeasureCode>|null,
- *   unitPrice?: string|null,
+ *   unit_price?: string|null,
  * }
  */
 final class Item implements BaseModel
@@ -66,8 +66,8 @@ final class Item implements BaseModel
     /**
      * The product code of the line item.
      */
-    #[Api('product_code', nullable: true, optional: true)]
-    public ?string $productCode;
+    #[Api(nullable: true, optional: true)]
+    public ?string $product_code;
 
     /**
      * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals.
@@ -84,8 +84,8 @@ final class Item implements BaseModel
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals.
      */
-    #[Api('tax_rate', nullable: true, optional: true)]
-    public ?string $taxRate;
+    #[Api(nullable: true, optional: true)]
+    public ?string $tax_rate;
 
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
@@ -98,8 +98,8 @@ final class Item implements BaseModel
     /**
      * The unit price of the line item. Must be rounded to maximum 2 decimals.
      */
-    #[Api('unit_price', nullable: true, optional: true)]
-    public ?string $unitPrice;
+    #[Api(nullable: true, optional: true)]
+    public ?string $unit_price;
 
     public function __construct()
     {
@@ -121,12 +121,12 @@ final class Item implements BaseModel
         ?array $charges = null,
         null $date = null,
         ?string $description = null,
-        ?string $productCode = null,
+        ?string $product_code = null,
         ?string $quantity = null,
         ?string $tax = null,
-        ?string $taxRate = null,
+        ?string $tax_rate = null,
         UnitOfMeasureCode|string|null $unit = null,
-        ?string $unitPrice = null,
+        ?string $unit_price = null,
     ): self {
         $obj = new self;
 
@@ -135,12 +135,12 @@ final class Item implements BaseModel
         null !== $charges && $obj->charges = $charges;
         null !== $date && $obj->date = $date;
         null !== $description && $obj->description = $description;
-        null !== $productCode && $obj->productCode = $productCode;
+        null !== $product_code && $obj->product_code = $product_code;
         null !== $quantity && $obj->quantity = $quantity;
         null !== $tax && $obj->tax = $tax;
-        null !== $taxRate && $obj->taxRate = $taxRate;
+        null !== $tax_rate && $obj->tax_rate = $tax_rate;
         null !== $unit && $obj['unit'] = $unit;
-        null !== $unitPrice && $obj->unitPrice = $unitPrice;
+        null !== $unit_price && $obj->unit_price = $unit_price;
 
         return $obj;
     }
@@ -210,7 +210,7 @@ final class Item implements BaseModel
     public function withProductCode(?string $productCode): self
     {
         $obj = clone $this;
-        $obj->productCode = $productCode;
+        $obj->product_code = $productCode;
 
         return $obj;
     }
@@ -243,7 +243,7 @@ final class Item implements BaseModel
     public function withTaxRate(?string $taxRate): self
     {
         $obj = clone $this;
-        $obj->taxRate = $taxRate;
+        $obj->tax_rate = $taxRate;
 
         return $obj;
     }
@@ -267,7 +267,7 @@ final class Item implements BaseModel
     public function withUnitPrice(?string $unitPrice): self
     {
         $obj = clone $this;
-        $obj->unitPrice = $unitPrice;
+        $obj->unit_price = $unitPrice;
 
         return $obj;
     }

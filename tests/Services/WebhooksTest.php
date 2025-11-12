@@ -33,10 +33,9 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->webhooks->create(
-            events: ['string'],
-            url: 'https://example.com'
-        );
+        $result = $this->client->webhooks->create([
+            'events' => ['string'], 'url' => 'https://example.com',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -48,10 +47,9 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->webhooks->create(
-            events: ['string'],
-            url: 'https://example.com'
-        );
+        $result = $this->client->webhooks->create([
+            'events' => ['string'], 'url' => 'https://example.com',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -75,7 +73,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->webhooks->update('webhook_id');
+        $result = $this->client->webhooks->update('webhook_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -14,7 +14,11 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
  * Response model for webhook API endpoints.
  *
  * @phpstan-type WebhookResponseShape = array{
- *   id: string, events: list<string>, secret: string, url: string, enabled?: bool
+ *   id: string,
+ *   events: list<string>,
+ *   secret: string,
+ *   url: string,
+ *   enabled?: bool|null,
  * }
  */
 final class WebhookResponse implements BaseModel, ResponseConverter

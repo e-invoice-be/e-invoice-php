@@ -13,7 +13,7 @@ use EInvoiceAPI\Documents\DocumentResponse;
  * @phpstan-type PaginatedDocumentResponseShape = array{
  *   items: list<DocumentResponse>,
  *   page: int,
- *   pageSize: int,
+ *   page_size: int,
  *   pages: int,
  *   total: int,
  * }
@@ -30,8 +30,8 @@ final class PaginatedDocumentResponse implements BaseModel
     #[Api]
     public int $page;
 
-    #[Api('page_size')]
-    public int $pageSize;
+    #[Api]
+    public int $page_size;
 
     #[Api]
     public int $pages;
@@ -45,7 +45,7 @@ final class PaginatedDocumentResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * PaginatedDocumentResponse::with(
-     *   items: ..., page: ..., pageSize: ..., pages: ..., total: ...
+     *   items: ..., page: ..., page_size: ..., pages: ..., total: ...
      * )
      * ```
      *
@@ -75,7 +75,7 @@ final class PaginatedDocumentResponse implements BaseModel
     public static function with(
         array $items,
         int $page,
-        int $pageSize,
+        int $page_size,
         int $pages,
         int $total
     ): self {
@@ -83,7 +83,7 @@ final class PaginatedDocumentResponse implements BaseModel
 
         $obj->items = $items;
         $obj->page = $page;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $page_size;
         $obj->pages = $pages;
         $obj->total = $total;
 
@@ -112,7 +112,7 @@ final class PaginatedDocumentResponse implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }
