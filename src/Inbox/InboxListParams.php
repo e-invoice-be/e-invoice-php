@@ -16,10 +16,10 @@ use EInvoiceAPI\Documents\DocumentType;
  * @see EInvoiceAPI\Inbox->list
  *
  * @phpstan-type InboxListParamsShape = array{
- *   dateFrom?: \DateTimeInterface|null,
- *   dateTo?: \DateTimeInterface|null,
+ *   date_from?: \DateTimeInterface|null,
+ *   date_to?: \DateTimeInterface|null,
  *   page?: int,
- *   pageSize?: int,
+ *   page_size?: int,
  *   search?: string|null,
  *   sender?: string|null,
  *   state?: null|DocumentState|value-of<DocumentState>,
@@ -36,13 +36,13 @@ final class InboxListParams implements BaseModel
      * Filter by issue date (from).
      */
     #[Api(nullable: true, optional: true)]
-    public ?\DateTimeInterface $dateFrom;
+    public ?\DateTimeInterface $date_from;
 
     /**
      * Filter by issue date (to).
      */
     #[Api(nullable: true, optional: true)]
-    public ?\DateTimeInterface $dateTo;
+    public ?\DateTimeInterface $date_to;
 
     /**
      * Page number.
@@ -54,7 +54,7 @@ final class InboxListParams implements BaseModel
      * Number of items per page.
      */
     #[Api(optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     /**
      * Search in invoice number, seller/buyer names.
@@ -98,10 +98,10 @@ final class InboxListParams implements BaseModel
      * @param DocumentType|value-of<DocumentType>|null $type
      */
     public static function with(
-        ?\DateTimeInterface $dateFrom = null,
-        ?\DateTimeInterface $dateTo = null,
+        ?\DateTimeInterface $date_from = null,
+        ?\DateTimeInterface $date_to = null,
         ?int $page = null,
-        ?int $pageSize = null,
+        ?int $page_size = null,
         ?string $search = null,
         ?string $sender = null,
         DocumentState|string|null $state = null,
@@ -109,10 +109,10 @@ final class InboxListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $dateFrom && $obj->dateFrom = $dateFrom;
-        null !== $dateTo && $obj->dateTo = $dateTo;
+        null !== $date_from && $obj->date_from = $date_from;
+        null !== $date_to && $obj->date_to = $date_to;
         null !== $page && $obj->page = $page;
-        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $page_size && $obj->page_size = $page_size;
         null !== $search && $obj->search = $search;
         null !== $sender && $obj->sender = $sender;
         null !== $state && $obj['state'] = $state;
@@ -127,7 +127,7 @@ final class InboxListParams implements BaseModel
     public function withDateFrom(?\DateTimeInterface $dateFrom): self
     {
         $obj = clone $this;
-        $obj->dateFrom = $dateFrom;
+        $obj->date_from = $dateFrom;
 
         return $obj;
     }
@@ -138,7 +138,7 @@ final class InboxListParams implements BaseModel
     public function withDateTo(?\DateTimeInterface $dateTo): self
     {
         $obj = clone $this;
-        $obj->dateTo = $dateTo;
+        $obj->date_to = $dateTo;
 
         return $obj;
     }
@@ -160,7 +160,7 @@ final class InboxListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }

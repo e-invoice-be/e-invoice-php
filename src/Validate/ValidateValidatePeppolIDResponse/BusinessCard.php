@@ -12,9 +12,9 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * Business card information for the Peppol ID.
  *
  * @phpstan-type BusinessCardShape = array{
- *   countryCode?: string|null,
+ *   country_code?: string|null,
  *   name?: string|null,
- *   registrationDate?: \DateTimeInterface|null,
+ *   registration_date?: \DateTimeInterface|null,
  * }
  */
 final class BusinessCard implements BaseModel
@@ -22,14 +22,14 @@ final class BusinessCard implements BaseModel
     /** @use SdkModel<BusinessCardShape> */
     use SdkModel;
 
-    #[Api('country_code', nullable: true, optional: true)]
-    public ?string $countryCode;
+    #[Api(nullable: true, optional: true)]
+    public ?string $country_code;
 
     #[Api(nullable: true, optional: true)]
     public ?string $name;
 
-    #[Api('registration_date', nullable: true, optional: true)]
-    public ?\DateTimeInterface $registrationDate;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $registration_date;
 
     public function __construct()
     {
@@ -42,15 +42,15 @@ final class BusinessCard implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $countryCode = null,
+        ?string $country_code = null,
         ?string $name = null,
-        ?\DateTimeInterface $registrationDate = null,
+        ?\DateTimeInterface $registration_date = null,
     ): self {
         $obj = new self;
 
-        null !== $countryCode && $obj->countryCode = $countryCode;
+        null !== $country_code && $obj->country_code = $country_code;
         null !== $name && $obj->name = $name;
-        null !== $registrationDate && $obj->registrationDate = $registrationDate;
+        null !== $registration_date && $obj->registration_date = $registration_date;
 
         return $obj;
     }
@@ -58,7 +58,7 @@ final class BusinessCard implements BaseModel
     public function withCountryCode(?string $countryCode): self
     {
         $obj = clone $this;
-        $obj->countryCode = $countryCode;
+        $obj->country_code = $countryCode;
 
         return $obj;
     }
@@ -75,7 +75,7 @@ final class BusinessCard implements BaseModel
         ?\DateTimeInterface $registrationDate
     ): self {
         $obj = clone $this;
-        $obj->registrationDate = $registrationDate;
+        $obj->registration_date = $registrationDate;
 
         return $obj;
     }

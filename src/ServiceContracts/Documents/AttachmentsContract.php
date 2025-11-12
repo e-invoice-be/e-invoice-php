@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts\Documents;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
+use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
+use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 
@@ -14,26 +17,13 @@ interface AttachmentsContract
     /**
      * @api
      *
-     * @param string $documentID
+     * @param array<mixed>|AttachmentRetrieveParams $params
      *
      * @throws APIException
      */
     public function retrieve(
         string $attachmentID,
-        $documentID,
-        ?RequestOptions $requestOptions = null,
-    ): DocumentAttachment;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $attachmentID,
-        array $params,
+        array|AttachmentRetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment;
 
@@ -52,52 +42,26 @@ interface AttachmentsContract
     /**
      * @api
      *
-     * @param string $documentID
+     * @param array<mixed>|AttachmentDeleteParams $params
      *
      * @throws APIException
      */
     public function delete(
         string $attachmentID,
-        $documentID,
+        array|AttachmentDeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): AttachmentDeleteResponse;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $attachmentID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
-    ): AttachmentDeleteResponse;
-
-    /**
-     * @api
-     *
-     * @param string $file
+     * @param array<mixed>|AttachmentAddParams $params
      *
      * @throws APIException
      */
     public function add(
         string $documentID,
-        $file,
-        ?RequestOptions $requestOptions = null
-    ): DocumentAttachment;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function addRaw(
-        string $documentID,
-        array $params,
+        array|AttachmentAddParams $params,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment;
 }

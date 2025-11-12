@@ -16,7 +16,7 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
  *   type: value-of<Type>,
  *   flag?: string|null,
  *   location?: string|null,
- *   ruleID?: string|null,
+ *   rule_id?: string|null,
  *   test?: string|null,
  * }
  */
@@ -41,8 +41,8 @@ final class Issue implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?string $location;
 
-    #[Api('rule_id', nullable: true, optional: true)]
-    public ?string $ruleID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $rule_id;
 
     #[Api(nullable: true, optional: true)]
     public ?string $test;
@@ -79,7 +79,7 @@ final class Issue implements BaseModel
         Type|string $type,
         ?string $flag = null,
         ?string $location = null,
-        ?string $ruleID = null,
+        ?string $rule_id = null,
         ?string $test = null,
     ): self {
         $obj = new self;
@@ -90,7 +90,7 @@ final class Issue implements BaseModel
 
         null !== $flag && $obj->flag = $flag;
         null !== $location && $obj->location = $location;
-        null !== $ruleID && $obj->ruleID = $ruleID;
+        null !== $rule_id && $obj->rule_id = $rule_id;
         null !== $test && $obj->test = $test;
 
         return $obj;
@@ -142,7 +142,7 @@ final class Issue implements BaseModel
     public function withRuleID(?string $ruleID): self
     {
         $obj = clone $this;
-        $obj->ruleID = $ruleID;
+        $obj->rule_id = $ruleID;
 
         return $obj;
     }

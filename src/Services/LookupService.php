@@ -13,8 +13,6 @@ use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\LookupContract;
 
-use const EInvoiceAPI\Core\OMIT as omit;
-
 final class LookupService implements LookupContract
 {
     /**
@@ -27,33 +25,17 @@ final class LookupService implements LookupContract
      *
      * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
-     * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
+     * @param array{peppol_id: string}|LookupRetrieveParams $params
      *
      * @throws APIException
      */
     public function retrieve(
-        $peppolID,
-        ?RequestOptions $requestOptions = null
-    ): LookupGetResponse {
-        $params = ['peppolID' => $peppolID];
-
-        return $this->retrieveRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        array $params,
+        array|LookupRetrieveParams $params,
         ?RequestOptions $requestOptions = null
     ): LookupGetResponse {
         [$parsed, $options] = LookupRetrieveParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -71,35 +53,19 @@ final class LookupService implements LookupContract
      *
      * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
      *
-     * @param string $query Query to lookup
-     * @param string|null $countryCode Country code of the company to lookup. If not provided, the search will be global.
+     * @param array{
+     *   query: string, country_code?: string|null
+     * }|LookupRetrieveParticipantsParams $params
      *
      * @throws APIException
      */
     public function retrieveParticipants(
-        $query,
-        $countryCode = omit,
-        ?RequestOptions $requestOptions = null
-    ): LookupGetParticipantsResponse {
-        $params = ['query' => $query, 'countryCode' => $countryCode];
-
-        return $this->retrieveParticipantsRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function retrieveParticipantsRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|LookupRetrieveParticipantsParams $params,
+        ?RequestOptions $requestOptions = null,
     ): LookupGetParticipantsResponse {
         [$parsed, $options] = LookupRetrieveParticipantsParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

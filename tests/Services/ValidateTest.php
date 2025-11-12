@@ -33,7 +33,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->validate->validateJson();
+        $result = $this->client->validate->validateJson([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -45,7 +45,9 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->validate->validatePeppolID('peppol_id');
+        $result = $this->client->validate->validatePeppolID([
+            'peppol_id' => 'peppol_id',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -57,7 +59,9 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->validate->validatePeppolID('peppol_id');
+        $result = $this->client->validate->validatePeppolID([
+            'peppol_id' => 'peppol_id',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -69,7 +73,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->validate->validateUbl('file');
+        $result = $this->client->validate->validateUbl(['file' => null]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -81,7 +85,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->validate->validateUbl('file');
+        $result = $this->client->validate->validateUbl(['file' => null]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

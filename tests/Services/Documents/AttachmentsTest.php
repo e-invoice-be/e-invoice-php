@@ -35,7 +35,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->retrieve(
             'attachment_id',
-            'document_id'
+            ['document_id' => 'document_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -50,7 +50,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->retrieve(
             'attachment_id',
-            'document_id'
+            ['document_id' => 'document_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -77,7 +77,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->delete(
             'attachment_id',
-            'document_id'
+            ['document_id' => 'document_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -92,7 +92,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->delete(
             'attachment_id',
-            'document_id'
+            ['document_id' => 'document_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -105,7 +105,10 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->attachments->add('document_id', 'file');
+        $result = $this->client->documents->attachments->add(
+            'document_id',
+            ['file' => null]
+        );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -117,7 +120,10 @@ final class AttachmentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->attachments->add('document_id', 'file');
+        $result = $this->client->documents->attachments->add(
+            'document_id',
+            ['file' => null]
+        );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

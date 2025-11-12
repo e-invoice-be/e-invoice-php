@@ -6,39 +6,23 @@ namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Webhooks\WebhookCreateParams;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
-
-use const EInvoiceAPI\Core\OMIT as omit;
+use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
 interface WebhooksContract
 {
     /**
      * @api
      *
-     * @param list<string> $events
-     * @param string $url
-     * @param bool $enabled
+     * @param array<mixed>|WebhookCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $events,
-        $url,
-        $enabled = omit,
-        ?RequestOptions $requestOptions = null
-    ): WebhookResponse;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|WebhookCreateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 
     /**
@@ -54,31 +38,14 @@ interface WebhooksContract
     /**
      * @api
      *
-     * @param bool|null $enabled
-     * @param list<string>|null $events
-     * @param string|null $url
+     * @param array<mixed>|WebhookUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        $enabled = omit,
-        $events = omit,
-        $url = omit,
+        array|WebhookUpdateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): WebhookResponse;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
     /**

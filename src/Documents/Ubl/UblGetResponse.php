@@ -13,15 +13,15 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type UblGetResponseShape = array{
  *   id: string,
- *   fileName: string,
- *   fileHash?: string|null,
- *   fileSize?: int,
- *   receiverPeppolID?: string|null,
- *   receiverPeppolScheme?: string|null,
- *   senderPeppolID?: string|null,
- *   senderPeppolScheme?: string|null,
- *   signedURL?: string|null,
- *   validatedAt?: \DateTimeInterface|null,
+ *   file_name: string,
+ *   file_hash?: string|null,
+ *   file_size?: int|null,
+ *   receiver_peppol_id?: string|null,
+ *   receiver_peppol_scheme?: string|null,
+ *   sender_peppol_id?: string|null,
+ *   sender_peppol_scheme?: string|null,
+ *   signed_url?: string|null,
+ *   validated_at?: \DateTimeInterface|null,
  * }
  */
 final class UblGetResponse implements BaseModel, ResponseConverter
@@ -34,39 +34,39 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     #[Api]
     public string $id;
 
-    #[Api('file_name')]
-    public string $fileName;
+    #[Api]
+    public string $file_name;
 
-    #[Api('file_hash', nullable: true, optional: true)]
-    public ?string $fileHash;
+    #[Api(nullable: true, optional: true)]
+    public ?string $file_hash;
 
-    #[Api('file_size', optional: true)]
-    public ?int $fileSize;
+    #[Api(optional: true)]
+    public ?int $file_size;
 
-    #[Api('receiver_peppol_id', nullable: true, optional: true)]
-    public ?string $receiverPeppolID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $receiver_peppol_id;
 
-    #[Api('receiver_peppol_scheme', nullable: true, optional: true)]
-    public ?string $receiverPeppolScheme;
+    #[Api(nullable: true, optional: true)]
+    public ?string $receiver_peppol_scheme;
 
-    #[Api('sender_peppol_id', nullable: true, optional: true)]
-    public ?string $senderPeppolID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $sender_peppol_id;
 
-    #[Api('sender_peppol_scheme', nullable: true, optional: true)]
-    public ?string $senderPeppolScheme;
+    #[Api(nullable: true, optional: true)]
+    public ?string $sender_peppol_scheme;
 
-    #[Api('signed_url', nullable: true, optional: true)]
-    public ?string $signedURL;
+    #[Api(nullable: true, optional: true)]
+    public ?string $signed_url;
 
-    #[Api('validated_at', nullable: true, optional: true)]
-    public ?\DateTimeInterface $validatedAt;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $validated_at;
 
     /**
      * `new UblGetResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UblGetResponse::with(id: ..., fileName: ...)
+     * UblGetResponse::with(id: ..., file_name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -87,29 +87,29 @@ final class UblGetResponse implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $fileName,
-        ?string $fileHash = null,
-        ?int $fileSize = null,
-        ?string $receiverPeppolID = null,
-        ?string $receiverPeppolScheme = null,
-        ?string $senderPeppolID = null,
-        ?string $senderPeppolScheme = null,
-        ?string $signedURL = null,
-        ?\DateTimeInterface $validatedAt = null,
+        string $file_name,
+        ?string $file_hash = null,
+        ?int $file_size = null,
+        ?string $receiver_peppol_id = null,
+        ?string $receiver_peppol_scheme = null,
+        ?string $sender_peppol_id = null,
+        ?string $sender_peppol_scheme = null,
+        ?string $signed_url = null,
+        ?\DateTimeInterface $validated_at = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->fileName = $fileName;
+        $obj->file_name = $file_name;
 
-        null !== $fileHash && $obj->fileHash = $fileHash;
-        null !== $fileSize && $obj->fileSize = $fileSize;
-        null !== $receiverPeppolID && $obj->receiverPeppolID = $receiverPeppolID;
-        null !== $receiverPeppolScheme && $obj->receiverPeppolScheme = $receiverPeppolScheme;
-        null !== $senderPeppolID && $obj->senderPeppolID = $senderPeppolID;
-        null !== $senderPeppolScheme && $obj->senderPeppolScheme = $senderPeppolScheme;
-        null !== $signedURL && $obj->signedURL = $signedURL;
-        null !== $validatedAt && $obj->validatedAt = $validatedAt;
+        null !== $file_hash && $obj->file_hash = $file_hash;
+        null !== $file_size && $obj->file_size = $file_size;
+        null !== $receiver_peppol_id && $obj->receiver_peppol_id = $receiver_peppol_id;
+        null !== $receiver_peppol_scheme && $obj->receiver_peppol_scheme = $receiver_peppol_scheme;
+        null !== $sender_peppol_id && $obj->sender_peppol_id = $sender_peppol_id;
+        null !== $sender_peppol_scheme && $obj->sender_peppol_scheme = $sender_peppol_scheme;
+        null !== $signed_url && $obj->signed_url = $signed_url;
+        null !== $validated_at && $obj->validated_at = $validated_at;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withFileName(string $fileName): self
     {
         $obj = clone $this;
-        $obj->fileName = $fileName;
+        $obj->file_name = $fileName;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withFileHash(?string $fileHash): self
     {
         $obj = clone $this;
-        $obj->fileHash = $fileHash;
+        $obj->file_hash = $fileHash;
 
         return $obj;
     }
@@ -141,7 +141,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withFileSize(int $fileSize): self
     {
         $obj = clone $this;
-        $obj->fileSize = $fileSize;
+        $obj->file_size = $fileSize;
 
         return $obj;
     }
@@ -149,7 +149,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
         $obj = clone $this;
-        $obj->receiverPeppolID = $receiverPeppolID;
+        $obj->receiver_peppol_id = $receiverPeppolID;
 
         return $obj;
     }
@@ -158,7 +158,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
         ?string $receiverPeppolScheme
     ): self {
         $obj = clone $this;
-        $obj->receiverPeppolScheme = $receiverPeppolScheme;
+        $obj->receiver_peppol_scheme = $receiverPeppolScheme;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withSenderPeppolID(?string $senderPeppolID): self
     {
         $obj = clone $this;
-        $obj->senderPeppolID = $senderPeppolID;
+        $obj->sender_peppol_id = $senderPeppolID;
 
         return $obj;
     }
@@ -174,7 +174,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
         $obj = clone $this;
-        $obj->senderPeppolScheme = $senderPeppolScheme;
+        $obj->sender_peppol_scheme = $senderPeppolScheme;
 
         return $obj;
     }
@@ -182,7 +182,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withSignedURL(?string $signedURL): self
     {
         $obj = clone $this;
-        $obj->signedURL = $signedURL;
+        $obj->signed_url = $signedURL;
 
         return $obj;
     }
@@ -190,7 +190,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withValidatedAt(?\DateTimeInterface $validatedAt): self
     {
         $obj = clone $this;
-        $obj->validatedAt = $validatedAt;
+        $obj->validated_at = $validatedAt;
 
         return $obj;
     }

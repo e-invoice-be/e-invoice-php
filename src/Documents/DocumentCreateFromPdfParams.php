@@ -15,7 +15,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Documents->createFromPdf
  *
  * @phpstan-type DocumentCreateFromPdfParamsShape = array{
- *   file: string, customerTaxID?: string|null, vendorTaxID?: string|null
+ *   file: string, customer_tax_id?: string|null, vendor_tax_id?: string|null
  * }
  */
 final class DocumentCreateFromPdfParams implements BaseModel
@@ -28,10 +28,10 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public string $file;
 
     #[Api(nullable: true, optional: true)]
-    public ?string $customerTaxID;
+    public ?string $customer_tax_id;
 
     #[Api(nullable: true, optional: true)]
-    public ?string $vendorTaxID;
+    public ?string $vendor_tax_id;
 
     /**
      * `new DocumentCreateFromPdfParams()` is missing required properties by the API.
@@ -59,15 +59,15 @@ final class DocumentCreateFromPdfParams implements BaseModel
      */
     public static function with(
         string $file,
-        ?string $customerTaxID = null,
-        ?string $vendorTaxID = null
+        ?string $customer_tax_id = null,
+        ?string $vendor_tax_id = null
     ): self {
         $obj = new self;
 
         $obj->file = $file;
 
-        null !== $customerTaxID && $obj->customerTaxID = $customerTaxID;
-        null !== $vendorTaxID && $obj->vendorTaxID = $vendorTaxID;
+        null !== $customer_tax_id && $obj->customer_tax_id = $customer_tax_id;
+        null !== $vendor_tax_id && $obj->vendor_tax_id = $vendor_tax_id;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public function withCustomerTaxID(?string $customerTaxID): self
     {
         $obj = clone $this;
-        $obj->customerTaxID = $customerTaxID;
+        $obj->customer_tax_id = $customerTaxID;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public function withVendorTaxID(?string $vendorTaxID): self
     {
         $obj = clone $this;
-        $obj->vendorTaxID = $vendorTaxID;
+        $obj->vendor_tax_id = $vendorTaxID;
 
         return $obj;
     }

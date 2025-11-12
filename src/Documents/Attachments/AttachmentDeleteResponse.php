@@ -11,7 +11,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type AttachmentDeleteResponseShape = array{isDeleted: bool}
+ * @phpstan-type AttachmentDeleteResponseShape = array{is_deleted: bool}
  */
 final class AttachmentDeleteResponse implements BaseModel, ResponseConverter
 {
@@ -20,15 +20,15 @@ final class AttachmentDeleteResponse implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('is_deleted')]
-    public bool $isDeleted;
+    #[Api]
+    public bool $is_deleted;
 
     /**
      * `new AttachmentDeleteResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * AttachmentDeleteResponse::with(isDeleted: ...)
+     * AttachmentDeleteResponse::with(is_deleted: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -47,11 +47,11 @@ final class AttachmentDeleteResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(bool $isDeleted): self
+    public static function with(bool $is_deleted): self
     {
         $obj = new self;
 
-        $obj->isDeleted = $isDeleted;
+        $obj->is_deleted = $is_deleted;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class AttachmentDeleteResponse implements BaseModel, ResponseConverter
     public function withIsDeleted(bool $isDeleted): self
     {
         $obj = clone $this;
-        $obj->isDeleted = $isDeleted;
+        $obj->is_deleted = $isDeleted;
 
         return $obj;
     }

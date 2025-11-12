@@ -14,10 +14,10 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
 /**
  * @phpstan-type UblDocumentValidationShape = array{
  *   id: string,
- *   fileName: string|null,
- *   isValid: bool,
+ *   file_name: string|null,
+ *   is_valid: bool,
  *   issues: list<Issue>,
- *   ublDocument?: string|null,
+ *   ubl_document?: string|null,
  * }
  */
 final class UblDocumentValidation implements BaseModel, ResponseConverter
@@ -30,25 +30,25 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     #[Api]
     public string $id;
 
-    #[Api('file_name')]
-    public ?string $fileName;
+    #[Api]
+    public ?string $file_name;
 
-    #[Api('is_valid')]
-    public bool $isValid;
+    #[Api]
+    public bool $is_valid;
 
     /** @var list<Issue> $issues */
     #[Api(list: Issue::class)]
     public array $issues;
 
-    #[Api('ubl_document', nullable: true, optional: true)]
-    public ?string $ublDocument;
+    #[Api(nullable: true, optional: true)]
+    public ?string $ubl_document;
 
     /**
      * `new UblDocumentValidation()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UblDocumentValidation::with(id: ..., fileName: ..., isValid: ..., issues: ...)
+     * UblDocumentValidation::with(id: ..., file_name: ..., is_valid: ..., issues: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -75,19 +75,19 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        ?string $fileName,
-        bool $isValid,
+        ?string $file_name,
+        bool $is_valid,
         array $issues,
-        ?string $ublDocument = null,
+        ?string $ubl_document = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->fileName = $fileName;
-        $obj->isValid = $isValid;
+        $obj->file_name = $file_name;
+        $obj->is_valid = $is_valid;
         $obj->issues = $issues;
 
-        null !== $ublDocument && $obj->ublDocument = $ublDocument;
+        null !== $ubl_document && $obj->ubl_document = $ubl_document;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     public function withFileName(?string $fileName): self
     {
         $obj = clone $this;
-        $obj->fileName = $fileName;
+        $obj->file_name = $fileName;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     public function withIsValid(bool $isValid): self
     {
         $obj = clone $this;
-        $obj->isValid = $isValid;
+        $obj->is_valid = $isValid;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     public function withUblDocument(?string $ublDocument): self
     {
         $obj = clone $this;
-        $obj->ublDocument = $ublDocument;
+        $obj->ubl_document = $ublDocument;
 
         return $obj;
     }

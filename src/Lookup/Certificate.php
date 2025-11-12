@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * Certificate information for a Peppol endpoint.
  *
  * @phpstan-type CertificateShape = array{
- *   status: string, details?: array<string, mixed>|null, error?: string|null
+ *   status: string, details?: array<string,mixed>|null, error?: string|null
  * }
  */
 final class Certificate implements BaseModel
@@ -29,7 +29,7 @@ final class Certificate implements BaseModel
     /**
      * Details about the certificate including subject, issuer, validity dates, etc.
      *
-     * @var array<string, mixed>|null $details
+     * @var array<string,mixed>|null $details
      */
     #[Api(map: 'mixed', nullable: true, optional: true)]
     public ?array $details;
@@ -64,7 +64,7 @@ final class Certificate implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed>|null $details
+     * @param array<string,mixed>|null $details
      */
     public static function with(
         string $status,
@@ -95,7 +95,7 @@ final class Certificate implements BaseModel
     /**
      * Details about the certificate including subject, issuer, validity dates, etc.
      *
-     * @param array<string, mixed>|null $details
+     * @param array<string,mixed>|null $details
      */
     public function withDetails(?array $details): self
     {
