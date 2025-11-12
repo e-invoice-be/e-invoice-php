@@ -15,7 +15,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Outbox->listDraftDocuments
  *
  * @phpstan-type OutboxListDraftDocumentsParamsShape = array{
- *   page?: int, pageSize?: int
+ *   page?: int, page_size?: int
  * }
  */
 final class OutboxListDraftDocumentsParams implements BaseModel
@@ -34,7 +34,7 @@ final class OutboxListDraftDocumentsParams implements BaseModel
      * Number of items per page.
      */
     #[Api(optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     public function __construct()
     {
@@ -46,12 +46,12 @@ final class OutboxListDraftDocumentsParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?int $page = null, ?int $pageSize = null): self
+    public static function with(?int $page = null, ?int $page_size = null): self
     {
         $obj = new self;
 
         null !== $page && $obj->page = $page;
-        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $page_size && $obj->page_size = $page_size;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class OutboxListDraftDocumentsParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }

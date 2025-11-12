@@ -16,8 +16,6 @@ use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\InboxContract;
 
-use const EInvoiceAPI\Core\OMIT as omit;
-
 final class InboxService implements InboxContract
 {
     /**
@@ -30,60 +28,28 @@ final class InboxService implements InboxContract
      *
      * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
      *
-     * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
-     * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
-     * @param string|null $search Search in invoice number, seller/buyer names
-     * @param string|null $sender Filter by sender ID
-     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
-     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
+     * @param array{
+     *   date_from?: string|\DateTimeInterface|null,
+     *   date_to?: string|\DateTimeInterface|null,
+     *   page?: int,
+     *   page_size?: int,
+     *   search?: string|null,
+     *   sender?: string|null,
+     *   state?: "DRAFT"|"TRANSIT"|"FAILED"|"SENT"|"RECEIVED"|DocumentState|null,
+     *   type?: "INVOICE"|"CREDIT_NOTE"|"DEBIT_NOTE"|DocumentType|null,
+     * }|InboxListParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function list(
-        $dateFrom = omit,
-        $dateTo = omit,
-        $page = omit,
-        $pageSize = omit,
-        $search = omit,
-        $sender = omit,
-        $state = omit,
-        $type = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DocumentsNumberPage {
-        $params = [
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'page' => $page,
-            'pageSize' => $pageSize,
-            'search' => $search,
-            'sender' => $sender,
-            'state' => $state,
-            'type' => $type,
-        ];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|InboxListParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage {
         [$parsed, $options] = InboxListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -102,39 +68,19 @@ final class InboxService implements InboxContract
      *
      * Retrieve a paginated list of received credit notes with filtering options.
      *
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
+     * @param array{page?: int, page_size?: int}|InboxListCreditNotesParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function listCreditNotes(
-        $page = omit,
-        $pageSize = omit,
-        ?RequestOptions $requestOptions = null
-    ): DocumentsNumberPage {
-        $params = ['page' => $page, 'pageSize' => $pageSize];
-
-        return $this->listCreditNotesRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listCreditNotesRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListCreditNotesParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage {
         [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -153,39 +99,19 @@ final class InboxService implements InboxContract
      *
      * Retrieve a paginated list of received invoices with filtering options.
      *
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
+     * @param array{page?: int, page_size?: int}|InboxListInvoicesParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function listInvoices(
-        $page = omit,
-        $pageSize = omit,
-        ?RequestOptions $requestOptions = null
-    ): DocumentsNumberPage {
-        $params = ['page' => $page, 'pageSize' => $pageSize];
-
-        return $this->listInvoicesRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listInvoicesRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|InboxListInvoicesParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage {
         [$parsed, $options] = InboxListInvoicesParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

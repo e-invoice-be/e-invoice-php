@@ -24,33 +24,17 @@ final class UblService implements UblContract
      *
      * Create a new invoice or credit note from a UBL file
      *
-     * @param string $file
+     * @param array{file: string}|UblCreateFromUblParams $params
      *
      * @throws APIException
      */
     public function createFromUbl(
-        $file,
-        ?RequestOptions $requestOptions = null
-    ): DocumentResponse {
-        $params = ['file' => $file];
-
-        return $this->createFromUblRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createFromUblRaw(
-        array $params,
+        array|UblCreateFromUblParams $params,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         [$parsed, $options] = UblCreateFromUblParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

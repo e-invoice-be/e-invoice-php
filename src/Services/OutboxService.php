@@ -15,8 +15,6 @@ use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\OutboxContract;
 
-use const EInvoiceAPI\Core\OMIT as omit;
-
 final class OutboxService implements OutboxContract
 {
     /**
@@ -29,39 +27,19 @@ final class OutboxService implements OutboxContract
      *
      * Retrieve a paginated list of draft documents with filtering options.
      *
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
+     * @param array{page?: int, page_size?: int}|OutboxListDraftDocumentsParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function listDraftDocuments(
-        $page = omit,
-        $pageSize = omit,
-        ?RequestOptions $requestOptions = null
-    ): DocumentsNumberPage {
-        $params = ['page' => $page, 'pageSize' => $pageSize];
-
-        return $this->listDraftDocumentsRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listDraftDocumentsRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|OutboxListDraftDocumentsParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage {
         [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -80,60 +58,28 @@ final class OutboxService implements OutboxContract
      *
      * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
      *
-     * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
-     * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
-     * @param int $page Page number
-     * @param int $pageSize Number of items per page
-     * @param string|null $search Search in invoice number, seller/buyer names
-     * @param string|null $sender Filter by sender ID
-     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
-     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
+     * @param array{
+     *   date_from?: string|\DateTimeInterface|null,
+     *   date_to?: string|\DateTimeInterface|null,
+     *   page?: int,
+     *   page_size?: int,
+     *   search?: string|null,
+     *   sender?: string|null,
+     *   state?: "DRAFT"|"TRANSIT"|"FAILED"|"SENT"|"RECEIVED"|DocumentState|null,
+     *   type?: "INVOICE"|"CREDIT_NOTE"|"DEBIT_NOTE"|DocumentType|null,
+     * }|OutboxListReceivedDocumentsParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function listReceivedDocuments(
-        $dateFrom = omit,
-        $dateTo = omit,
-        $page = omit,
-        $pageSize = omit,
-        $search = omit,
-        $sender = omit,
-        $state = omit,
-        $type = omit,
+        array|OutboxListReceivedDocumentsParams $params,
         ?RequestOptions $requestOptions = null,
-    ): DocumentsNumberPage {
-        $params = [
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'page' => $page,
-            'pageSize' => $pageSize,
-            'search' => $search,
-            'sender' => $sender,
-            'state' => $state,
-            'type' => $type,
-        ];
-
-        return $this->listReceivedDocumentsRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DocumentsNumberPage<DocumentResponse>
-     *
-     * @throws APIException
-     */
-    public function listReceivedDocumentsRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage {
         [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

@@ -14,8 +14,6 @@ use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
-use const EInvoiceAPI\Core\OMIT as omit;
-
 final class WebhooksService implements WebhooksContract
 {
     /**
@@ -28,37 +26,19 @@ final class WebhooksService implements WebhooksContract
      *
      * Create a new webhook
      *
-     * @param list<string> $events
-     * @param string $url
-     * @param bool $enabled
+     * @param array{
+     *   events: list<string>, url: string, enabled?: bool
+     * }|WebhookCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $events,
-        $url,
-        $enabled = omit,
-        ?RequestOptions $requestOptions = null
-    ): WebhookResponse {
-        $params = ['events' => $events, 'url' => $url, 'enabled' => $enabled];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|WebhookCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
         [$parsed, $options] = WebhookCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -96,39 +76,20 @@ final class WebhooksService implements WebhooksContract
      *
      * Update a webhook by ID
      *
-     * @param bool|null $enabled
-     * @param list<string>|null $events
-     * @param string|null $url
+     * @param array{
+     *   enabled?: bool|null, events?: list<string>|null, url?: string|null
+     * }|WebhookUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        $enabled = omit,
-        $events = omit,
-        $url = omit,
+        array|WebhookUpdateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): WebhookResponse {
-        $params = ['enabled' => $enabled, 'events' => $events, 'url' => $url];
-
-        return $this->updateRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): WebhookResponse {
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

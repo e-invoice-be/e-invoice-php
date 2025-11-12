@@ -27,38 +27,21 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
-     * @param string $documentID
+     * @param array{document_id: string}|AttachmentRetrieveParams $params
      *
      * @throws APIException
      */
     public function retrieve(
         string $attachmentID,
-        $documentID,
-        ?RequestOptions $requestOptions = null
-    ): DocumentAttachment {
-        $params = ['documentID' => $documentID];
-
-        return $this->retrieveRaw($attachmentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $attachmentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|AttachmentRetrieveParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
         [$parsed, $options] = AttachmentRetrieveParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
-        $documentID = $parsed['documentID'];
-        unset($parsed['documentID']);
+        $documentID = $parsed['document_id'];
+        unset($parsed['document_id']);
 
         // @phpstan-ignore-next-line;
         return $this->client->request(
@@ -96,38 +79,21 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Delete an attachment from an invoice or credit note
      *
-     * @param string $documentID
+     * @param array{document_id: string}|AttachmentDeleteParams $params
      *
      * @throws APIException
      */
     public function delete(
         string $attachmentID,
-        $documentID,
-        ?RequestOptions $requestOptions = null
-    ): AttachmentDeleteResponse {
-        $params = ['documentID' => $documentID];
-
-        return $this->deleteRaw($attachmentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $attachmentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|AttachmentDeleteParams $params,
+        ?RequestOptions $requestOptions = null,
     ): AttachmentDeleteResponse {
         [$parsed, $options] = AttachmentDeleteParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
-        $documentID = $parsed['documentID'];
-        unset($parsed['documentID']);
+        $documentID = $parsed['document_id'];
+        unset($parsed['document_id']);
 
         // @phpstan-ignore-next-line;
         return $this->client->request(
@@ -143,35 +109,18 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Add a new attachment to an invoice or credit note
      *
-     * @param string $file
+     * @param array{file: string}|AttachmentAddParams $params
      *
      * @throws APIException
      */
     public function add(
         string $documentID,
-        $file,
-        ?RequestOptions $requestOptions = null
-    ): DocumentAttachment {
-        $params = ['file' => $file];
-
-        return $this->addRaw($documentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function addRaw(
-        string $documentID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|AttachmentAddParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
         [$parsed, $options] = AttachmentAddParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

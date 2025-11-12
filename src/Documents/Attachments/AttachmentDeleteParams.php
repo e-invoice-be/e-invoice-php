@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Documents\Attachments->delete
  *
- * @phpstan-type AttachmentDeleteParamsShape = array{documentID: string}
+ * @phpstan-type AttachmentDeleteParamsShape = array{document_id: string}
  */
 final class AttachmentDeleteParams implements BaseModel
 {
@@ -23,14 +23,14 @@ final class AttachmentDeleteParams implements BaseModel
     use SdkParams;
 
     #[Api]
-    public string $documentID;
+    public string $document_id;
 
     /**
      * `new AttachmentDeleteParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * AttachmentDeleteParams::with(documentID: ...)
+     * AttachmentDeleteParams::with(document_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,11 +49,11 @@ final class AttachmentDeleteParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $documentID): self
+    public static function with(string $document_id): self
     {
         $obj = new self;
 
-        $obj->documentID = $documentID;
+        $obj->document_id = $document_id;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class AttachmentDeleteParams implements BaseModel
     public function withDocumentID(string $documentID): self
     {
         $obj = clone $this;
-        $obj->documentID = $documentID;
+        $obj->document_id = $documentID;
 
         return $obj;
     }

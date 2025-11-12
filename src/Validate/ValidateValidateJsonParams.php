@@ -28,53 +28,53 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *
  * @phpstan-type ValidateValidateJsonParamsShape = array{
  *   allowances?: list<Allowance>|null,
- *   amountDue?: float|string|null,
+ *   amount_due?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
- *   billingAddress?: string|null,
- *   billingAddressRecipient?: string|null,
+ *   billing_address?: string|null,
+ *   billing_address_recipient?: string|null,
  *   charges?: list<Charge>|null,
  *   currency?: CurrencyCode|value-of<CurrencyCode>,
- *   customerAddress?: string|null,
- *   customerAddressRecipient?: string|null,
- *   customerCompanyID?: string|null,
- *   customerEmail?: string|null,
- *   customerID?: string|null,
- *   customerName?: string|null,
- *   customerTaxID?: string|null,
+ *   customer_address?: string|null,
+ *   customer_address_recipient?: string|null,
+ *   customer_company_id?: string|null,
+ *   customer_email?: string|null,
+ *   customer_id?: string|null,
+ *   customer_name?: string|null,
+ *   customer_tax_id?: string|null,
  *   direction?: DocumentDirection|value-of<DocumentDirection>,
- *   documentType?: DocumentType|value-of<DocumentType>,
- *   dueDate?: \DateTimeInterface|null,
- *   invoiceDate?: \DateTimeInterface|null,
- *   invoiceID?: string|null,
- *   invoiceTotal?: float|string|null,
+ *   document_type?: DocumentType|value-of<DocumentType>,
+ *   due_date?: \DateTimeInterface|null,
+ *   invoice_date?: \DateTimeInterface|null,
+ *   invoice_id?: string|null,
+ *   invoice_total?: float|string|null,
  *   items?: list<Item>,
  *   note?: string|null,
- *   paymentDetails?: list<PaymentDetailCreate>|null,
- *   paymentTerm?: string|null,
- *   previousUnpaidBalance?: float|string|null,
- *   purchaseOrder?: string|null,
- *   remittanceAddress?: string|null,
- *   remittanceAddressRecipient?: string|null,
- *   serviceAddress?: string|null,
- *   serviceAddressRecipient?: string|null,
- *   serviceEndDate?: \DateTimeInterface|null,
- *   serviceStartDate?: \DateTimeInterface|null,
- *   shippingAddress?: string|null,
- *   shippingAddressRecipient?: string|null,
+ *   payment_details?: list<PaymentDetailCreate>|null,
+ *   payment_term?: string|null,
+ *   previous_unpaid_balance?: float|string|null,
+ *   purchase_order?: string|null,
+ *   remittance_address?: string|null,
+ *   remittance_address_recipient?: string|null,
+ *   service_address?: string|null,
+ *   service_address_recipient?: string|null,
+ *   service_end_date?: \DateTimeInterface|null,
+ *   service_start_date?: \DateTimeInterface|null,
+ *   shipping_address?: string|null,
+ *   shipping_address_recipient?: string|null,
  *   state?: DocumentState|value-of<DocumentState>,
  *   subtotal?: float|string|null,
- *   taxCode?: TaxCode|value-of<TaxCode>,
- *   taxDetails?: list<TaxDetail>|null,
- *   totalDiscount?: float|string|null,
- *   totalTax?: float|string|null,
+ *   tax_code?: TaxCode|value-of<TaxCode>,
+ *   tax_details?: list<TaxDetail>|null,
+ *   total_discount?: float|string|null,
+ *   total_tax?: float|string|null,
  *   vatex?: null|Vatex|value-of<Vatex>,
- *   vatexNote?: string|null,
- *   vendorAddress?: string|null,
- *   vendorAddressRecipient?: string|null,
- *   vendorCompanyID?: string|null,
- *   vendorEmail?: string|null,
- *   vendorName?: string|null,
- *   vendorTaxID?: string|null,
+ *   vatex_note?: string|null,
+ *   vendor_address?: string|null,
+ *   vendor_address_recipient?: string|null,
+ *   vendor_company_id?: string|null,
+ *   vendor_email?: string|null,
+ *   vendor_name?: string|null,
+ *   vendor_tax_id?: string|null,
  * }
  */
 final class ValidateValidateJsonParams implements BaseModel
@@ -90,8 +90,8 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * The amount due for payment. Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api('amount_due', nullable: true, optional: true)]
-    public float|string|null $amountDue;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $amount_due;
 
     /** @var list<DocumentAttachmentCreate>|null $attachments */
     #[Api(list: DocumentAttachmentCreate::class, nullable: true, optional: true)]
@@ -100,14 +100,14 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * The billing address (if different from customer address).
      */
-    #[Api('billing_address', nullable: true, optional: true)]
-    public ?string $billingAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?string $billing_address;
 
     /**
      * The recipient name at the billing address.
      */
-    #[Api('billing_address_recipient', nullable: true, optional: true)]
-    public ?string $billingAddressRecipient;
+    #[Api(nullable: true, optional: true)]
+    public ?string $billing_address_recipient;
 
     /** @var list<Charge>|null $charges */
     #[Api(list: Charge::class, nullable: true, optional: true)]
@@ -124,44 +124,44 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * The address of the customer/buyer.
      */
-    #[Api('customer_address', nullable: true, optional: true)]
-    public ?string $customerAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_address;
 
     /**
      * The recipient name at the customer address.
      */
-    #[Api('customer_address_recipient', nullable: true, optional: true)]
-    public ?string $customerAddressRecipient;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_address_recipient;
 
     /**
      * Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
      */
-    #[Api('customer_company_id', nullable: true, optional: true)]
-    public ?string $customerCompanyID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_company_id;
 
     /**
      * The email address of the customer.
      */
-    #[Api('customer_email', nullable: true, optional: true)]
-    public ?string $customerEmail;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_email;
 
     /**
      * The unique identifier for the customer in your system.
      */
-    #[Api('customer_id', nullable: true, optional: true)]
-    public ?string $customerID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_id;
 
     /**
      * The company name of the customer/buyer.
      */
-    #[Api('customer_name', nullable: true, optional: true)]
-    public ?string $customerName;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_name;
 
     /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
-    #[Api('customer_tax_id', nullable: true, optional: true)]
-    public ?string $customerTaxID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_tax_id;
 
     /**
      * The direction of the document: INBOUND (purchases) or OUTBOUND (sales).
@@ -174,34 +174,34 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE.
      *
-     * @var value-of<DocumentType>|null $documentType
+     * @var value-of<DocumentType>|null $document_type
      */
-    #[Api('document_type', enum: DocumentType::class, optional: true)]
-    public ?string $documentType;
+    #[Api(enum: DocumentType::class, optional: true)]
+    public ?string $document_type;
 
     /**
      * The date when payment is due.
      */
-    #[Api('due_date', nullable: true, optional: true)]
-    public ?\DateTimeInterface $dueDate;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $due_date;
 
     /**
      * The date when the invoice was issued.
      */
-    #[Api('invoice_date', nullable: true, optional: true)]
-    public ?\DateTimeInterface $invoiceDate;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $invoice_date;
 
     /**
      * The unique invoice identifier/number.
      */
-    #[Api('invoice_id', nullable: true, optional: true)]
-    public ?string $invoiceID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $invoice_id;
 
     /**
      * The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api('invoice_total', nullable: true, optional: true)]
-    public float|string|null $invoiceTotal;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $invoice_total;
 
     /**
      * At least one line item is required.
@@ -217,80 +217,75 @@ final class ValidateValidateJsonParams implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?string $note;
 
-    /** @var list<PaymentDetailCreate>|null $paymentDetails */
-    #[Api(
-        'payment_details',
-        list: PaymentDetailCreate::class,
-        nullable: true,
-        optional: true,
-    )]
-    public ?array $paymentDetails;
+    /** @var list<PaymentDetailCreate>|null $payment_details */
+    #[Api(list: PaymentDetailCreate::class, nullable: true, optional: true)]
+    public ?array $payment_details;
 
     /**
      * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30').
      */
-    #[Api('payment_term', nullable: true, optional: true)]
-    public ?string $paymentTerm;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_term;
 
     /**
      * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api('previous_unpaid_balance', nullable: true, optional: true)]
-    public float|string|null $previousUnpaidBalance;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $previous_unpaid_balance;
 
     /**
      * The purchase order reference number.
      */
-    #[Api('purchase_order', nullable: true, optional: true)]
-    public ?string $purchaseOrder;
+    #[Api(nullable: true, optional: true)]
+    public ?string $purchase_order;
 
     /**
      * The address where payment should be sent or remitted to.
      */
-    #[Api('remittance_address', nullable: true, optional: true)]
-    public ?string $remittanceAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?string $remittance_address;
 
     /**
      * The recipient name at the remittance address.
      */
-    #[Api('remittance_address_recipient', nullable: true, optional: true)]
-    public ?string $remittanceAddressRecipient;
+    #[Api(nullable: true, optional: true)]
+    public ?string $remittance_address_recipient;
 
     /**
      * The address where services were performed or goods were delivered.
      */
-    #[Api('service_address', nullable: true, optional: true)]
-    public ?string $serviceAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?string $service_address;
 
     /**
      * The recipient name at the service address.
      */
-    #[Api('service_address_recipient', nullable: true, optional: true)]
-    public ?string $serviceAddressRecipient;
+    #[Api(nullable: true, optional: true)]
+    public ?string $service_address_recipient;
 
     /**
      * The end date of the service period or delivery period.
      */
-    #[Api('service_end_date', nullable: true, optional: true)]
-    public ?\DateTimeInterface $serviceEndDate;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $service_end_date;
 
     /**
      * The start date of the service period or delivery period.
      */
-    #[Api('service_start_date', nullable: true, optional: true)]
-    public ?\DateTimeInterface $serviceStartDate;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $service_start_date;
 
     /**
      * The shipping/delivery address.
      */
-    #[Api('shipping_address', nullable: true, optional: true)]
-    public ?string $shippingAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?string $shipping_address;
 
     /**
      * The recipient name at the shipping address.
      */
-    #[Api('shipping_address_recipient', nullable: true, optional: true)]
-    public ?string $shippingAddressRecipient;
+    #[Api(nullable: true, optional: true)]
+    public ?string $shipping_address_recipient;
 
     /**
      * The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED.
@@ -309,26 +304,26 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt).
      *
-     * @var value-of<TaxCode>|null $taxCode
+     * @var value-of<TaxCode>|null $tax_code
      */
-    #[Api('tax_code', enum: TaxCode::class, optional: true)]
-    public ?string $taxCode;
+    #[Api(enum: TaxCode::class, optional: true)]
+    public ?string $tax_code;
 
-    /** @var list<TaxDetail>|null $taxDetails */
-    #[Api('tax_details', list: TaxDetail::class, nullable: true, optional: true)]
-    public ?array $taxDetails;
+    /** @var list<TaxDetail>|null $tax_details */
+    #[Api(list: TaxDetail::class, nullable: true, optional: true)]
+    public ?array $tax_details;
 
     /**
      * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals.
      */
-    #[Api('total_discount', nullable: true, optional: true)]
-    public float|string|null $totalDiscount;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $total_discount;
 
     /**
      * The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api('total_tax', nullable: true, optional: true)]
-    public float|string|null $totalTax;
+    #[Api(nullable: true, optional: true)]
+    public float|string|null $total_tax;
 
     /**
      * VATEX code list for VAT exemption reasons.
@@ -344,44 +339,44 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * Textual explanation for VAT exemption.
      */
-    #[Api('vatex_note', nullable: true, optional: true)]
-    public ?string $vatexNote;
+    #[Api(nullable: true, optional: true)]
+    public ?string $vatex_note;
 
     /**
      * The address of the vendor/seller.
      */
-    #[Api('vendor_address', nullable: true, optional: true)]
-    public ?string $vendorAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?string $vendor_address;
 
     /**
      * The recipient name at the vendor address.
      */
-    #[Api('vendor_address_recipient', nullable: true, optional: true)]
-    public ?string $vendorAddressRecipient;
+    #[Api(nullable: true, optional: true)]
+    public ?string $vendor_address_recipient;
 
     /**
      * Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
      */
-    #[Api('vendor_company_id', nullable: true, optional: true)]
-    public ?string $vendorCompanyID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $vendor_company_id;
 
     /**
      * The email address of the vendor.
      */
-    #[Api('vendor_email', nullable: true, optional: true)]
-    public ?string $vendorEmail;
+    #[Api(nullable: true, optional: true)]
+    public ?string $vendor_email;
 
     /**
      * The name of the vendor/seller/supplier.
      */
-    #[Api('vendor_name', nullable: true, optional: true)]
-    public ?string $vendorName;
+    #[Api(nullable: true, optional: true)]
+    public ?string $vendor_name;
 
     /**
      * Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
-    #[Api('vendor_tax_id', nullable: true, optional: true)]
-    public ?string $vendorTaxID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $vendor_tax_id;
 
     public function __construct()
     {
@@ -398,114 +393,114 @@ final class ValidateValidateJsonParams implements BaseModel
      * @param list<Charge>|null $charges
      * @param CurrencyCode|value-of<CurrencyCode> $currency
      * @param DocumentDirection|value-of<DocumentDirection> $direction
-     * @param DocumentType|value-of<DocumentType> $documentType
+     * @param DocumentType|value-of<DocumentType> $document_type
      * @param list<Item> $items
-     * @param list<PaymentDetailCreate>|null $paymentDetails
+     * @param list<PaymentDetailCreate>|null $payment_details
      * @param DocumentState|value-of<DocumentState> $state
-     * @param TaxCode|value-of<TaxCode> $taxCode
-     * @param list<TaxDetail>|null $taxDetails
+     * @param TaxCode|value-of<TaxCode> $tax_code
+     * @param list<TaxDetail>|null $tax_details
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
         ?array $allowances = null,
-        float|string|null $amountDue = null,
+        float|string|null $amount_due = null,
         ?array $attachments = null,
-        ?string $billingAddress = null,
-        ?string $billingAddressRecipient = null,
+        ?string $billing_address = null,
+        ?string $billing_address_recipient = null,
         ?array $charges = null,
         CurrencyCode|string|null $currency = null,
-        ?string $customerAddress = null,
-        ?string $customerAddressRecipient = null,
-        ?string $customerCompanyID = null,
-        ?string $customerEmail = null,
-        ?string $customerID = null,
-        ?string $customerName = null,
-        ?string $customerTaxID = null,
+        ?string $customer_address = null,
+        ?string $customer_address_recipient = null,
+        ?string $customer_company_id = null,
+        ?string $customer_email = null,
+        ?string $customer_id = null,
+        ?string $customer_name = null,
+        ?string $customer_tax_id = null,
         DocumentDirection|string|null $direction = null,
-        DocumentType|string|null $documentType = null,
-        ?\DateTimeInterface $dueDate = null,
-        ?\DateTimeInterface $invoiceDate = null,
-        ?string $invoiceID = null,
-        float|string|null $invoiceTotal = null,
+        DocumentType|string|null $document_type = null,
+        ?\DateTimeInterface $due_date = null,
+        ?\DateTimeInterface $invoice_date = null,
+        ?string $invoice_id = null,
+        float|string|null $invoice_total = null,
         ?array $items = null,
         ?string $note = null,
-        ?array $paymentDetails = null,
-        ?string $paymentTerm = null,
-        float|string|null $previousUnpaidBalance = null,
-        ?string $purchaseOrder = null,
-        ?string $remittanceAddress = null,
-        ?string $remittanceAddressRecipient = null,
-        ?string $serviceAddress = null,
-        ?string $serviceAddressRecipient = null,
-        ?\DateTimeInterface $serviceEndDate = null,
-        ?\DateTimeInterface $serviceStartDate = null,
-        ?string $shippingAddress = null,
-        ?string $shippingAddressRecipient = null,
+        ?array $payment_details = null,
+        ?string $payment_term = null,
+        float|string|null $previous_unpaid_balance = null,
+        ?string $purchase_order = null,
+        ?string $remittance_address = null,
+        ?string $remittance_address_recipient = null,
+        ?string $service_address = null,
+        ?string $service_address_recipient = null,
+        ?\DateTimeInterface $service_end_date = null,
+        ?\DateTimeInterface $service_start_date = null,
+        ?string $shipping_address = null,
+        ?string $shipping_address_recipient = null,
         DocumentState|string|null $state = null,
         float|string|null $subtotal = null,
-        TaxCode|string|null $taxCode = null,
-        ?array $taxDetails = null,
-        float|string|null $totalDiscount = null,
-        float|string|null $totalTax = null,
+        TaxCode|string|null $tax_code = null,
+        ?array $tax_details = null,
+        float|string|null $total_discount = null,
+        float|string|null $total_tax = null,
         Vatex|string|null $vatex = null,
-        ?string $vatexNote = null,
-        ?string $vendorAddress = null,
-        ?string $vendorAddressRecipient = null,
-        ?string $vendorCompanyID = null,
-        ?string $vendorEmail = null,
-        ?string $vendorName = null,
-        ?string $vendorTaxID = null,
+        ?string $vatex_note = null,
+        ?string $vendor_address = null,
+        ?string $vendor_address_recipient = null,
+        ?string $vendor_company_id = null,
+        ?string $vendor_email = null,
+        ?string $vendor_name = null,
+        ?string $vendor_tax_id = null,
     ): self {
         $obj = new self;
 
         null !== $allowances && $obj->allowances = $allowances;
-        null !== $amountDue && $obj->amountDue = $amountDue;
+        null !== $amount_due && $obj->amount_due = $amount_due;
         null !== $attachments && $obj->attachments = $attachments;
-        null !== $billingAddress && $obj->billingAddress = $billingAddress;
-        null !== $billingAddressRecipient && $obj->billingAddressRecipient = $billingAddressRecipient;
+        null !== $billing_address && $obj->billing_address = $billing_address;
+        null !== $billing_address_recipient && $obj->billing_address_recipient = $billing_address_recipient;
         null !== $charges && $obj->charges = $charges;
         null !== $currency && $obj['currency'] = $currency;
-        null !== $customerAddress && $obj->customerAddress = $customerAddress;
-        null !== $customerAddressRecipient && $obj->customerAddressRecipient = $customerAddressRecipient;
-        null !== $customerCompanyID && $obj->customerCompanyID = $customerCompanyID;
-        null !== $customerEmail && $obj->customerEmail = $customerEmail;
-        null !== $customerID && $obj->customerID = $customerID;
-        null !== $customerName && $obj->customerName = $customerName;
-        null !== $customerTaxID && $obj->customerTaxID = $customerTaxID;
+        null !== $customer_address && $obj->customer_address = $customer_address;
+        null !== $customer_address_recipient && $obj->customer_address_recipient = $customer_address_recipient;
+        null !== $customer_company_id && $obj->customer_company_id = $customer_company_id;
+        null !== $customer_email && $obj->customer_email = $customer_email;
+        null !== $customer_id && $obj->customer_id = $customer_id;
+        null !== $customer_name && $obj->customer_name = $customer_name;
+        null !== $customer_tax_id && $obj->customer_tax_id = $customer_tax_id;
         null !== $direction && $obj['direction'] = $direction;
-        null !== $documentType && $obj['documentType'] = $documentType;
-        null !== $dueDate && $obj->dueDate = $dueDate;
-        null !== $invoiceDate && $obj->invoiceDate = $invoiceDate;
-        null !== $invoiceID && $obj->invoiceID = $invoiceID;
-        null !== $invoiceTotal && $obj->invoiceTotal = $invoiceTotal;
+        null !== $document_type && $obj['document_type'] = $document_type;
+        null !== $due_date && $obj->due_date = $due_date;
+        null !== $invoice_date && $obj->invoice_date = $invoice_date;
+        null !== $invoice_id && $obj->invoice_id = $invoice_id;
+        null !== $invoice_total && $obj->invoice_total = $invoice_total;
         null !== $items && $obj->items = $items;
         null !== $note && $obj->note = $note;
-        null !== $paymentDetails && $obj->paymentDetails = $paymentDetails;
-        null !== $paymentTerm && $obj->paymentTerm = $paymentTerm;
-        null !== $previousUnpaidBalance && $obj->previousUnpaidBalance = $previousUnpaidBalance;
-        null !== $purchaseOrder && $obj->purchaseOrder = $purchaseOrder;
-        null !== $remittanceAddress && $obj->remittanceAddress = $remittanceAddress;
-        null !== $remittanceAddressRecipient && $obj->remittanceAddressRecipient = $remittanceAddressRecipient;
-        null !== $serviceAddress && $obj->serviceAddress = $serviceAddress;
-        null !== $serviceAddressRecipient && $obj->serviceAddressRecipient = $serviceAddressRecipient;
-        null !== $serviceEndDate && $obj->serviceEndDate = $serviceEndDate;
-        null !== $serviceStartDate && $obj->serviceStartDate = $serviceStartDate;
-        null !== $shippingAddress && $obj->shippingAddress = $shippingAddress;
-        null !== $shippingAddressRecipient && $obj->shippingAddressRecipient = $shippingAddressRecipient;
+        null !== $payment_details && $obj->payment_details = $payment_details;
+        null !== $payment_term && $obj->payment_term = $payment_term;
+        null !== $previous_unpaid_balance && $obj->previous_unpaid_balance = $previous_unpaid_balance;
+        null !== $purchase_order && $obj->purchase_order = $purchase_order;
+        null !== $remittance_address && $obj->remittance_address = $remittance_address;
+        null !== $remittance_address_recipient && $obj->remittance_address_recipient = $remittance_address_recipient;
+        null !== $service_address && $obj->service_address = $service_address;
+        null !== $service_address_recipient && $obj->service_address_recipient = $service_address_recipient;
+        null !== $service_end_date && $obj->service_end_date = $service_end_date;
+        null !== $service_start_date && $obj->service_start_date = $service_start_date;
+        null !== $shipping_address && $obj->shipping_address = $shipping_address;
+        null !== $shipping_address_recipient && $obj->shipping_address_recipient = $shipping_address_recipient;
         null !== $state && $obj['state'] = $state;
         null !== $subtotal && $obj->subtotal = $subtotal;
-        null !== $taxCode && $obj['taxCode'] = $taxCode;
-        null !== $taxDetails && $obj->taxDetails = $taxDetails;
-        null !== $totalDiscount && $obj->totalDiscount = $totalDiscount;
-        null !== $totalTax && $obj->totalTax = $totalTax;
+        null !== $tax_code && $obj['tax_code'] = $tax_code;
+        null !== $tax_details && $obj->tax_details = $tax_details;
+        null !== $total_discount && $obj->total_discount = $total_discount;
+        null !== $total_tax && $obj->total_tax = $total_tax;
         null !== $vatex && $obj['vatex'] = $vatex;
-        null !== $vatexNote && $obj->vatexNote = $vatexNote;
-        null !== $vendorAddress && $obj->vendorAddress = $vendorAddress;
-        null !== $vendorAddressRecipient && $obj->vendorAddressRecipient = $vendorAddressRecipient;
-        null !== $vendorCompanyID && $obj->vendorCompanyID = $vendorCompanyID;
-        null !== $vendorEmail && $obj->vendorEmail = $vendorEmail;
-        null !== $vendorName && $obj->vendorName = $vendorName;
-        null !== $vendorTaxID && $obj->vendorTaxID = $vendorTaxID;
+        null !== $vatex_note && $obj->vatex_note = $vatex_note;
+        null !== $vendor_address && $obj->vendor_address = $vendor_address;
+        null !== $vendor_address_recipient && $obj->vendor_address_recipient = $vendor_address_recipient;
+        null !== $vendor_company_id && $obj->vendor_company_id = $vendor_company_id;
+        null !== $vendor_email && $obj->vendor_email = $vendor_email;
+        null !== $vendor_name && $obj->vendor_name = $vendor_name;
+        null !== $vendor_tax_id && $obj->vendor_tax_id = $vendor_tax_id;
 
         return $obj;
     }
@@ -527,7 +522,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withAmountDue(float|string|null $amountDue): self
     {
         $obj = clone $this;
-        $obj->amountDue = $amountDue;
+        $obj->amount_due = $amountDue;
 
         return $obj;
     }
@@ -549,7 +544,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withBillingAddress(?string $billingAddress): self
     {
         $obj = clone $this;
-        $obj->billingAddress = $billingAddress;
+        $obj->billing_address = $billingAddress;
 
         return $obj;
     }
@@ -561,7 +556,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $billingAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->billingAddressRecipient = $billingAddressRecipient;
+        $obj->billing_address_recipient = $billingAddressRecipient;
 
         return $obj;
     }
@@ -596,7 +591,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCustomerAddress(?string $customerAddress): self
     {
         $obj = clone $this;
-        $obj->customerAddress = $customerAddress;
+        $obj->customer_address = $customerAddress;
 
         return $obj;
     }
@@ -608,7 +603,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $customerAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->customerAddressRecipient = $customerAddressRecipient;
+        $obj->customer_address_recipient = $customerAddressRecipient;
 
         return $obj;
     }
@@ -619,7 +614,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCustomerCompanyID(?string $customerCompanyID): self
     {
         $obj = clone $this;
-        $obj->customerCompanyID = $customerCompanyID;
+        $obj->customer_company_id = $customerCompanyID;
 
         return $obj;
     }
@@ -630,7 +625,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCustomerEmail(?string $customerEmail): self
     {
         $obj = clone $this;
-        $obj->customerEmail = $customerEmail;
+        $obj->customer_email = $customerEmail;
 
         return $obj;
     }
@@ -641,7 +636,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCustomerID(?string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -652,7 +647,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCustomerName(?string $customerName): self
     {
         $obj = clone $this;
-        $obj->customerName = $customerName;
+        $obj->customer_name = $customerName;
 
         return $obj;
     }
@@ -663,7 +658,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCustomerTaxID(?string $customerTaxID): self
     {
         $obj = clone $this;
-        $obj->customerTaxID = $customerTaxID;
+        $obj->customer_tax_id = $customerTaxID;
 
         return $obj;
     }
@@ -689,7 +684,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withDocumentType(DocumentType|string $documentType): self
     {
         $obj = clone $this;
-        $obj['documentType'] = $documentType;
+        $obj['document_type'] = $documentType;
 
         return $obj;
     }
@@ -700,7 +695,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withDueDate(?\DateTimeInterface $dueDate): self
     {
         $obj = clone $this;
-        $obj->dueDate = $dueDate;
+        $obj->due_date = $dueDate;
 
         return $obj;
     }
@@ -711,7 +706,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withInvoiceDate(?\DateTimeInterface $invoiceDate): self
     {
         $obj = clone $this;
-        $obj->invoiceDate = $invoiceDate;
+        $obj->invoice_date = $invoiceDate;
 
         return $obj;
     }
@@ -722,7 +717,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withInvoiceID(?string $invoiceID): self
     {
         $obj = clone $this;
-        $obj->invoiceID = $invoiceID;
+        $obj->invoice_id = $invoiceID;
 
         return $obj;
     }
@@ -733,7 +728,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withInvoiceTotal(float|string|null $invoiceTotal): self
     {
         $obj = clone $this;
-        $obj->invoiceTotal = $invoiceTotal;
+        $obj->invoice_total = $invoiceTotal;
 
         return $obj;
     }
@@ -768,7 +763,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withPaymentDetails(?array $paymentDetails): self
     {
         $obj = clone $this;
-        $obj->paymentDetails = $paymentDetails;
+        $obj->payment_details = $paymentDetails;
 
         return $obj;
     }
@@ -779,7 +774,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withPaymentTerm(?string $paymentTerm): self
     {
         $obj = clone $this;
-        $obj->paymentTerm = $paymentTerm;
+        $obj->payment_term = $paymentTerm;
 
         return $obj;
     }
@@ -791,7 +786,7 @@ final class ValidateValidateJsonParams implements BaseModel
         float|string|null $previousUnpaidBalance
     ): self {
         $obj = clone $this;
-        $obj->previousUnpaidBalance = $previousUnpaidBalance;
+        $obj->previous_unpaid_balance = $previousUnpaidBalance;
 
         return $obj;
     }
@@ -802,7 +797,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withPurchaseOrder(?string $purchaseOrder): self
     {
         $obj = clone $this;
-        $obj->purchaseOrder = $purchaseOrder;
+        $obj->purchase_order = $purchaseOrder;
 
         return $obj;
     }
@@ -813,7 +808,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withRemittanceAddress(?string $remittanceAddress): self
     {
         $obj = clone $this;
-        $obj->remittanceAddress = $remittanceAddress;
+        $obj->remittance_address = $remittanceAddress;
 
         return $obj;
     }
@@ -825,7 +820,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $remittanceAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->remittanceAddressRecipient = $remittanceAddressRecipient;
+        $obj->remittance_address_recipient = $remittanceAddressRecipient;
 
         return $obj;
     }
@@ -836,7 +831,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withServiceAddress(?string $serviceAddress): self
     {
         $obj = clone $this;
-        $obj->serviceAddress = $serviceAddress;
+        $obj->service_address = $serviceAddress;
 
         return $obj;
     }
@@ -848,7 +843,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $serviceAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->serviceAddressRecipient = $serviceAddressRecipient;
+        $obj->service_address_recipient = $serviceAddressRecipient;
 
         return $obj;
     }
@@ -860,7 +855,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?\DateTimeInterface $serviceEndDate
     ): self {
         $obj = clone $this;
-        $obj->serviceEndDate = $serviceEndDate;
+        $obj->service_end_date = $serviceEndDate;
 
         return $obj;
     }
@@ -872,7 +867,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?\DateTimeInterface $serviceStartDate
     ): self {
         $obj = clone $this;
-        $obj->serviceStartDate = $serviceStartDate;
+        $obj->service_start_date = $serviceStartDate;
 
         return $obj;
     }
@@ -883,7 +878,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withShippingAddress(?string $shippingAddress): self
     {
         $obj = clone $this;
-        $obj->shippingAddress = $shippingAddress;
+        $obj->shipping_address = $shippingAddress;
 
         return $obj;
     }
@@ -895,7 +890,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $shippingAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->shippingAddressRecipient = $shippingAddressRecipient;
+        $obj->shipping_address_recipient = $shippingAddressRecipient;
 
         return $obj;
     }
@@ -932,7 +927,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withTaxCode(TaxCode|string $taxCode): self
     {
         $obj = clone $this;
-        $obj['taxCode'] = $taxCode;
+        $obj['tax_code'] = $taxCode;
 
         return $obj;
     }
@@ -943,7 +938,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withTaxDetails(?array $taxDetails): self
     {
         $obj = clone $this;
-        $obj->taxDetails = $taxDetails;
+        $obj->tax_details = $taxDetails;
 
         return $obj;
     }
@@ -954,7 +949,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withTotalDiscount(float|string|null $totalDiscount): self
     {
         $obj = clone $this;
-        $obj->totalDiscount = $totalDiscount;
+        $obj->total_discount = $totalDiscount;
 
         return $obj;
     }
@@ -965,7 +960,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withTotalTax(float|string|null $totalTax): self
     {
         $obj = clone $this;
-        $obj->totalTax = $totalTax;
+        $obj->total_tax = $totalTax;
 
         return $obj;
     }
@@ -992,7 +987,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withVatexNote(?string $vatexNote): self
     {
         $obj = clone $this;
-        $obj->vatexNote = $vatexNote;
+        $obj->vatex_note = $vatexNote;
 
         return $obj;
     }
@@ -1003,7 +998,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withVendorAddress(?string $vendorAddress): self
     {
         $obj = clone $this;
-        $obj->vendorAddress = $vendorAddress;
+        $obj->vendor_address = $vendorAddress;
 
         return $obj;
     }
@@ -1015,7 +1010,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $vendorAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->vendorAddressRecipient = $vendorAddressRecipient;
+        $obj->vendor_address_recipient = $vendorAddressRecipient;
 
         return $obj;
     }
@@ -1026,7 +1021,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withVendorCompanyID(?string $vendorCompanyID): self
     {
         $obj = clone $this;
-        $obj->vendorCompanyID = $vendorCompanyID;
+        $obj->vendor_company_id = $vendorCompanyID;
 
         return $obj;
     }
@@ -1037,7 +1032,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withVendorEmail(?string $vendorEmail): self
     {
         $obj = clone $this;
-        $obj->vendorEmail = $vendorEmail;
+        $obj->vendor_email = $vendorEmail;
 
         return $obj;
     }
@@ -1048,7 +1043,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withVendorName(?string $vendorName): self
     {
         $obj = clone $this;
-        $obj->vendorName = $vendorName;
+        $obj->vendor_name = $vendorName;
 
         return $obj;
     }
@@ -1059,7 +1054,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withVendorTaxID(?string $vendorTaxID): self
     {
         $obj = clone $this;
-        $obj->vendorTaxID = $vendorTaxID;
+        $obj->vendor_tax_id = $vendorTaxID;
 
         return $obj;
     }

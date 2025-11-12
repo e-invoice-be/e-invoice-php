@@ -14,7 +14,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Proces
  * Process information in the Peppol network.
  *
  * @phpstan-type ProcessShape = array{
- *   endpoints: list<Endpoint>, processID: ProcessID
+ *   endpoints: list<Endpoint>, processId: ProcessID
  * }
  */
 final class Process implements BaseModel
@@ -33,15 +33,15 @@ final class Process implements BaseModel
     /**
      * Identifier of the process.
      */
-    #[Api('processId')]
-    public ProcessID $processID;
+    #[Api]
+    public ProcessID $processId;
 
     /**
      * `new Process()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Process::with(endpoints: ..., processID: ...)
+     * Process::with(endpoints: ..., processId: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -62,12 +62,12 @@ final class Process implements BaseModel
      *
      * @param list<Endpoint> $endpoints
      */
-    public static function with(array $endpoints, ProcessID $processID): self
+    public static function with(array $endpoints, ProcessID $processId): self
     {
         $obj = new self;
 
         $obj->endpoints = $endpoints;
-        $obj->processID = $processID;
+        $obj->processId = $processId;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class Process implements BaseModel
     public function withProcessID(ProcessID $processID): self
     {
         $obj = clone $this;
-        $obj->processID = $processID;
+        $obj->processId = $processID;
 
         return $obj;
     }

@@ -14,10 +14,10 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
  * Represents a Peppol participant with their details.
  *
  * @phpstan-type ParticipantShape = array{
- *   peppolID: string,
- *   peppolScheme: string,
- *   documentTypes?: list<DocumentType>,
- *   entities?: list<Entity>,
+ *   peppol_id: string,
+ *   peppol_scheme: string,
+ *   document_types?: list<DocumentType>|null,
+ *   entities?: list<Entity>|null,
  * }
  */
 final class Participant implements BaseModel
@@ -28,22 +28,22 @@ final class Participant implements BaseModel
     /**
      * Peppol ID of the participant.
      */
-    #[Api('peppol_id')]
-    public string $peppolID;
+    #[Api]
+    public string $peppol_id;
 
     /**
      * Peppol scheme of the participant.
      */
-    #[Api('peppol_scheme')]
-    public string $peppolScheme;
+    #[Api]
+    public string $peppol_scheme;
 
     /**
      * List of supported document types.
      *
-     * @var list<DocumentType>|null $documentTypes
+     * @var list<DocumentType>|null $document_types
      */
-    #[Api('document_types', list: DocumentType::class, optional: true)]
-    public ?array $documentTypes;
+    #[Api(list: DocumentType::class, optional: true)]
+    public ?array $document_types;
 
     /**
      * List of business entities.
@@ -58,7 +58,7 @@ final class Participant implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Participant::with(peppolID: ..., peppolScheme: ...)
+     * Participant::with(peppol_id: ..., peppol_scheme: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -77,21 +77,21 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentType> $documentTypes
+     * @param list<DocumentType> $document_types
      * @param list<Entity> $entities
      */
     public static function with(
-        string $peppolID,
-        string $peppolScheme,
-        ?array $documentTypes = null,
+        string $peppol_id,
+        string $peppol_scheme,
+        ?array $document_types = null,
         ?array $entities = null,
     ): self {
         $obj = new self;
 
-        $obj->peppolID = $peppolID;
-        $obj->peppolScheme = $peppolScheme;
+        $obj->peppol_id = $peppol_id;
+        $obj->peppol_scheme = $peppol_scheme;
 
-        null !== $documentTypes && $obj->documentTypes = $documentTypes;
+        null !== $document_types && $obj->document_types = $document_types;
         null !== $entities && $obj->entities = $entities;
 
         return $obj;
@@ -103,7 +103,7 @@ final class Participant implements BaseModel
     public function withPeppolID(string $peppolID): self
     {
         $obj = clone $this;
-        $obj->peppolID = $peppolID;
+        $obj->peppol_id = $peppolID;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class Participant implements BaseModel
     public function withPeppolScheme(string $peppolScheme): self
     {
         $obj = clone $this;
-        $obj->peppolScheme = $peppolScheme;
+        $obj->peppol_scheme = $peppolScheme;
 
         return $obj;
     }
@@ -127,7 +127,7 @@ final class Participant implements BaseModel
     public function withDocumentTypes(array $documentTypes): self
     {
         $obj = clone $this;
-        $obj->documentTypes = $documentTypes;
+        $obj->document_types = $documentTypes;
 
         return $obj;
     }
