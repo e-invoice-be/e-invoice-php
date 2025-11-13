@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Send an invoice or credit note via Peppol.
  *
- * @see EInvoiceAPI\DocumentsService::send()
+ * @see EInvoiceAPI\Services\DocumentsService::send()
  *
  * @phpstan-type DocumentSendParamsShape = array{
  *   email?: string|null,

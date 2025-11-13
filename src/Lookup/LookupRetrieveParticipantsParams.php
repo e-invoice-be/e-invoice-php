@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
  *
- * @see EInvoiceAPI\LookupService::retrieveParticipants()
+ * @see EInvoiceAPI\Services\LookupService::retrieveParticipants()
  *
  * @phpstan-type LookupRetrieveParticipantsParamsShape = array{
  *   query: string, country_code?: string|null

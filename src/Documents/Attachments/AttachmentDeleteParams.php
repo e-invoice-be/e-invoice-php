@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Delete an attachment from an invoice or credit note.
  *
- * @see EInvoiceAPI\STAINLESS_FIXME_Documents\AttachmentsService::delete()
+ * @see EInvoiceAPI\Services\Documents\AttachmentsService::delete()
  *
  * @phpstan-type AttachmentDeleteParamsShape = array{document_id: string}
  */

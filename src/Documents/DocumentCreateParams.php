@@ -19,7 +19,7 @@ use EInvoiceAPI\Inbox\DocumentState;
 /**
  * Create a new invoice or credit note.
  *
- * @see EInvoiceAPI\DocumentsService::create()
+ * @see EInvoiceAPI\Services\DocumentsService::create()
  *
  * @phpstan-type DocumentCreateParamsShape = array{
  *   allowances?: list<Allowance>|null,
