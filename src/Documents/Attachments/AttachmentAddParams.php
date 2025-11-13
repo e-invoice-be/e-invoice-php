@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Add a new attachment to an invoice or credit note.
  *
- * @see EInvoiceAPI\Documents\Attachments->add
+ * @see EInvoiceAPI\STAINLESS_FIXME_Documents\AttachmentsService::add()
  *
  * @phpstan-type AttachmentAddParamsShape = array{file: string}
  */

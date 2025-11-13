@@ -13,7 +13,7 @@ use EInvoiceAPI\Documents\DocumentType;
 /**
  * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
  *
- * @see EInvoiceAPI\Inbox->list
+ * @see EInvoiceAPI\InboxService::list()
  *
  * @phpstan-type InboxListParamsShape = array{
  *   date_from?: \DateTimeInterface|null,
