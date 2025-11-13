@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Retrieve a paginated list of received credit notes with filtering options.
  *
- * @see EInvoiceAPI\Inbox->listCreditNotes
+ * @see EInvoiceAPI\InboxService::listCreditNotes()
  *
  * @phpstan-type InboxListCreditNotesParamsShape = array{
  *   page?: int, page_size?: int
