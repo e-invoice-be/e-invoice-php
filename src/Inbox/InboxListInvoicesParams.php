@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Retrieve a paginated list of received invoices with filtering options.
  *
- * @see EInvoiceAPI\InboxService::listInvoices()
+ * @see EInvoiceAPI\Services\InboxService::listInvoices()
  *
  * @phpstan-type InboxListInvoicesParamsShape = array{page?: int, page_size?: int}
  */
