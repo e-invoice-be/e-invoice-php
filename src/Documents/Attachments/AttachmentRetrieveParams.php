@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour).
  *
- * @see EInvoiceAPI\Documents\Attachments->retrieve
+ * @see EInvoiceAPI\STAINLESS_FIXME_Documents\AttachmentsService::retrieve()
  *
  * @phpstan-type AttachmentRetrieveParamsShape = array{document_id: string}
  */

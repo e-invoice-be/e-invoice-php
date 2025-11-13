@@ -24,7 +24,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
 /**
  * Validate if the JSON document can be converted to a valid UBL document.
  *
- * @see EInvoiceAPI\Validate->validateJson
+ * @see EInvoiceAPI\ValidateService::validateJson()
  *
  * @phpstan-type ValidateValidateJsonParamsShape = array{
  *   allowances?: list<Allowance>|null,

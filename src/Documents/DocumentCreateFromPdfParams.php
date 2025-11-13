@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
  *
- * @see EInvoiceAPI\Documents->createFromPdf
+ * @see EInvoiceAPI\DocumentsService::createFromPdf()
  *
  * @phpstan-type DocumentCreateFromPdfParamsShape = array{
  *   file: string, customer_tax_id?: string|null, vendor_tax_id?: string|null

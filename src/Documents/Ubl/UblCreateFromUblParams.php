@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Create a new invoice or credit note from a UBL file.
  *
- * @see EInvoiceAPI\Documents\Ubl->createFromUbl
+ * @see EInvoiceAPI\STAINLESS_FIXME_Documents\UblService::createFromUbl()
  *
  * @phpstan-type UblCreateFromUblParamsShape = array{file: string}
  */
