@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
  *
- * @see EInvoiceAPI\LookupService::retrieve()
+ * @see EInvoiceAPI\Services\LookupService::retrieve()
  *
  * @phpstan-type LookupRetrieveParamsShape = array{peppol_id: string}
  */

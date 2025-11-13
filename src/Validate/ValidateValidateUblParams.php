@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Validate the correctness of a UBL document.
  *
- * @see EInvoiceAPI\ValidateService::validateUbl()
+ * @see EInvoiceAPI\Services\ValidateService::validateUbl()
  *
  * @phpstan-type ValidateValidateUblParamsShape = array{file: string}
  */

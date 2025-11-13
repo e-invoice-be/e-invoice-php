@@ -14,7 +14,7 @@ use EInvoiceAPI\Inbox\DocumentState;
 /**
  * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
  *
- * @see EInvoiceAPI\OutboxService::listReceivedDocuments()
+ * @see EInvoiceAPI\Services\OutboxService::listReceivedDocuments()
  *
  * @phpstan-type OutboxListReceivedDocumentsParamsShape = array{
  *   date_from?: \DateTimeInterface|null,

@@ -12,7 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Update a webhook by ID.
  *
- * @see EInvoiceAPI\WebhooksService::update()
+ * @see EInvoiceAPI\Services\WebhooksService::update()
  *
  * @phpstan-type WebhookUpdateParamsShape = array{
  *   enabled?: bool|null, events?: list<string>|null, url?: string|null
