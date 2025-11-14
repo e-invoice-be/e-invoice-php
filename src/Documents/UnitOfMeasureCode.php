@@ -2070,4 +2070,6 @@ enum UnitOfMeasureCode: string
     case C62 = 'C62';
 
     case LTR = 'LTR';
+
+    case H87 = 'H87';
 }

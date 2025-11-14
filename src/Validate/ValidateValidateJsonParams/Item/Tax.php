@@ -9,7 +9,7 @@ use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+ * The total VAT amount for the line item. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
  */
 final class Tax implements ConverterSource
 {
