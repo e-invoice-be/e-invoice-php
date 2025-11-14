@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Documents\DocumentCreate\Allowance;
 
 /**
- * Duty or tax or fee category codes (Subset of UNCL5305).
- *
- * Agency: UN/CEFACT
- * Version: D.16B
- * Subset: OpenPEPPOL
+ * The VAT category code that applies to the allowance.
  */
 enum TaxCode: string
 {
