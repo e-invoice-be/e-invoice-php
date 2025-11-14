@@ -46,7 +46,6 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   note?: string|null,
  *   payment_details?: list<PaymentDetail>|null,
  *   payment_term?: string|null,
- *   previous_unpaid_balance?: string|null,
  *   purchase_order?: string|null,
  *   remittance_address?: string|null,
  *   remittance_address_recipient?: string|null,
@@ -221,12 +220,6 @@ final class DocumentResponse implements BaseModel, ResponseConverter
      */
     #[Api(nullable: true, optional: true)]
     public ?string $payment_term;
-
-    /**
-     * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
-     */
-    #[Api(nullable: true, optional: true)]
-    public ?string $previous_unpaid_balance;
 
     /**
      * The purchase order reference number.
@@ -436,7 +429,6 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         ?string $note = null,
         ?array $payment_details = null,
         ?string $payment_term = null,
-        ?string $previous_unpaid_balance = null,
         ?string $purchase_order = null,
         ?string $remittance_address = null,
         ?string $remittance_address_recipient = null,
@@ -489,7 +481,6 @@ final class DocumentResponse implements BaseModel, ResponseConverter
         null !== $note && $obj->note = $note;
         null !== $payment_details && $obj->payment_details = $payment_details;
         null !== $payment_term && $obj->payment_term = $payment_term;
-        null !== $previous_unpaid_balance && $obj->previous_unpaid_balance = $previous_unpaid_balance;
         null !== $purchase_order && $obj->purchase_order = $purchase_order;
         null !== $remittance_address && $obj->remittance_address = $remittance_address;
         null !== $remittance_address_recipient && $obj->remittance_address_recipient = $remittance_address_recipient;
@@ -793,18 +784,6 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     {
         $obj = clone $this;
         $obj->payment_term = $paymentTerm;
-
-        return $obj;
-    }
-
-    /**
-     * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
-     */
-    public function withPreviousUnpaidBalance(
-        ?string $previousUnpaidBalance
-    ): self {
-        $obj = clone $this;
-        $obj->previous_unpaid_balance = $previousUnpaidBalance;
 
         return $obj;
     }
