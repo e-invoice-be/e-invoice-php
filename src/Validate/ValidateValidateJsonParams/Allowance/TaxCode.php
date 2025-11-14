@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Validate\ValidateValidateJsonParams\Allowance;
 
 /**
- * The VAT category code that applies to the allowance.
+ * Duty or tax or fee category codes (Subset of UNCL5305).
+ *
+ * Agency: UN/CEFACT
+ * Version: D.16B
+ * Subset: OpenPEPPOL
  */
 enum TaxCode: string
 {
