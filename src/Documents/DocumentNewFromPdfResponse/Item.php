@@ -18,7 +18,6 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   charges?: list<Charge>|null,
  *   date?: null|null,
  *   description?: string|null,
- *   price_base_quantity?: string|null,
  *   product_code?: string|null,
  *   quantity?: string|null,
  *   tax?: string|null,
@@ -41,7 +40,7 @@ final class Item implements BaseModel
     public ?array $allowances;
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals.
+     * The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $amount;
@@ -63,12 +62,6 @@ final class Item implements BaseModel
      */
     #[Api(nullable: true, optional: true)]
     public ?string $description;
-
-    /**
-     * The item price base quantity (BT-149). The number of item units to which the price applies. Defaults to 1. Must be rounded to maximum 4 decimals.
-     */
-    #[Api(nullable: true, optional: true)]
-    public ?string $price_base_quantity;
 
     /**
      * The product code of the line item.
@@ -103,7 +96,7 @@ final class Item implements BaseModel
     public ?string $unit;
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
+     * The unit price of the line item. Must be rounded to maximum 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $unit_price;
@@ -128,7 +121,6 @@ final class Item implements BaseModel
         ?array $charges = null,
         null $date = null,
         ?string $description = null,
-        ?string $price_base_quantity = null,
         ?string $product_code = null,
         ?string $quantity = null,
         ?string $tax = null,
@@ -143,7 +135,6 @@ final class Item implements BaseModel
         null !== $charges && $obj->charges = $charges;
         null !== $date && $obj->date = $date;
         null !== $description && $obj->description = $description;
-        null !== $price_base_quantity && $obj->price_base_quantity = $price_base_quantity;
         null !== $product_code && $obj->product_code = $product_code;
         null !== $quantity && $obj->quantity = $quantity;
         null !== $tax && $obj->tax = $tax;
@@ -168,7 +159,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals.
+     * The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals.
      */
     public function withAmount(?string $amount): self
     {
@@ -209,17 +200,6 @@ final class Item implements BaseModel
     {
         $obj = clone $this;
         $obj->description = $description;
-
-        return $obj;
-    }
-
-    /**
-     * The item price base quantity (BT-149). The number of item units to which the price applies. Defaults to 1. Must be rounded to maximum 4 decimals.
-     */
-    public function withPriceBaseQuantity(?string $priceBaseQuantity): self
-    {
-        $obj = clone $this;
-        $obj->price_base_quantity = $priceBaseQuantity;
 
         return $obj;
     }
@@ -282,7 +262,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
+     * The unit price of the line item. Must be rounded to maximum 2 decimals.
      */
     public function withUnitPrice(?string $unitPrice): self
     {
