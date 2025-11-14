@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\ReasonCode;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\TaxCode;
 
 /**
@@ -17,9 +18,9 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\TaxCode;
  *   base_amount?: float|string|null,
  *   multiplier_factor?: float|string|null,
  *   reason?: string|null,
- *   reason_code?: string|null,
+ *   reason_code?: value-of<ReasonCode>|null,
  *   tax_code?: value-of<TaxCode>|null,
- *   tax_rate?: string|null,
+ *   tax_rate?: float|string|null,
  * }
  */
 final class Allowance implements BaseModel
@@ -40,7 +41,7 @@ final class Allowance implements BaseModel
     public float|string|null $base_amount;
 
     /**
-     * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20.
+     * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20. Must be rounded to maximum 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
     public float|string|null $multiplier_factor;
@@ -52,28 +53,26 @@ final class Allowance implements BaseModel
     public ?string $reason;
 
     /**
-     * The code for the allowance reason.
+     * Allowance reason codes for invoice discounts and charges.
+     *
+     * @var value-of<ReasonCode>|null $reason_code
      */
-    #[Api(nullable: true, optional: true)]
+    #[Api(enum: ReasonCode::class, nullable: true, optional: true)]
     public ?string $reason_code;
 
     /**
-     * Duty or tax or fee category codes (Subset of UNCL5305).
-     *
-     * Agency: UN/CEFACT
-     * Version: D.16B
-     * Subset: OpenPEPPOL
+     * The VAT category code that applies to the allowance.
      *
      * @var value-of<TaxCode>|null $tax_code
      */
-    #[Api(enum: TaxCode::class, nullable: true, optional: true)]
+    #[Api(enum: TaxCode::class, optional: true)]
     public ?string $tax_code;
 
     /**
-     * The VAT rate, represented as percentage that applies to the allowance.
+     * The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
-    public ?string $tax_rate;
+    public float|string|null $tax_rate;
 
     public function __construct()
     {
@@ -85,16 +84,17 @@ final class Allowance implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TaxCode|value-of<TaxCode>|null $tax_code
+     * @param ReasonCode|value-of<ReasonCode>|null $reason_code
+     * @param TaxCode|value-of<TaxCode> $tax_code
      */
     public static function with(
         float|string|null $amount = null,
         float|string|null $base_amount = null,
         float|string|null $multiplier_factor = null,
         ?string $reason = null,
-        ?string $reason_code = null,
+        ReasonCode|string|null $reason_code = null,
         TaxCode|string|null $tax_code = null,
-        ?string $tax_rate = null,
+        float|string|null $tax_rate = null,
     ): self {
         $obj = new self;
 
@@ -102,7 +102,7 @@ final class Allowance implements BaseModel
         null !== $base_amount && $obj->base_amount = $base_amount;
         null !== $multiplier_factor && $obj->multiplier_factor = $multiplier_factor;
         null !== $reason && $obj->reason = $reason;
-        null !== $reason_code && $obj->reason_code = $reason_code;
+        null !== $reason_code && $obj['reason_code'] = $reason_code;
         null !== $tax_code && $obj['tax_code'] = $tax_code;
         null !== $tax_rate && $obj->tax_rate = $tax_rate;
 
@@ -132,7 +132,7 @@ final class Allowance implements BaseModel
     }
 
     /**
-     * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20.
+     * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20. Must be rounded to maximum 2 decimals.
      */
     public function withMultiplierFactor(
         float|string|null $multiplierFactor
@@ -155,26 +155,24 @@ final class Allowance implements BaseModel
     }
 
     /**
-     * The code for the allowance reason.
+     * Allowance reason codes for invoice discounts and charges.
+     *
+     * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
      */
-    public function withReasonCode(?string $reasonCode): self
+    public function withReasonCode(ReasonCode|string|null $reasonCode): self
     {
         $obj = clone $this;
-        $obj->reason_code = $reasonCode;
+        $obj['reason_code'] = $reasonCode;
 
         return $obj;
     }
 
     /**
-     * Duty or tax or fee category codes (Subset of UNCL5305).
+     * The VAT category code that applies to the allowance.
      *
-     * Agency: UN/CEFACT
-     * Version: D.16B
-     * Subset: OpenPEPPOL
-     *
-     * @param TaxCode|value-of<TaxCode>|null $taxCode
+     * @param TaxCode|value-of<TaxCode> $taxCode
      */
-    public function withTaxCode(TaxCode|string|null $taxCode): self
+    public function withTaxCode(TaxCode|string $taxCode): self
     {
         $obj = clone $this;
         $obj['tax_code'] = $taxCode;
@@ -183,9 +181,9 @@ final class Allowance implements BaseModel
     }
 
     /**
-     * The VAT rate, represented as percentage that applies to the allowance.
+     * The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals.
      */
-    public function withTaxRate(?string $taxRate): self
+    public function withTaxRate(float|string|null $taxRate): self
     {
         $obj = clone $this;
         $obj->tax_rate = $taxRate;
