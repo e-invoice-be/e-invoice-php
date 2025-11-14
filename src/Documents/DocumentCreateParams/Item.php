@@ -18,11 +18,10 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   charges?: list<Charge>|null,
  *   date?: null|null,
  *   description?: string|null,
- *   price_base_quantity?: float|string|null,
  *   product_code?: string|null,
  *   quantity?: float|string|null,
  *   tax?: float|string|null,
- *   tax_rate?: float|string|null,
+ *   tax_rate?: string|null,
  *   unit?: value-of<UnitOfMeasureCode>|null,
  *   unit_price?: float|string|null,
  * }
@@ -41,7 +40,7 @@ final class Item implements BaseModel
     public ?array $allowances;
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals.
+     * The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
     public float|string|null $amount;
@@ -65,12 +64,6 @@ final class Item implements BaseModel
     public ?string $description;
 
     /**
-     * The item price base quantity (BT-149). The number of item units to which the price applies. Defaults to 1. Must be rounded to maximum 4 decimals.
-     */
-    #[Api(nullable: true, optional: true)]
-    public float|string|null $price_base_quantity;
-
-    /**
      * The product code of the line item.
      */
     #[Api(nullable: true, optional: true)]
@@ -92,7 +85,7 @@ final class Item implements BaseModel
      * The VAT rate of the line item expressed as percentage with 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
-    public float|string|null $tax_rate;
+    public ?string $tax_rate;
 
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
@@ -103,7 +96,7 @@ final class Item implements BaseModel
     public ?string $unit;
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
+     * The unit price of the line item. Must be rounded to maximum 2 decimals.
      */
     #[Api(nullable: true, optional: true)]
     public float|string|null $unit_price;
@@ -128,11 +121,10 @@ final class Item implements BaseModel
         ?array $charges = null,
         null $date = null,
         ?string $description = null,
-        float|string|null $price_base_quantity = null,
         ?string $product_code = null,
         float|string|null $quantity = null,
         float|string|null $tax = null,
-        float|string|null $tax_rate = null,
+        ?string $tax_rate = null,
         UnitOfMeasureCode|string|null $unit = null,
         float|string|null $unit_price = null,
     ): self {
@@ -143,7 +135,6 @@ final class Item implements BaseModel
         null !== $charges && $obj->charges = $charges;
         null !== $date && $obj->date = $date;
         null !== $description && $obj->description = $description;
-        null !== $price_base_quantity && $obj->price_base_quantity = $price_base_quantity;
         null !== $product_code && $obj->product_code = $product_code;
         null !== $quantity && $obj->quantity = $quantity;
         null !== $tax && $obj->tax = $tax;
@@ -168,7 +159,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals.
+     * The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals.
      */
     public function withAmount(float|string|null $amount): self
     {
@@ -214,18 +205,6 @@ final class Item implements BaseModel
     }
 
     /**
-     * The item price base quantity (BT-149). The number of item units to which the price applies. Defaults to 1. Must be rounded to maximum 4 decimals.
-     */
-    public function withPriceBaseQuantity(
-        float|string|null $priceBaseQuantity
-    ): self {
-        $obj = clone $this;
-        $obj->price_base_quantity = $priceBaseQuantity;
-
-        return $obj;
-    }
-
-    /**
      * The product code of the line item.
      */
     public function withProductCode(?string $productCode): self
@@ -261,7 +240,7 @@ final class Item implements BaseModel
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals.
      */
-    public function withTaxRate(float|string|null $taxRate): self
+    public function withTaxRate(?string $taxRate): self
     {
         $obj = clone $this;
         $obj->tax_rate = $taxRate;
@@ -283,7 +262,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
+     * The unit price of the line item. Must be rounded to maximum 2 decimals.
      */
     public function withUnitPrice(float|string|null $unitPrice): self
     {
