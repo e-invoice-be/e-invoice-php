@@ -40,7 +40,7 @@ final class Item implements BaseModel
     public ?array $allowances;
 
     /**
-     * The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals.
+     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $amount;
@@ -70,13 +70,13 @@ final class Item implements BaseModel
     public ?string $product_code;
 
     /**
-     * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals.
+     * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals. Can be negative for credit notes or corrections.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $quantity;
 
     /**
-     * The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+     * The total VAT amount for the line item. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $tax;
@@ -96,7 +96,7 @@ final class Item implements BaseModel
     public ?string $unit;
 
     /**
-     * The unit price of the line item. Must be rounded to maximum 2 decimals.
+     * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
      */
     #[Api(nullable: true, optional: true)]
     public ?string $unit_price;
@@ -159,7 +159,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The total amount of the line item, exclusive of VAT, after subtracting line level allowances and adding line level charges. Must be rounded to maximum 2 decimals.
+     * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
      */
     public function withAmount(?string $amount): self
     {
@@ -216,7 +216,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals.
+     * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals. Can be negative for credit notes or corrections.
      */
     public function withQuantity(?string $quantity): self
     {
@@ -227,7 +227,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+     * The total VAT amount for the line item. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
      */
     public function withTax(?string $tax): self
     {
@@ -262,7 +262,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The unit price of the line item. Must be rounded to maximum 2 decimals.
+     * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
      */
     public function withUnitPrice(?string $unitPrice): self
     {

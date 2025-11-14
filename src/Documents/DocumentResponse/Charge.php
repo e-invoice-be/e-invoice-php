@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Documents\DocumentResponse\Charge\ReasonCode;
 use EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode;
 
 /**
@@ -15,7 +16,7 @@ use EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode;
  *   base_amount?: string|null,
  *   multiplier_factor?: string|null,
  *   reason?: string|null,
- *   reason_code?: string|null,
+ *   reason_code?: value-of<ReasonCode>|null,
  *   tax_code?: value-of<TaxCode>|null,
  *   tax_rate?: string|null,
  * }
@@ -50,9 +51,11 @@ final class Charge implements BaseModel
     public ?string $reason;
 
     /**
-     * The code for the charge reason.
+     * Charge reason codes for invoice charges and fees.
+     *
+     * @var value-of<ReasonCode>|null $reason_code
      */
-    #[Api(nullable: true, optional: true)]
+    #[Api(enum: ReasonCode::class, nullable: true, optional: true)]
     public ?string $reason_code;
 
     /**
@@ -83,6 +86,7 @@ final class Charge implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param ReasonCode|value-of<ReasonCode>|null $reason_code
      * @param TaxCode|value-of<TaxCode>|null $tax_code
      */
     public static function with(
@@ -90,7 +94,7 @@ final class Charge implements BaseModel
         ?string $base_amount = null,
         ?string $multiplier_factor = null,
         ?string $reason = null,
-        ?string $reason_code = null,
+        ReasonCode|string|null $reason_code = null,
         TaxCode|string|null $tax_code = null,
         ?string $tax_rate = null,
     ): self {
@@ -100,7 +104,7 @@ final class Charge implements BaseModel
         null !== $base_amount && $obj->base_amount = $base_amount;
         null !== $multiplier_factor && $obj->multiplier_factor = $multiplier_factor;
         null !== $reason && $obj->reason = $reason;
-        null !== $reason_code && $obj->reason_code = $reason_code;
+        null !== $reason_code && $obj['reason_code'] = $reason_code;
         null !== $tax_code && $obj['tax_code'] = $tax_code;
         null !== $tax_rate && $obj->tax_rate = $tax_rate;
 
@@ -152,12 +156,14 @@ final class Charge implements BaseModel
     }
 
     /**
-     * The code for the charge reason.
+     * Charge reason codes for invoice charges and fees.
+     *
+     * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
      */
-    public function withReasonCode(?string $reasonCode): self
+    public function withReasonCode(ReasonCode|string|null $reasonCode): self
     {
         $obj = clone $this;
-        $obj->reason_code = $reasonCode;
+        $obj['reason_code'] = $reasonCode;
 
         return $obj;
     }
