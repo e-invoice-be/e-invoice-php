@@ -945,8 +945,6 @@ enum UnitOfMeasureCode: string
 
     case ONZ = 'ONZ';
 
-    case PCE = 'PCE';
-
     case LBR = 'LBR';
 
     case QT = 'QT';
