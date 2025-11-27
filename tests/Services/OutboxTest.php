@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\DocumentsNumberPage;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +36,8 @@ final class OutboxTest extends TestCase
 
         $result = $this->client->outbox->listDraftDocuments([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentsNumberPage::class, $result);
     }
 
     #[Test]
@@ -47,6 +49,7 @@ final class OutboxTest extends TestCase
 
         $result = $this->client->outbox->listReceivedDocuments([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentsNumberPage::class, $result);
     }
 }

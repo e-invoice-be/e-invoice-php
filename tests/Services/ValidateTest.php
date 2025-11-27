@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Validate\UblDocumentValidation;
+use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +37,8 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validateJson([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
 
     #[Test]
@@ -49,7 +52,8 @@ final class ValidateTest extends TestCase
             'peppol_id' => 'peppol_id',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ValidateValidatePeppolIDResponse::class, $result);
     }
 
     #[Test]
@@ -63,7 +67,8 @@ final class ValidateTest extends TestCase
             'peppol_id' => 'peppol_id',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ValidateValidatePeppolIDResponse::class, $result);
     }
 
     #[Test]
@@ -75,7 +80,8 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validateUbl(['file' => null]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
 
     #[Test]
@@ -87,6 +93,7 @@ final class ValidateTest extends TestCase
 
         $result = $this->client->validate->validateUbl(['file' => null]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
 }

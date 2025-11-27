@@ -3,6 +3,8 @@
 namespace Tests\Services\Documents;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
+use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +40,8 @@ final class AttachmentsTest extends TestCase
             ['document_id' => 'document_id']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 
     #[Test]
@@ -53,7 +56,8 @@ final class AttachmentsTest extends TestCase
             ['document_id' => 'document_id']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 
     #[Test]
@@ -65,7 +69,8 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->list('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsList($result);
     }
 
     #[Test]
@@ -80,7 +85,8 @@ final class AttachmentsTest extends TestCase
             ['document_id' => 'document_id']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(AttachmentDeleteResponse::class, $result);
     }
 
     #[Test]
@@ -95,7 +101,8 @@ final class AttachmentsTest extends TestCase
             ['document_id' => 'document_id']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(AttachmentDeleteResponse::class, $result);
     }
 
     #[Test]
@@ -110,7 +117,8 @@ final class AttachmentsTest extends TestCase
             ['file' => null]
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 
     #[Test]
@@ -125,6 +133,7 @@ final class AttachmentsTest extends TestCase
             ['file' => null]
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentAttachment::class, $result);
     }
 }

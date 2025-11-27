@@ -3,6 +3,10 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Documents\DocumentDeleteResponse;
+use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Validate\UblDocumentValidation;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +39,8 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->create([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -47,7 +52,8 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->retrieve('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -59,7 +65,8 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->delete('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentDeleteResponse::class, $result);
     }
 
     #[Test]
@@ -71,7 +78,8 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->createFromPdf(['file' => null]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
     }
 
     #[Test]
@@ -81,9 +89,14 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->createFromPdf(['file' => null]);
+        $result = $this->client->documents->createFromPdf([
+            'file' => null,
+            'customer_tax_id' => 'customer_tax_id',
+            'vendor_tax_id' => 'vendor_tax_id',
+        ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
     }
 
     #[Test]
@@ -95,7 +108,8 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->send('document_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -107,6 +121,7 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->validate('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
 }
