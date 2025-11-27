@@ -47,7 +47,7 @@ Parameters with a default value must be set by name.
 
 use EInvoiceAPI\Client;
 
-$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
+$client = new Client(apiKey: getenv('E_INVOICE_API_KEY') ?: 'My API Key');
 
 $documentResponse = $client->documents->create([]);
 
@@ -56,10 +56,10 @@ var_dump($documentResponse->id);
 
 ### Value Objects
 
-It is recommended to use the static `with` constructor `DocumentAttachmentCreate::with(fileName: "file_name", ...)`
+It is recommended to use the static `with` constructor `DocumentAttachmentCreate::with(fileName: 'file_name', ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new DocumentAttachmentCreate)->withFileName("file_name")`.
+However, builders are also provided `(new DocumentAttachmentCreate)->withFileName('file_name')`.
 
 ### Pagination
 
@@ -72,7 +72,7 @@ This library provides auto-paginating iterators with each list response, so you 
 
 use EInvoiceAPI\Client;
 
-$client = new Client(apiKey: getenv("E_INVOICE_API_KEY") ?: "My API Key");
+$client = new Client(apiKey: getenv('E_INVOICE_API_KEY') ?: 'My API Key');
 
 $page = $client->inbox->list([]);
 
@@ -165,9 +165,9 @@ use EInvoiceAPI\RequestOptions;
 $documentResponse = $client->documents->create(
   [],
   RequestOptions::with(
-    extraQueryParams: ["my_query_parameter" => "value"],
-    extraBodyParams: ["my_body_parameter" => "value"],
-    extraHeaders: ["my-header" => "value"],
+    extraQueryParams: ['my_query_parameter' => 'value'],
+    extraBodyParams: ['my_body_parameter' => 'value'],
+    extraHeaders: ['my-header' => 'value'],
   ),
 );
 ```
