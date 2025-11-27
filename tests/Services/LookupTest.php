@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
+use EInvoiceAPI\Lookup\LookupGetResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +37,8 @@ final class LookupTest extends TestCase
 
         $result = $this->client->lookup->retrieve(['peppol_id' => 'peppol_id']);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LookupGetResponse::class, $result);
     }
 
     #[Test]
@@ -47,7 +50,8 @@ final class LookupTest extends TestCase
 
         $result = $this->client->lookup->retrieve(['peppol_id' => 'peppol_id']);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LookupGetResponse::class, $result);
     }
 
     #[Test]
@@ -59,7 +63,8 @@ final class LookupTest extends TestCase
 
         $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LookupGetParticipantsResponse::class, $result);
     }
 
     #[Test]
@@ -69,8 +74,11 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
+        $result = $this->client->lookup->retrieveParticipants([
+            'query' => 'query', 'country_code' => 'country_code',
+        ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LookupGetParticipantsResponse::class, $result);
     }
 }

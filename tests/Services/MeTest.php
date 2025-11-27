@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Me\MeGetResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,6 +36,7 @@ final class MeTest extends TestCase
 
         $result = $this->client->me->retrieve();
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MeGetResponse::class, $result);
     }
 }

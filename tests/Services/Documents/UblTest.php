@@ -3,6 +3,8 @@
 namespace Tests\Services\Documents;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +37,8 @@ final class UblTest extends TestCase
 
         $result = $this->client->documents->ubl->createFromUbl(['file' => null]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -47,7 +50,8 @@ final class UblTest extends TestCase
 
         $result = $this->client->documents->ubl->createFromUbl(['file' => null]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentResponse::class, $result);
     }
 
     #[Test]
@@ -59,6 +63,7 @@ final class UblTest extends TestCase
 
         $result = $this->client->documents->ubl->get('document_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblGetResponse::class, $result);
     }
 }

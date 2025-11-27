@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\DocumentsNumberPage;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +36,8 @@ final class InboxTest extends TestCase
 
         $result = $this->client->inbox->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentsNumberPage::class, $result);
     }
 
     #[Test]
@@ -47,7 +49,8 @@ final class InboxTest extends TestCase
 
         $result = $this->client->inbox->listCreditNotes([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentsNumberPage::class, $result);
     }
 
     #[Test]
@@ -59,6 +62,7 @@ final class InboxTest extends TestCase
 
         $result = $this->client->inbox->listInvoices([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentsNumberPage::class, $result);
     }
 }
