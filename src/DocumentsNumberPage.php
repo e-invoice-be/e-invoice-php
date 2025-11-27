@@ -77,7 +77,7 @@ final class DocumentsNumberPage implements BaseModel, BasePage
         // @phpstan-ignore-next-line
         self::__unserialize($data);
 
-        if ($this->offsetExists('items')) {
+        if ($this->offsetGet('items')) {
             $acc = Conversion::coerce(
                 new ListOf($convert),
                 value: $this->offsetGet('items')
@@ -90,7 +90,7 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     /** @return list<TItem> */
     public function getItems(): array
     {
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return $this->offsetGet('items') ?? [];
     }
 
@@ -110,9 +110,18 @@ final class DocumentsNumberPage implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        $currentPage = $this->page ?? 1;
-        $nextRequest = $this->request;
+        /** @var int */
+        $curr = $this->page ?? 1;
+        if (!count($this->getItems()) || ($curr >= ($this->total ?? null))) {
+            return null;
+        }
 
+        $nextRequest = array_merge_recursive(
+            $this->request,
+            ['query' => $curr + 1]
+        );
+
+        // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];
     }
 }
