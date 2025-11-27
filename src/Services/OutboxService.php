@@ -65,8 +65,8 @@ final class OutboxService implements OutboxContract
      *   page_size?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: "DRAFT"|"TRANSIT"|"FAILED"|"SENT"|"RECEIVED"|DocumentState|null,
-     *   type?: "INVOICE"|"CREDIT_NOTE"|"DEBIT_NOTE"|DocumentType|null,
+     *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
+     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType|null,
      * }|OutboxListReceivedDocumentsParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
