@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
+use EInvoiceAPI\Webhooks\WebhookResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -37,7 +39,8 @@ final class WebhooksTest extends TestCase
             'events' => ['string'], 'url' => 'https://example.com',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -48,10 +51,11 @@ final class WebhooksTest extends TestCase
         }
 
         $result = $this->client->webhooks->create([
-            'events' => ['string'], 'url' => 'https://example.com',
+            'events' => ['string'], 'url' => 'https://example.com', 'enabled' => true,
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -63,7 +67,8 @@ final class WebhooksTest extends TestCase
 
         $result = $this->client->webhooks->retrieve('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -75,7 +80,8 @@ final class WebhooksTest extends TestCase
 
         $result = $this->client->webhooks->update('webhook_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookResponse::class, $result);
     }
 
     #[Test]
@@ -87,7 +93,8 @@ final class WebhooksTest extends TestCase
 
         $result = $this->client->webhooks->list();
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsList($result);
     }
 
     #[Test]
@@ -99,6 +106,7 @@ final class WebhooksTest extends TestCase
 
         $result = $this->client->webhooks->delete('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookDeleteResponse::class, $result);
     }
 }
