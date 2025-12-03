@@ -22,7 +22,7 @@ interface LookupContract
      */
     public function retrieve(
         array|LookupRetrieveParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): LookupGetResponse;
 
     /**

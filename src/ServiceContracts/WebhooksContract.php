@@ -22,7 +22,7 @@ interface WebhooksContract
      */
     public function create(
         array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): WebhookResponse;
 
     /**
@@ -55,9 +55,7 @@ interface WebhooksContract
      *
      * @throws APIException
      */
-    public function list(
-        ?RequestOptions $requestOptions = null
-    ): array;
+    public function list(?RequestOptions $requestOptions = null): array;
 
     /**
      * @api
