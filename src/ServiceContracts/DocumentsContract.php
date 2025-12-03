@@ -25,7 +25,7 @@ interface DocumentsContract
      */
     public function create(
         array|DocumentCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
     /**
