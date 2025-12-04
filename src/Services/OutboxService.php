@@ -42,7 +42,7 @@ final class OutboxService implements OutboxContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'api/outbox/drafts',
@@ -82,7 +82,7 @@ final class OutboxService implements OutboxContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'api/outbox/',

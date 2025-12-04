@@ -136,7 +136,7 @@ final class ValidateService implements ValidateContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/validate/json',
@@ -164,7 +164,7 @@ final class ValidateService implements ValidateContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'api/validate/peppol-id',
@@ -192,7 +192,7 @@ final class ValidateService implements ValidateContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/validate/ubl',

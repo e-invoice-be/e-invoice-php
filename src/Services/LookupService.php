@@ -38,7 +38,7 @@ final class LookupService implements LookupContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'api/lookup',
@@ -68,7 +68,7 @@ final class LookupService implements LookupContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'api/lookup/participants',

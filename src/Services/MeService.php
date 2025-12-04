@@ -27,7 +27,7 @@ final class MeService implements MeContract
     public function retrieve(
         ?RequestOptions $requestOptions = null
     ): MeGetResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'api/me/',

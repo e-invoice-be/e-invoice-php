@@ -13,9 +13,9 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
 /**
  * @phpstan-type ItemShape = array{
- *   allowances?: list<Allowance>|null,
+ *   allowances?: list<\EInvoiceAPI\Documents\DocumentCreate\Item\Allowance>|null,
  *   amount?: float|string|null,
- *   charges?: list<Charge>|null,
+ *   charges?: list<\EInvoiceAPI\Documents\DocumentCreate\Item\Charge>|null,
  *   date?: null|null,
  *   description?: string|null,
  *   product_code?: string|null,
@@ -36,7 +36,11 @@ final class Item implements BaseModel
      *
      * @var list<Allowance>|null $allowances
      */
-    #[Api(list: Allowance::class, nullable: true, optional: true)]
+    #[Api(
+        list: Allowance::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $allowances;
 
     /**
@@ -50,7 +54,11 @@ final class Item implements BaseModel
      *
      * @var list<Charge>|null $charges
      */
-    #[Api(list: Charge::class, nullable: true, optional: true)]
+    #[Api(
+        list: Charge::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $charges;
 
     /** @var null|null $date */
