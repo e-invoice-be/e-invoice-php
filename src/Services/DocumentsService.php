@@ -154,7 +154,7 @@ final class DocumentsService implements DocumentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/',
@@ -175,7 +175,7 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s', $documentID],
@@ -195,7 +195,7 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentDeleteResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['api/documents/%1$s', $documentID],
@@ -225,7 +225,7 @@ final class DocumentsService implements DocumentsContract
         );
         $query_params = array_flip(['customer_tax_id', 'vendor_tax_id']);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/pdf',
@@ -262,7 +262,7 @@ final class DocumentsService implements DocumentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/send', $documentID],
@@ -283,7 +283,7 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/validate', $documentID],

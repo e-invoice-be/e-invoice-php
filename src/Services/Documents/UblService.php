@@ -37,7 +37,7 @@ final class UblService implements UblContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/ubl',
@@ -59,7 +59,7 @@ final class UblService implements UblContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblGetResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/ubl', $documentID],

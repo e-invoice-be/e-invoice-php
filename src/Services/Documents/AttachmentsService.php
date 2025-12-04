@@ -43,7 +43,7 @@ final class AttachmentsService implements AttachmentsContract
         $documentID = $parsed['document_id'];
         unset($parsed['document_id']);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/attachments/%2$s', $documentID, $attachmentID],
@@ -65,7 +65,7 @@ final class AttachmentsService implements AttachmentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): array {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/attachments', $documentID],
@@ -95,7 +95,7 @@ final class AttachmentsService implements AttachmentsContract
         $documentID = $parsed['document_id'];
         unset($parsed['document_id']);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['api/documents/%1$s/attachments/%2$s', $documentID, $attachmentID],
@@ -123,7 +123,7 @@ final class AttachmentsService implements AttachmentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/attachments', $documentID],

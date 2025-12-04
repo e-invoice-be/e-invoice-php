@@ -17,7 +17,7 @@ use EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode;
  *   multiplier_factor?: string|null,
  *   reason?: string|null,
  *   reason_code?: value-of<ReasonCode>|null,
- *   tax_code?: value-of<TaxCode>|null,
+ *   tax_code?: value-of<\EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode>|null,
  *   tax_rate?: string|null,
  * }
  */
@@ -67,7 +67,11 @@ final class Charge implements BaseModel
      *
      * @var value-of<TaxCode>|null $tax_code
      */
-    #[Api(enum: TaxCode::class, nullable: true, optional: true)]
+    #[Api(
+        enum: TaxCode::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?string $tax_code;
 
     /**
@@ -177,8 +181,9 @@ final class Charge implements BaseModel
      *
      * @param TaxCode|value-of<TaxCode>|null $taxCode
      */
-    public function withTaxCode(TaxCode|string|null $taxCode): self
-    {
+    public function withTaxCode(
+        TaxCode|string|null $taxCode
+    ): self {
         $obj = clone $this;
         $obj['tax_code'] = $taxCode;
 
