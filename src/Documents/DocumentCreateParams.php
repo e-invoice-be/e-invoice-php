@@ -22,12 +22,12 @@ use EInvoiceAPI\Inbox\DocumentState;
  * @see EInvoiceAPI\Services\DocumentsService::create()
  *
  * @phpstan-type DocumentCreateParamsShape = array{
- *   allowances?: list<Allowance>|null,
+ *   allowances?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Allowance>|null,
  *   amount_due?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
  *   billing_address?: string|null,
  *   billing_address_recipient?: string|null,
- *   charges?: list<Charge>|null,
+ *   charges?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Charge>|null,
  *   currency?: CurrencyCode|value-of<CurrencyCode>,
  *   customer_address?: string|null,
  *   customer_address_recipient?: string|null,
@@ -78,8 +78,14 @@ final class DocumentCreateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    /** @var list<Allowance>|null $allowances */
-    #[Api(list: Allowance::class, nullable: true, optional: true)]
+    /**
+     * @var list<Allowance>|null $allowances
+     */
+    #[Api(
+        list: Allowance::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $allowances;
 
     /**
@@ -105,7 +111,11 @@ final class DocumentCreateParams implements BaseModel
     public ?string $billing_address_recipient;
 
     /** @var list<Charge>|null $charges */
-    #[Api(list: Charge::class, nullable: true, optional: true)]
+    #[Api(
+        list: Charge::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $charges;
 
     /**

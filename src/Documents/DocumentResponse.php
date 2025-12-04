@@ -22,12 +22,12 @@ use EInvoiceAPI\Inbox\DocumentState;
 /**
  * @phpstan-type DocumentResponseShape = array{
  *   id: string,
- *   allowances?: list<Allowance>|null,
+ *   allowances?: list<\EInvoiceAPI\Documents\DocumentResponse\Allowance>|null,
  *   amount_due?: string|null,
  *   attachments?: list<DocumentAttachment>|null,
  *   billing_address?: string|null,
  *   billing_address_recipient?: string|null,
- *   charges?: list<Charge>|null,
+ *   charges?: list<\EInvoiceAPI\Documents\DocumentResponse\Charge>|null,
  *   currency?: value-of<CurrencyCode>|null,
  *   customer_address?: string|null,
  *   customer_address_recipient?: string|null,
@@ -82,7 +82,11 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     public string $id;
 
     /** @var list<Allowance>|null $allowances */
-    #[Api(list: Allowance::class, nullable: true, optional: true)]
+    #[Api(
+        list: Allowance::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $allowances;
 
     /**
@@ -108,7 +112,11 @@ final class DocumentResponse implements BaseModel, ResponseConverter
     public ?string $billing_address_recipient;
 
     /** @var list<Charge>|null $charges */
-    #[Api(list: Charge::class, nullable: true, optional: true)]
+    #[Api(
+        list: Charge::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $charges;
 
     /**

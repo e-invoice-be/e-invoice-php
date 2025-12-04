@@ -17,12 +17,12 @@ use EInvoiceAPI\Inbox\DocumentState;
 
 /**
  * @phpstan-type DocumentCreateShape = array{
- *   allowances?: list<Allowance>|null,
+ *   allowances?: list<\EInvoiceAPI\Documents\DocumentCreate\Allowance>|null,
  *   amount_due?: float|string|null,
  *   attachments?: list<DocumentAttachmentCreate>|null,
  *   billing_address?: string|null,
  *   billing_address_recipient?: string|null,
- *   charges?: list<Charge>|null,
+ *   charges?: list<\EInvoiceAPI\Documents\DocumentCreate\Charge>|null,
  *   currency?: value-of<CurrencyCode>|null,
  *   customer_address?: string|null,
  *   customer_address_recipient?: string|null,
@@ -73,7 +73,11 @@ final class DocumentCreate implements BaseModel
     use SdkModel;
 
     /** @var list<Allowance>|null $allowances */
-    #[Api(list: Allowance::class, nullable: true, optional: true)]
+    #[Api(
+        list: Allowance::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $allowances;
 
     /**
@@ -99,7 +103,11 @@ final class DocumentCreate implements BaseModel
     public ?string $billing_address_recipient;
 
     /** @var list<Charge>|null $charges */
-    #[Api(list: Charge::class, nullable: true, optional: true)]
+    #[Api(
+        list: Charge::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?array $charges;
 
     /**
