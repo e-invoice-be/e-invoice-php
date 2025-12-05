@@ -138,10 +138,11 @@ final class Item implements BaseModel
     ): self {
         $obj = new self;
 
+        $obj->date = $date;
+
         null !== $allowances && $obj->allowances = $allowances;
         null !== $amount && $obj->amount = $amount;
         null !== $charges && $obj->charges = $charges;
-        null !== $date && $obj->date = $date;
         null !== $description && $obj->description = $description;
         null !== $product_code && $obj->product_code = $product_code;
         null !== $quantity && $obj->quantity = $quantity;
