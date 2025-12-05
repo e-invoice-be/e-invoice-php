@@ -1,5 +1,46 @@
 # Changelog
 
+## 0.5.0 (2025-12-05)
+
+Full Changelog: [v0.4.1...v0.5.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.4.1...v0.5.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** redesign methods
+
+### Features
+
+* **api:** api update ([ae0dd2b](https://github.com/e-invoice-be/e-invoice-php/commit/ae0dd2b08c1166609cd277b317b2c03b096bd217))
+* **api:** api update ([93eee1b](https://github.com/e-invoice-be/e-invoice-php/commit/93eee1be3b1d4bfb0cba1b8539c4ecf0bdc59921))
+* **api:** api update ([a37a23c](https://github.com/e-invoice-be/e-invoice-php/commit/a37a23c47b1583a812e2f16dc75a05f509eaf0bf))
+* **api:** api update ([9aa3b97](https://github.com/e-invoice-be/e-invoice-php/commit/9aa3b97db8e75f77cdcb050893fb72ed4aa2ec4d))
+* **api:** api update ([932c8ff](https://github.com/e-invoice-be/e-invoice-php/commit/932c8ff83275028b4f1eb4a940a3b036fa631c13))
+* **api:** api update ([a90632e](https://github.com/e-invoice-be/e-invoice-php/commit/a90632eaf982785251efc4d92ed44f7add8a7530))
+* better support for pagination mechanisms ([d5465a5](https://github.com/e-invoice-be/e-invoice-php/commit/d5465a5c7af891c0105eac8f6c93bae3086951ea))
+* **client:** redesign methods ([5cc85ce](https://github.com/e-invoice-be/e-invoice-php/commit/5cc85ce93d5de20b25df745f659bca9fe1ac9f4b))
+
+
+### Bug Fixes
+
+* ensure auth methods return non-nullable arrays ([5b5f2ff](https://github.com/e-invoice-be/e-invoice-php/commit/5b5f2ffe267361010dede75e79a73e028a471f48))
+* misc phpstan lint errors ([d1189de](https://github.com/e-invoice-be/e-invoice-php/commit/d1189dec055ed56e7475188ca8ed2a2ccf288459))
+* phpStan linter errors ([4e9ed94](https://github.com/e-invoice-be/e-invoice-php/commit/4e9ed944d66c7c5942133120eac890ded60bba5a))
+* rename invalid types ([e64bad2](https://github.com/e-invoice-be/e-invoice-php/commit/e64bad2b068aa6cc04d27a800f0e1a87c042e77f))
+* revert accidental code deletion ([2995c7a](https://github.com/e-invoice-be/e-invoice-php/commit/2995c7a5348bb13f540e2f6110e07c0469f2cbad))
+
+
+### Chores
+
+* be more targeted in suppressing superfluous linter warnings ([2b810bf](https://github.com/e-invoice-be/e-invoice-php/commit/2b810bf731d0508076525486ccd8fa024e4178fd))
+* better support for phpstan ([9c99cbc](https://github.com/e-invoice-be/e-invoice-php/commit/9c99cbca766d99bcff510aae244067f386aad1ce))
+* **client:** refactor error type constructors ([deb2964](https://github.com/e-invoice-be/e-invoice-php/commit/deb29643bd5238956621975ba9b3eff88144a61a))
+* **client:** send metadata headers ([0f624ea](https://github.com/e-invoice-be/e-invoice-php/commit/0f624ea2004a68e3687383e736e86857108c539e))
+* formatting ([e9fd98d](https://github.com/e-invoice-be/e-invoice-php/commit/e9fd98d41e75805d5da6d9d8a56e5d6e27b8fa51))
+* **internal:** codegen related update ([79e61c1](https://github.com/e-invoice-be/e-invoice-php/commit/79e61c1c3d1eff5b1032b907f78cbb2ae325e4d2))
+* typing updates ([0b87e62](https://github.com/e-invoice-be/e-invoice-php/commit/0b87e623b593c756a8435db37d5a8d9a12553dc6))
+* use non-trivial test assertions ([401e9ba](https://github.com/e-invoice-be/e-invoice-php/commit/401e9bacba35a9079a61cae96b769d4dbd2e7a39))
+* use single quote strings ([d835b5e](https://github.com/e-invoice-be/e-invoice-php/commit/d835b5edf3ebf908a06dd619af7f5e52797b219c))
+
 ## 0.4.1 (2025-10-30)
 
 Full Changelog: [v0.4.0...v0.4.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.4.0...v0.4.1)
