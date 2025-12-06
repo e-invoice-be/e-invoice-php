@@ -48,9 +48,9 @@ final class BusinessCard implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $country_code && $obj->country_code = $country_code;
-        null !== $name && $obj->name = $name;
-        null !== $registration_date && $obj->registration_date = $registration_date;
+        null !== $country_code && $obj['country_code'] = $country_code;
+        null !== $name && $obj['name'] = $name;
+        null !== $registration_date && $obj['registration_date'] = $registration_date;
 
         return $obj;
     }
@@ -58,7 +58,7 @@ final class BusinessCard implements BaseModel
     public function withCountryCode(?string $countryCode): self
     {
         $obj = clone $this;
-        $obj->country_code = $countryCode;
+        $obj['country_code'] = $countryCode;
 
         return $obj;
     }
@@ -66,7 +66,7 @@ final class BusinessCard implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -75,7 +75,7 @@ final class BusinessCard implements BaseModel
         ?\DateTimeInterface $registrationDate
     ): self {
         $obj = clone $this;
-        $obj->registration_date = $registrationDate;
+        $obj['registration_date'] = $registrationDate;
 
         return $obj;
     }

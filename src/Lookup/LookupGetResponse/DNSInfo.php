@@ -74,7 +74,7 @@ final class DNSInfo implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DNSRecord> $dnsRecords
+     * @param list<DNSRecord|array{ip: string}> $dnsRecords
      */
     public static function with(
         array $dnsRecords,
@@ -84,11 +84,11 @@ final class DNSInfo implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->dnsRecords = $dnsRecords;
-        $obj->smlHostname = $smlHostname;
-        $obj->status = $status;
+        $obj['dnsRecords'] = $dnsRecords;
+        $obj['smlHostname'] = $smlHostname;
+        $obj['status'] = $status;
 
-        null !== $error && $obj->error = $error;
+        null !== $error && $obj['error'] = $error;
 
         return $obj;
     }
@@ -96,12 +96,12 @@ final class DNSInfo implements BaseModel
     /**
      * List of DNS records found for the Peppol participant.
      *
-     * @param list<DNSRecord> $dnsRecords
+     * @param list<DNSRecord|array{ip: string}> $dnsRecords
      */
     public function withDNSRecords(array $dnsRecords): self
     {
         $obj = clone $this;
-        $obj->dnsRecords = $dnsRecords;
+        $obj['dnsRecords'] = $dnsRecords;
 
         return $obj;
     }
@@ -112,7 +112,7 @@ final class DNSInfo implements BaseModel
     public function withSmlHostname(string $smlHostname): self
     {
         $obj = clone $this;
-        $obj->smlHostname = $smlHostname;
+        $obj['smlHostname'] = $smlHostname;
 
         return $obj;
     }
@@ -123,7 +123,7 @@ final class DNSInfo implements BaseModel
     public function withStatus(string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -134,7 +134,7 @@ final class DNSInfo implements BaseModel
     public function withError(?string $error): self
     {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }

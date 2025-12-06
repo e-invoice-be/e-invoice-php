@@ -83,12 +83,12 @@ final class WebhookResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->events = $events;
-        $obj->secret = $secret;
-        $obj->url = $url;
+        $obj['id'] = $id;
+        $obj['events'] = $events;
+        $obj['secret'] = $secret;
+        $obj['url'] = $url;
 
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $enabled && $obj['enabled'] = $enabled;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class WebhookResponse implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -107,7 +107,7 @@ final class WebhookResponse implements BaseModel, ResponseConverter
     public function withEvents(array $events): self
     {
         $obj = clone $this;
-        $obj->events = $events;
+        $obj['events'] = $events;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class WebhookResponse implements BaseModel, ResponseConverter
     public function withSecret(string $secret): self
     {
         $obj = clone $this;
-        $obj->secret = $secret;
+        $obj['secret'] = $secret;
 
         return $obj;
     }
@@ -123,7 +123,7 @@ final class WebhookResponse implements BaseModel, ResponseConverter
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -131,7 +131,7 @@ final class WebhookResponse implements BaseModel, ResponseConverter
     public function withEnabled(bool $enabled): self
     {
         $obj = clone $this;
-        $obj->enabled = $enabled;
+        $obj['enabled'] = $enabled;
 
         return $obj;
     }

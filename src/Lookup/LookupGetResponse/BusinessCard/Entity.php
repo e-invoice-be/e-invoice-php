@@ -69,10 +69,10 @@ final class Entity implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $additionalInformation && $obj->additionalInformation = $additionalInformation;
-        null !== $countryCode && $obj->countryCode = $countryCode;
-        null !== $name && $obj->name = $name;
-        null !== $registrationDate && $obj->registrationDate = $registrationDate;
+        null !== $additionalInformation && $obj['additionalInformation'] = $additionalInformation;
+        null !== $countryCode && $obj['countryCode'] = $countryCode;
+        null !== $name && $obj['name'] = $name;
+        null !== $registrationDate && $obj['registrationDate'] = $registrationDate;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class Entity implements BaseModel
         ?array $additionalInformation
     ): self {
         $obj = clone $this;
-        $obj->additionalInformation = $additionalInformation;
+        $obj['additionalInformation'] = $additionalInformation;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class Entity implements BaseModel
     public function withCountryCode(?string $countryCode): self
     {
         $obj = clone $this;
-        $obj->countryCode = $countryCode;
+        $obj['countryCode'] = $countryCode;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class Entity implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -119,7 +119,7 @@ final class Entity implements BaseModel
     public function withRegistrationDate(?string $registrationDate): self
     {
         $obj = clone $this;
-        $obj->registrationDate = $registrationDate;
+        $obj['registrationDate'] = $registrationDate;
 
         return $obj;
     }

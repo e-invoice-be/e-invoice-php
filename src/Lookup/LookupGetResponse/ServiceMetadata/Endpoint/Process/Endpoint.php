@@ -99,11 +99,15 @@ final class Endpoint implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Certificate|array{
+     *   status: string, details?: array<string,mixed>|null, error?: string|null
+     * }|null $certificate
      */
     public static function with(
         string $address,
         string $transportProfile,
-        ?Certificate $certificate = null,
+        Certificate|array|null $certificate = null,
         ?string $serviceActivationDate = null,
         ?string $serviceDescription = null,
         ?string $serviceExpirationDate = null,
@@ -112,15 +116,15 @@ final class Endpoint implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->address = $address;
-        $obj->transportProfile = $transportProfile;
+        $obj['address'] = $address;
+        $obj['transportProfile'] = $transportProfile;
 
-        null !== $certificate && $obj->certificate = $certificate;
-        null !== $serviceActivationDate && $obj->serviceActivationDate = $serviceActivationDate;
-        null !== $serviceDescription && $obj->serviceDescription = $serviceDescription;
-        null !== $serviceExpirationDate && $obj->serviceExpirationDate = $serviceExpirationDate;
-        null !== $technicalContactUrl && $obj->technicalContactUrl = $technicalContactUrl;
-        null !== $technicalInformationUrl && $obj->technicalInformationUrl = $technicalInformationUrl;
+        null !== $certificate && $obj['certificate'] = $certificate;
+        null !== $serviceActivationDate && $obj['serviceActivationDate'] = $serviceActivationDate;
+        null !== $serviceDescription && $obj['serviceDescription'] = $serviceDescription;
+        null !== $serviceExpirationDate && $obj['serviceExpirationDate'] = $serviceExpirationDate;
+        null !== $technicalContactUrl && $obj['technicalContactUrl'] = $technicalContactUrl;
+        null !== $technicalInformationUrl && $obj['technicalInformationUrl'] = $technicalInformationUrl;
 
         return $obj;
     }
@@ -131,7 +135,7 @@ final class Endpoint implements BaseModel
     public function withAddress(string $address): self
     {
         $obj = clone $this;
-        $obj->address = $address;
+        $obj['address'] = $address;
 
         return $obj;
     }
@@ -142,18 +146,22 @@ final class Endpoint implements BaseModel
     public function withTransportProfile(string $transportProfile): self
     {
         $obj = clone $this;
-        $obj->transportProfile = $transportProfile;
+        $obj['transportProfile'] = $transportProfile;
 
         return $obj;
     }
 
     /**
      * Certificate information for a Peppol endpoint.
+     *
+     * @param Certificate|array{
+     *   status: string, details?: array<string,mixed>|null, error?: string|null
+     * }|null $certificate
      */
-    public function withCertificate(?Certificate $certificate): self
+    public function withCertificate(Certificate|array|null $certificate): self
     {
         $obj = clone $this;
-        $obj->certificate = $certificate;
+        $obj['certificate'] = $certificate;
 
         return $obj;
     }
@@ -165,7 +173,7 @@ final class Endpoint implements BaseModel
         ?string $serviceActivationDate
     ): self {
         $obj = clone $this;
-        $obj->serviceActivationDate = $serviceActivationDate;
+        $obj['serviceActivationDate'] = $serviceActivationDate;
 
         return $obj;
     }
@@ -176,7 +184,7 @@ final class Endpoint implements BaseModel
     public function withServiceDescription(?string $serviceDescription): self
     {
         $obj = clone $this;
-        $obj->serviceDescription = $serviceDescription;
+        $obj['serviceDescription'] = $serviceDescription;
 
         return $obj;
     }
@@ -188,7 +196,7 @@ final class Endpoint implements BaseModel
         ?string $serviceExpirationDate
     ): self {
         $obj = clone $this;
-        $obj->serviceExpirationDate = $serviceExpirationDate;
+        $obj['serviceExpirationDate'] = $serviceExpirationDate;
 
         return $obj;
     }
@@ -199,7 +207,7 @@ final class Endpoint implements BaseModel
     public function withTechnicalContactURL(?string $technicalContactURL): self
     {
         $obj = clone $this;
-        $obj->technicalContactUrl = $technicalContactURL;
+        $obj['technicalContactUrl'] = $technicalContactURL;
 
         return $obj;
     }
@@ -211,7 +219,7 @@ final class Endpoint implements BaseModel
         ?string $technicalInformationURL
     ): self {
         $obj = clone $this;
-        $obj->technicalInformationUrl = $technicalInformationURL;
+        $obj['technicalInformationUrl'] = $technicalInformationURL;
 
         return $obj;
     }

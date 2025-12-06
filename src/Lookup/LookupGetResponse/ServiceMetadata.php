@@ -8,6 +8,8 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
+use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
+use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
 /**
  * Service metadata information for the Peppol participant.
@@ -74,7 +76,13 @@ final class ServiceMetadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   documentTypes: list<DocumentType>,
+     *   status: string,
+     *   url: string,
+     *   error?: string|null,
+     *   processes?: list<Process>|null,
+     * }> $endpoints
      */
     public static function with(
         array $endpoints,
@@ -84,11 +92,11 @@ final class ServiceMetadata implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->endpoints = $endpoints;
-        $obj->queryTimeMs = $queryTimeMs;
-        $obj->status = $status;
+        $obj['endpoints'] = $endpoints;
+        $obj['queryTimeMs'] = $queryTimeMs;
+        $obj['status'] = $status;
 
-        null !== $error && $obj->error = $error;
+        null !== $error && $obj['error'] = $error;
 
         return $obj;
     }
@@ -96,12 +104,18 @@ final class ServiceMetadata implements BaseModel
     /**
      * List of endpoints found for the Peppol participant.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   documentTypes: list<DocumentType>,
+     *   status: string,
+     *   url: string,
+     *   error?: string|null,
+     *   processes?: list<Process>|null,
+     * }> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {
         $obj = clone $this;
-        $obj->endpoints = $endpoints;
+        $obj['endpoints'] = $endpoints;
 
         return $obj;
     }
@@ -112,7 +126,7 @@ final class ServiceMetadata implements BaseModel
     public function withQueryTimeMs(float $queryTimeMs): self
     {
         $obj = clone $this;
-        $obj->queryTimeMs = $queryTimeMs;
+        $obj['queryTimeMs'] = $queryTimeMs;
 
         return $obj;
     }
@@ -123,7 +137,7 @@ final class ServiceMetadata implements BaseModel
     public function withStatus(string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -134,7 +148,7 @@ final class ServiceMetadata implements BaseModel
     public function withError(?string $error): self
     {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }
