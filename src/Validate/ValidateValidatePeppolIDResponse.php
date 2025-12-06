@@ -90,10 +90,15 @@ final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConve
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BusinessCard|array{
+     *   country_code?: string|null,
+     *   name?: string|null,
+     *   registration_date?: \DateTimeInterface|null,
+     * }|null $business_card
      * @param list<string> $supported_document_types
      */
     public static function with(
-        ?BusinessCard $business_card,
+        BusinessCard|array|null $business_card,
         bool $business_card_valid,
         bool $dns_valid,
         bool $is_valid,
@@ -101,23 +106,30 @@ final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConve
     ): self {
         $obj = new self;
 
-        $obj->business_card = $business_card;
-        $obj->business_card_valid = $business_card_valid;
-        $obj->dns_valid = $dns_valid;
-        $obj->is_valid = $is_valid;
+        $obj['business_card'] = $business_card;
+        $obj['business_card_valid'] = $business_card_valid;
+        $obj['dns_valid'] = $dns_valid;
+        $obj['is_valid'] = $is_valid;
 
-        null !== $supported_document_types && $obj->supported_document_types = $supported_document_types;
+        null !== $supported_document_types && $obj['supported_document_types'] = $supported_document_types;
 
         return $obj;
     }
 
     /**
      * Business card information for the Peppol ID.
+     *
+     * @param BusinessCard|array{
+     *   country_code?: string|null,
+     *   name?: string|null,
+     *   registration_date?: \DateTimeInterface|null,
+     * }|null $businessCard
      */
-    public function withBusinessCard(?BusinessCard $businessCard): self
-    {
+    public function withBusinessCard(
+        BusinessCard|array|null $businessCard
+    ): self {
         $obj = clone $this;
-        $obj->business_card = $businessCard;
+        $obj['business_card'] = $businessCard;
 
         return $obj;
     }
@@ -128,7 +140,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConve
     public function withBusinessCardValid(bool $businessCardValid): self
     {
         $obj = clone $this;
-        $obj->business_card_valid = $businessCardValid;
+        $obj['business_card_valid'] = $businessCardValid;
 
         return $obj;
     }
@@ -139,7 +151,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConve
     public function withDNSValid(bool $dnsValid): self
     {
         $obj = clone $this;
-        $obj->dns_valid = $dnsValid;
+        $obj['dns_valid'] = $dnsValid;
 
         return $obj;
     }
@@ -150,7 +162,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConve
     public function withIsValid(bool $isValid): self
     {
         $obj = clone $this;
-        $obj->is_valid = $isValid;
+        $obj['is_valid'] = $isValid;
 
         return $obj;
     }
@@ -162,7 +174,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConve
         array $supportedDocumentTypes
     ): self {
         $obj = clone $this;
-        $obj->supported_document_types = $supportedDocumentTypes;
+        $obj['supported_document_types'] = $supportedDocumentTypes;
 
         return $obj;
     }

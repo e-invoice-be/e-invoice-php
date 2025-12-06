@@ -68,11 +68,11 @@ final class DocumentAttachmentCreate implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->file_name = $file_name;
+        $obj['file_name'] = $file_name;
 
-        null !== $file_data && $obj->file_data = $file_data;
-        null !== $file_size && $obj->file_size = $file_size;
-        null !== $file_type && $obj->file_type = $file_type;
+        null !== $file_data && $obj['file_data'] = $file_data;
+        null !== $file_size && $obj['file_size'] = $file_size;
+        null !== $file_type && $obj['file_type'] = $file_type;
 
         return $obj;
     }
@@ -80,7 +80,7 @@ final class DocumentAttachmentCreate implements BaseModel
     public function withFileName(string $fileName): self
     {
         $obj = clone $this;
-        $obj->file_name = $fileName;
+        $obj['file_name'] = $fileName;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class DocumentAttachmentCreate implements BaseModel
     public function withFileData(?string $fileData): self
     {
         $obj = clone $this;
-        $obj->file_data = $fileData;
+        $obj['file_data'] = $fileData;
 
         return $obj;
     }
@@ -99,7 +99,7 @@ final class DocumentAttachmentCreate implements BaseModel
     public function withFileSize(int $fileSize): self
     {
         $obj = clone $this;
-        $obj->file_size = $fileSize;
+        $obj['file_size'] = $fileSize;
 
         return $obj;
     }
@@ -107,7 +107,7 @@ final class DocumentAttachmentCreate implements BaseModel
     public function withFileType(string $fileType): self
     {
         $obj = clone $this;
-        $obj->file_type = $fileType;
+        $obj['file_type'] = $fileType;
 
         return $obj;
     }

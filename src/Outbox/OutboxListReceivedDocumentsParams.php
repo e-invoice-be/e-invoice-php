@@ -110,12 +110,12 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $date_from && $obj->date_from = $date_from;
-        null !== $date_to && $obj->date_to = $date_to;
-        null !== $page && $obj->page = $page;
-        null !== $page_size && $obj->page_size = $page_size;
-        null !== $search && $obj->search = $search;
-        null !== $sender && $obj->sender = $sender;
+        null !== $date_from && $obj['date_from'] = $date_from;
+        null !== $date_to && $obj['date_to'] = $date_to;
+        null !== $page && $obj['page'] = $page;
+        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $search && $obj['search'] = $search;
+        null !== $sender && $obj['sender'] = $sender;
         null !== $state && $obj['state'] = $state;
         null !== $type && $obj['type'] = $type;
 
@@ -128,7 +128,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withDateFrom(?\DateTimeInterface $dateFrom): self
     {
         $obj = clone $this;
-        $obj->date_from = $dateFrom;
+        $obj['date_from'] = $dateFrom;
 
         return $obj;
     }
@@ -139,7 +139,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withDateTo(?\DateTimeInterface $dateTo): self
     {
         $obj = clone $this;
-        $obj->date_to = $dateTo;
+        $obj['date_to'] = $dateTo;
 
         return $obj;
     }
@@ -150,7 +150,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withPage(int $page): self
     {
         $obj = clone $this;
-        $obj->page = $page;
+        $obj['page'] = $page;
 
         return $obj;
     }
@@ -161,7 +161,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $obj['page_size'] = $pageSize;
 
         return $obj;
     }
@@ -172,7 +172,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withSearch(?string $search): self
     {
         $obj = clone $this;
-        $obj->search = $search;
+        $obj['search'] = $search;
 
         return $obj;
     }
@@ -183,7 +183,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public function withSender(?string $sender): self
     {
         $obj = clone $this;
-        $obj->sender = $sender;
+        $obj['sender'] = $sender;
 
         return $obj;
     }

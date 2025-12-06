@@ -53,7 +53,7 @@ final class WebhookDeleteResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->is_deleted = $is_deleted;
+        $obj['is_deleted'] = $is_deleted;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class WebhookDeleteResponse implements BaseModel, ResponseConverter
     public function withIsDeleted(bool $isDeleted): self
     {
         $obj = clone $this;
-        $obj->is_deleted = $isDeleted;
+        $obj['is_deleted'] = $isDeleted;
 
         return $obj;
     }

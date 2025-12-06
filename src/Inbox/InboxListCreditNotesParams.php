@@ -50,8 +50,8 @@ final class InboxListCreditNotesParams implements BaseModel
     {
         $obj = new self;
 
-        null !== $page && $obj->page = $page;
-        null !== $page_size && $obj->page_size = $page_size;
+        null !== $page && $obj['page'] = $page;
+        null !== $page_size && $obj['page_size'] = $page_size;
 
         return $obj;
     }
@@ -62,7 +62,7 @@ final class InboxListCreditNotesParams implements BaseModel
     public function withPage(int $page): self
     {
         $obj = clone $this;
-        $obj->page = $page;
+        $obj['page'] = $page;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class InboxListCreditNotesParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $obj['page_size'] = $pageSize;
 
         return $obj;
     }

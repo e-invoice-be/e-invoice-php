@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
+use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifier;
 
 /**
  * Represents a Peppol participant with their details.
@@ -77,8 +78,16 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentType> $document_types
-     * @param list<Entity> $entities
+     * @param list<DocumentType|array{scheme: string, value: string}> $document_types
+     * @param list<Entity|array{
+     *   additional_info?: string|null,
+     *   country_code?: string|null,
+     *   geo_info?: string|null,
+     *   identifiers?: list<Identifier>|null,
+     *   name?: string|null,
+     *   registration_date?: string|null,
+     *   website?: string|null,
+     * }> $entities
      */
     public static function with(
         string $peppol_id,
@@ -88,11 +97,11 @@ final class Participant implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->peppol_id = $peppol_id;
-        $obj->peppol_scheme = $peppol_scheme;
+        $obj['peppol_id'] = $peppol_id;
+        $obj['peppol_scheme'] = $peppol_scheme;
 
-        null !== $document_types && $obj->document_types = $document_types;
-        null !== $entities && $obj->entities = $entities;
+        null !== $document_types && $obj['document_types'] = $document_types;
+        null !== $entities && $obj['entities'] = $entities;
 
         return $obj;
     }
@@ -103,7 +112,7 @@ final class Participant implements BaseModel
     public function withPeppolID(string $peppolID): self
     {
         $obj = clone $this;
-        $obj->peppol_id = $peppolID;
+        $obj['peppol_id'] = $peppolID;
 
         return $obj;
     }
@@ -114,7 +123,7 @@ final class Participant implements BaseModel
     public function withPeppolScheme(string $peppolScheme): self
     {
         $obj = clone $this;
-        $obj->peppol_scheme = $peppolScheme;
+        $obj['peppol_scheme'] = $peppolScheme;
 
         return $obj;
     }
@@ -122,12 +131,12 @@ final class Participant implements BaseModel
     /**
      * List of supported document types.
      *
-     * @param list<DocumentType> $documentTypes
+     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
      */
     public function withDocumentTypes(array $documentTypes): self
     {
         $obj = clone $this;
-        $obj->document_types = $documentTypes;
+        $obj['document_types'] = $documentTypes;
 
         return $obj;
     }
@@ -135,12 +144,20 @@ final class Participant implements BaseModel
     /**
      * List of business entities.
      *
-     * @param list<Entity> $entities
+     * @param list<Entity|array{
+     *   additional_info?: string|null,
+     *   country_code?: string|null,
+     *   geo_info?: string|null,
+     *   identifiers?: list<Identifier>|null,
+     *   name?: string|null,
+     *   registration_date?: string|null,
+     *   website?: string|null,
+     * }> $entities
      */
     public function withEntities(array $entities): self
     {
         $obj = clone $this;
-        $obj->entities = $entities;
+        $obj['entities'] = $entities;
 
         return $obj;
     }

@@ -99,17 +99,17 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->file_name = $file_name;
+        $obj['id'] = $id;
+        $obj['file_name'] = $file_name;
 
-        null !== $file_hash && $obj->file_hash = $file_hash;
-        null !== $file_size && $obj->file_size = $file_size;
-        null !== $receiver_peppol_id && $obj->receiver_peppol_id = $receiver_peppol_id;
-        null !== $receiver_peppol_scheme && $obj->receiver_peppol_scheme = $receiver_peppol_scheme;
-        null !== $sender_peppol_id && $obj->sender_peppol_id = $sender_peppol_id;
-        null !== $sender_peppol_scheme && $obj->sender_peppol_scheme = $sender_peppol_scheme;
-        null !== $signed_url && $obj->signed_url = $signed_url;
-        null !== $validated_at && $obj->validated_at = $validated_at;
+        null !== $file_hash && $obj['file_hash'] = $file_hash;
+        null !== $file_size && $obj['file_size'] = $file_size;
+        null !== $receiver_peppol_id && $obj['receiver_peppol_id'] = $receiver_peppol_id;
+        null !== $receiver_peppol_scheme && $obj['receiver_peppol_scheme'] = $receiver_peppol_scheme;
+        null !== $sender_peppol_id && $obj['sender_peppol_id'] = $sender_peppol_id;
+        null !== $sender_peppol_scheme && $obj['sender_peppol_scheme'] = $sender_peppol_scheme;
+        null !== $signed_url && $obj['signed_url'] = $signed_url;
+        null !== $validated_at && $obj['validated_at'] = $validated_at;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withFileName(string $fileName): self
     {
         $obj = clone $this;
-        $obj->file_name = $fileName;
+        $obj['file_name'] = $fileName;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withFileHash(?string $fileHash): self
     {
         $obj = clone $this;
-        $obj->file_hash = $fileHash;
+        $obj['file_hash'] = $fileHash;
 
         return $obj;
     }
@@ -141,7 +141,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withFileSize(int $fileSize): self
     {
         $obj = clone $this;
-        $obj->file_size = $fileSize;
+        $obj['file_size'] = $fileSize;
 
         return $obj;
     }
@@ -149,7 +149,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
         $obj = clone $this;
-        $obj->receiver_peppol_id = $receiverPeppolID;
+        $obj['receiver_peppol_id'] = $receiverPeppolID;
 
         return $obj;
     }
@@ -158,7 +158,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
         ?string $receiverPeppolScheme
     ): self {
         $obj = clone $this;
-        $obj->receiver_peppol_scheme = $receiverPeppolScheme;
+        $obj['receiver_peppol_scheme'] = $receiverPeppolScheme;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withSenderPeppolID(?string $senderPeppolID): self
     {
         $obj = clone $this;
-        $obj->sender_peppol_id = $senderPeppolID;
+        $obj['sender_peppol_id'] = $senderPeppolID;
 
         return $obj;
     }
@@ -174,7 +174,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
         $obj = clone $this;
-        $obj->sender_peppol_scheme = $senderPeppolScheme;
+        $obj['sender_peppol_scheme'] = $senderPeppolScheme;
 
         return $obj;
     }
@@ -182,7 +182,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withSignedURL(?string $signedURL): self
     {
         $obj = clone $this;
-        $obj->signed_url = $signedURL;
+        $obj['signed_url'] = $signedURL;
 
         return $obj;
     }
@@ -190,7 +190,7 @@ final class UblGetResponse implements BaseModel, ResponseConverter
     public function withValidatedAt(?\DateTimeInterface $validatedAt): self
     {
         $obj = clone $this;
-        $obj->validated_at = $validatedAt;
+        $obj['validated_at'] = $validatedAt;
 
         return $obj;
     }

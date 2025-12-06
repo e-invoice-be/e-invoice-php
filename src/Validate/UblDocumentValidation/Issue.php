@@ -84,14 +84,14 @@ final class Issue implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->message = $message;
-        $obj->schematron = $schematron;
+        $obj['message'] = $message;
+        $obj['schematron'] = $schematron;
         $obj['type'] = $type;
 
-        null !== $flag && $obj->flag = $flag;
-        null !== $location && $obj->location = $location;
-        null !== $rule_id && $obj->rule_id = $rule_id;
-        null !== $test && $obj->test = $test;
+        null !== $flag && $obj['flag'] = $flag;
+        null !== $location && $obj['location'] = $location;
+        null !== $rule_id && $obj['rule_id'] = $rule_id;
+        null !== $test && $obj['test'] = $test;
 
         return $obj;
     }
@@ -99,7 +99,7 @@ final class Issue implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -107,7 +107,7 @@ final class Issue implements BaseModel
     public function withSchematron(string $schematron): self
     {
         $obj = clone $this;
-        $obj->schematron = $schematron;
+        $obj['schematron'] = $schematron;
 
         return $obj;
     }
@@ -126,7 +126,7 @@ final class Issue implements BaseModel
     public function withFlag(?string $flag): self
     {
         $obj = clone $this;
-        $obj->flag = $flag;
+        $obj['flag'] = $flag;
 
         return $obj;
     }
@@ -134,7 +134,7 @@ final class Issue implements BaseModel
     public function withLocation(?string $location): self
     {
         $obj = clone $this;
-        $obj->location = $location;
+        $obj['location'] = $location;
 
         return $obj;
     }
@@ -142,7 +142,7 @@ final class Issue implements BaseModel
     public function withRuleID(?string $ruleID): self
     {
         $obj = clone $this;
-        $obj->rule_id = $ruleID;
+        $obj['rule_id'] = $ruleID;
 
         return $obj;
     }
@@ -150,7 +150,7 @@ final class Issue implements BaseModel
     public function withTest(?string $test): self
     {
         $obj = clone $this;
-        $obj->test = $test;
+        $obj['test'] = $test;
 
         return $obj;
     }

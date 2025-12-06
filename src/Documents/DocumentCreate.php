@@ -8,6 +8,7 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentCreate\Allowance;
+use EInvoiceAPI\Documents\DocumentCreate\Allowance\ReasonCode;
 use EInvoiceAPI\Documents\DocumentCreate\Charge;
 use EInvoiceAPI\Documents\DocumentCreate\Item;
 use EInvoiceAPI\Documents\DocumentCreate\TaxCode;
@@ -385,17 +386,57 @@ final class DocumentCreate implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Allowance>|null $allowances
-     * @param list<DocumentAttachmentCreate>|null $attachments
-     * @param list<Charge>|null $charges
+     * @param list<Allowance|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<ReasonCode>|null,
+     *   tax_code?: value-of<Allowance\TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $allowances
+     * @param list<DocumentAttachmentCreate|array{
+     *   file_name: string,
+     *   file_data?: string|null,
+     *   file_size?: int|null,
+     *   file_type?: string|null,
+     * }>|null $attachments
+     * @param list<Charge|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<Charge\ReasonCode>|null,
+     *   tax_code?: value-of<Charge\TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $charges
      * @param CurrencyCode|value-of<CurrencyCode> $currency
      * @param DocumentDirection|value-of<DocumentDirection> $direction
      * @param DocumentType|value-of<DocumentType> $document_type
-     * @param list<Item> $items
-     * @param list<PaymentDetailCreate>|null $payment_details
+     * @param list<Item|array{
+     *   allowances?: list<Item\Allowance>|null,
+     *   amount?: float|string|null,
+     *   charges?: list<Item\Charge>|null,
+     *   date?: null|null,
+     *   description?: string|null,
+     *   product_code?: string|null,
+     *   quantity?: float|string|null,
+     *   tax?: float|string|null,
+     *   tax_rate?: float|string|null,
+     *   unit?: value-of<UnitOfMeasureCode>|null,
+     *   unit_price?: float|string|null,
+     * }> $items
+     * @param list<PaymentDetailCreate|array{
+     *   bank_account_number?: string|null,
+     *   iban?: string|null,
+     *   payment_reference?: string|null,
+     *   swift?: string|null,
+     * }>|null $payment_details
      * @param DocumentState|value-of<DocumentState> $state
      * @param TaxCode|value-of<TaxCode> $tax_code
-     * @param list<TaxDetail>|null $tax_details
+     * @param list<TaxDetail|array{
+     *   amount?: float|string|null, rate?: string|null
+     * }>|null $tax_details
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
@@ -450,65 +491,73 @@ final class DocumentCreate implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $allowances && $obj->allowances = $allowances;
-        null !== $amount_due && $obj->amount_due = $amount_due;
-        null !== $attachments && $obj->attachments = $attachments;
-        null !== $billing_address && $obj->billing_address = $billing_address;
-        null !== $billing_address_recipient && $obj->billing_address_recipient = $billing_address_recipient;
-        null !== $charges && $obj->charges = $charges;
+        null !== $allowances && $obj['allowances'] = $allowances;
+        null !== $amount_due && $obj['amount_due'] = $amount_due;
+        null !== $attachments && $obj['attachments'] = $attachments;
+        null !== $billing_address && $obj['billing_address'] = $billing_address;
+        null !== $billing_address_recipient && $obj['billing_address_recipient'] = $billing_address_recipient;
+        null !== $charges && $obj['charges'] = $charges;
         null !== $currency && $obj['currency'] = $currency;
-        null !== $customer_address && $obj->customer_address = $customer_address;
-        null !== $customer_address_recipient && $obj->customer_address_recipient = $customer_address_recipient;
-        null !== $customer_company_id && $obj->customer_company_id = $customer_company_id;
-        null !== $customer_email && $obj->customer_email = $customer_email;
-        null !== $customer_id && $obj->customer_id = $customer_id;
-        null !== $customer_name && $obj->customer_name = $customer_name;
-        null !== $customer_tax_id && $obj->customer_tax_id = $customer_tax_id;
+        null !== $customer_address && $obj['customer_address'] = $customer_address;
+        null !== $customer_address_recipient && $obj['customer_address_recipient'] = $customer_address_recipient;
+        null !== $customer_company_id && $obj['customer_company_id'] = $customer_company_id;
+        null !== $customer_email && $obj['customer_email'] = $customer_email;
+        null !== $customer_id && $obj['customer_id'] = $customer_id;
+        null !== $customer_name && $obj['customer_name'] = $customer_name;
+        null !== $customer_tax_id && $obj['customer_tax_id'] = $customer_tax_id;
         null !== $direction && $obj['direction'] = $direction;
         null !== $document_type && $obj['document_type'] = $document_type;
-        null !== $due_date && $obj->due_date = $due_date;
-        null !== $invoice_date && $obj->invoice_date = $invoice_date;
-        null !== $invoice_id && $obj->invoice_id = $invoice_id;
-        null !== $invoice_total && $obj->invoice_total = $invoice_total;
-        null !== $items && $obj->items = $items;
-        null !== $note && $obj->note = $note;
-        null !== $payment_details && $obj->payment_details = $payment_details;
-        null !== $payment_term && $obj->payment_term = $payment_term;
-        null !== $previous_unpaid_balance && $obj->previous_unpaid_balance = $previous_unpaid_balance;
-        null !== $purchase_order && $obj->purchase_order = $purchase_order;
-        null !== $remittance_address && $obj->remittance_address = $remittance_address;
-        null !== $remittance_address_recipient && $obj->remittance_address_recipient = $remittance_address_recipient;
-        null !== $service_address && $obj->service_address = $service_address;
-        null !== $service_address_recipient && $obj->service_address_recipient = $service_address_recipient;
-        null !== $service_end_date && $obj->service_end_date = $service_end_date;
-        null !== $service_start_date && $obj->service_start_date = $service_start_date;
-        null !== $shipping_address && $obj->shipping_address = $shipping_address;
-        null !== $shipping_address_recipient && $obj->shipping_address_recipient = $shipping_address_recipient;
+        null !== $due_date && $obj['due_date'] = $due_date;
+        null !== $invoice_date && $obj['invoice_date'] = $invoice_date;
+        null !== $invoice_id && $obj['invoice_id'] = $invoice_id;
+        null !== $invoice_total && $obj['invoice_total'] = $invoice_total;
+        null !== $items && $obj['items'] = $items;
+        null !== $note && $obj['note'] = $note;
+        null !== $payment_details && $obj['payment_details'] = $payment_details;
+        null !== $payment_term && $obj['payment_term'] = $payment_term;
+        null !== $previous_unpaid_balance && $obj['previous_unpaid_balance'] = $previous_unpaid_balance;
+        null !== $purchase_order && $obj['purchase_order'] = $purchase_order;
+        null !== $remittance_address && $obj['remittance_address'] = $remittance_address;
+        null !== $remittance_address_recipient && $obj['remittance_address_recipient'] = $remittance_address_recipient;
+        null !== $service_address && $obj['service_address'] = $service_address;
+        null !== $service_address_recipient && $obj['service_address_recipient'] = $service_address_recipient;
+        null !== $service_end_date && $obj['service_end_date'] = $service_end_date;
+        null !== $service_start_date && $obj['service_start_date'] = $service_start_date;
+        null !== $shipping_address && $obj['shipping_address'] = $shipping_address;
+        null !== $shipping_address_recipient && $obj['shipping_address_recipient'] = $shipping_address_recipient;
         null !== $state && $obj['state'] = $state;
-        null !== $subtotal && $obj->subtotal = $subtotal;
+        null !== $subtotal && $obj['subtotal'] = $subtotal;
         null !== $tax_code && $obj['tax_code'] = $tax_code;
-        null !== $tax_details && $obj->tax_details = $tax_details;
-        null !== $total_discount && $obj->total_discount = $total_discount;
-        null !== $total_tax && $obj->total_tax = $total_tax;
+        null !== $tax_details && $obj['tax_details'] = $tax_details;
+        null !== $total_discount && $obj['total_discount'] = $total_discount;
+        null !== $total_tax && $obj['total_tax'] = $total_tax;
         null !== $vatex && $obj['vatex'] = $vatex;
-        null !== $vatex_note && $obj->vatex_note = $vatex_note;
-        null !== $vendor_address && $obj->vendor_address = $vendor_address;
-        null !== $vendor_address_recipient && $obj->vendor_address_recipient = $vendor_address_recipient;
-        null !== $vendor_company_id && $obj->vendor_company_id = $vendor_company_id;
-        null !== $vendor_email && $obj->vendor_email = $vendor_email;
-        null !== $vendor_name && $obj->vendor_name = $vendor_name;
-        null !== $vendor_tax_id && $obj->vendor_tax_id = $vendor_tax_id;
+        null !== $vatex_note && $obj['vatex_note'] = $vatex_note;
+        null !== $vendor_address && $obj['vendor_address'] = $vendor_address;
+        null !== $vendor_address_recipient && $obj['vendor_address_recipient'] = $vendor_address_recipient;
+        null !== $vendor_company_id && $obj['vendor_company_id'] = $vendor_company_id;
+        null !== $vendor_email && $obj['vendor_email'] = $vendor_email;
+        null !== $vendor_name && $obj['vendor_name'] = $vendor_name;
+        null !== $vendor_tax_id && $obj['vendor_tax_id'] = $vendor_tax_id;
 
         return $obj;
     }
 
     /**
-     * @param list<Allowance>|null $allowances
+     * @param list<Allowance|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<ReasonCode>|null,
+     *   tax_code?: value-of<Allowance\TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
         $obj = clone $this;
-        $obj->allowances = $allowances;
+        $obj['allowances'] = $allowances;
 
         return $obj;
     }
@@ -519,18 +568,23 @@ final class DocumentCreate implements BaseModel
     public function withAmountDue(float|string|null $amountDue): self
     {
         $obj = clone $this;
-        $obj->amount_due = $amountDue;
+        $obj['amount_due'] = $amountDue;
 
         return $obj;
     }
 
     /**
-     * @param list<DocumentAttachmentCreate>|null $attachments
+     * @param list<DocumentAttachmentCreate|array{
+     *   file_name: string,
+     *   file_data?: string|null,
+     *   file_size?: int|null,
+     *   file_type?: string|null,
+     * }>|null $attachments
      */
     public function withAttachments(?array $attachments): self
     {
         $obj = clone $this;
-        $obj->attachments = $attachments;
+        $obj['attachments'] = $attachments;
 
         return $obj;
     }
@@ -541,7 +595,7 @@ final class DocumentCreate implements BaseModel
     public function withBillingAddress(?string $billingAddress): self
     {
         $obj = clone $this;
-        $obj->billing_address = $billingAddress;
+        $obj['billing_address'] = $billingAddress;
 
         return $obj;
     }
@@ -553,18 +607,26 @@ final class DocumentCreate implements BaseModel
         ?string $billingAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->billing_address_recipient = $billingAddressRecipient;
+        $obj['billing_address_recipient'] = $billingAddressRecipient;
 
         return $obj;
     }
 
     /**
-     * @param list<Charge>|null $charges
+     * @param list<Charge|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<Charge\ReasonCode>|null,
+     *   tax_code?: value-of<Charge\TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $charges
      */
     public function withCharges(?array $charges): self
     {
         $obj = clone $this;
-        $obj->charges = $charges;
+        $obj['charges'] = $charges;
 
         return $obj;
     }
@@ -588,7 +650,7 @@ final class DocumentCreate implements BaseModel
     public function withCustomerAddress(?string $customerAddress): self
     {
         $obj = clone $this;
-        $obj->customer_address = $customerAddress;
+        $obj['customer_address'] = $customerAddress;
 
         return $obj;
     }
@@ -600,7 +662,7 @@ final class DocumentCreate implements BaseModel
         ?string $customerAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->customer_address_recipient = $customerAddressRecipient;
+        $obj['customer_address_recipient'] = $customerAddressRecipient;
 
         return $obj;
     }
@@ -611,7 +673,7 @@ final class DocumentCreate implements BaseModel
     public function withCustomerCompanyID(?string $customerCompanyID): self
     {
         $obj = clone $this;
-        $obj->customer_company_id = $customerCompanyID;
+        $obj['customer_company_id'] = $customerCompanyID;
 
         return $obj;
     }
@@ -622,7 +684,7 @@ final class DocumentCreate implements BaseModel
     public function withCustomerEmail(?string $customerEmail): self
     {
         $obj = clone $this;
-        $obj->customer_email = $customerEmail;
+        $obj['customer_email'] = $customerEmail;
 
         return $obj;
     }
@@ -633,7 +695,7 @@ final class DocumentCreate implements BaseModel
     public function withCustomerID(?string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -644,7 +706,7 @@ final class DocumentCreate implements BaseModel
     public function withCustomerName(?string $customerName): self
     {
         $obj = clone $this;
-        $obj->customer_name = $customerName;
+        $obj['customer_name'] = $customerName;
 
         return $obj;
     }
@@ -655,7 +717,7 @@ final class DocumentCreate implements BaseModel
     public function withCustomerTaxID(?string $customerTaxID): self
     {
         $obj = clone $this;
-        $obj->customer_tax_id = $customerTaxID;
+        $obj['customer_tax_id'] = $customerTaxID;
 
         return $obj;
     }
@@ -692,7 +754,7 @@ final class DocumentCreate implements BaseModel
     public function withDueDate(?\DateTimeInterface $dueDate): self
     {
         $obj = clone $this;
-        $obj->due_date = $dueDate;
+        $obj['due_date'] = $dueDate;
 
         return $obj;
     }
@@ -703,7 +765,7 @@ final class DocumentCreate implements BaseModel
     public function withInvoiceDate(?\DateTimeInterface $invoiceDate): self
     {
         $obj = clone $this;
-        $obj->invoice_date = $invoiceDate;
+        $obj['invoice_date'] = $invoiceDate;
 
         return $obj;
     }
@@ -714,7 +776,7 @@ final class DocumentCreate implements BaseModel
     public function withInvoiceID(?string $invoiceID): self
     {
         $obj = clone $this;
-        $obj->invoice_id = $invoiceID;
+        $obj['invoice_id'] = $invoiceID;
 
         return $obj;
     }
@@ -725,7 +787,7 @@ final class DocumentCreate implements BaseModel
     public function withInvoiceTotal(float|string|null $invoiceTotal): self
     {
         $obj = clone $this;
-        $obj->invoice_total = $invoiceTotal;
+        $obj['invoice_total'] = $invoiceTotal;
 
         return $obj;
     }
@@ -733,12 +795,24 @@ final class DocumentCreate implements BaseModel
     /**
      * At least one line item is required.
      *
-     * @param list<Item> $items
+     * @param list<Item|array{
+     *   allowances?: list<Item\Allowance>|null,
+     *   amount?: float|string|null,
+     *   charges?: list<Item\Charge>|null,
+     *   date?: null|null,
+     *   description?: string|null,
+     *   product_code?: string|null,
+     *   quantity?: float|string|null,
+     *   tax?: float|string|null,
+     *   tax_rate?: float|string|null,
+     *   unit?: value-of<UnitOfMeasureCode>|null,
+     *   unit_price?: float|string|null,
+     * }> $items
      */
     public function withItems(array $items): self
     {
         $obj = clone $this;
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }
@@ -749,18 +823,23 @@ final class DocumentCreate implements BaseModel
     public function withNote(?string $note): self
     {
         $obj = clone $this;
-        $obj->note = $note;
+        $obj['note'] = $note;
 
         return $obj;
     }
 
     /**
-     * @param list<PaymentDetailCreate>|null $paymentDetails
+     * @param list<PaymentDetailCreate|array{
+     *   bank_account_number?: string|null,
+     *   iban?: string|null,
+     *   payment_reference?: string|null,
+     *   swift?: string|null,
+     * }>|null $paymentDetails
      */
     public function withPaymentDetails(?array $paymentDetails): self
     {
         $obj = clone $this;
-        $obj->payment_details = $paymentDetails;
+        $obj['payment_details'] = $paymentDetails;
 
         return $obj;
     }
@@ -771,7 +850,7 @@ final class DocumentCreate implements BaseModel
     public function withPaymentTerm(?string $paymentTerm): self
     {
         $obj = clone $this;
-        $obj->payment_term = $paymentTerm;
+        $obj['payment_term'] = $paymentTerm;
 
         return $obj;
     }
@@ -783,7 +862,7 @@ final class DocumentCreate implements BaseModel
         float|string|null $previousUnpaidBalance
     ): self {
         $obj = clone $this;
-        $obj->previous_unpaid_balance = $previousUnpaidBalance;
+        $obj['previous_unpaid_balance'] = $previousUnpaidBalance;
 
         return $obj;
     }
@@ -794,7 +873,7 @@ final class DocumentCreate implements BaseModel
     public function withPurchaseOrder(?string $purchaseOrder): self
     {
         $obj = clone $this;
-        $obj->purchase_order = $purchaseOrder;
+        $obj['purchase_order'] = $purchaseOrder;
 
         return $obj;
     }
@@ -805,7 +884,7 @@ final class DocumentCreate implements BaseModel
     public function withRemittanceAddress(?string $remittanceAddress): self
     {
         $obj = clone $this;
-        $obj->remittance_address = $remittanceAddress;
+        $obj['remittance_address'] = $remittanceAddress;
 
         return $obj;
     }
@@ -817,7 +896,7 @@ final class DocumentCreate implements BaseModel
         ?string $remittanceAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->remittance_address_recipient = $remittanceAddressRecipient;
+        $obj['remittance_address_recipient'] = $remittanceAddressRecipient;
 
         return $obj;
     }
@@ -828,7 +907,7 @@ final class DocumentCreate implements BaseModel
     public function withServiceAddress(?string $serviceAddress): self
     {
         $obj = clone $this;
-        $obj->service_address = $serviceAddress;
+        $obj['service_address'] = $serviceAddress;
 
         return $obj;
     }
@@ -840,7 +919,7 @@ final class DocumentCreate implements BaseModel
         ?string $serviceAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->service_address_recipient = $serviceAddressRecipient;
+        $obj['service_address_recipient'] = $serviceAddressRecipient;
 
         return $obj;
     }
@@ -852,7 +931,7 @@ final class DocumentCreate implements BaseModel
         ?\DateTimeInterface $serviceEndDate
     ): self {
         $obj = clone $this;
-        $obj->service_end_date = $serviceEndDate;
+        $obj['service_end_date'] = $serviceEndDate;
 
         return $obj;
     }
@@ -864,7 +943,7 @@ final class DocumentCreate implements BaseModel
         ?\DateTimeInterface $serviceStartDate
     ): self {
         $obj = clone $this;
-        $obj->service_start_date = $serviceStartDate;
+        $obj['service_start_date'] = $serviceStartDate;
 
         return $obj;
     }
@@ -875,7 +954,7 @@ final class DocumentCreate implements BaseModel
     public function withShippingAddress(?string $shippingAddress): self
     {
         $obj = clone $this;
-        $obj->shipping_address = $shippingAddress;
+        $obj['shipping_address'] = $shippingAddress;
 
         return $obj;
     }
@@ -887,7 +966,7 @@ final class DocumentCreate implements BaseModel
         ?string $shippingAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->shipping_address_recipient = $shippingAddressRecipient;
+        $obj['shipping_address_recipient'] = $shippingAddressRecipient;
 
         return $obj;
     }
@@ -911,7 +990,7 @@ final class DocumentCreate implements BaseModel
     public function withSubtotal(float|string|null $subtotal): self
     {
         $obj = clone $this;
-        $obj->subtotal = $subtotal;
+        $obj['subtotal'] = $subtotal;
 
         return $obj;
     }
@@ -930,12 +1009,14 @@ final class DocumentCreate implements BaseModel
     }
 
     /**
-     * @param list<TaxDetail>|null $taxDetails
+     * @param list<TaxDetail|array{
+     *   amount?: float|string|null, rate?: string|null
+     * }>|null $taxDetails
      */
     public function withTaxDetails(?array $taxDetails): self
     {
         $obj = clone $this;
-        $obj->tax_details = $taxDetails;
+        $obj['tax_details'] = $taxDetails;
 
         return $obj;
     }
@@ -946,7 +1027,7 @@ final class DocumentCreate implements BaseModel
     public function withTotalDiscount(float|string|null $totalDiscount): self
     {
         $obj = clone $this;
-        $obj->total_discount = $totalDiscount;
+        $obj['total_discount'] = $totalDiscount;
 
         return $obj;
     }
@@ -957,7 +1038,7 @@ final class DocumentCreate implements BaseModel
     public function withTotalTax(float|string|null $totalTax): self
     {
         $obj = clone $this;
-        $obj->total_tax = $totalTax;
+        $obj['total_tax'] = $totalTax;
 
         return $obj;
     }
@@ -984,7 +1065,7 @@ final class DocumentCreate implements BaseModel
     public function withVatexNote(?string $vatexNote): self
     {
         $obj = clone $this;
-        $obj->vatex_note = $vatexNote;
+        $obj['vatex_note'] = $vatexNote;
 
         return $obj;
     }
@@ -995,7 +1076,7 @@ final class DocumentCreate implements BaseModel
     public function withVendorAddress(?string $vendorAddress): self
     {
         $obj = clone $this;
-        $obj->vendor_address = $vendorAddress;
+        $obj['vendor_address'] = $vendorAddress;
 
         return $obj;
     }
@@ -1007,7 +1088,7 @@ final class DocumentCreate implements BaseModel
         ?string $vendorAddressRecipient
     ): self {
         $obj = clone $this;
-        $obj->vendor_address_recipient = $vendorAddressRecipient;
+        $obj['vendor_address_recipient'] = $vendorAddressRecipient;
 
         return $obj;
     }
@@ -1018,7 +1099,7 @@ final class DocumentCreate implements BaseModel
     public function withVendorCompanyID(?string $vendorCompanyID): self
     {
         $obj = clone $this;
-        $obj->vendor_company_id = $vendorCompanyID;
+        $obj['vendor_company_id'] = $vendorCompanyID;
 
         return $obj;
     }
@@ -1029,7 +1110,7 @@ final class DocumentCreate implements BaseModel
     public function withVendorEmail(?string $vendorEmail): self
     {
         $obj = clone $this;
-        $obj->vendor_email = $vendorEmail;
+        $obj['vendor_email'] = $vendorEmail;
 
         return $obj;
     }
@@ -1040,7 +1121,7 @@ final class DocumentCreate implements BaseModel
     public function withVendorName(?string $vendorName): self
     {
         $obj = clone $this;
-        $obj->vendor_name = $vendorName;
+        $obj['vendor_name'] = $vendorName;
 
         return $obj;
     }
@@ -1051,7 +1132,7 @@ final class DocumentCreate implements BaseModel
     public function withVendorTaxID(?string $vendorTaxID): self
     {
         $obj = clone $this;
-        $obj->vendor_tax_id = $vendorTaxID;
+        $obj['vendor_tax_id'] = $vendorTaxID;
 
         return $obj;
     }
