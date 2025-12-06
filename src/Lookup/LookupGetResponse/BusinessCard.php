@@ -74,7 +74,12 @@ final class BusinessCard implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Entity> $entities
+     * @param list<Entity|array{
+     *   additionalInformation?: list<string>|null,
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: string|null,
+     * }> $entities
      */
     public static function with(
         array $entities,
@@ -84,11 +89,11 @@ final class BusinessCard implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->entities = $entities;
-        $obj->queryTimeMs = $queryTimeMs;
-        $obj->status = $status;
+        $obj['entities'] = $entities;
+        $obj['queryTimeMs'] = $queryTimeMs;
+        $obj['status'] = $status;
 
-        null !== $error && $obj->error = $error;
+        null !== $error && $obj['error'] = $error;
 
         return $obj;
     }
@@ -96,12 +101,17 @@ final class BusinessCard implements BaseModel
     /**
      * List of business entities associated with the Peppol ID.
      *
-     * @param list<Entity> $entities
+     * @param list<Entity|array{
+     *   additionalInformation?: list<string>|null,
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: string|null,
+     * }> $entities
      */
     public function withEntities(array $entities): self
     {
         $obj = clone $this;
-        $obj->entities = $entities;
+        $obj['entities'] = $entities;
 
         return $obj;
     }
@@ -112,7 +122,7 @@ final class BusinessCard implements BaseModel
     public function withQueryTimeMs(float $queryTimeMs): self
     {
         $obj = clone $this;
-        $obj->queryTimeMs = $queryTimeMs;
+        $obj['queryTimeMs'] = $queryTimeMs;
 
         return $obj;
     }
@@ -123,7 +133,7 @@ final class BusinessCard implements BaseModel
     public function withStatus(string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -134,7 +144,7 @@ final class BusinessCard implements BaseModel
     public function withError(?string $error): self
     {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }

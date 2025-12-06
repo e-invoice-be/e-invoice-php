@@ -56,7 +56,7 @@ final class ValidateValidatePeppolIDParams implements BaseModel
     {
         $obj = new self;
 
-        $obj->peppol_id = $peppol_id;
+        $obj['peppol_id'] = $peppol_id;
 
         return $obj;
     }
@@ -67,7 +67,7 @@ final class ValidateValidatePeppolIDParams implements BaseModel
     public function withPeppolID(string $peppolID): self
     {
         $obj = clone $this;
-        $obj->peppol_id = $peppolID;
+        $obj['peppol_id'] = $peppolID;
 
         return $obj;
     }

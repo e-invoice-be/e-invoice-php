@@ -74,12 +74,12 @@ final class DocumentAttachment implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->file_name = $file_name;
+        $obj['id'] = $id;
+        $obj['file_name'] = $file_name;
 
-        null !== $file_size && $obj->file_size = $file_size;
-        null !== $file_type && $obj->file_type = $file_type;
-        null !== $file_url && $obj->file_url = $file_url;
+        null !== $file_size && $obj['file_size'] = $file_size;
+        null !== $file_type && $obj['file_type'] = $file_type;
+        null !== $file_url && $obj['file_url'] = $file_url;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class DocumentAttachment implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class DocumentAttachment implements BaseModel, ResponseConverter
     public function withFileName(string $fileName): self
     {
         $obj = clone $this;
-        $obj->file_name = $fileName;
+        $obj['file_name'] = $fileName;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class DocumentAttachment implements BaseModel, ResponseConverter
     public function withFileSize(int $fileSize): self
     {
         $obj = clone $this;
-        $obj->file_size = $fileSize;
+        $obj['file_size'] = $fileSize;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class DocumentAttachment implements BaseModel, ResponseConverter
     public function withFileType(string $fileType): self
     {
         $obj = clone $this;
-        $obj->file_type = $fileType;
+        $obj['file_type'] = $fileType;
 
         return $obj;
     }
@@ -119,7 +119,7 @@ final class DocumentAttachment implements BaseModel, ResponseConverter
     public function withFileURL(?string $fileURL): self
     {
         $obj = clone $this;
-        $obj->file_url = $fileURL;
+        $obj['file_url'] = $fileURL;
 
         return $obj;
     }

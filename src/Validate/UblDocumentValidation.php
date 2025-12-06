@@ -10,6 +10,7 @@ use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
+use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
 
 /**
  * @phpstan-type UblDocumentValidationShape = array{
@@ -71,7 +72,15 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Issue> $issues
+     * @param list<Issue|array{
+     *   message: string,
+     *   schematron: string,
+     *   type: value-of<Type>,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   rule_id?: string|null,
+     *   test?: string|null,
+     * }> $issues
      */
     public static function with(
         string $id,
@@ -82,12 +91,12 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->file_name = $file_name;
-        $obj->is_valid = $is_valid;
-        $obj->issues = $issues;
+        $obj['id'] = $id;
+        $obj['file_name'] = $file_name;
+        $obj['is_valid'] = $is_valid;
+        $obj['issues'] = $issues;
 
-        null !== $ubl_document && $obj->ubl_document = $ubl_document;
+        null !== $ubl_document && $obj['ubl_document'] = $ubl_document;
 
         return $obj;
     }
@@ -95,7 +104,7 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -103,7 +112,7 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     public function withFileName(?string $fileName): self
     {
         $obj = clone $this;
-        $obj->file_name = $fileName;
+        $obj['file_name'] = $fileName;
 
         return $obj;
     }
@@ -111,18 +120,26 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     public function withIsValid(bool $isValid): self
     {
         $obj = clone $this;
-        $obj->is_valid = $isValid;
+        $obj['is_valid'] = $isValid;
 
         return $obj;
     }
 
     /**
-     * @param list<Issue> $issues
+     * @param list<Issue|array{
+     *   message: string,
+     *   schematron: string,
+     *   type: value-of<Type>,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   rule_id?: string|null,
+     *   test?: string|null,
+     * }> $issues
      */
     public function withIssues(array $issues): self
     {
         $obj = clone $this;
-        $obj->issues = $issues;
+        $obj['issues'] = $issues;
 
         return $obj;
     }
@@ -130,7 +147,7 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
     public function withUblDocument(?string $ublDocument): self
     {
         $obj = clone $this;
-        $obj->ubl_document = $ublDocument;
+        $obj['ubl_document'] = $ublDocument;
 
         return $obj;
     }

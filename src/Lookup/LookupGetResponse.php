@@ -10,9 +10,12 @@ use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard;
+use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
 use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo;
+use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo\DNSRecord;
 use EInvoiceAPI\Lookup\LookupGetResponse\QueryMetadata;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
+use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 
 /**
  * Response from a Peppol ID lookup operation.
@@ -137,40 +140,74 @@ final class LookupGetResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Certificate> $certificates
+     * @param BusinessCard|array{
+     *   entities: list<Entity>,
+     *   queryTimeMs: float,
+     *   status: string,
+     *   error?: string|null,
+     * } $businessCard
+     * @param list<Certificate|array{
+     *   status: string, details?: array<string,mixed>|null, error?: string|null
+     * }> $certificates
+     * @param DNSInfo|array{
+     *   dnsRecords: list<DNSRecord>,
+     *   smlHostname: string,
+     *   status: string,
+     *   error?: string|null,
+     * } $dnsInfo
      * @param list<string> $errors
+     * @param QueryMetadata|array{
+     *   identifierScheme: string,
+     *   identifierValue: string,
+     *   smlDomain: string,
+     *   timestamp: string,
+     *   version: string,
+     * } $queryMetadata
+     * @param ServiceMetadata|array{
+     *   endpoints: list<Endpoint>,
+     *   queryTimeMs: float,
+     *   status: string,
+     *   error?: string|null,
+     * } $serviceMetadata
      */
     public static function with(
-        BusinessCard $businessCard,
+        BusinessCard|array $businessCard,
         array $certificates,
-        DNSInfo $dnsInfo,
+        DNSInfo|array $dnsInfo,
         array $errors,
         float $executionTimeMs,
-        QueryMetadata $queryMetadata,
-        ServiceMetadata $serviceMetadata,
+        QueryMetadata|array $queryMetadata,
+        ServiceMetadata|array $serviceMetadata,
         string $status,
     ): self {
         $obj = new self;
 
-        $obj->businessCard = $businessCard;
-        $obj->certificates = $certificates;
-        $obj->dnsInfo = $dnsInfo;
-        $obj->errors = $errors;
-        $obj->executionTimeMs = $executionTimeMs;
-        $obj->queryMetadata = $queryMetadata;
-        $obj->serviceMetadata = $serviceMetadata;
-        $obj->status = $status;
+        $obj['businessCard'] = $businessCard;
+        $obj['certificates'] = $certificates;
+        $obj['dnsInfo'] = $dnsInfo;
+        $obj['errors'] = $errors;
+        $obj['executionTimeMs'] = $executionTimeMs;
+        $obj['queryMetadata'] = $queryMetadata;
+        $obj['serviceMetadata'] = $serviceMetadata;
+        $obj['status'] = $status;
 
         return $obj;
     }
 
     /**
      * Business card information for the Peppol participant.
+     *
+     * @param BusinessCard|array{
+     *   entities: list<Entity>,
+     *   queryTimeMs: float,
+     *   status: string,
+     *   error?: string|null,
+     * } $businessCard
      */
-    public function withBusinessCard(BusinessCard $businessCard): self
+    public function withBusinessCard(BusinessCard|array $businessCard): self
     {
         $obj = clone $this;
-        $obj->businessCard = $businessCard;
+        $obj['businessCard'] = $businessCard;
 
         return $obj;
     }
@@ -178,23 +215,32 @@ final class LookupGetResponse implements BaseModel, ResponseConverter
     /**
      * List of certificates found for the Peppol participant.
      *
-     * @param list<Certificate> $certificates
+     * @param list<Certificate|array{
+     *   status: string, details?: array<string,mixed>|null, error?: string|null
+     * }> $certificates
      */
     public function withCertificates(array $certificates): self
     {
         $obj = clone $this;
-        $obj->certificates = $certificates;
+        $obj['certificates'] = $certificates;
 
         return $obj;
     }
 
     /**
      * Information about the DNS lookup performed.
+     *
+     * @param DNSInfo|array{
+     *   dnsRecords: list<DNSRecord>,
+     *   smlHostname: string,
+     *   status: string,
+     *   error?: string|null,
+     * } $dnsInfo
      */
-    public function withDNSInfo(DNSInfo $dnsInfo): self
+    public function withDNSInfo(DNSInfo|array $dnsInfo): self
     {
         $obj = clone $this;
-        $obj->dnsInfo = $dnsInfo;
+        $obj['dnsInfo'] = $dnsInfo;
 
         return $obj;
     }
@@ -207,7 +253,7 @@ final class LookupGetResponse implements BaseModel, ResponseConverter
     public function withErrors(array $errors): self
     {
         $obj = clone $this;
-        $obj->errors = $errors;
+        $obj['errors'] = $errors;
 
         return $obj;
     }
@@ -218,29 +264,45 @@ final class LookupGetResponse implements BaseModel, ResponseConverter
     public function withExecutionTimeMs(float $executionTimeMs): self
     {
         $obj = clone $this;
-        $obj->executionTimeMs = $executionTimeMs;
+        $obj['executionTimeMs'] = $executionTimeMs;
 
         return $obj;
     }
 
     /**
      * Metadata about the query that was performed.
+     *
+     * @param QueryMetadata|array{
+     *   identifierScheme: string,
+     *   identifierValue: string,
+     *   smlDomain: string,
+     *   timestamp: string,
+     *   version: string,
+     * } $queryMetadata
      */
-    public function withQueryMetadata(QueryMetadata $queryMetadata): self
+    public function withQueryMetadata(QueryMetadata|array $queryMetadata): self
     {
         $obj = clone $this;
-        $obj->queryMetadata = $queryMetadata;
+        $obj['queryMetadata'] = $queryMetadata;
 
         return $obj;
     }
 
     /**
      * Service metadata information for the Peppol participant.
+     *
+     * @param ServiceMetadata|array{
+     *   endpoints: list<Endpoint>,
+     *   queryTimeMs: float,
+     *   status: string,
+     *   error?: string|null,
+     * } $serviceMetadata
      */
-    public function withServiceMetadata(ServiceMetadata $serviceMetadata): self
-    {
+    public function withServiceMetadata(
+        ServiceMetadata|array $serviceMetadata
+    ): self {
         $obj = clone $this;
-        $obj->serviceMetadata = $serviceMetadata;
+        $obj['serviceMetadata'] = $serviceMetadata;
 
         return $obj;
     }
@@ -251,7 +313,7 @@ final class LookupGetResponse implements BaseModel, ResponseConverter
     public function withStatus(string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj['status'] = $status;
 
         return $obj;
     }

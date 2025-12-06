@@ -53,7 +53,7 @@ final class UblCreateFromUblParams implements BaseModel
     {
         $obj = new self;
 
-        $obj->file = $file;
+        $obj['file'] = $file;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class UblCreateFromUblParams implements BaseModel
     public function withFile(string $file): self
     {
         $obj = clone $this;
-        $obj->file = $file;
+        $obj['file'] = $file;
 
         return $obj;
     }

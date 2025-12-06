@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
+use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
+use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
 
 /**
  * Represents the result of a Peppol directory search.
@@ -91,7 +93,12 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Participant> $participants
+     * @param list<Participant|array{
+     *   peppol_id: string,
+     *   peppol_scheme: string,
+     *   document_types?: list<DocumentType>|null,
+     *   entities?: list<Entity>|null,
+     * }> $participants
      */
     public static function with(
         string $query_terms,
@@ -102,12 +109,12 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
     ): self {
         $obj = new self;
 
-        $obj->query_terms = $query_terms;
-        $obj->search_date = $search_date;
-        $obj->total_count = $total_count;
-        $obj->used_count = $used_count;
+        $obj['query_terms'] = $query_terms;
+        $obj['search_date'] = $search_date;
+        $obj['total_count'] = $total_count;
+        $obj['used_count'] = $used_count;
 
-        null !== $participants && $obj->participants = $participants;
+        null !== $participants && $obj['participants'] = $participants;
 
         return $obj;
     }
@@ -118,7 +125,7 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
     public function withQueryTerms(string $queryTerms): self
     {
         $obj = clone $this;
-        $obj->query_terms = $queryTerms;
+        $obj['query_terms'] = $queryTerms;
 
         return $obj;
     }
@@ -129,7 +136,7 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
     public function withSearchDate(string $searchDate): self
     {
         $obj = clone $this;
-        $obj->search_date = $searchDate;
+        $obj['search_date'] = $searchDate;
 
         return $obj;
     }
@@ -140,7 +147,7 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
     public function withTotalCount(int $totalCount): self
     {
         $obj = clone $this;
-        $obj->total_count = $totalCount;
+        $obj['total_count'] = $totalCount;
 
         return $obj;
     }
@@ -151,7 +158,7 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
     public function withUsedCount(int $usedCount): self
     {
         $obj = clone $this;
-        $obj->used_count = $usedCount;
+        $obj['used_count'] = $usedCount;
 
         return $obj;
     }
@@ -159,12 +166,17 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
     /**
      * List of participants.
      *
-     * @param list<Participant> $participants
+     * @param list<Participant|array{
+     *   peppol_id: string,
+     *   peppol_scheme: string,
+     *   document_types?: list<DocumentType>|null,
+     *   entities?: list<Entity>|null,
+     * }> $participants
      */
     public function withParticipants(array $participants): self
     {
         $obj = clone $this;
-        $obj->participants = $participants;
+        $obj['participants'] = $participants;
 
         return $obj;
     }
