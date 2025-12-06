@@ -52,7 +52,7 @@ final class DNSRecord implements BaseModel
     {
         $obj = new self;
 
-        $obj->ip = $ip;
+        $obj['ip'] = $ip;
 
         return $obj;
     }
@@ -63,7 +63,7 @@ final class DNSRecord implements BaseModel
     public function withIP(string $ip): self
     {
         $obj = clone $this;
-        $obj->ip = $ip;
+        $obj['ip'] = $ip;
 
         return $obj;
     }

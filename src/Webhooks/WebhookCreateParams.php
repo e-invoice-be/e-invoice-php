@@ -67,10 +67,10 @@ final class WebhookCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->events = $events;
-        $obj->url = $url;
+        $obj['events'] = $events;
+        $obj['url'] = $url;
 
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $enabled && $obj['enabled'] = $enabled;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class WebhookCreateParams implements BaseModel
     public function withEvents(array $events): self
     {
         $obj = clone $this;
-        $obj->events = $events;
+        $obj['events'] = $events;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class WebhookCreateParams implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class WebhookCreateParams implements BaseModel
     public function withEnabled(bool $enabled): self
     {
         $obj = clone $this;
-        $obj->enabled = $enabled;
+        $obj['enabled'] = $enabled;
 
         return $obj;
     }

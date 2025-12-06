@@ -46,8 +46,8 @@ final class TaxDetail implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $amount && $obj->amount = $amount;
-        null !== $rate && $obj->rate = $rate;
+        null !== $amount && $obj['amount'] = $amount;
+        null !== $rate && $obj['rate'] = $rate;
 
         return $obj;
     }
@@ -58,7 +58,7 @@ final class TaxDetail implements BaseModel
     public function withAmount(float|string|null $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -69,7 +69,7 @@ final class TaxDetail implements BaseModel
     public function withRate(?string $rate): self
     {
         $obj = clone $this;
-        $obj->rate = $rate;
+        $obj['rate'] = $rate;
 
         return $obj;
     }

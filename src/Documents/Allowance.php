@@ -98,13 +98,13 @@ final class Allowance implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $amount && $obj->amount = $amount;
-        null !== $base_amount && $obj->base_amount = $base_amount;
-        null !== $multiplier_factor && $obj->multiplier_factor = $multiplier_factor;
-        null !== $reason && $obj->reason = $reason;
+        null !== $amount && $obj['amount'] = $amount;
+        null !== $base_amount && $obj['base_amount'] = $base_amount;
+        null !== $multiplier_factor && $obj['multiplier_factor'] = $multiplier_factor;
+        null !== $reason && $obj['reason'] = $reason;
         null !== $reason_code && $obj['reason_code'] = $reason_code;
         null !== $tax_code && $obj['tax_code'] = $tax_code;
-        null !== $tax_rate && $obj->tax_rate = $tax_rate;
+        null !== $tax_rate && $obj['tax_rate'] = $tax_rate;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class Allowance implements BaseModel
     public function withAmount(?string $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -126,7 +126,7 @@ final class Allowance implements BaseModel
     public function withBaseAmount(?string $baseAmount): self
     {
         $obj = clone $this;
-        $obj->base_amount = $baseAmount;
+        $obj['base_amount'] = $baseAmount;
 
         return $obj;
     }
@@ -137,7 +137,7 @@ final class Allowance implements BaseModel
     public function withMultiplierFactor(?string $multiplierFactor): self
     {
         $obj = clone $this;
-        $obj->multiplier_factor = $multiplierFactor;
+        $obj['multiplier_factor'] = $multiplierFactor;
 
         return $obj;
     }
@@ -148,7 +148,7 @@ final class Allowance implements BaseModel
     public function withReason(?string $reason): self
     {
         $obj = clone $this;
-        $obj->reason = $reason;
+        $obj['reason'] = $reason;
 
         return $obj;
     }
@@ -185,7 +185,7 @@ final class Allowance implements BaseModel
     public function withTaxRate(?string $taxRate): self
     {
         $obj = clone $this;
-        $obj->tax_rate = $taxRate;
+        $obj['tax_rate'] = $taxRate;
 
         return $obj;
     }

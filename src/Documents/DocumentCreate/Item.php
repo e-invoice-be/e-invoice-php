@@ -8,6 +8,8 @@ use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentCreate\Item\Allowance;
+use EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\ReasonCode;
+use EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreate\Item\Charge;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
@@ -119,8 +121,24 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Allowance>|null $allowances
-     * @param list<Charge>|null $charges
+     * @param list<Allowance|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<ReasonCode>|null,
+     *   tax_code?: value-of<TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $allowances
+     * @param list<Charge|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<Charge\ReasonCode>|null,
+     *   tax_code?: value-of<Charge\TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $charges
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
     public static function with(
@@ -138,18 +156,18 @@ final class Item implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->date = $date;
+        $obj['date'] = $date;
 
-        null !== $allowances && $obj->allowances = $allowances;
-        null !== $amount && $obj->amount = $amount;
-        null !== $charges && $obj->charges = $charges;
-        null !== $description && $obj->description = $description;
-        null !== $product_code && $obj->product_code = $product_code;
-        null !== $quantity && $obj->quantity = $quantity;
-        null !== $tax && $obj->tax = $tax;
-        null !== $tax_rate && $obj->tax_rate = $tax_rate;
+        null !== $allowances && $obj['allowances'] = $allowances;
+        null !== $amount && $obj['amount'] = $amount;
+        null !== $charges && $obj['charges'] = $charges;
+        null !== $description && $obj['description'] = $description;
+        null !== $product_code && $obj['product_code'] = $product_code;
+        null !== $quantity && $obj['quantity'] = $quantity;
+        null !== $tax && $obj['tax'] = $tax;
+        null !== $tax_rate && $obj['tax_rate'] = $tax_rate;
         null !== $unit && $obj['unit'] = $unit;
-        null !== $unit_price && $obj->unit_price = $unit_price;
+        null !== $unit_price && $obj['unit_price'] = $unit_price;
 
         return $obj;
     }
@@ -157,12 +175,20 @@ final class Item implements BaseModel
     /**
      * The allowances of the line item.
      *
-     * @param list<Allowance>|null $allowances
+     * @param list<Allowance|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<ReasonCode>|null,
+     *   tax_code?: value-of<TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
         $obj = clone $this;
-        $obj->allowances = $allowances;
+        $obj['allowances'] = $allowances;
 
         return $obj;
     }
@@ -173,7 +199,7 @@ final class Item implements BaseModel
     public function withAmount(float|string|null $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -181,12 +207,20 @@ final class Item implements BaseModel
     /**
      * The charges of the line item.
      *
-     * @param list<Charge>|null $charges
+     * @param list<Charge|array{
+     *   amount?: float|string|null,
+     *   base_amount?: float|string|null,
+     *   multiplier_factor?: float|string|null,
+     *   reason?: string|null,
+     *   reason_code?: value-of<Charge\ReasonCode>|null,
+     *   tax_code?: value-of<Charge\TaxCode>|null,
+     *   tax_rate?: float|string|null,
+     * }>|null $charges
      */
     public function withCharges(?array $charges): self
     {
         $obj = clone $this;
-        $obj->charges = $charges;
+        $obj['charges'] = $charges;
 
         return $obj;
     }
@@ -197,7 +231,7 @@ final class Item implements BaseModel
     public function withDate(null $date): self
     {
         $obj = clone $this;
-        $obj->date = $date;
+        $obj['date'] = $date;
 
         return $obj;
     }
@@ -208,7 +242,7 @@ final class Item implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -219,7 +253,7 @@ final class Item implements BaseModel
     public function withProductCode(?string $productCode): self
     {
         $obj = clone $this;
-        $obj->product_code = $productCode;
+        $obj['product_code'] = $productCode;
 
         return $obj;
     }
@@ -230,7 +264,7 @@ final class Item implements BaseModel
     public function withQuantity(float|string|null $quantity): self
     {
         $obj = clone $this;
-        $obj->quantity = $quantity;
+        $obj['quantity'] = $quantity;
 
         return $obj;
     }
@@ -241,7 +275,7 @@ final class Item implements BaseModel
     public function withTax(float|string|null $tax): self
     {
         $obj = clone $this;
-        $obj->tax = $tax;
+        $obj['tax'] = $tax;
 
         return $obj;
     }
@@ -252,7 +286,7 @@ final class Item implements BaseModel
     public function withTaxRate(float|string|null $taxRate): self
     {
         $obj = clone $this;
-        $obj->tax_rate = $taxRate;
+        $obj['tax_rate'] = $taxRate;
 
         return $obj;
     }
@@ -276,7 +310,7 @@ final class Item implements BaseModel
     public function withUnitPrice(float|string|null $unitPrice): self
     {
         $obj = clone $this;
-        $obj->unit_price = $unitPrice;
+        $obj['unit_price'] = $unitPrice;
 
         return $obj;
     }

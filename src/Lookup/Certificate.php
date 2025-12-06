@@ -73,10 +73,10 @@ final class Certificate implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->status = $status;
+        $obj['status'] = $status;
 
-        null !== $details && $obj->details = $details;
-        null !== $error && $obj->error = $error;
+        null !== $details && $obj['details'] = $details;
+        null !== $error && $obj['error'] = $error;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class Certificate implements BaseModel
     public function withStatus(string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class Certificate implements BaseModel
     public function withDetails(?array $details): self
     {
         $obj = clone $this;
-        $obj->details = $details;
+        $obj['details'] = $details;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class Certificate implements BaseModel
     public function withError(?string $error): self
     {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }

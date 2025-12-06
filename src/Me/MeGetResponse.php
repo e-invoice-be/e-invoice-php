@@ -190,24 +190,24 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->credit_balance = $credit_balance;
-        $obj->name = $name;
+        $obj['credit_balance'] = $credit_balance;
+        $obj['name'] = $name;
         $obj['plan'] = $plan;
 
-        null !== $bcc_recipient_email && $obj->bcc_recipient_email = $bcc_recipient_email;
-        null !== $company_address && $obj->company_address = $company_address;
-        null !== $company_city && $obj->company_city = $company_city;
-        null !== $company_country && $obj->company_country = $company_country;
-        null !== $company_email && $obj->company_email = $company_email;
-        null !== $company_name && $obj->company_name = $company_name;
-        null !== $company_number && $obj->company_number = $company_number;
-        null !== $company_tax_id && $obj->company_tax_id = $company_tax_id;
-        null !== $company_zip && $obj->company_zip = $company_zip;
-        null !== $description && $obj->description = $description;
-        null !== $ibans && $obj->ibans = $ibans;
-        null !== $peppol_ids && $obj->peppol_ids = $peppol_ids;
-        null !== $smp_registration && $obj->smp_registration = $smp_registration;
-        null !== $smp_registration_date && $obj->smp_registration_date = $smp_registration_date;
+        null !== $bcc_recipient_email && $obj['bcc_recipient_email'] = $bcc_recipient_email;
+        null !== $company_address && $obj['company_address'] = $company_address;
+        null !== $company_city && $obj['company_city'] = $company_city;
+        null !== $company_country && $obj['company_country'] = $company_country;
+        null !== $company_email && $obj['company_email'] = $company_email;
+        null !== $company_name && $obj['company_name'] = $company_name;
+        null !== $company_number && $obj['company_number'] = $company_number;
+        null !== $company_tax_id && $obj['company_tax_id'] = $company_tax_id;
+        null !== $company_zip && $obj['company_zip'] = $company_zip;
+        null !== $description && $obj['description'] = $description;
+        null !== $ibans && $obj['ibans'] = $ibans;
+        null !== $peppol_ids && $obj['peppol_ids'] = $peppol_ids;
+        null !== $smp_registration && $obj['smp_registration'] = $smp_registration;
+        null !== $smp_registration_date && $obj['smp_registration_date'] = $smp_registration_date;
 
         return $obj;
     }
@@ -218,7 +218,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCreditBalance(int $creditBalance): self
     {
         $obj = clone $this;
-        $obj->credit_balance = $creditBalance;
+        $obj['credit_balance'] = $creditBalance;
 
         return $obj;
     }
@@ -226,7 +226,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -250,7 +250,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withBccRecipientEmail(?string $bccRecipientEmail): self
     {
         $obj = clone $this;
-        $obj->bcc_recipient_email = $bccRecipientEmail;
+        $obj['bcc_recipient_email'] = $bccRecipientEmail;
 
         return $obj;
     }
@@ -261,7 +261,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyAddress(?string $companyAddress): self
     {
         $obj = clone $this;
-        $obj->company_address = $companyAddress;
+        $obj['company_address'] = $companyAddress;
 
         return $obj;
     }
@@ -272,7 +272,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyCity(?string $companyCity): self
     {
         $obj = clone $this;
-        $obj->company_city = $companyCity;
+        $obj['company_city'] = $companyCity;
 
         return $obj;
     }
@@ -283,7 +283,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyCountry(?string $companyCountry): self
     {
         $obj = clone $this;
-        $obj->company_country = $companyCountry;
+        $obj['company_country'] = $companyCountry;
 
         return $obj;
     }
@@ -294,7 +294,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyEmail(?string $companyEmail): self
     {
         $obj = clone $this;
-        $obj->company_email = $companyEmail;
+        $obj['company_email'] = $companyEmail;
 
         return $obj;
     }
@@ -305,7 +305,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyName(?string $companyName): self
     {
         $obj = clone $this;
-        $obj->company_name = $companyName;
+        $obj['company_name'] = $companyName;
 
         return $obj;
     }
@@ -316,7 +316,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyNumber(?string $companyNumber): self
     {
         $obj = clone $this;
-        $obj->company_number = $companyNumber;
+        $obj['company_number'] = $companyNumber;
 
         return $obj;
     }
@@ -327,7 +327,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyTaxID(?string $companyTaxID): self
     {
         $obj = clone $this;
-        $obj->company_tax_id = $companyTaxID;
+        $obj['company_tax_id'] = $companyTaxID;
 
         return $obj;
     }
@@ -338,7 +338,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withCompanyZip(?string $companyZip): self
     {
         $obj = clone $this;
-        $obj->company_zip = $companyZip;
+        $obj['company_zip'] = $companyZip;
 
         return $obj;
     }
@@ -346,7 +346,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -359,7 +359,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withIbans(?array $ibans): self
     {
         $obj = clone $this;
-        $obj->ibans = $ibans;
+        $obj['ibans'] = $ibans;
 
         return $obj;
     }
@@ -372,7 +372,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withPeppolIDs(?array $peppolIDs): self
     {
         $obj = clone $this;
-        $obj->peppol_ids = $peppolIDs;
+        $obj['peppol_ids'] = $peppolIDs;
 
         return $obj;
     }
@@ -383,7 +383,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withSmpRegistration(?bool $smpRegistration): self
     {
         $obj = clone $this;
-        $obj->smp_registration = $smpRegistration;
+        $obj['smp_registration'] = $smpRegistration;
 
         return $obj;
     }
@@ -395,7 +395,7 @@ final class MeGetResponse implements BaseModel, ResponseConverter
         ?\DateTimeInterface $smpRegistrationDate
     ): self {
         $obj = clone $this;
-        $obj->smp_registration_date = $smpRegistrationDate;
+        $obj['smp_registration_date'] = $smpRegistrationDate;
 
         return $obj;
     }

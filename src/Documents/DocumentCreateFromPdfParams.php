@@ -64,10 +64,10 @@ final class DocumentCreateFromPdfParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->file = $file;
+        $obj['file'] = $file;
 
-        null !== $customer_tax_id && $obj->customer_tax_id = $customer_tax_id;
-        null !== $vendor_tax_id && $obj->vendor_tax_id = $vendor_tax_id;
+        null !== $customer_tax_id && $obj['customer_tax_id'] = $customer_tax_id;
+        null !== $vendor_tax_id && $obj['vendor_tax_id'] = $vendor_tax_id;
 
         return $obj;
     }
@@ -75,7 +75,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public function withFile(string $file): self
     {
         $obj = clone $this;
-        $obj->file = $file;
+        $obj['file'] = $file;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public function withCustomerTaxID(?string $customerTaxID): self
     {
         $obj = clone $this;
-        $obj->customer_tax_id = $customerTaxID;
+        $obj['customer_tax_id'] = $customerTaxID;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public function withVendorTaxID(?string $vendorTaxID): self
     {
         $obj = clone $this;
-        $obj->vendor_tax_id = $vendorTaxID;
+        $obj['vendor_tax_id'] = $vendorTaxID;
 
         return $obj;
     }

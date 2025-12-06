@@ -58,8 +58,8 @@ final class Identifier implements BaseModel
     {
         $obj = new self;
 
-        $obj->scheme = $scheme;
-        $obj->value = $value;
+        $obj['scheme'] = $scheme;
+        $obj['value'] = $value;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class Identifier implements BaseModel
     public function withScheme(string $scheme): self
     {
         $obj = clone $this;
-        $obj->scheme = $scheme;
+        $obj['scheme'] = $scheme;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class Identifier implements BaseModel
     public function withValue(string $value): self
     {
         $obj = clone $this;
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }

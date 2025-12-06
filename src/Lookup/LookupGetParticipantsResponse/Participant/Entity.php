@@ -81,7 +81,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Identifier> $identifiers
+     * @param list<Identifier|array{scheme: string, value: string}> $identifiers
      */
     public static function with(
         ?string $additional_info = null,
@@ -94,13 +94,13 @@ final class Entity implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $additional_info && $obj->additional_info = $additional_info;
-        null !== $country_code && $obj->country_code = $country_code;
-        null !== $geo_info && $obj->geo_info = $geo_info;
-        null !== $identifiers && $obj->identifiers = $identifiers;
-        null !== $name && $obj->name = $name;
-        null !== $registration_date && $obj->registration_date = $registration_date;
-        null !== $website && $obj->website = $website;
+        null !== $additional_info && $obj['additional_info'] = $additional_info;
+        null !== $country_code && $obj['country_code'] = $country_code;
+        null !== $geo_info && $obj['geo_info'] = $geo_info;
+        null !== $identifiers && $obj['identifiers'] = $identifiers;
+        null !== $name && $obj['name'] = $name;
+        null !== $registration_date && $obj['registration_date'] = $registration_date;
+        null !== $website && $obj['website'] = $website;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class Entity implements BaseModel
     public function withAdditionalInfo(?string $additionalInfo): self
     {
         $obj = clone $this;
-        $obj->additional_info = $additionalInfo;
+        $obj['additional_info'] = $additionalInfo;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class Entity implements BaseModel
     public function withCountryCode(?string $countryCode): self
     {
         $obj = clone $this;
-        $obj->country_code = $countryCode;
+        $obj['country_code'] = $countryCode;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class Entity implements BaseModel
     public function withGeoInfo(?string $geoInfo): self
     {
         $obj = clone $this;
-        $obj->geo_info = $geoInfo;
+        $obj['geo_info'] = $geoInfo;
 
         return $obj;
     }
@@ -141,12 +141,12 @@ final class Entity implements BaseModel
     /**
      * List of business identifiers.
      *
-     * @param list<Identifier> $identifiers
+     * @param list<Identifier|array{scheme: string, value: string}> $identifiers
      */
     public function withIdentifiers(array $identifiers): self
     {
         $obj = clone $this;
-        $obj->identifiers = $identifiers;
+        $obj['identifiers'] = $identifiers;
 
         return $obj;
     }
@@ -157,7 +157,7 @@ final class Entity implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -168,7 +168,7 @@ final class Entity implements BaseModel
     public function withRegistrationDate(?string $registrationDate): self
     {
         $obj = clone $this;
-        $obj->registration_date = $registrationDate;
+        $obj['registration_date'] = $registrationDate;
 
         return $obj;
     }
@@ -179,7 +179,7 @@ final class Entity implements BaseModel
     public function withWebsite(?string $website): self
     {
         $obj = clone $this;
-        $obj->website = $website;
+        $obj['website'] = $website;
 
         return $obj;
     }

@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Lookup\Certificate;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Endpoint;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
@@ -60,14 +61,26 @@ final class Process implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   address: string,
+     *   transportProfile: string,
+     *   certificate?: Certificate|null,
+     *   serviceActivationDate?: string|null,
+     *   serviceDescription?: string|null,
+     *   serviceExpirationDate?: string|null,
+     *   technicalContactUrl?: string|null,
+     *   technicalInformationUrl?: string|null,
+     * }> $endpoints
+     * @param ProcessID|array{scheme: string, value: string} $processId
      */
-    public static function with(array $endpoints, ProcessID $processId): self
-    {
+    public static function with(
+        array $endpoints,
+        ProcessID|array $processId
+    ): self {
         $obj = new self;
 
-        $obj->endpoints = $endpoints;
-        $obj->processId = $processId;
+        $obj['endpoints'] = $endpoints;
+        $obj['processId'] = $processId;
 
         return $obj;
     }
@@ -75,23 +88,34 @@ final class Process implements BaseModel
     /**
      * List of endpoints supporting this process.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   address: string,
+     *   transportProfile: string,
+     *   certificate?: Certificate|null,
+     *   serviceActivationDate?: string|null,
+     *   serviceDescription?: string|null,
+     *   serviceExpirationDate?: string|null,
+     *   technicalContactUrl?: string|null,
+     *   technicalInformationUrl?: string|null,
+     * }> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {
         $obj = clone $this;
-        $obj->endpoints = $endpoints;
+        $obj['endpoints'] = $endpoints;
 
         return $obj;
     }
 
     /**
      * Identifier of the process.
+     *
+     * @param ProcessID|array{scheme: string, value: string} $processID
      */
-    public function withProcessID(ProcessID $processID): self
+    public function withProcessID(ProcessID|array $processID): self
     {
         $obj = clone $this;
-        $obj->processId = $processID;
+        $obj['processId'] = $processID;
 
         return $obj;
     }

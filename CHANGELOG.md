@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2025-12-06)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* allow both model class instances and arrays in setters ([f22de1a](https://github.com/e-invoice-be/e-invoice-php/commit/f22de1aa99924f6721be1ab4a593f76e935661b9))
+
 ## 0.5.0 (2025-12-05)
 
 Full Changelog: [v0.4.1...v0.5.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.4.1...v0.5.0)

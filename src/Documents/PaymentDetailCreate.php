@@ -63,10 +63,10 @@ final class PaymentDetailCreate implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $bank_account_number && $obj->bank_account_number = $bank_account_number;
-        null !== $iban && $obj->iban = $iban;
-        null !== $payment_reference && $obj->payment_reference = $payment_reference;
-        null !== $swift && $obj->swift = $swift;
+        null !== $bank_account_number && $obj['bank_account_number'] = $bank_account_number;
+        null !== $iban && $obj['iban'] = $iban;
+        null !== $payment_reference && $obj['payment_reference'] = $payment_reference;
+        null !== $swift && $obj['swift'] = $swift;
 
         return $obj;
     }
@@ -77,7 +77,7 @@ final class PaymentDetailCreate implements BaseModel
     public function withBankAccountNumber(?string $bankAccountNumber): self
     {
         $obj = clone $this;
-        $obj->bank_account_number = $bankAccountNumber;
+        $obj['bank_account_number'] = $bankAccountNumber;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class PaymentDetailCreate implements BaseModel
     public function withIban(?string $iban): self
     {
         $obj = clone $this;
-        $obj->iban = $iban;
+        $obj['iban'] = $iban;
 
         return $obj;
     }
@@ -99,7 +99,7 @@ final class PaymentDetailCreate implements BaseModel
     public function withPaymentReference(?string $paymentReference): self
     {
         $obj = clone $this;
-        $obj->payment_reference = $paymentReference;
+        $obj['payment_reference'] = $paymentReference;
 
         return $obj;
     }
@@ -110,7 +110,7 @@ final class PaymentDetailCreate implements BaseModel
     public function withSwift(?string $swift): self
     {
         $obj = clone $this;
-        $obj->swift = $swift;
+        $obj['swift'] = $swift;
 
         return $obj;
     }

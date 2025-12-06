@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
+use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
 /**
  * Information about a Peppol participant's endpoint.
@@ -84,8 +85,11 @@ final class Endpoint implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentType> $documentTypes
-     * @param list<Process>|null $processes
+     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
+     * @param list<Process|array{
+     *   endpoints: list<Process\Endpoint>,
+     *   processId: ProcessID,
+     * }>|null $processes
      */
     public static function with(
         array $documentTypes,
@@ -96,12 +100,12 @@ final class Endpoint implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->documentTypes = $documentTypes;
-        $obj->status = $status;
-        $obj->url = $url;
+        $obj['documentTypes'] = $documentTypes;
+        $obj['status'] = $status;
+        $obj['url'] = $url;
 
-        null !== $error && $obj->error = $error;
-        null !== $processes && $obj->processes = $processes;
+        null !== $error && $obj['error'] = $error;
+        null !== $processes && $obj['processes'] = $processes;
 
         return $obj;
     }
@@ -109,12 +113,12 @@ final class Endpoint implements BaseModel
     /**
      * List of document types supported by this endpoint.
      *
-     * @param list<DocumentType> $documentTypes
+     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
      */
     public function withDocumentTypes(array $documentTypes): self
     {
         $obj = clone $this;
-        $obj->documentTypes = $documentTypes;
+        $obj['documentTypes'] = $documentTypes;
 
         return $obj;
     }
@@ -125,7 +129,7 @@ final class Endpoint implements BaseModel
     public function withStatus(string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -136,7 +140,7 @@ final class Endpoint implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -147,7 +151,7 @@ final class Endpoint implements BaseModel
     public function withError(?string $error): self
     {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }
@@ -155,12 +159,15 @@ final class Endpoint implements BaseModel
     /**
      * List of processes supported by this endpoint.
      *
-     * @param list<Process>|null $processes
+     * @param list<Process|array{
+     *   endpoints: list<Process\Endpoint>,
+     *   processId: ProcessID,
+     * }>|null $processes
      */
     public function withProcesses(?array $processes): self
     {
         $obj = clone $this;
-        $obj->processes = $processes;
+        $obj['processes'] = $processes;
 
         return $obj;
     }

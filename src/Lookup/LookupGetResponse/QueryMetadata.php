@@ -98,11 +98,11 @@ final class QueryMetadata implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->identifierScheme = $identifierScheme;
-        $obj->identifierValue = $identifierValue;
-        $obj->smlDomain = $smlDomain;
-        $obj->timestamp = $timestamp;
-        $obj->version = $version;
+        $obj['identifierScheme'] = $identifierScheme;
+        $obj['identifierValue'] = $identifierValue;
+        $obj['smlDomain'] = $smlDomain;
+        $obj['timestamp'] = $timestamp;
+        $obj['version'] = $version;
 
         return $obj;
     }
@@ -113,7 +113,7 @@ final class QueryMetadata implements BaseModel
     public function withIdentifierScheme(string $identifierScheme): self
     {
         $obj = clone $this;
-        $obj->identifierScheme = $identifierScheme;
+        $obj['identifierScheme'] = $identifierScheme;
 
         return $obj;
     }
@@ -124,7 +124,7 @@ final class QueryMetadata implements BaseModel
     public function withIdentifierValue(string $identifierValue): self
     {
         $obj = clone $this;
-        $obj->identifierValue = $identifierValue;
+        $obj['identifierValue'] = $identifierValue;
 
         return $obj;
     }
@@ -135,7 +135,7 @@ final class QueryMetadata implements BaseModel
     public function withSmlDomain(string $smlDomain): self
     {
         $obj = clone $this;
-        $obj->smlDomain = $smlDomain;
+        $obj['smlDomain'] = $smlDomain;
 
         return $obj;
     }
@@ -146,7 +146,7 @@ final class QueryMetadata implements BaseModel
     public function withTimestamp(string $timestamp): self
     {
         $obj = clone $this;
-        $obj->timestamp = $timestamp;
+        $obj['timestamp'] = $timestamp;
 
         return $obj;
     }
@@ -157,7 +157,7 @@ final class QueryMetadata implements BaseModel
     public function withVersion(string $version): self
     {
         $obj = clone $this;
-        $obj->version = $version;
+        $obj['version'] = $version;
 
         return $obj;
     }
