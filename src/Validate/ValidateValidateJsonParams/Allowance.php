@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Validate\ValidateValidateJsonParams;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Allowance\ReasonCode;
@@ -31,25 +31,25 @@ final class Allowance implements BaseModel
     /**
      * The allowance amount, without VAT. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $amount;
 
     /**
      * The base amount that may be used, in conjunction with the allowance percentage, to calculate the allowance amount. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $base_amount;
 
     /**
      * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $multiplier_factor;
 
     /**
      * The reason for the allowance.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
     /**
@@ -57,7 +57,7 @@ final class Allowance implements BaseModel
      *
      * @var value-of<ReasonCode>|null $reason_code
      */
-    #[Api(enum: ReasonCode::class, nullable: true, optional: true)]
+    #[Optional(enum: ReasonCode::class, nullable: true)]
     public ?string $reason_code;
 
     /**
@@ -65,16 +65,15 @@ final class Allowance implements BaseModel
      *
      * @var value-of<TaxCode>|null $tax_code
      */
-    #[Api(
+    #[Optional(
         enum: TaxCode::class,
-        optional: true,
     )]
     public ?string $tax_code;
 
     /**
      * The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $tax_rate;
 
     public function __construct()

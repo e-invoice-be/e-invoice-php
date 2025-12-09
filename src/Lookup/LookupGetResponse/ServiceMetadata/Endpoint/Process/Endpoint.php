@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\Certificate;
@@ -31,49 +32,49 @@ final class Endpoint implements BaseModel
     /**
      * URL or address of the endpoint.
      */
-    #[Api]
+    #[Required]
     public string $address;
 
     /**
      * Transport profile used by this endpoint.
      */
-    #[Api]
+    #[Required]
     public string $transportProfile;
 
     /**
      * Certificate information for a Peppol endpoint.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?Certificate $certificate;
 
     /**
      * ISO 8601 date when the service was activated.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $serviceActivationDate;
 
     /**
      * Human-readable description of the service.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $serviceDescription;
 
     /**
      * ISO 8601 date when the service will expire.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $serviceExpirationDate;
 
     /**
      * URL for technical contact information.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $technicalContactUrl;
 
     /**
      * URL for technical documentation.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $technicalInformationUrl;
 
     /**

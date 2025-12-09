@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Validate;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
@@ -24,20 +25,20 @@ final class UblDocumentValidation implements BaseModel
     /** @use SdkModel<UblDocumentValidationShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
+    #[Required]
     public ?string $file_name;
 
-    #[Api]
+    #[Required]
     public bool $is_valid;
 
     /** @var list<Issue> $issues */
-    #[Api(list: Issue::class)]
+    #[Required(list: Issue::class)]
     public array $issues;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $ubl_document;
 
     /**

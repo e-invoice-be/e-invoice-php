@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\DocumentCreate;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentCreate\Item\Allowance;
@@ -38,17 +38,16 @@ final class Item implements BaseModel
      *
      * @var list<Allowance>|null $allowances
      */
-    #[Api(
+    #[Optional(
         list: Allowance::class,
         nullable: true,
-        optional: true,
     )]
     public ?array $allowances;
 
     /**
      * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $amount;
 
     /**
@@ -56,45 +55,44 @@ final class Item implements BaseModel
      *
      * @var list<Charge>|null $charges
      */
-    #[Api(
+    #[Optional(
         list: Charge::class,
         nullable: true,
-        optional: true,
     )]
     public ?array $charges;
 
     /** @var null|null $date */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public null $date;
 
     /**
      * The description of the line item.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
      * The product code of the line item.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $product_code;
 
     /**
      * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals. Can be negative for credit notes or corrections.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $quantity;
 
     /**
      * The total VAT amount for the line item. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $tax;
 
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $tax_rate;
 
     /**
@@ -102,13 +100,13 @@ final class Item implements BaseModel
      *
      * @var value-of<UnitOfMeasureCode>|null $unit
      */
-    #[Api(enum: UnitOfMeasureCode::class, nullable: true, optional: true)]
+    #[Optional(enum: UnitOfMeasureCode::class, nullable: true)]
     public ?string $unit;
 
     /**
      * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $unit_price;
 
     public function __construct()

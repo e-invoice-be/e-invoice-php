@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -27,31 +27,31 @@ final class QueryMetadata implements BaseModel
     /**
      * Scheme of the identifier, typically 'iso6523-actorid-upis'.
      */
-    #[Api]
+    #[Required]
     public string $identifierScheme;
 
     /**
      * The actual Peppol ID value being queried.
      */
-    #[Api]
+    #[Required]
     public string $identifierValue;
 
     /**
      * Domain of the SML (Service Metadata Locator) used for the lookup.
      */
-    #[Api]
+    #[Required]
     public string $smlDomain;
 
     /**
      * ISO 8601 timestamp of when the query was executed.
      */
-    #[Api]
+    #[Required]
     public string $timestamp;
 
     /**
      * Version of the API used for the lookup.
      */
-    #[Api]
+    #[Required]
     public string $version;
 
     /**

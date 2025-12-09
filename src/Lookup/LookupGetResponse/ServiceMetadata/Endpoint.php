@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
@@ -32,25 +33,25 @@ final class Endpoint implements BaseModel
      *
      * @var list<DocumentType> $documentTypes
      */
-    #[Api(list: DocumentType::class)]
+    #[Required(list: DocumentType::class)]
     public array $documentTypes;
 
     /**
      * Status of the endpoint lookup: 'success', 'error', or 'pending'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**
      * URL of the endpoint.
      */
-    #[Api]
+    #[Required]
     public string $url;
 
     /**
      * Error message if endpoint lookup failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error;
 
     /**
@@ -58,7 +59,7 @@ final class Endpoint implements BaseModel
      *
      * @var list<Process>|null $processes
      */
-    #[Api(list: Process::class, nullable: true, optional: true)]
+    #[Optional(list: Process::class, nullable: true)]
     public ?array $processes;
 
     /**

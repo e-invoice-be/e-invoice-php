@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
@@ -30,25 +31,25 @@ final class LookupGetParticipantsResponse implements BaseModel
     /**
      * Query terms used for search.
      */
-    #[Api]
+    #[Required]
     public string $query_terms;
 
     /**
      * Search date of the result.
      */
-    #[Api]
+    #[Required]
     public string $search_date;
 
     /**
      * Total number of results.
      */
-    #[Api]
+    #[Required]
     public int $total_count;
 
     /**
      * Number of results returned by the API.
      */
-    #[Api]
+    #[Required]
     public int $used_count;
 
     /**
@@ -56,7 +57,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * @var list<Participant>|null $participants
      */
-    #[Api(list: Participant::class, optional: true)]
+    #[Optional(list: Participant::class)]
     public ?array $participants;
 
     /**

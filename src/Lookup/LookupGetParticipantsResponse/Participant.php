@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
@@ -29,13 +30,13 @@ final class Participant implements BaseModel
     /**
      * Peppol ID of the participant.
      */
-    #[Api]
+    #[Required]
     public string $peppol_id;
 
     /**
      * Peppol scheme of the participant.
      */
-    #[Api]
+    #[Required]
     public string $peppol_scheme;
 
     /**
@@ -43,7 +44,7 @@ final class Participant implements BaseModel
      *
      * @var list<DocumentType>|null $document_types
      */
-    #[Api(list: DocumentType::class, optional: true)]
+    #[Optional(list: DocumentType::class)]
     public ?array $document_types;
 
     /**
@@ -51,7 +52,7 @@ final class Participant implements BaseModel
      *
      * @var list<Entity>|null $entities
      */
-    #[Api(list: Entity::class, optional: true)]
+    #[Optional(list: Entity::class)]
     public ?array $entities;
 
     /**

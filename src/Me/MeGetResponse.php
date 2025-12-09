@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Me;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Me\MeGetResponse\Plan;
@@ -38,10 +39,10 @@ final class MeGetResponse implements BaseModel
     /**
      * Credit balance of the tenant.
      */
-    #[Api]
+    #[Required]
     public int $credit_balance;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
@@ -49,64 +50,64 @@ final class MeGetResponse implements BaseModel
      *
      * @var value-of<Plan> $plan
      */
-    #[Api(enum: Plan::class)]
+    #[Required(enum: Plan::class)]
     public string $plan;
 
     /**
      * BCC recipient email to deliver documents.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $bcc_recipient_email;
 
     /**
      * Address of the company. Must be in the form of `Street Name Street Number`.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_address;
 
     /**
      * City of the company.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_city;
 
     /**
      * Country of the company.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_country;
 
     /**
      * Email of the company.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_email;
 
     /**
      * Name of the company. Must include the company type. For example: `BV`, `NV`, `CVBA`, `VOF`.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_name;
 
     /**
      * Company number. For Belgium this is the CBE number or their EUID (European Unique Identifier) number.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_number;
 
     /**
      * Company tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_tax_id;
 
     /**
      * Zip code of the company.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $company_zip;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
@@ -114,7 +115,7 @@ final class MeGetResponse implements BaseModel
      *
      * @var list<string>|null $ibans
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $ibans;
 
     /**
@@ -122,19 +123,19 @@ final class MeGetResponse implements BaseModel
      *
      * @var list<string>|null $peppol_ids
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $peppol_ids;
 
     /**
      * Whether the tenant is registered on our SMP.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $smp_registration;
 
     /**
      * Date when the tenant was registered on SMP.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $smp_registration_date;
 
     /**

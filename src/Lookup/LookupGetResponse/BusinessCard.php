@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
@@ -29,25 +30,25 @@ final class BusinessCard implements BaseModel
      *
      * @var list<Entity> $entities
      */
-    #[Api(list: Entity::class)]
+    #[Required(list: Entity::class)]
     public array $entities;
 
     /**
      * Time taken to query the business card in milliseconds.
      */
-    #[Api]
+    #[Required]
     public float $queryTimeMs;
 
     /**
      * Status of the business card lookup: 'success', 'error', or 'pending'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**
      * Error message if business card lookup failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error;
 
     /**

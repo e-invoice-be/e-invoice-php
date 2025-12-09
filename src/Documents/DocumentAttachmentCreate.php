@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -21,19 +22,19 @@ final class DocumentAttachmentCreate implements BaseModel
     /** @use SdkModel<DocumentAttachmentCreateShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $file_name;
 
     /**
      * Base64 encoded file data.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $file_data;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $file_size;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $file_type;
 
     /**

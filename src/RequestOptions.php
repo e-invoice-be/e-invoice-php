@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI;
 
-use EInvoiceAPI\Core\Attributes\Api as Property;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required as Property;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Implementation\Omit;
@@ -49,26 +50,26 @@ final class RequestOptions implements BaseModel
     public float $maxRetryDelay = 8.0;
 
     /** @var array<string,string|int|list<string|int>|null>|null $extraHeaders */
-    #[Property(optional: true)]
+    #[Optional]
     public ?array $extraHeaders;
 
     /** @var array<string,mixed>|null $extraQueryParams */
-    #[Property(optional: true)]
+    #[Optional]
     public ?array $extraQueryParams;
 
-    #[Property(optional: true)]
+    #[Optional]
     public mixed $extraBodyParams;
 
-    #[Property(optional: true)]
+    #[Optional]
     public ?ClientInterface $transporter;
 
-    #[Property(optional: true)]
+    #[Optional]
     public ?UriFactoryInterface $uriFactory;
 
-    #[Property(optional: true)]
+    #[Optional]
     public ?StreamFactoryInterface $streamFactory;
 
-    #[Property(optional: true)]
+    #[Optional]
     public ?RequestFactoryInterface $requestFactory;
 
     public function __construct()

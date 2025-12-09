@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Webhooks;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -25,13 +26,13 @@ final class WebhookCreateParams implements BaseModel
     use SdkParams;
 
     /** @var list<string> $events */
-    #[Api(list: 'string')]
+    #[Required(list: 'string')]
     public array $events;
 
-    #[Api]
+    #[Required]
     public string $url;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $enabled;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Validate;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
@@ -31,29 +32,29 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     /**
      * Business card information for the Peppol ID.
      */
-    #[Api]
+    #[Required]
     public ?BusinessCard $business_card;
 
     /**
      * Whether a business card is set at the SMP.
      */
-    #[Api]
+    #[Required]
     public bool $business_card_valid;
 
     /**
      * Whether the DNS resolves to a valid SMP.
      */
-    #[Api]
+    #[Required]
     public bool $dns_valid;
 
     /**
      * Whether the Peppol ID is valid and registered in the Peppol network.
      */
-    #[Api]
+    #[Required]
     public bool $is_valid;
 
     /** @var list<string>|null $supported_document_types */
-    #[Api(list: 'string', optional: true)]
+    #[Optional(list: 'string')]
     public ?array $supported_document_types;
 
     /**
