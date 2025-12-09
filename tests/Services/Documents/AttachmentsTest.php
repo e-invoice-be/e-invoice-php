@@ -114,7 +114,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add(
             'document_id',
-            ['file' => file_get_contents(__FILE__) ?: '']
+            ['file' => 'file']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -130,7 +130,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add(
             'document_id',
-            ['file' => file_get_contents(__FILE__) ?: '']
+            ['file' => 'file']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
