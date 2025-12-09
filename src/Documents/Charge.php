@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\Charge\ReasonCode;
@@ -31,25 +31,25 @@ final class Charge implements BaseModel
     /**
      * The charge amount, without VAT. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $amount;
 
     /**
      * The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $base_amount;
 
     /**
      * The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $multiplier_factor;
 
     /**
      * The reason for the charge.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
     /**
@@ -57,7 +57,7 @@ final class Charge implements BaseModel
      *
      * @var value-of<ReasonCode>|null $reason_code
      */
-    #[Api(enum: ReasonCode::class, nullable: true, optional: true)]
+    #[Optional(enum: ReasonCode::class, nullable: true)]
     public ?string $reason_code;
 
     /**
@@ -69,13 +69,13 @@ final class Charge implements BaseModel
      *
      * @var value-of<TaxCode>|null $tax_code
      */
-    #[Api(enum: TaxCode::class, nullable: true, optional: true)]
+    #[Optional(enum: TaxCode::class, nullable: true)]
     public ?string $tax_code;
 
     /**
      * The VAT rate, represented as percentage that applies to the charge.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $tax_rate;
 
     public function __construct()

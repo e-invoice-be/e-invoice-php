@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Webhooks;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -18,7 +18,7 @@ final class WebhookDeleteResponse implements BaseModel
     /** @use SdkModel<WebhookDeleteResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public bool $is_deleted;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentCreate\Allowance;
@@ -74,40 +74,38 @@ final class DocumentCreate implements BaseModel
     use SdkModel;
 
     /** @var list<Allowance>|null $allowances */
-    #[Api(
+    #[Optional(
         list: Allowance::class,
-        nullable: true,
-        optional: true,
+        nullable: true
     )]
     public ?array $allowances;
 
     /**
      * The amount due for payment. Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $amount_due;
 
     /** @var list<DocumentAttachmentCreate>|null $attachments */
-    #[Api(list: DocumentAttachmentCreate::class, nullable: true, optional: true)]
+    #[Optional(list: DocumentAttachmentCreate::class, nullable: true)]
     public ?array $attachments;
 
     /**
      * The billing address (if different from customer address).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $billing_address;
 
     /**
      * The recipient name at the billing address.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $billing_address_recipient;
 
     /** @var list<Charge>|null $charges */
-    #[Api(
+    #[Optional(
         list: Charge::class,
-        nullable: true,
-        optional: true,
+        nullable: true
     )]
     public ?array $charges;
 
@@ -116,49 +114,49 @@ final class DocumentCreate implements BaseModel
      *
      * @var value-of<CurrencyCode>|null $currency
      */
-    #[Api(enum: CurrencyCode::class, optional: true)]
+    #[Optional(enum: CurrencyCode::class)]
     public ?string $currency;
 
     /**
      * The address of the customer/buyer.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_address;
 
     /**
      * The recipient name at the customer address.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_address_recipient;
 
     /**
      * Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_company_id;
 
     /**
      * The email address of the customer.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_email;
 
     /**
      * The unique identifier for the customer in your system.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_id;
 
     /**
      * The company name of the customer/buyer.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_name;
 
     /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_tax_id;
 
     /**
@@ -166,7 +164,7 @@ final class DocumentCreate implements BaseModel
      *
      * @var value-of<DocumentDirection>|null $direction
      */
-    #[Api(enum: DocumentDirection::class, optional: true)]
+    #[Optional(enum: DocumentDirection::class)]
     public ?string $direction;
 
     /**
@@ -174,31 +172,31 @@ final class DocumentCreate implements BaseModel
      *
      * @var value-of<DocumentType>|null $document_type
      */
-    #[Api(enum: DocumentType::class, optional: true)]
+    #[Optional(enum: DocumentType::class)]
     public ?string $document_type;
 
     /**
      * The date when payment is due.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $due_date;
 
     /**
      * The date when the invoice was issued.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $invoice_date;
 
     /**
      * The unique invoice identifier/number.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $invoice_id;
 
     /**
      * The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $invoice_total;
 
     /**
@@ -206,83 +204,83 @@ final class DocumentCreate implements BaseModel
      *
      * @var list<Item>|null $items
      */
-    #[Api(list: Item::class, optional: true)]
+    #[Optional(list: Item::class)]
     public ?array $items;
 
     /**
      * Additional notes or comments for the invoice.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $note;
 
     /** @var list<PaymentDetailCreate>|null $payment_details */
-    #[Api(list: PaymentDetailCreate::class, nullable: true, optional: true)]
+    #[Optional(list: PaymentDetailCreate::class, nullable: true)]
     public ?array $payment_details;
 
     /**
      * The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30').
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_term;
 
     /**
      * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $previous_unpaid_balance;
 
     /**
      * The purchase order reference number.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $purchase_order;
 
     /**
      * The address where payment should be sent or remitted to.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $remittance_address;
 
     /**
      * The recipient name at the remittance address.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $remittance_address_recipient;
 
     /**
      * The address where services were performed or goods were delivered.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $service_address;
 
     /**
      * The recipient name at the service address.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $service_address_recipient;
 
     /**
      * The end date of the service period or delivery period.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $service_end_date;
 
     /**
      * The start date of the service period or delivery period.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $service_start_date;
 
     /**
      * The shipping/delivery address.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $shipping_address;
 
     /**
      * The recipient name at the shipping address.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $shipping_address_recipient;
 
     /**
@@ -290,13 +288,13 @@ final class DocumentCreate implements BaseModel
      *
      * @var value-of<DocumentState>|null $state
      */
-    #[Api(enum: DocumentState::class, optional: true)]
+    #[Optional(enum: DocumentState::class)]
     public ?string $state;
 
     /**
      * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $subtotal;
 
     /**
@@ -304,23 +302,23 @@ final class DocumentCreate implements BaseModel
      *
      * @var value-of<TaxCode>|null $tax_code
      */
-    #[Api(enum: TaxCode::class, optional: true)]
+    #[Optional(enum: TaxCode::class)]
     public ?string $tax_code;
 
     /** @var list<TaxDetail>|null $tax_details */
-    #[Api(list: TaxDetail::class, nullable: true, optional: true)]
+    #[Optional(list: TaxDetail::class, nullable: true)]
     public ?array $tax_details;
 
     /**
      * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $total_discount;
 
     /**
      * The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $total_tax;
 
     /**
@@ -331,49 +329,49 @@ final class DocumentCreate implements BaseModel
      *
      * @var value-of<Vatex>|null $vatex
      */
-    #[Api(enum: Vatex::class, nullable: true, optional: true)]
+    #[Optional(enum: Vatex::class, nullable: true)]
     public ?string $vatex;
 
     /**
      * Textual explanation for VAT exemption.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $vatex_note;
 
     /**
      * The address of the vendor/seller.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $vendor_address;
 
     /**
      * The recipient name at the vendor address.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $vendor_address_recipient;
 
     /**
      * Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $vendor_company_id;
 
     /**
      * The email address of the vendor.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $vendor_email;
 
     /**
      * The name of the vendor/seller/supplier.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $vendor_name;
 
     /**
      * Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $vendor_tax_id;
 
     public function __construct()

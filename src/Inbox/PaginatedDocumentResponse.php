@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Inbox;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
@@ -35,19 +35,19 @@ final class PaginatedDocumentResponse implements BaseModel
     use SdkModel;
 
     /** @var list<DocumentResponse> $items */
-    #[Api(list: DocumentResponse::class)]
+    #[Required(list: DocumentResponse::class)]
     public array $items;
 
-    #[Api]
+    #[Required]
     public int $page;
 
-    #[Api]
+    #[Required]
     public int $page_size;
 
-    #[Api]
+    #[Required]
     public int $pages;
 
-    #[Api]
+    #[Required]
     public int $total;
 
     /**

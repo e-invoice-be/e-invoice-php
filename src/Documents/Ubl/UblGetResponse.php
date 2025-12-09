@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\Ubl;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -27,34 +28,34 @@ final class UblGetResponse implements BaseModel
     /** @use SdkModel<UblGetResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
+    #[Required]
     public string $file_name;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $file_hash;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $file_size;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $receiver_peppol_id;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $receiver_peppol_scheme;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $sender_peppol_id;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $sender_peppol_scheme;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $signed_url;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $validated_at;
 
     /**

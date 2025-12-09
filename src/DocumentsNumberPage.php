@@ -2,7 +2,7 @@
 
 namespace EInvoiceAPI;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkPage;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -35,16 +35,16 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $items */
-    #[Api(list: Item::class, optional: true)]
+    #[Optional(list: Item::class)]
     public ?array $items;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $total;
 
     /**

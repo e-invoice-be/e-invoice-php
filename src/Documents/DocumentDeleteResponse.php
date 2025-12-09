@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class DocumentDeleteResponse implements BaseModel
     /** @use SdkModel<DocumentDeleteResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public bool $is_deleted;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class ProcessID implements BaseModel
     /**
      * Scheme of the process identifier.
      */
-    #[Api]
+    #[Required]
     public string $scheme;
 
     /**
      * Value of the process identifier.
      */
-    #[Api]
+    #[Required]
     public string $value;
 
     /**

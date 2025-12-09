@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Outbox;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -36,37 +36,37 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     /**
      * Filter by issue date (from).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $date_from;
 
     /**
      * Filter by issue date (to).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $date_to;
 
     /**
      * Page number.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page;
 
     /**
      * Number of items per page.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     /**
      * Search in invoice number, seller/buyer names.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $search;
 
     /**
      * Filter by sender ID.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $sender;
 
     /**
@@ -74,7 +74,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      *
      * @var value-of<DocumentState>|null $state
      */
-    #[Api(enum: DocumentState::class, nullable: true, optional: true)]
+    #[Optional(enum: DocumentState::class, nullable: true)]
     public ?string $state;
 
     /**
@@ -82,7 +82,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      *
      * @var value-of<DocumentType>|null $type
      */
-    #[Api(enum: DocumentType::class, nullable: true, optional: true)]
+    #[Optional(enum: DocumentType::class, nullable: true)]
     public ?string $type;
 
     public function __construct()

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
@@ -31,25 +32,25 @@ final class ServiceMetadata implements BaseModel
      *
      * @var list<Endpoint> $endpoints
      */
-    #[Api(list: Endpoint::class)]
+    #[Required(list: Endpoint::class)]
     public array $endpoints;
 
     /**
      * Time taken to query the service metadata in milliseconds.
      */
-    #[Api]
+    #[Required]
     public float $queryTimeMs;
 
     /**
      * Status of the service metadata lookup: 'success', 'error', or 'pending'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**
      * Error message if service metadata lookup failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error;
 
     /**

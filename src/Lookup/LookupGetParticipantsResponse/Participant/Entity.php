@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifier;
@@ -30,19 +30,19 @@ final class Entity implements BaseModel
     /**
      * Additional information.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $additional_info;
 
     /**
      * Country code.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $country_code;
 
     /**
      * Geographic information.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $geo_info;
 
     /**
@@ -50,25 +50,25 @@ final class Entity implements BaseModel
      *
      * @var list<Identifier>|null $identifiers
      */
-    #[Api(list: Identifier::class, optional: true)]
+    #[Optional(list: Identifier::class)]
     public ?array $identifiers;
 
     /**
      * Business entity name.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
      * Registration date.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $registration_date;
 
     /**
      * Website URL.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $website;
 
     public function __construct()
