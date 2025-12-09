@@ -78,9 +78,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->validate->validateUbl([
-            'file' => file_get_contents(__FILE__) ?: '',
-        ]);
+        $result = $this->client->validate->validateUbl(['file' => 'file']);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
@@ -93,9 +91,7 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->validate->validateUbl([
-            'file' => file_get_contents(__FILE__) ?: '',
-        ]);
+        $result = $this->client->validate->validateUbl(['file' => 'file']);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
