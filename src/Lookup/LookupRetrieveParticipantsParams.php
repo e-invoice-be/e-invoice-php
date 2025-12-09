@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -27,13 +28,13 @@ final class LookupRetrieveParticipantsParams implements BaseModel
     /**
      * Query to lookup.
      */
-    #[Api]
+    #[Required]
     public string $query;
 
     /**
      * Country code of the company to lookup. If not provided, the search will be global.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $country_code;
 
     /**

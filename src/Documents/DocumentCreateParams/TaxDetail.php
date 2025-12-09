@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\DocumentCreateParams;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class TaxDetail implements BaseModel
     /**
      * The tax amount for this tax category. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public float|string|null $amount;
 
     /**
      * The tax rate as a percentage (e.g., '21.00', '6.00', '0.00').
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $rate;
 
     public function __construct()

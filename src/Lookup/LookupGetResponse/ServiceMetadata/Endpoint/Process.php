@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\Certificate;
@@ -28,13 +28,13 @@ final class Process implements BaseModel
      *
      * @var list<Endpoint> $endpoints
      */
-    #[Api(list: Endpoint::class)]
+    #[Required(list: Endpoint::class)]
     public array $endpoints;
 
     /**
      * Identifier of the process.
      */
-    #[Api]
+    #[Required]
     public ProcessID $processId;
 
     /**

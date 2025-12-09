@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -23,7 +24,7 @@ final class Certificate implements BaseModel
     /**
      * Status of the certificate validation: 'success', 'error', or 'pending'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**
@@ -31,13 +32,13 @@ final class Certificate implements BaseModel
      *
      * @var array<string,mixed>|null $details
      */
-    #[Api(map: 'mixed', nullable: true, optional: true)]
+    #[Optional(map: 'mixed', nullable: true)]
     public ?array $details;
 
     /**
      * Error message if certificate validation failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error;
 
     /**

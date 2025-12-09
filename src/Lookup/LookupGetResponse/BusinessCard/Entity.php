@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -28,25 +28,25 @@ final class Entity implements BaseModel
      *
      * @var list<string>|null $additionalInformation
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $additionalInformation;
 
     /**
      * ISO 3166-1 alpha-2 country code of the business entity.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $countryCode;
 
     /**
      * Name of the business entity.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
      * ISO 8601 date of when the entity was registered in Peppol.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $registrationDate;
 
     public function __construct()

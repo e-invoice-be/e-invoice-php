@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -24,25 +24,25 @@ final class PaymentDetailCreate implements BaseModel
     /**
      * Bank account number (for non-IBAN accounts).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $bank_account_number;
 
     /**
      * International Bank Account Number for payment transfers.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $iban;
 
     /**
      * Structured payment reference or communication (e.g., structured communication for Belgian bank transfers).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_reference;
 
     /**
      * SWIFT/BIC code of the bank.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $swift;
 
     public function __construct()

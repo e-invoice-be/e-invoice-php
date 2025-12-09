@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class DocumentType implements BaseModel
     /**
      * Scheme of the document type identifier.
      */
-    #[Api]
+    #[Required]
     public string $scheme;
 
     /**
      * Value of the document type identifier.
      */
-    #[Api]
+    #[Required]
     public string $value;
 
     /**

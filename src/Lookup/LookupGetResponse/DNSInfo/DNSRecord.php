@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -21,7 +21,7 @@ final class DNSRecord implements BaseModel
     /**
      * IP address found in the DNS record.
      */
-    #[Api]
+    #[Required]
     public string $ip;
 
     /**

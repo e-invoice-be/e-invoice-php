@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard;
@@ -46,7 +46,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Business card information for the Peppol participant.
      */
-    #[Api]
+    #[Required]
     public BusinessCard $businessCard;
 
     /**
@@ -54,13 +54,13 @@ final class LookupGetResponse implements BaseModel
      *
      * @var list<Certificate> $certificates
      */
-    #[Api(list: Certificate::class)]
+    #[Required(list: Certificate::class)]
     public array $certificates;
 
     /**
      * Information about the DNS lookup performed.
      */
-    #[Api]
+    #[Required]
     public DNSInfo $dnsInfo;
 
     /**
@@ -68,31 +68,31 @@ final class LookupGetResponse implements BaseModel
      *
      * @var list<string> $errors
      */
-    #[Api(list: 'string')]
+    #[Required(list: 'string')]
     public array $errors;
 
     /**
      * Total execution time of the lookup operation in milliseconds.
      */
-    #[Api]
+    #[Required]
     public float $executionTimeMs;
 
     /**
      * Metadata about the query that was performed.
      */
-    #[Api]
+    #[Required]
     public QueryMetadata $queryMetadata;
 
     /**
      * Service metadata information for the Peppol participant.
      */
-    #[Api]
+    #[Required]
     public ServiceMetadata $serviceMetadata;
 
     /**
      * Overall status of the lookup: 'success' or 'error'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**

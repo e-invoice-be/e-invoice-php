@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\Attachments;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -22,19 +23,19 @@ final class DocumentAttachment implements BaseModel
     /** @use SdkModel<DocumentAttachmentShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
+    #[Required]
     public string $file_name;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $file_size;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $file_type;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $file_url;
 
     /**
