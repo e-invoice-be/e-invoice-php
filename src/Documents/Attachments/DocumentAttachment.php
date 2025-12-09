@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Documents\Attachments;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DocumentAttachmentShape = array{
@@ -19,12 +17,10 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
  *   file_url?: string|null,
  * }
  */
-final class DocumentAttachment implements BaseModel, ResponseConverter
+final class DocumentAttachment implements BaseModel
 {
     /** @use SdkModel<DocumentAttachmentShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;

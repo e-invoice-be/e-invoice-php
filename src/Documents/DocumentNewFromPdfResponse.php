@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Documents\Allowance\ReasonCode;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse\Item;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse\TaxCode;
@@ -69,12 +67,10 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   vendor_tax_id?: string|null,
  * }
  */
-final class DocumentNewFromPdfResponse implements BaseModel, ResponseConverter
+final class DocumentNewFromPdfResponse implements BaseModel
 {
     /** @use SdkModel<DocumentNewFromPdfResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /** @var list<Allowance>|null $allowances */
     #[Api(list: Allowance::class, nullable: true, optional: true)]

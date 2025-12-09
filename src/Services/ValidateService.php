@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -136,14 +137,16 @@ final class ValidateService implements ValidateContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<UblDocumentValidation> */
+        $response = $this->client->request(
             method: 'post',
             path: 'api/validate/json',
             body: (object) $parsed,
             options: $options,
             convert: UblDocumentValidation::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -164,14 +167,16 @@ final class ValidateService implements ValidateContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<ValidateValidatePeppolIDResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/validate/peppol-id',
             query: $parsed,
             options: $options,
             convert: ValidateValidatePeppolIDResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -192,8 +197,8 @@ final class ValidateService implements ValidateContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<UblDocumentValidation> */
+        $response = $this->client->request(
             method: 'post',
             path: 'api/validate/ubl',
             headers: ['Content-Type' => 'multipart/form-data'],
@@ -201,5 +206,7 @@ final class ValidateService implements ValidateContract
             options: $options,
             convert: UblDocumentValidation::class,
         );
+
+        return $response->parse();
     }
 }

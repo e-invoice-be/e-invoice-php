@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
 use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo;
@@ -40,12 +38,10 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
  *   status: string,
  * }
  */
-final class LookupGetResponse implements BaseModel, ResponseConverter
+final class LookupGetResponse implements BaseModel
 {
     /** @use SdkModel<LookupGetResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Business card information for the Peppol participant.

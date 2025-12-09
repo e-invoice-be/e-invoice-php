@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
@@ -52,8 +53,8 @@ final class InboxService implements InboxContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentsNumberPage<DocumentResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/inbox/',
             query: $parsed,
@@ -61,6 +62,8 @@ final class InboxService implements InboxContract
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -83,8 +86,8 @@ final class InboxService implements InboxContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentsNumberPage<DocumentResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/inbox/credit-notes',
             query: $parsed,
@@ -92,6 +95,8 @@ final class InboxService implements InboxContract
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -114,8 +119,8 @@ final class InboxService implements InboxContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentsNumberPage<DocumentResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/inbox/invoices',
             query: $parsed,
@@ -123,5 +128,7 @@ final class InboxService implements InboxContract
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
         );
+
+        return $response->parse();
     }
 }
