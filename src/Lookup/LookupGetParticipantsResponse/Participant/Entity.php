@@ -13,12 +13,12 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
  * Represents a business entity.
  *
  * @phpstan-type EntityShape = array{
- *   additional_info?: string|null,
- *   country_code?: string|null,
- *   geo_info?: string|null,
+ *   additionalInfo?: string|null,
+ *   countryCode?: string|null,
+ *   geoInfo?: string|null,
  *   identifiers?: list<Identifier>|null,
  *   name?: string|null,
- *   registration_date?: string|null,
+ *   registrationDate?: string|null,
  *   website?: string|null,
  * }
  */
@@ -30,20 +30,20 @@ final class Entity implements BaseModel
     /**
      * Additional information.
      */
-    #[Optional(nullable: true)]
-    public ?string $additional_info;
+    #[Optional('additional_info', nullable: true)]
+    public ?string $additionalInfo;
 
     /**
      * Country code.
      */
-    #[Optional(nullable: true)]
-    public ?string $country_code;
+    #[Optional('country_code', nullable: true)]
+    public ?string $countryCode;
 
     /**
      * Geographic information.
      */
-    #[Optional(nullable: true)]
-    public ?string $geo_info;
+    #[Optional('geo_info', nullable: true)]
+    public ?string $geoInfo;
 
     /**
      * List of business identifiers.
@@ -62,8 +62,8 @@ final class Entity implements BaseModel
     /**
      * Registration date.
      */
-    #[Optional(nullable: true)]
-    public ?string $registration_date;
+    #[Optional('registration_date', nullable: true)]
+    public ?string $registrationDate;
 
     /**
      * Website URL.
@@ -84,22 +84,22 @@ final class Entity implements BaseModel
      * @param list<Identifier|array{scheme: string, value: string}> $identifiers
      */
     public static function with(
-        ?string $additional_info = null,
-        ?string $country_code = null,
-        ?string $geo_info = null,
+        ?string $additionalInfo = null,
+        ?string $countryCode = null,
+        ?string $geoInfo = null,
         ?array $identifiers = null,
         ?string $name = null,
-        ?string $registration_date = null,
+        ?string $registrationDate = null,
         ?string $website = null,
     ): self {
         $obj = new self;
 
-        null !== $additional_info && $obj['additional_info'] = $additional_info;
-        null !== $country_code && $obj['country_code'] = $country_code;
-        null !== $geo_info && $obj['geo_info'] = $geo_info;
+        null !== $additionalInfo && $obj['additionalInfo'] = $additionalInfo;
+        null !== $countryCode && $obj['countryCode'] = $countryCode;
+        null !== $geoInfo && $obj['geoInfo'] = $geoInfo;
         null !== $identifiers && $obj['identifiers'] = $identifiers;
         null !== $name && $obj['name'] = $name;
-        null !== $registration_date && $obj['registration_date'] = $registration_date;
+        null !== $registrationDate && $obj['registrationDate'] = $registrationDate;
         null !== $website && $obj['website'] = $website;
 
         return $obj;
@@ -111,7 +111,7 @@ final class Entity implements BaseModel
     public function withAdditionalInfo(?string $additionalInfo): self
     {
         $obj = clone $this;
-        $obj['additional_info'] = $additionalInfo;
+        $obj['additionalInfo'] = $additionalInfo;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class Entity implements BaseModel
     public function withCountryCode(?string $countryCode): self
     {
         $obj = clone $this;
-        $obj['country_code'] = $countryCode;
+        $obj['countryCode'] = $countryCode;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class Entity implements BaseModel
     public function withGeoInfo(?string $geoInfo): self
     {
         $obj = clone $this;
-        $obj['geo_info'] = $geoInfo;
+        $obj['geoInfo'] = $geoInfo;
 
         return $obj;
     }
@@ -168,7 +168,7 @@ final class Entity implements BaseModel
     public function withRegistrationDate(?string $registrationDate): self
     {
         $obj = clone $this;
-        $obj['registration_date'] = $registrationDate;
+        $obj['registrationDate'] = $registrationDate;
 
         return $obj;
     }

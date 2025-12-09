@@ -20,8 +20,8 @@ use EInvoiceAPI\Lookup\Certificate;
  *   serviceActivationDate?: string|null,
  *   serviceDescription?: string|null,
  *   serviceExpirationDate?: string|null,
- *   technicalContactUrl?: string|null,
- *   technicalInformationUrl?: string|null,
+ *   technicalContactURL?: string|null,
+ *   technicalInformationURL?: string|null,
  * }
  */
 final class Endpoint implements BaseModel
@@ -68,14 +68,14 @@ final class Endpoint implements BaseModel
     /**
      * URL for technical contact information.
      */
-    #[Optional(nullable: true)]
-    public ?string $technicalContactUrl;
+    #[Optional('technicalContactUrl', nullable: true)]
+    public ?string $technicalContactURL;
 
     /**
      * URL for technical documentation.
      */
-    #[Optional(nullable: true)]
-    public ?string $technicalInformationUrl;
+    #[Optional('technicalInformationUrl', nullable: true)]
+    public ?string $technicalInformationURL;
 
     /**
      * `new Endpoint()` is missing required properties by the API.
@@ -112,8 +112,8 @@ final class Endpoint implements BaseModel
         ?string $serviceActivationDate = null,
         ?string $serviceDescription = null,
         ?string $serviceExpirationDate = null,
-        ?string $technicalContactUrl = null,
-        ?string $technicalInformationUrl = null,
+        ?string $technicalContactURL = null,
+        ?string $technicalInformationURL = null,
     ): self {
         $obj = new self;
 
@@ -124,8 +124,8 @@ final class Endpoint implements BaseModel
         null !== $serviceActivationDate && $obj['serviceActivationDate'] = $serviceActivationDate;
         null !== $serviceDescription && $obj['serviceDescription'] = $serviceDescription;
         null !== $serviceExpirationDate && $obj['serviceExpirationDate'] = $serviceExpirationDate;
-        null !== $technicalContactUrl && $obj['technicalContactUrl'] = $technicalContactUrl;
-        null !== $technicalInformationUrl && $obj['technicalInformationUrl'] = $technicalInformationUrl;
+        null !== $technicalContactURL && $obj['technicalContactURL'] = $technicalContactURL;
+        null !== $technicalInformationURL && $obj['technicalInformationURL'] = $technicalInformationURL;
 
         return $obj;
     }
@@ -208,7 +208,7 @@ final class Endpoint implements BaseModel
     public function withTechnicalContactURL(?string $technicalContactURL): self
     {
         $obj = clone $this;
-        $obj['technicalContactUrl'] = $technicalContactURL;
+        $obj['technicalContactURL'] = $technicalContactURL;
 
         return $obj;
     }
@@ -220,7 +220,7 @@ final class Endpoint implements BaseModel
         ?string $technicalInformationURL
     ): self {
         $obj = clone $this;
-        $obj['technicalInformationUrl'] = $technicalInformationURL;
+        $obj['technicalInformationURL'] = $technicalInformationURL;
 
         return $obj;
     }

@@ -17,11 +17,11 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
  * including whether the ID is valid and what document types it supports.
  *
  * @phpstan-type ValidateValidatePeppolIDResponseShape = array{
- *   business_card: BusinessCard|null,
- *   business_card_valid: bool,
- *   dns_valid: bool,
- *   is_valid: bool,
- *   supported_document_types?: list<string>|null,
+ *   businessCard: BusinessCard|null,
+ *   businessCardValid: bool,
+ *   dnsValid: bool,
+ *   isValid: bool,
+ *   supportedDocumentTypes?: list<string>|null,
  * }
  */
 final class ValidateValidatePeppolIDResponse implements BaseModel
@@ -32,30 +32,30 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     /**
      * Business card information for the Peppol ID.
      */
-    #[Required]
-    public ?BusinessCard $business_card;
+    #[Required('business_card')]
+    public ?BusinessCard $businessCard;
 
     /**
      * Whether a business card is set at the SMP.
      */
-    #[Required]
-    public bool $business_card_valid;
+    #[Required('business_card_valid')]
+    public bool $businessCardValid;
 
     /**
      * Whether the DNS resolves to a valid SMP.
      */
-    #[Required]
-    public bool $dns_valid;
+    #[Required('dns_valid')]
+    public bool $dnsValid;
 
     /**
      * Whether the Peppol ID is valid and registered in the Peppol network.
      */
-    #[Required]
-    public bool $is_valid;
+    #[Required('is_valid')]
+    public bool $isValid;
 
-    /** @var list<string>|null $supported_document_types */
-    #[Optional(list: 'string')]
-    public ?array $supported_document_types;
+    /** @var list<string>|null $supportedDocumentTypes */
+    #[Optional('supported_document_types', list: 'string')]
+    public ?array $supportedDocumentTypes;
 
     /**
      * `new ValidateValidatePeppolIDResponse()` is missing required properties by the API.
@@ -63,7 +63,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * ValidateValidatePeppolIDResponse::with(
-     *   business_card: ..., business_card_valid: ..., dns_valid: ..., is_valid: ...
+     *   businessCard: ..., businessCardValid: ..., dnsValid: ..., isValid: ...
      * )
      * ```
      *
@@ -88,27 +88,27 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BusinessCard|array{
-     *   country_code?: string|null,
+     *   countryCode?: string|null,
      *   name?: string|null,
-     *   registration_date?: \DateTimeInterface|null,
-     * }|null $business_card
-     * @param list<string> $supported_document_types
+     *   registrationDate?: \DateTimeInterface|null,
+     * }|null $businessCard
+     * @param list<string> $supportedDocumentTypes
      */
     public static function with(
-        BusinessCard|array|null $business_card,
-        bool $business_card_valid,
-        bool $dns_valid,
-        bool $is_valid,
-        ?array $supported_document_types = null,
+        BusinessCard|array|null $businessCard,
+        bool $businessCardValid,
+        bool $dnsValid,
+        bool $isValid,
+        ?array $supportedDocumentTypes = null,
     ): self {
         $obj = new self;
 
-        $obj['business_card'] = $business_card;
-        $obj['business_card_valid'] = $business_card_valid;
-        $obj['dns_valid'] = $dns_valid;
-        $obj['is_valid'] = $is_valid;
+        $obj['businessCard'] = $businessCard;
+        $obj['businessCardValid'] = $businessCardValid;
+        $obj['dnsValid'] = $dnsValid;
+        $obj['isValid'] = $isValid;
 
-        null !== $supported_document_types && $obj['supported_document_types'] = $supported_document_types;
+        null !== $supportedDocumentTypes && $obj['supportedDocumentTypes'] = $supportedDocumentTypes;
 
         return $obj;
     }
@@ -117,16 +117,16 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      * Business card information for the Peppol ID.
      *
      * @param BusinessCard|array{
-     *   country_code?: string|null,
+     *   countryCode?: string|null,
      *   name?: string|null,
-     *   registration_date?: \DateTimeInterface|null,
+     *   registrationDate?: \DateTimeInterface|null,
      * }|null $businessCard
      */
     public function withBusinessCard(
         BusinessCard|array|null $businessCard
     ): self {
         $obj = clone $this;
-        $obj['business_card'] = $businessCard;
+        $obj['businessCard'] = $businessCard;
 
         return $obj;
     }
@@ -137,7 +137,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     public function withBusinessCardValid(bool $businessCardValid): self
     {
         $obj = clone $this;
-        $obj['business_card_valid'] = $businessCardValid;
+        $obj['businessCardValid'] = $businessCardValid;
 
         return $obj;
     }
@@ -148,7 +148,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     public function withDNSValid(bool $dnsValid): self
     {
         $obj = clone $this;
-        $obj['dns_valid'] = $dnsValid;
+        $obj['dnsValid'] = $dnsValid;
 
         return $obj;
     }
@@ -159,7 +159,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     public function withIsValid(bool $isValid): self
     {
         $obj = clone $this;
-        $obj['is_valid'] = $isValid;
+        $obj['isValid'] = $isValid;
 
         return $obj;
     }
@@ -171,7 +171,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
         array $supportedDocumentTypes
     ): self {
         $obj = clone $this;
-        $obj['supported_document_types'] = $supportedDocumentTypes;
+        $obj['supportedDocumentTypes'] = $supportedDocumentTypes;
 
         return $obj;
     }
