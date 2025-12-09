@@ -89,7 +89,7 @@ final class Endpoint implements BaseModel
      * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
      * @param list<Process|array{
      *   endpoints: list<Process\Endpoint>,
-     *   processId: ProcessID,
+     *   processID: ProcessID,
      * }>|null $processes
      */
     public static function with(
@@ -162,7 +162,7 @@ final class Endpoint implements BaseModel
      *
      * @param list<Process|array{
      *   endpoints: list<Process\Endpoint>,
-     *   processId: ProcessID,
+     *   processID: ProcessID,
      * }>|null $processes
      */
     public function withProcesses(?array $processes): self

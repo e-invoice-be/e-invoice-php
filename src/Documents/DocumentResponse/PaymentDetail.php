@@ -10,9 +10,9 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type PaymentDetailShape = array{
- *   bank_account_number?: string|null,
+ *   bankAccountNumber?: string|null,
  *   iban?: string|null,
- *   payment_reference?: string|null,
+ *   paymentReference?: string|null,
  *   swift?: string|null,
  * }
  */
@@ -24,8 +24,8 @@ final class PaymentDetail implements BaseModel
     /**
      * Bank account number (for non-IBAN accounts).
      */
-    #[Optional(nullable: true)]
-    public ?string $bank_account_number;
+    #[Optional('bank_account_number', nullable: true)]
+    public ?string $bankAccountNumber;
 
     /**
      * International Bank Account Number for payment transfers.
@@ -36,8 +36,8 @@ final class PaymentDetail implements BaseModel
     /**
      * Structured payment reference or communication (e.g., structured communication for Belgian bank transfers).
      */
-    #[Optional(nullable: true)]
-    public ?string $payment_reference;
+    #[Optional('payment_reference', nullable: true)]
+    public ?string $paymentReference;
 
     /**
      * SWIFT/BIC code of the bank.
@@ -56,16 +56,16 @@ final class PaymentDetail implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $bank_account_number = null,
+        ?string $bankAccountNumber = null,
         ?string $iban = null,
-        ?string $payment_reference = null,
+        ?string $paymentReference = null,
         ?string $swift = null,
     ): self {
         $obj = new self;
 
-        null !== $bank_account_number && $obj['bank_account_number'] = $bank_account_number;
+        null !== $bankAccountNumber && $obj['bankAccountNumber'] = $bankAccountNumber;
         null !== $iban && $obj['iban'] = $iban;
-        null !== $payment_reference && $obj['payment_reference'] = $payment_reference;
+        null !== $paymentReference && $obj['paymentReference'] = $paymentReference;
         null !== $swift && $obj['swift'] = $swift;
 
         return $obj;
@@ -77,7 +77,7 @@ final class PaymentDetail implements BaseModel
     public function withBankAccountNumber(?string $bankAccountNumber): self
     {
         $obj = clone $this;
-        $obj['bank_account_number'] = $bankAccountNumber;
+        $obj['bankAccountNumber'] = $bankAccountNumber;
 
         return $obj;
     }
@@ -99,7 +99,7 @@ final class PaymentDetail implements BaseModel
     public function withPaymentReference(?string $paymentReference): self
     {
         $obj = clone $this;
-        $obj['payment_reference'] = $paymentReference;
+        $obj['paymentReference'] = $paymentReference;
 
         return $obj;
     }

@@ -20,12 +20,12 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   charges?: list<\EInvoiceAPI\Documents\DocumentCreate\Item\Charge>|null,
  *   date?: null|null,
  *   description?: string|null,
- *   product_code?: string|null,
+ *   productCode?: string|null,
  *   quantity?: float|string|null,
  *   tax?: float|string|null,
- *   tax_rate?: float|string|null,
+ *   taxRate?: float|string|null,
  *   unit?: value-of<UnitOfMeasureCode>|null,
- *   unit_price?: float|string|null,
+ *   unitPrice?: float|string|null,
  * }
  */
 final class Item implements BaseModel
@@ -74,8 +74,8 @@ final class Item implements BaseModel
     /**
      * The product code of the line item.
      */
-    #[Optional(nullable: true)]
-    public ?string $product_code;
+    #[Optional('product_code', nullable: true)]
+    public ?string $productCode;
 
     /**
      * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals. Can be negative for credit notes or corrections.
@@ -92,8 +92,8 @@ final class Item implements BaseModel
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals.
      */
-    #[Optional(nullable: true)]
-    public float|string|null $tax_rate;
+    #[Optional('tax_rate', nullable: true)]
+    public float|string|null $taxRate;
 
     /**
      * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
@@ -106,8 +106,8 @@ final class Item implements BaseModel
     /**
      * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
      */
-    #[Optional(nullable: true)]
-    public float|string|null $unit_price;
+    #[Optional('unit_price', nullable: true)]
+    public float|string|null $unitPrice;
 
     public function __construct()
     {
@@ -121,21 +121,21 @@ final class Item implements BaseModel
      *
      * @param list<Allowance|array{
      *   amount?: float|string|null,
-     *   base_amount?: float|string|null,
-     *   multiplier_factor?: float|string|null,
+     *   baseAmount?: float|string|null,
+     *   multiplierFactor?: float|string|null,
      *   reason?: string|null,
-     *   reason_code?: value-of<ReasonCode>|null,
-     *   tax_code?: value-of<TaxCode>|null,
-     *   tax_rate?: float|string|null,
+     *   reasonCode?: value-of<ReasonCode>|null,
+     *   taxCode?: value-of<TaxCode>|null,
+     *   taxRate?: float|string|null,
      * }>|null $allowances
      * @param list<Charge|array{
      *   amount?: float|string|null,
-     *   base_amount?: float|string|null,
-     *   multiplier_factor?: float|string|null,
+     *   baseAmount?: float|string|null,
+     *   multiplierFactor?: float|string|null,
      *   reason?: string|null,
-     *   reason_code?: value-of<Charge\ReasonCode>|null,
-     *   tax_code?: value-of<Charge\TaxCode>|null,
-     *   tax_rate?: float|string|null,
+     *   reasonCode?: value-of<Charge\ReasonCode>|null,
+     *   taxCode?: value-of<Charge\TaxCode>|null,
+     *   taxRate?: float|string|null,
      * }>|null $charges
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
@@ -145,12 +145,12 @@ final class Item implements BaseModel
         ?array $charges = null,
         null $date = null,
         ?string $description = null,
-        ?string $product_code = null,
+        ?string $productCode = null,
         float|string|null $quantity = null,
         float|string|null $tax = null,
-        float|string|null $tax_rate = null,
+        float|string|null $taxRate = null,
         UnitOfMeasureCode|string|null $unit = null,
-        float|string|null $unit_price = null,
+        float|string|null $unitPrice = null,
     ): self {
         $obj = new self;
 
@@ -160,12 +160,12 @@ final class Item implements BaseModel
         null !== $amount && $obj['amount'] = $amount;
         null !== $charges && $obj['charges'] = $charges;
         null !== $description && $obj['description'] = $description;
-        null !== $product_code && $obj['product_code'] = $product_code;
+        null !== $productCode && $obj['productCode'] = $productCode;
         null !== $quantity && $obj['quantity'] = $quantity;
         null !== $tax && $obj['tax'] = $tax;
-        null !== $tax_rate && $obj['tax_rate'] = $tax_rate;
+        null !== $taxRate && $obj['taxRate'] = $taxRate;
         null !== $unit && $obj['unit'] = $unit;
-        null !== $unit_price && $obj['unit_price'] = $unit_price;
+        null !== $unitPrice && $obj['unitPrice'] = $unitPrice;
 
         return $obj;
     }
@@ -175,12 +175,12 @@ final class Item implements BaseModel
      *
      * @param list<Allowance|array{
      *   amount?: float|string|null,
-     *   base_amount?: float|string|null,
-     *   multiplier_factor?: float|string|null,
+     *   baseAmount?: float|string|null,
+     *   multiplierFactor?: float|string|null,
      *   reason?: string|null,
-     *   reason_code?: value-of<ReasonCode>|null,
-     *   tax_code?: value-of<TaxCode>|null,
-     *   tax_rate?: float|string|null,
+     *   reasonCode?: value-of<ReasonCode>|null,
+     *   taxCode?: value-of<TaxCode>|null,
+     *   taxRate?: float|string|null,
      * }>|null $allowances
      */
     public function withAllowances(?array $allowances): self
@@ -207,12 +207,12 @@ final class Item implements BaseModel
      *
      * @param list<Charge|array{
      *   amount?: float|string|null,
-     *   base_amount?: float|string|null,
-     *   multiplier_factor?: float|string|null,
+     *   baseAmount?: float|string|null,
+     *   multiplierFactor?: float|string|null,
      *   reason?: string|null,
-     *   reason_code?: value-of<Charge\ReasonCode>|null,
-     *   tax_code?: value-of<Charge\TaxCode>|null,
-     *   tax_rate?: float|string|null,
+     *   reasonCode?: value-of<Charge\ReasonCode>|null,
+     *   taxCode?: value-of<Charge\TaxCode>|null,
+     *   taxRate?: float|string|null,
      * }>|null $charges
      */
     public function withCharges(?array $charges): self
@@ -251,7 +251,7 @@ final class Item implements BaseModel
     public function withProductCode(?string $productCode): self
     {
         $obj = clone $this;
-        $obj['product_code'] = $productCode;
+        $obj['productCode'] = $productCode;
 
         return $obj;
     }
@@ -284,7 +284,7 @@ final class Item implements BaseModel
     public function withTaxRate(float|string|null $taxRate): self
     {
         $obj = clone $this;
-        $obj['tax_rate'] = $taxRate;
+        $obj['taxRate'] = $taxRate;
 
         return $obj;
     }
@@ -308,7 +308,7 @@ final class Item implements BaseModel
     public function withUnitPrice(float|string|null $unitPrice): self
     {
         $obj = clone $this;
-        $obj['unit_price'] = $unitPrice;
+        $obj['unitPrice'] = $unitPrice;
 
         return $obj;
     }

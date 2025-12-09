@@ -16,9 +16,9 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
  * Represents a Peppol participant with their details.
  *
  * @phpstan-type ParticipantShape = array{
- *   peppol_id: string,
- *   peppol_scheme: string,
- *   document_types?: list<DocumentType>|null,
+ *   peppolID: string,
+ *   peppolScheme: string,
+ *   documentTypes?: list<DocumentType>|null,
  *   entities?: list<Entity>|null,
  * }
  */
@@ -30,22 +30,22 @@ final class Participant implements BaseModel
     /**
      * Peppol ID of the participant.
      */
-    #[Required]
-    public string $peppol_id;
+    #[Required('peppol_id')]
+    public string $peppolID;
 
     /**
      * Peppol scheme of the participant.
      */
-    #[Required]
-    public string $peppol_scheme;
+    #[Required('peppol_scheme')]
+    public string $peppolScheme;
 
     /**
      * List of supported document types.
      *
-     * @var list<DocumentType>|null $document_types
+     * @var list<DocumentType>|null $documentTypes
      */
-    #[Optional(list: DocumentType::class)]
-    public ?array $document_types;
+    #[Optional('document_types', list: DocumentType::class)]
+    public ?array $documentTypes;
 
     /**
      * List of business entities.
@@ -60,7 +60,7 @@ final class Participant implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Participant::with(peppol_id: ..., peppol_scheme: ...)
+     * Participant::with(peppolID: ..., peppolScheme: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -79,29 +79,29 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentType|array{scheme: string, value: string}> $document_types
+     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
      * @param list<Entity|array{
-     *   additional_info?: string|null,
-     *   country_code?: string|null,
-     *   geo_info?: string|null,
+     *   additionalInfo?: string|null,
+     *   countryCode?: string|null,
+     *   geoInfo?: string|null,
      *   identifiers?: list<Identifier>|null,
      *   name?: string|null,
-     *   registration_date?: string|null,
+     *   registrationDate?: string|null,
      *   website?: string|null,
      * }> $entities
      */
     public static function with(
-        string $peppol_id,
-        string $peppol_scheme,
-        ?array $document_types = null,
+        string $peppolID,
+        string $peppolScheme,
+        ?array $documentTypes = null,
         ?array $entities = null,
     ): self {
         $obj = new self;
 
-        $obj['peppol_id'] = $peppol_id;
-        $obj['peppol_scheme'] = $peppol_scheme;
+        $obj['peppolID'] = $peppolID;
+        $obj['peppolScheme'] = $peppolScheme;
 
-        null !== $document_types && $obj['document_types'] = $document_types;
+        null !== $documentTypes && $obj['documentTypes'] = $documentTypes;
         null !== $entities && $obj['entities'] = $entities;
 
         return $obj;
@@ -113,7 +113,7 @@ final class Participant implements BaseModel
     public function withPeppolID(string $peppolID): self
     {
         $obj = clone $this;
-        $obj['peppol_id'] = $peppolID;
+        $obj['peppolID'] = $peppolID;
 
         return $obj;
     }
@@ -124,7 +124,7 @@ final class Participant implements BaseModel
     public function withPeppolScheme(string $peppolScheme): self
     {
         $obj = clone $this;
-        $obj['peppol_scheme'] = $peppolScheme;
+        $obj['peppolScheme'] = $peppolScheme;
 
         return $obj;
     }
@@ -137,7 +137,7 @@ final class Participant implements BaseModel
     public function withDocumentTypes(array $documentTypes): self
     {
         $obj = clone $this;
-        $obj['document_types'] = $documentTypes;
+        $obj['documentTypes'] = $documentTypes;
 
         return $obj;
     }
@@ -146,12 +146,12 @@ final class Participant implements BaseModel
      * List of business entities.
      *
      * @param list<Entity|array{
-     *   additional_info?: string|null,
-     *   country_code?: string|null,
-     *   geo_info?: string|null,
+     *   additionalInfo?: string|null,
+     *   countryCode?: string|null,
+     *   geoInfo?: string|null,
      *   identifiers?: list<Identifier>|null,
      *   name?: string|null,
-     *   registration_date?: string|null,
+     *   registrationDate?: string|null,
      *   website?: string|null,
      * }> $entities
      */

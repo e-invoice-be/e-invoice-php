@@ -11,22 +11,22 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 /**
  * Model for webhook deletion.
  *
- * @phpstan-type WebhookDeleteResponseShape = array{is_deleted: bool}
+ * @phpstan-type WebhookDeleteResponseShape = array{isDeleted: bool}
  */
 final class WebhookDeleteResponse implements BaseModel
 {
     /** @use SdkModel<WebhookDeleteResponseShape> */
     use SdkModel;
 
-    #[Required]
-    public bool $is_deleted;
+    #[Required('is_deleted')]
+    public bool $isDeleted;
 
     /**
      * `new WebhookDeleteResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WebhookDeleteResponse::with(is_deleted: ...)
+     * WebhookDeleteResponse::with(isDeleted: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -45,11 +45,11 @@ final class WebhookDeleteResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(bool $is_deleted): self
+    public static function with(bool $isDeleted): self
     {
         $obj = new self;
 
-        $obj['is_deleted'] = $is_deleted;
+        $obj['isDeleted'] = $isDeleted;
 
         return $obj;
     }
@@ -57,7 +57,7 @@ final class WebhookDeleteResponse implements BaseModel
     public function withIsDeleted(bool $isDeleted): self
     {
         $obj = clone $this;
-        $obj['is_deleted'] = $isDeleted;
+        $obj['isDeleted'] = $isDeleted;
 
         return $obj;
     }

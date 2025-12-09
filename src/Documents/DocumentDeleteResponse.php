@@ -9,22 +9,22 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type DocumentDeleteResponseShape = array{is_deleted: bool}
+ * @phpstan-type DocumentDeleteResponseShape = array{isDeleted: bool}
  */
 final class DocumentDeleteResponse implements BaseModel
 {
     /** @use SdkModel<DocumentDeleteResponseShape> */
     use SdkModel;
 
-    #[Required]
-    public bool $is_deleted;
+    #[Required('is_deleted')]
+    public bool $isDeleted;
 
     /**
      * `new DocumentDeleteResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * DocumentDeleteResponse::with(is_deleted: ...)
+     * DocumentDeleteResponse::with(isDeleted: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -43,11 +43,11 @@ final class DocumentDeleteResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(bool $is_deleted): self
+    public static function with(bool $isDeleted): self
     {
         $obj = new self;
 
-        $obj['is_deleted'] = $is_deleted;
+        $obj['isDeleted'] = $isDeleted;
 
         return $obj;
     }
@@ -55,7 +55,7 @@ final class DocumentDeleteResponse implements BaseModel
     public function withIsDeleted(bool $isDeleted): self
     {
         $obj = clone $this;
-        $obj['is_deleted'] = $isDeleted;
+        $obj['isDeleted'] = $isDeleted;
 
         return $obj;
     }

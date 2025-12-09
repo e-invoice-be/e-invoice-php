@@ -16,7 +16,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Services\DocumentsService::createFromPdf()
  *
  * @phpstan-type DocumentCreateFromPdfParamsShape = array{
- *   file: string, customer_tax_id?: string|null, vendor_tax_id?: string|null
+ *   file: string, customerTaxID?: string|null, vendorTaxID?: string|null
  * }
  */
 final class DocumentCreateFromPdfParams implements BaseModel
@@ -29,10 +29,10 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public string $file;
 
     #[Optional(nullable: true)]
-    public ?string $customer_tax_id;
+    public ?string $customerTaxID;
 
     #[Optional(nullable: true)]
-    public ?string $vendor_tax_id;
+    public ?string $vendorTaxID;
 
     /**
      * `new DocumentCreateFromPdfParams()` is missing required properties by the API.
@@ -60,15 +60,15 @@ final class DocumentCreateFromPdfParams implements BaseModel
      */
     public static function with(
         string $file,
-        ?string $customer_tax_id = null,
-        ?string $vendor_tax_id = null
+        ?string $customerTaxID = null,
+        ?string $vendorTaxID = null
     ): self {
         $obj = new self;
 
         $obj['file'] = $file;
 
-        null !== $customer_tax_id && $obj['customer_tax_id'] = $customer_tax_id;
-        null !== $vendor_tax_id && $obj['vendor_tax_id'] = $vendor_tax_id;
+        null !== $customerTaxID && $obj['customerTaxID'] = $customerTaxID;
+        null !== $vendorTaxID && $obj['vendorTaxID'] = $vendorTaxID;
 
         return $obj;
     }
@@ -84,7 +84,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public function withCustomerTaxID(?string $customerTaxID): self
     {
         $obj = clone $this;
-        $obj['customer_tax_id'] = $customerTaxID;
+        $obj['customerTaxID'] = $customerTaxID;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
     public function withVendorTaxID(?string $vendorTaxID): self
     {
         $obj = clone $this;
-        $obj['vendor_tax_id'] = $vendorTaxID;
+        $obj['vendorTaxID'] = $vendorTaxID;
 
         return $obj;
     }

@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -28,7 +29,7 @@ final class OutboxService implements OutboxContract
      *
      * Retrieve a paginated list of draft documents with filtering options.
      *
-     * @param array{page?: int, page_size?: int}|OutboxListDraftDocumentsParams $params
+     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
@@ -47,7 +48,7 @@ final class OutboxService implements OutboxContract
         $response = $this->client->request(
             method: 'get',
             path: 'api/outbox/drafts',
-            query: $parsed,
+            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
@@ -62,10 +63,10 @@ final class OutboxService implements OutboxContract
      * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
      *
      * @param array{
-     *   date_from?: string|\DateTimeInterface|null,
-     *   date_to?: string|\DateTimeInterface|null,
+     *   dateFrom?: string|\DateTimeInterface|null,
+     *   dateTo?: string|\DateTimeInterface|null,
      *   page?: int,
-     *   page_size?: int,
+     *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
      *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
@@ -89,7 +90,14 @@ final class OutboxService implements OutboxContract
         $response = $this->client->request(
             method: 'get',
             path: 'api/outbox/',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'dateFrom' => 'date_from',
+                    'dateTo' => 'date_to',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,

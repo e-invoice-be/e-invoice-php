@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Services\LookupService::retrieve()
  *
- * @phpstan-type LookupRetrieveParamsShape = array{peppol_id: string}
+ * @phpstan-type LookupRetrieveParamsShape = array{peppolID: string}
  */
 final class LookupRetrieveParams implements BaseModel
 {
@@ -26,14 +26,14 @@ final class LookupRetrieveParams implements BaseModel
      * Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
     #[Required]
-    public string $peppol_id;
+    public string $peppolID;
 
     /**
      * `new LookupRetrieveParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * LookupRetrieveParams::with(peppol_id: ...)
+     * LookupRetrieveParams::with(peppolID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -52,11 +52,11 @@ final class LookupRetrieveParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $peppol_id): self
+    public static function with(string $peppolID): self
     {
         $obj = new self;
 
-        $obj['peppol_id'] = $peppol_id;
+        $obj['peppolID'] = $peppolID;
 
         return $obj;
     }
@@ -67,7 +67,7 @@ final class LookupRetrieveParams implements BaseModel
     public function withPeppolID(string $peppolID): self
     {
         $obj = clone $this;
-        $obj['peppol_id'] = $peppolID;
+        $obj['peppolID'] = $peppolID;
 
         return $obj;
     }

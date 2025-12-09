@@ -14,10 +14,10 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
 /**
  * @phpstan-type UblDocumentValidationShape = array{
  *   id: string,
- *   file_name: string|null,
- *   is_valid: bool,
+ *   fileName: string|null,
+ *   isValid: bool,
  *   issues: list<Issue>,
- *   ubl_document?: string|null,
+ *   ublDocument?: string|null,
  * }
  */
 final class UblDocumentValidation implements BaseModel
@@ -28,25 +28,25 @@ final class UblDocumentValidation implements BaseModel
     #[Required]
     public string $id;
 
-    #[Required]
-    public ?string $file_name;
+    #[Required('file_name')]
+    public ?string $fileName;
 
-    #[Required]
-    public bool $is_valid;
+    #[Required('is_valid')]
+    public bool $isValid;
 
     /** @var list<Issue> $issues */
     #[Required(list: Issue::class)]
     public array $issues;
 
-    #[Optional(nullable: true)]
-    public ?string $ubl_document;
+    #[Optional('ubl_document', nullable: true)]
+    public ?string $ublDocument;
 
     /**
      * `new UblDocumentValidation()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UblDocumentValidation::with(id: ..., file_name: ..., is_valid: ..., issues: ...)
+     * UblDocumentValidation::with(id: ..., fileName: ..., isValid: ..., issues: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -75,25 +75,25 @@ final class UblDocumentValidation implements BaseModel
      *   type: value-of<Type>,
      *   flag?: string|null,
      *   location?: string|null,
-     *   rule_id?: string|null,
+     *   ruleID?: string|null,
      *   test?: string|null,
      * }> $issues
      */
     public static function with(
         string $id,
-        ?string $file_name,
-        bool $is_valid,
+        ?string $fileName,
+        bool $isValid,
         array $issues,
-        ?string $ubl_document = null,
+        ?string $ublDocument = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['file_name'] = $file_name;
-        $obj['is_valid'] = $is_valid;
+        $obj['fileName'] = $fileName;
+        $obj['isValid'] = $isValid;
         $obj['issues'] = $issues;
 
-        null !== $ubl_document && $obj['ubl_document'] = $ubl_document;
+        null !== $ublDocument && $obj['ublDocument'] = $ublDocument;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class UblDocumentValidation implements BaseModel
     public function withFileName(?string $fileName): self
     {
         $obj = clone $this;
-        $obj['file_name'] = $fileName;
+        $obj['fileName'] = $fileName;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class UblDocumentValidation implements BaseModel
     public function withIsValid(bool $isValid): self
     {
         $obj = clone $this;
-        $obj['is_valid'] = $isValid;
+        $obj['isValid'] = $isValid;
 
         return $obj;
     }
@@ -129,7 +129,7 @@ final class UblDocumentValidation implements BaseModel
      *   type: value-of<Type>,
      *   flag?: string|null,
      *   location?: string|null,
-     *   rule_id?: string|null,
+     *   ruleID?: string|null,
      *   test?: string|null,
      * }> $issues
      */
@@ -144,7 +144,7 @@ final class UblDocumentValidation implements BaseModel
     public function withUblDocument(?string $ublDocument): self
     {
         $obj = clone $this;
-        $obj['ubl_document'] = $ublDocument;
+        $obj['ublDocument'] = $ublDocument;
 
         return $obj;
     }

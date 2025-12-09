@@ -24,7 +24,7 @@ use EInvoiceAPI\Documents\DocumentType;
  * @phpstan-type PaginatedDocumentResponseShape = array{
  *   items: list<DocumentResponse>,
  *   page: int,
- *   page_size: int,
+ *   pageSize: int,
  *   pages: int,
  *   total: int,
  * }
@@ -41,8 +41,8 @@ final class PaginatedDocumentResponse implements BaseModel
     #[Required]
     public int $page;
 
-    #[Required]
-    public int $page_size;
+    #[Required('page_size')]
+    public int $pageSize;
 
     #[Required]
     public int $pages;
@@ -56,7 +56,7 @@ final class PaginatedDocumentResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * PaginatedDocumentResponse::with(
-     *   items: ..., page: ..., page_size: ..., pages: ..., total: ...
+     *   items: ..., page: ..., pageSize: ..., pages: ..., total: ...
      * )
      * ```
      *
@@ -84,58 +84,58 @@ final class PaginatedDocumentResponse implements BaseModel
      * @param list<DocumentResponse|array{
      *   id: string,
      *   allowances?: list<Allowance>|null,
-     *   amount_due?: string|null,
+     *   amountDue?: string|null,
      *   attachments?: list<DocumentAttachment>|null,
-     *   billing_address?: string|null,
-     *   billing_address_recipient?: string|null,
+     *   billingAddress?: string|null,
+     *   billingAddressRecipient?: string|null,
      *   charges?: list<Charge>|null,
      *   currency?: value-of<CurrencyCode>|null,
-     *   customer_address?: string|null,
-     *   customer_address_recipient?: string|null,
-     *   customer_company_id?: string|null,
-     *   customer_email?: string|null,
-     *   customer_id?: string|null,
-     *   customer_name?: string|null,
-     *   customer_tax_id?: string|null,
+     *   customerAddress?: string|null,
+     *   customerAddressRecipient?: string|null,
+     *   customerCompanyID?: string|null,
+     *   customerEmail?: string|null,
+     *   customerID?: string|null,
+     *   customerName?: string|null,
+     *   customerTaxID?: string|null,
      *   direction?: value-of<DocumentDirection>|null,
-     *   document_type?: value-of<DocumentType>|null,
-     *   due_date?: \DateTimeInterface|null,
-     *   invoice_date?: \DateTimeInterface|null,
-     *   invoice_id?: string|null,
-     *   invoice_total?: string|null,
+     *   documentType?: value-of<DocumentType>|null,
+     *   dueDate?: \DateTimeInterface|null,
+     *   invoiceDate?: \DateTimeInterface|null,
+     *   invoiceID?: string|null,
+     *   invoiceTotal?: string|null,
      *   items?: list<Item>|null,
      *   note?: string|null,
-     *   payment_details?: list<PaymentDetail>|null,
-     *   payment_term?: string|null,
-     *   purchase_order?: string|null,
-     *   remittance_address?: string|null,
-     *   remittance_address_recipient?: string|null,
-     *   service_address?: string|null,
-     *   service_address_recipient?: string|null,
-     *   service_end_date?: \DateTimeInterface|null,
-     *   service_start_date?: \DateTimeInterface|null,
-     *   shipping_address?: string|null,
-     *   shipping_address_recipient?: string|null,
+     *   paymentDetails?: list<PaymentDetail>|null,
+     *   paymentTerm?: string|null,
+     *   purchaseOrder?: string|null,
+     *   remittanceAddress?: string|null,
+     *   remittanceAddressRecipient?: string|null,
+     *   serviceAddress?: string|null,
+     *   serviceAddressRecipient?: string|null,
+     *   serviceEndDate?: \DateTimeInterface|null,
+     *   serviceStartDate?: \DateTimeInterface|null,
+     *   shippingAddress?: string|null,
+     *   shippingAddressRecipient?: string|null,
      *   state?: value-of<DocumentState>|null,
      *   subtotal?: string|null,
-     *   tax_code?: value-of<TaxCode>|null,
-     *   tax_details?: list<TaxDetail>|null,
-     *   total_discount?: string|null,
-     *   total_tax?: string|null,
+     *   taxCode?: value-of<TaxCode>|null,
+     *   taxDetails?: list<TaxDetail>|null,
+     *   totalDiscount?: string|null,
+     *   totalTax?: string|null,
      *   vatex?: value-of<Vatex>|null,
-     *   vatex_note?: string|null,
-     *   vendor_address?: string|null,
-     *   vendor_address_recipient?: string|null,
-     *   vendor_company_id?: string|null,
-     *   vendor_email?: string|null,
-     *   vendor_name?: string|null,
-     *   vendor_tax_id?: string|null,
+     *   vatexNote?: string|null,
+     *   vendorAddress?: string|null,
+     *   vendorAddressRecipient?: string|null,
+     *   vendorCompanyID?: string|null,
+     *   vendorEmail?: string|null,
+     *   vendorName?: string|null,
+     *   vendorTaxID?: string|null,
      * }> $items
      */
     public static function with(
         array $items,
         int $page,
-        int $page_size,
+        int $pageSize,
         int $pages,
         int $total
     ): self {
@@ -143,7 +143,7 @@ final class PaginatedDocumentResponse implements BaseModel
 
         $obj['items'] = $items;
         $obj['page'] = $page;
-        $obj['page_size'] = $page_size;
+        $obj['pageSize'] = $pageSize;
         $obj['pages'] = $pages;
         $obj['total'] = $total;
 
@@ -154,52 +154,52 @@ final class PaginatedDocumentResponse implements BaseModel
      * @param list<DocumentResponse|array{
      *   id: string,
      *   allowances?: list<Allowance>|null,
-     *   amount_due?: string|null,
+     *   amountDue?: string|null,
      *   attachments?: list<DocumentAttachment>|null,
-     *   billing_address?: string|null,
-     *   billing_address_recipient?: string|null,
+     *   billingAddress?: string|null,
+     *   billingAddressRecipient?: string|null,
      *   charges?: list<Charge>|null,
      *   currency?: value-of<CurrencyCode>|null,
-     *   customer_address?: string|null,
-     *   customer_address_recipient?: string|null,
-     *   customer_company_id?: string|null,
-     *   customer_email?: string|null,
-     *   customer_id?: string|null,
-     *   customer_name?: string|null,
-     *   customer_tax_id?: string|null,
+     *   customerAddress?: string|null,
+     *   customerAddressRecipient?: string|null,
+     *   customerCompanyID?: string|null,
+     *   customerEmail?: string|null,
+     *   customerID?: string|null,
+     *   customerName?: string|null,
+     *   customerTaxID?: string|null,
      *   direction?: value-of<DocumentDirection>|null,
-     *   document_type?: value-of<DocumentType>|null,
-     *   due_date?: \DateTimeInterface|null,
-     *   invoice_date?: \DateTimeInterface|null,
-     *   invoice_id?: string|null,
-     *   invoice_total?: string|null,
+     *   documentType?: value-of<DocumentType>|null,
+     *   dueDate?: \DateTimeInterface|null,
+     *   invoiceDate?: \DateTimeInterface|null,
+     *   invoiceID?: string|null,
+     *   invoiceTotal?: string|null,
      *   items?: list<Item>|null,
      *   note?: string|null,
-     *   payment_details?: list<PaymentDetail>|null,
-     *   payment_term?: string|null,
-     *   purchase_order?: string|null,
-     *   remittance_address?: string|null,
-     *   remittance_address_recipient?: string|null,
-     *   service_address?: string|null,
-     *   service_address_recipient?: string|null,
-     *   service_end_date?: \DateTimeInterface|null,
-     *   service_start_date?: \DateTimeInterface|null,
-     *   shipping_address?: string|null,
-     *   shipping_address_recipient?: string|null,
+     *   paymentDetails?: list<PaymentDetail>|null,
+     *   paymentTerm?: string|null,
+     *   purchaseOrder?: string|null,
+     *   remittanceAddress?: string|null,
+     *   remittanceAddressRecipient?: string|null,
+     *   serviceAddress?: string|null,
+     *   serviceAddressRecipient?: string|null,
+     *   serviceEndDate?: \DateTimeInterface|null,
+     *   serviceStartDate?: \DateTimeInterface|null,
+     *   shippingAddress?: string|null,
+     *   shippingAddressRecipient?: string|null,
      *   state?: value-of<DocumentState>|null,
      *   subtotal?: string|null,
-     *   tax_code?: value-of<TaxCode>|null,
-     *   tax_details?: list<TaxDetail>|null,
-     *   total_discount?: string|null,
-     *   total_tax?: string|null,
+     *   taxCode?: value-of<TaxCode>|null,
+     *   taxDetails?: list<TaxDetail>|null,
+     *   totalDiscount?: string|null,
+     *   totalTax?: string|null,
      *   vatex?: value-of<Vatex>|null,
-     *   vatex_note?: string|null,
-     *   vendor_address?: string|null,
-     *   vendor_address_recipient?: string|null,
-     *   vendor_company_id?: string|null,
-     *   vendor_email?: string|null,
-     *   vendor_name?: string|null,
-     *   vendor_tax_id?: string|null,
+     *   vatexNote?: string|null,
+     *   vendorAddress?: string|null,
+     *   vendorAddressRecipient?: string|null,
+     *   vendorCompanyID?: string|null,
+     *   vendorEmail?: string|null,
+     *   vendorName?: string|null,
+     *   vendorTaxID?: string|null,
      * }> $items
      */
     public function withItems(array $items): self
@@ -221,7 +221,7 @@ final class PaginatedDocumentResponse implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj['page_size'] = $pageSize;
+        $obj['pageSize'] = $pageSize;
 
         return $obj;
     }

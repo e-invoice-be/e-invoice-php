@@ -16,7 +16,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Services\LookupService::retrieveParticipants()
  *
  * @phpstan-type LookupRetrieveParticipantsParamsShape = array{
- *   query: string, country_code?: string|null
+ *   query: string, countryCode?: string|null
  * }
  */
 final class LookupRetrieveParticipantsParams implements BaseModel
@@ -35,7 +35,7 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      * Country code of the company to lookup. If not provided, the search will be global.
      */
     #[Optional(nullable: true)]
-    public ?string $country_code;
+    public ?string $countryCode;
 
     /**
      * `new LookupRetrieveParticipantsParams()` is missing required properties by the API.
@@ -63,13 +63,13 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      */
     public static function with(
         string $query,
-        ?string $country_code = null
+        ?string $countryCode = null
     ): self {
         $obj = new self;
 
         $obj['query'] = $query;
 
-        null !== $country_code && $obj['country_code'] = $country_code;
+        null !== $countryCode && $obj['countryCode'] = $countryCode;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class LookupRetrieveParticipantsParams implements BaseModel
     public function withCountryCode(?string $countryCode): self
     {
         $obj = clone $this;
-        $obj['country_code'] = $countryCode;
+        $obj['countryCode'] = $countryCode;
 
         return $obj;
     }

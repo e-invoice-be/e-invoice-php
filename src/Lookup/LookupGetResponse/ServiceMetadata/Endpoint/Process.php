@@ -15,7 +15,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Proces
  * Process information in the Peppol network.
  *
  * @phpstan-type ProcessShape = array{
- *   endpoints: list<Endpoint>, processId: ProcessID
+ *   endpoints: list<Endpoint>, processID: ProcessID
  * }
  */
 final class Process implements BaseModel
@@ -34,15 +34,15 @@ final class Process implements BaseModel
     /**
      * Identifier of the process.
      */
-    #[Required]
-    public ProcessID $processId;
+    #[Required('processId')]
+    public ProcessID $processID;
 
     /**
      * `new Process()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Process::with(endpoints: ..., processId: ...)
+     * Process::with(endpoints: ..., processID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,19 +68,19 @@ final class Process implements BaseModel
      *   serviceActivationDate?: string|null,
      *   serviceDescription?: string|null,
      *   serviceExpirationDate?: string|null,
-     *   technicalContactUrl?: string|null,
-     *   technicalInformationUrl?: string|null,
+     *   technicalContactURL?: string|null,
+     *   technicalInformationURL?: string|null,
      * }> $endpoints
-     * @param ProcessID|array{scheme: string, value: string} $processId
+     * @param ProcessID|array{scheme: string, value: string} $processID
      */
     public static function with(
         array $endpoints,
-        ProcessID|array $processId
+        ProcessID|array $processID
     ): self {
         $obj = new self;
 
         $obj['endpoints'] = $endpoints;
-        $obj['processId'] = $processId;
+        $obj['processID'] = $processID;
 
         return $obj;
     }
@@ -95,8 +95,8 @@ final class Process implements BaseModel
      *   serviceActivationDate?: string|null,
      *   serviceDescription?: string|null,
      *   serviceExpirationDate?: string|null,
-     *   technicalContactUrl?: string|null,
-     *   technicalInformationUrl?: string|null,
+     *   technicalContactURL?: string|null,
+     *   technicalInformationURL?: string|null,
      * }> $endpoints
      */
     public function withEndpoints(array $endpoints): self
@@ -115,7 +115,7 @@ final class Process implements BaseModel
     public function withProcessID(ProcessID|array $processID): self
     {
         $obj = clone $this;
-        $obj['processId'] = $processID;
+        $obj['processID'] = $processID;
 
         return $obj;
     }
