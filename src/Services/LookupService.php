@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
@@ -38,14 +39,16 @@ final class LookupService implements LookupContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LookupGetResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/lookup',
             query: $parsed,
             options: $options,
             convert: LookupGetResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -68,13 +71,15 @@ final class LookupService implements LookupContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LookupGetParticipantsResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/lookup/participants',
             query: $parsed,
             options: $options,
             convert: LookupGetParticipantsResponse::class,
         );
+
+        return $response->parse();
     }
 }

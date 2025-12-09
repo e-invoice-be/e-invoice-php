@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
 
 /**
@@ -25,12 +23,10 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
  *   supported_document_types?: list<string>|null,
  * }
  */
-final class ValidateValidatePeppolIDResponse implements BaseModel, ResponseConverter
+final class ValidateValidatePeppolIDResponse implements BaseModel
 {
     /** @use SdkModel<ValidateValidatePeppolIDResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Business card information for the Peppol ID.

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Me\MeGetResponse;
 use EInvoiceAPI\RequestOptions;
@@ -27,12 +28,14 @@ final class MeService implements MeContract
     public function retrieve(
         ?RequestOptions $requestOptions = null
     ): MeGetResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MeGetResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/me/',
             options: $requestOptions,
             convert: MeGetResponse::class,
         );
+
+        return $response->parse();
     }
 }

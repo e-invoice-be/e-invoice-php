@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\Documents\DocumentResponse\Allowance\ReasonCode;
 use EInvoiceAPI\Documents\DocumentResponse\Item;
@@ -70,12 +68,10 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   vendor_tax_id?: string|null,
  * }
  */
-final class DocumentResponse implements BaseModel, ResponseConverter
+final class DocumentResponse implements BaseModel
 {
     /** @use SdkModel<DocumentResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;

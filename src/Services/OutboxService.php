@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
@@ -42,8 +43,8 @@ final class OutboxService implements OutboxContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentsNumberPage<DocumentResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/outbox/drafts',
             query: $parsed,
@@ -51,6 +52,8 @@ final class OutboxService implements OutboxContract
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -82,8 +85,8 @@ final class OutboxService implements OutboxContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentsNumberPage<DocumentResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/outbox/',
             query: $parsed,
@@ -91,5 +94,7 @@ final class OutboxService implements OutboxContract
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
         );
+
+        return $response->parse();
     }
 }

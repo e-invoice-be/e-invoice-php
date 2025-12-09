@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -154,14 +155,16 @@ final class DocumentsService implements DocumentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'api/documents/',
             body: (object) $parsed,
             options: $options,
             convert: DocumentResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -175,13 +178,15 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s', $documentID],
             options: $requestOptions,
             convert: DocumentResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -195,13 +200,15 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentDeleteResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentDeleteResponse> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['api/documents/%1$s', $documentID],
             options: $requestOptions,
             convert: DocumentDeleteResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -225,8 +232,8 @@ final class DocumentsService implements DocumentsContract
         );
         $query_params = array_flip(['customer_tax_id', 'vendor_tax_id']);
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentNewFromPdfResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'api/documents/pdf',
             query: array_diff_key($parsed, $query_params),
@@ -235,6 +242,8 @@ final class DocumentsService implements DocumentsContract
             options: $options,
             convert: DocumentNewFromPdfResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -262,14 +271,16 @@ final class DocumentsService implements DocumentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/send', $documentID],
             query: $parsed,
             options: $options,
             convert: DocumentResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -283,12 +294,14 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<UblDocumentValidation> */
+        $response = $this->client->request(
             method: 'post',
             path: ['api/documents/%1$s/validate', $documentID],
             options: $requestOptions,
             convert: UblDocumentValidation::class,
         );
+
+        return $response->parse();
     }
 }

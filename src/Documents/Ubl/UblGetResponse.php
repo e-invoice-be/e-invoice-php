@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Documents\Ubl;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type UblGetResponseShape = array{
@@ -24,12 +22,10 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
  *   validated_at?: \DateTimeInterface|null,
  * }
  */
-final class UblGetResponse implements BaseModel, ResponseConverter
+final class UblGetResponse implements BaseModel
 {
     /** @use SdkModel<UblGetResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;

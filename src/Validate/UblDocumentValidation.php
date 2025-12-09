@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Validate;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
 
@@ -21,12 +19,10 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
  *   ubl_document?: string|null,
  * }
  */
-final class UblDocumentValidation implements BaseModel, ResponseConverter
+final class UblDocumentValidation implements BaseModel
 {
     /** @use SdkModel<UblDocumentValidationShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;
