@@ -76,9 +76,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->createFromPdf([
-            'file' => file_get_contents(__FILE__) ?: '',
-        ]);
+        $result = $this->client->documents->createFromPdf(['file' => 'file']);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
@@ -92,7 +90,7 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->createFromPdf([
-            'file' => file_get_contents(__FILE__) ?: '',
+            'file' => 'file',
             'customer_tax_id' => 'customer_tax_id',
             'vendor_tax_id' => 'vendor_tax_id',
         ]);
