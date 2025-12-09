@@ -18,7 +18,7 @@ use Psr\Http\Message\ResponseInterface;
  * @phpstan-type DocumentsNumberPageShape = array{
  *   items?: list<Item>|null,
  *   page?: int|null,
- *   page_size?: int|null,
+ *   pageSize?: int|null,
  *   total?: int|null,
  * }
  *
@@ -41,8 +41,8 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     #[Optional]
     public ?int $page;
 
-    #[Optional]
-    public ?int $page_size;
+    #[Optional('page_size')]
+    public ?int $pageSize;
 
     #[Optional]
     public ?int $total;

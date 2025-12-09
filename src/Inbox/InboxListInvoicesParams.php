@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Services\InboxService::listInvoices()
  *
- * @phpstan-type InboxListInvoicesParamsShape = array{page?: int, page_size?: int}
+ * @phpstan-type InboxListInvoicesParamsShape = array{page?: int, pageSize?: int}
  */
 final class InboxListInvoicesParams implements BaseModel
 {
@@ -32,7 +32,7 @@ final class InboxListInvoicesParams implements BaseModel
      * Number of items per page.
      */
     #[Optional]
-    public ?int $page_size;
+    public ?int $pageSize;
 
     public function __construct()
     {
@@ -44,12 +44,12 @@ final class InboxListInvoicesParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?int $page = null, ?int $page_size = null): self
+    public static function with(?int $page = null, ?int $pageSize = null): self
     {
         $obj = new self;
 
         null !== $page && $obj['page'] = $page;
-        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $pageSize && $obj['pageSize'] = $pageSize;
 
         return $obj;
     }
@@ -71,7 +71,7 @@ final class InboxListInvoicesParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj['page_size'] = $pageSize;
+        $obj['pageSize'] = $pageSize;
 
         return $obj;
     }

@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -30,10 +31,10 @@ final class InboxService implements InboxContract
      * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
      *
      * @param array{
-     *   date_from?: string|\DateTimeInterface|null,
-     *   date_to?: string|\DateTimeInterface|null,
+     *   dateFrom?: string|\DateTimeInterface|null,
+     *   dateTo?: string|\DateTimeInterface|null,
      *   page?: int,
-     *   page_size?: int,
+     *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
      *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
@@ -57,7 +58,14 @@ final class InboxService implements InboxContract
         $response = $this->client->request(
             method: 'get',
             path: 'api/inbox/',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'dateFrom' => 'date_from',
+                    'dateTo' => 'date_to',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
@@ -71,7 +79,7 @@ final class InboxService implements InboxContract
      *
      * Retrieve a paginated list of received credit notes with filtering options.
      *
-     * @param array{page?: int, page_size?: int}|InboxListCreditNotesParams $params
+     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
@@ -90,7 +98,7 @@ final class InboxService implements InboxContract
         $response = $this->client->request(
             method: 'get',
             path: 'api/inbox/credit-notes',
-            query: $parsed,
+            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
@@ -104,7 +112,7 @@ final class InboxService implements InboxContract
      *
      * Retrieve a paginated list of received invoices with filtering options.
      *
-     * @param array{page?: int, page_size?: int}|InboxListInvoicesParams $params
+     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParams $params
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
@@ -123,7 +131,7 @@ final class InboxService implements InboxContract
         $response = $this->client->request(
             method: 'get',
             path: 'api/inbox/invoices',
-            query: $parsed,
+            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,

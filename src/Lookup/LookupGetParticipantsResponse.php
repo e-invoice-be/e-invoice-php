@@ -16,10 +16,10 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
  * Represents the result of a Peppol directory search.
  *
  * @phpstan-type LookupGetParticipantsResponseShape = array{
- *   query_terms: string,
- *   search_date: string,
- *   total_count: int,
- *   used_count: int,
+ *   queryTerms: string,
+ *   searchDate: string,
+ *   totalCount: int,
+ *   usedCount: int,
  *   participants?: list<Participant>|null,
  * }
  */
@@ -31,26 +31,26 @@ final class LookupGetParticipantsResponse implements BaseModel
     /**
      * Query terms used for search.
      */
-    #[Required]
-    public string $query_terms;
+    #[Required('query_terms')]
+    public string $queryTerms;
 
     /**
      * Search date of the result.
      */
-    #[Required]
-    public string $search_date;
+    #[Required('search_date')]
+    public string $searchDate;
 
     /**
      * Total number of results.
      */
-    #[Required]
-    public int $total_count;
+    #[Required('total_count')]
+    public int $totalCount;
 
     /**
      * Number of results returned by the API.
      */
-    #[Required]
-    public int $used_count;
+    #[Required('used_count')]
+    public int $usedCount;
 
     /**
      * List of participants.
@@ -66,7 +66,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * LookupGetParticipantsResponse::with(
-     *   query_terms: ..., search_date: ..., total_count: ..., used_count: ...
+     *   queryTerms: ..., searchDate: ..., totalCount: ..., usedCount: ...
      * )
      * ```
      *
@@ -91,25 +91,25 @@ final class LookupGetParticipantsResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Participant|array{
-     *   peppol_id: string,
-     *   peppol_scheme: string,
-     *   document_types?: list<DocumentType>|null,
+     *   peppolID: string,
+     *   peppolScheme: string,
+     *   documentTypes?: list<DocumentType>|null,
      *   entities?: list<Entity>|null,
      * }> $participants
      */
     public static function with(
-        string $query_terms,
-        string $search_date,
-        int $total_count,
-        int $used_count,
+        string $queryTerms,
+        string $searchDate,
+        int $totalCount,
+        int $usedCount,
         ?array $participants = null,
     ): self {
         $obj = new self;
 
-        $obj['query_terms'] = $query_terms;
-        $obj['search_date'] = $search_date;
-        $obj['total_count'] = $total_count;
-        $obj['used_count'] = $used_count;
+        $obj['queryTerms'] = $queryTerms;
+        $obj['searchDate'] = $searchDate;
+        $obj['totalCount'] = $totalCount;
+        $obj['usedCount'] = $usedCount;
 
         null !== $participants && $obj['participants'] = $participants;
 
@@ -122,7 +122,7 @@ final class LookupGetParticipantsResponse implements BaseModel
     public function withQueryTerms(string $queryTerms): self
     {
         $obj = clone $this;
-        $obj['query_terms'] = $queryTerms;
+        $obj['queryTerms'] = $queryTerms;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class LookupGetParticipantsResponse implements BaseModel
     public function withSearchDate(string $searchDate): self
     {
         $obj = clone $this;
-        $obj['search_date'] = $searchDate;
+        $obj['searchDate'] = $searchDate;
 
         return $obj;
     }
@@ -144,7 +144,7 @@ final class LookupGetParticipantsResponse implements BaseModel
     public function withTotalCount(int $totalCount): self
     {
         $obj = clone $this;
-        $obj['total_count'] = $totalCount;
+        $obj['totalCount'] = $totalCount;
 
         return $obj;
     }
@@ -155,7 +155,7 @@ final class LookupGetParticipantsResponse implements BaseModel
     public function withUsedCount(int $usedCount): self
     {
         $obj = clone $this;
-        $obj['used_count'] = $usedCount;
+        $obj['usedCount'] = $usedCount;
 
         return $obj;
     }
@@ -164,9 +164,9 @@ final class LookupGetParticipantsResponse implements BaseModel
      * List of participants.
      *
      * @param list<Participant|array{
-     *   peppol_id: string,
-     *   peppol_scheme: string,
-     *   document_types?: list<DocumentType>|null,
+     *   peppolID: string,
+     *   peppolScheme: string,
+     *   documentTypes?: list<DocumentType>|null,
      *   entities?: list<Entity>|null,
      * }> $participants
      */

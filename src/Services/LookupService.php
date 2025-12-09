@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
 use EInvoiceAPI\Lookup\LookupRetrieveParams;
@@ -26,7 +27,7 @@ final class LookupService implements LookupContract
      *
      * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
-     * @param array{peppol_id: string}|LookupRetrieveParams $params
+     * @param array{peppolID: string}|LookupRetrieveParams $params
      *
      * @throws APIException
      */
@@ -43,7 +44,7 @@ final class LookupService implements LookupContract
         $response = $this->client->request(
             method: 'get',
             path: 'api/lookup',
-            query: $parsed,
+            query: Util::array_transform_keys($parsed, ['peppolID' => 'peppol_id']),
             options: $options,
             convert: LookupGetResponse::class,
         );
@@ -57,7 +58,7 @@ final class LookupService implements LookupContract
      * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
      *
      * @param array{
-     *   query: string, country_code?: string|null
+     *   query: string, countryCode?: string|null
      * }|LookupRetrieveParticipantsParams $params
      *
      * @throws APIException
@@ -75,7 +76,10 @@ final class LookupService implements LookupContract
         $response = $this->client->request(
             method: 'get',
             path: 'api/lookup/participants',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['countryCode' => 'country_code']
+            ),
             options: $options,
             convert: LookupGetParticipantsResponse::class,
         );

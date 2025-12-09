@@ -28,7 +28,7 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
-     * @param array{document_id: string}|AttachmentRetrieveParams $params
+     * @param array{documentID: string}|AttachmentRetrieveParams $params
      *
      * @throws APIException
      */
@@ -41,8 +41,8 @@ final class AttachmentsService implements AttachmentsContract
             $params,
             $requestOptions,
         );
-        $documentID = $parsed['document_id'];
-        unset($parsed['document_id']);
+        $documentID = $parsed['documentID'];
+        unset($parsed['documentID']);
 
         /** @var BaseResponse<DocumentAttachment> */
         $response = $this->client->request(
@@ -84,7 +84,7 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Delete an attachment from an invoice or credit note
      *
-     * @param array{document_id: string}|AttachmentDeleteParams $params
+     * @param array{documentID: string}|AttachmentDeleteParams $params
      *
      * @throws APIException
      */
@@ -97,8 +97,8 @@ final class AttachmentsService implements AttachmentsContract
             $params,
             $requestOptions,
         );
-        $documentID = $parsed['document_id'];
-        unset($parsed['document_id']);
+        $documentID = $parsed['documentID'];
+        unset($parsed['documentID']);
 
         /** @var BaseResponse<AttachmentDeleteResponse> */
         $response = $this->client->request(

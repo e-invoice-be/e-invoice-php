@@ -91,8 +91,8 @@ final class DocumentsTest extends TestCase
 
         $result = $this->client->documents->createFromPdf([
             'file' => 'file',
-            'customer_tax_id' => 'customer_tax_id',
-            'vendor_tax_id' => 'vendor_tax_id',
+            'customerTaxID' => 'customer_tax_id',
+            'vendorTaxID' => 'vendor_tax_id',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

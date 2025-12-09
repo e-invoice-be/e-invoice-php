@@ -49,7 +49,7 @@ final class ValidateTest extends TestCase
         }
 
         $result = $this->client->validate->validatePeppolID([
-            'peppol_id' => 'peppol_id',
+            'peppolID' => 'peppol_id',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -64,7 +64,7 @@ final class ValidateTest extends TestCase
         }
 
         $result = $this->client->validate->validatePeppolID([
-            'peppol_id' => 'peppol_id',
+            'peppolID' => 'peppol_id',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

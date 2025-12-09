@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Services\Documents\AttachmentsService::retrieve()
  *
- * @phpstan-type AttachmentRetrieveParamsShape = array{document_id: string}
+ * @phpstan-type AttachmentRetrieveParamsShape = array{documentID: string}
  */
 final class AttachmentRetrieveParams implements BaseModel
 {
@@ -23,14 +23,14 @@ final class AttachmentRetrieveParams implements BaseModel
     use SdkParams;
 
     #[Required]
-    public string $document_id;
+    public string $documentID;
 
     /**
      * `new AttachmentRetrieveParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * AttachmentRetrieveParams::with(document_id: ...)
+     * AttachmentRetrieveParams::with(documentID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,11 +49,11 @@ final class AttachmentRetrieveParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $document_id): self
+    public static function with(string $documentID): self
     {
         $obj = new self;
 
-        $obj['document_id'] = $document_id;
+        $obj['documentID'] = $documentID;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class AttachmentRetrieveParams implements BaseModel
     public function withDocumentID(string $documentID): self
     {
         $obj = clone $this;
-        $obj['document_id'] = $documentID;
+        $obj['documentID'] = $documentID;
 
         return $obj;
     }
