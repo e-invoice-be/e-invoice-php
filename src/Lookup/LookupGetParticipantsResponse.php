@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Lookup;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
@@ -24,12 +22,10 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
  *   participants?: list<Participant>|null,
  * }
  */
-final class LookupGetParticipantsResponse implements BaseModel, ResponseConverter
+final class LookupGetParticipantsResponse implements BaseModel
 {
     /** @use SdkModel<LookupGetParticipantsResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Query terms used for search.

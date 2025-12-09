@@ -6,19 +6,15 @@ namespace EInvoiceAPI\Documents;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DocumentDeleteResponseShape = array{is_deleted: bool}
  */
-final class DocumentDeleteResponse implements BaseModel, ResponseConverter
+final class DocumentDeleteResponse implements BaseModel
 {
     /** @use SdkModel<DocumentDeleteResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public bool $is_deleted;

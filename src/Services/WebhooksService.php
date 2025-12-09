@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\RequestOptions;
@@ -41,14 +42,16 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'api/webhooks/',
             body: (object) $parsed,
             options: $options,
             convert: WebhookResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -62,13 +65,15 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['api/webhooks/%1$s', $webhookID],
             options: $requestOptions,
             convert: WebhookResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -92,14 +97,16 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookResponse> */
+        $response = $this->client->request(
             method: 'put',
             path: ['api/webhooks/%1$s', $webhookID],
             body: (object) $parsed,
             options: $options,
             convert: WebhookResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -113,13 +120,15 @@ final class WebhooksService implements WebhooksContract
      */
     public function list(?RequestOptions $requestOptions = null): array
     {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<list<WebhookResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'api/webhooks/',
             options: $requestOptions,
             convert: new ListOf(WebhookResponse::class),
         );
+
+        return $response->parse();
     }
 
     /**
@@ -133,12 +142,14 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDeleteResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookDeleteResponse> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['api/webhooks/%1$s', $webhookID],
             options: $requestOptions,
             convert: WebhookDeleteResponse::class,
         );
+
+        return $response->parse();
     }
 }

@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Webhooks;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * Response model for webhook API endpoints.
@@ -21,12 +19,10 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
  *   enabled?: bool|null,
  * }
  */
-final class WebhookResponse implements BaseModel, ResponseConverter
+final class WebhookResponse implements BaseModel
 {
     /** @use SdkModel<WebhookResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;

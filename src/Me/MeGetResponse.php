@@ -6,9 +6,7 @@ namespace EInvoiceAPI\Me;
 
 use EInvoiceAPI\Core\Attributes\Api;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Me\MeGetResponse\Plan;
 
 /**
@@ -32,12 +30,10 @@ use EInvoiceAPI\Me\MeGetResponse\Plan;
  *   smp_registration_date?: \DateTimeInterface|null,
  * }
  */
-final class MeGetResponse implements BaseModel, ResponseConverter
+final class MeGetResponse implements BaseModel
 {
     /** @use SdkModel<MeGetResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Credit balance of the tenant.

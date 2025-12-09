@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\Ubl\UblCreateFromUblParams;
@@ -37,8 +38,8 @@ final class UblService implements UblContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DocumentResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'api/documents/ubl',
             headers: ['Content-Type' => 'multipart/form-data'],
@@ -46,6 +47,8 @@ final class UblService implements UblContract
             options: $options,
             convert: DocumentResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -59,12 +62,14 @@ final class UblService implements UblContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblGetResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<UblGetResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['api/documents/%1$s/ubl', $documentID],
             options: $requestOptions,
             convert: UblGetResponse::class,
         );
+
+        return $response->parse();
     }
 }
