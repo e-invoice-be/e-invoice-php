@@ -101,16 +101,16 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
         bool $isValid,
         ?array $supportedDocumentTypes = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['businessCard'] = $businessCard;
-        $obj['businessCardValid'] = $businessCardValid;
-        $obj['dnsValid'] = $dnsValid;
-        $obj['isValid'] = $isValid;
+        $self['businessCard'] = $businessCard;
+        $self['businessCardValid'] = $businessCardValid;
+        $self['dnsValid'] = $dnsValid;
+        $self['isValid'] = $isValid;
 
-        null !== $supportedDocumentTypes && $obj['supportedDocumentTypes'] = $supportedDocumentTypes;
+        null !== $supportedDocumentTypes && $self['supportedDocumentTypes'] = $supportedDocumentTypes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -125,10 +125,10 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     public function withBusinessCard(
         BusinessCard|array|null $businessCard
     ): self {
-        $obj = clone $this;
-        $obj['businessCard'] = $businessCard;
+        $self = clone $this;
+        $self['businessCard'] = $businessCard;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -136,10 +136,10 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      */
     public function withBusinessCardValid(bool $businessCardValid): self
     {
-        $obj = clone $this;
-        $obj['businessCardValid'] = $businessCardValid;
+        $self = clone $this;
+        $self['businessCardValid'] = $businessCardValid;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -147,10 +147,10 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      */
     public function withDNSValid(bool $dnsValid): self
     {
-        $obj = clone $this;
-        $obj['dnsValid'] = $dnsValid;
+        $self = clone $this;
+        $self['dnsValid'] = $dnsValid;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -158,10 +158,10 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      */
     public function withIsValid(bool $isValid): self
     {
-        $obj = clone $this;
-        $obj['isValid'] = $isValid;
+        $self = clone $this;
+        $self['isValid'] = $isValid;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -170,9 +170,9 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     public function withSupportedDocumentTypes(
         array $supportedDocumentTypes
     ): self {
-        $obj = clone $this;
-        $obj['supportedDocumentTypes'] = $supportedDocumentTypes;
+        $self = clone $this;
+        $self['supportedDocumentTypes'] = $supportedDocumentTypes;
 
-        return $obj;
+        return $self;
     }
 }

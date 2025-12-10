@@ -96,15 +96,15 @@ final class Participant implements BaseModel
         ?array $documentTypes = null,
         ?array $entities = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['peppolID'] = $peppolID;
-        $obj['peppolScheme'] = $peppolScheme;
+        $self['peppolID'] = $peppolID;
+        $self['peppolScheme'] = $peppolScheme;
 
-        null !== $documentTypes && $obj['documentTypes'] = $documentTypes;
-        null !== $entities && $obj['entities'] = $entities;
+        null !== $documentTypes && $self['documentTypes'] = $documentTypes;
+        null !== $entities && $self['entities'] = $entities;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -112,10 +112,10 @@ final class Participant implements BaseModel
      */
     public function withPeppolID(string $peppolID): self
     {
-        $obj = clone $this;
-        $obj['peppolID'] = $peppolID;
+        $self = clone $this;
+        $self['peppolID'] = $peppolID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -123,10 +123,10 @@ final class Participant implements BaseModel
      */
     public function withPeppolScheme(string $peppolScheme): self
     {
-        $obj = clone $this;
-        $obj['peppolScheme'] = $peppolScheme;
+        $self = clone $this;
+        $self['peppolScheme'] = $peppolScheme;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -136,10 +136,10 @@ final class Participant implements BaseModel
      */
     public function withDocumentTypes(array $documentTypes): self
     {
-        $obj = clone $this;
-        $obj['documentTypes'] = $documentTypes;
+        $self = clone $this;
+        $self['documentTypes'] = $documentTypes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -157,9 +157,9 @@ final class Participant implements BaseModel
      */
     public function withEntities(array $entities): self
     {
-        $obj = clone $this;
-        $obj['entities'] = $entities;
+        $self = clone $this;
+        $self['entities'] = $entities;
 
-        return $obj;
+        return $self;
     }
 }

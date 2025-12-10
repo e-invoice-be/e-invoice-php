@@ -92,17 +92,17 @@ final class Entity implements BaseModel
         ?string $registrationDate = null,
         ?string $website = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $additionalInfo && $obj['additionalInfo'] = $additionalInfo;
-        null !== $countryCode && $obj['countryCode'] = $countryCode;
-        null !== $geoInfo && $obj['geoInfo'] = $geoInfo;
-        null !== $identifiers && $obj['identifiers'] = $identifiers;
-        null !== $name && $obj['name'] = $name;
-        null !== $registrationDate && $obj['registrationDate'] = $registrationDate;
-        null !== $website && $obj['website'] = $website;
+        null !== $additionalInfo && $self['additionalInfo'] = $additionalInfo;
+        null !== $countryCode && $self['countryCode'] = $countryCode;
+        null !== $geoInfo && $self['geoInfo'] = $geoInfo;
+        null !== $identifiers && $self['identifiers'] = $identifiers;
+        null !== $name && $self['name'] = $name;
+        null !== $registrationDate && $self['registrationDate'] = $registrationDate;
+        null !== $website && $self['website'] = $website;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class Entity implements BaseModel
      */
     public function withAdditionalInfo(?string $additionalInfo): self
     {
-        $obj = clone $this;
-        $obj['additionalInfo'] = $additionalInfo;
+        $self = clone $this;
+        $self['additionalInfo'] = $additionalInfo;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class Entity implements BaseModel
      */
     public function withCountryCode(?string $countryCode): self
     {
-        $obj = clone $this;
-        $obj['countryCode'] = $countryCode;
+        $self = clone $this;
+        $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -132,10 +132,10 @@ final class Entity implements BaseModel
      */
     public function withGeoInfo(?string $geoInfo): self
     {
-        $obj = clone $this;
-        $obj['geoInfo'] = $geoInfo;
+        $self = clone $this;
+        $self['geoInfo'] = $geoInfo;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,10 +145,10 @@ final class Entity implements BaseModel
      */
     public function withIdentifiers(array $identifiers): self
     {
-        $obj = clone $this;
-        $obj['identifiers'] = $identifiers;
+        $self = clone $this;
+        $self['identifiers'] = $identifiers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -156,10 +156,10 @@ final class Entity implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -167,10 +167,10 @@ final class Entity implements BaseModel
      */
     public function withRegistrationDate(?string $registrationDate): self
     {
-        $obj = clone $this;
-        $obj['registrationDate'] = $registrationDate;
+        $self = clone $this;
+        $self['registrationDate'] = $registrationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -178,9 +178,9 @@ final class Entity implements BaseModel
      */
     public function withWebsite(?string $website): self
     {
-        $obj = clone $this;
-        $obj['website'] = $website;
+        $self = clone $this;
+        $self['website'] = $website;
 
-        return $obj;
+        return $self;
     }
 }

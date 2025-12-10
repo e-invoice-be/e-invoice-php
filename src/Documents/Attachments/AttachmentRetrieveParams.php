@@ -51,18 +51,18 @@ final class AttachmentRetrieveParams implements BaseModel
      */
     public static function with(string $documentID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['documentID'] = $documentID;
+        $self['documentID'] = $documentID;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentID(string $documentID): self
     {
-        $obj = clone $this;
-        $obj['documentID'] = $documentID;
+        $self = clone $this;
+        $self['documentID'] = $documentID;
 
-        return $obj;
+        return $self;
     }
 }

@@ -83,15 +83,15 @@ final class DNSInfo implements BaseModel
         string $status,
         ?string $error = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['dnsRecords'] = $dnsRecords;
-        $obj['smlHostname'] = $smlHostname;
-        $obj['status'] = $status;
+        $self['dnsRecords'] = $dnsRecords;
+        $self['smlHostname'] = $smlHostname;
+        $self['status'] = $status;
 
-        null !== $error && $obj['error'] = $error;
+        null !== $error && $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -101,10 +101,10 @@ final class DNSInfo implements BaseModel
      */
     public function withDNSRecords(array $dnsRecords): self
     {
-        $obj = clone $this;
-        $obj['dnsRecords'] = $dnsRecords;
+        $self = clone $this;
+        $self['dnsRecords'] = $dnsRecords;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -112,10 +112,10 @@ final class DNSInfo implements BaseModel
      */
     public function withSmlHostname(string $smlHostname): self
     {
-        $obj = clone $this;
-        $obj['smlHostname'] = $smlHostname;
+        $self = clone $this;
+        $self['smlHostname'] = $smlHostname;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -123,10 +123,10 @@ final class DNSInfo implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -134,9 +134,9 @@ final class DNSInfo implements BaseModel
      */
     public function withError(?string $error): self
     {
-        $obj = clone $this;
-        $obj['error'] = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

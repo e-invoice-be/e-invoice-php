@@ -56,12 +56,12 @@ final class Identifier implements BaseModel
      */
     public static function with(string $scheme, string $value): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['scheme'] = $scheme;
-        $obj['value'] = $value;
+        $self['scheme'] = $scheme;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -69,10 +69,10 @@ final class Identifier implements BaseModel
      */
     public function withScheme(string $scheme): self
     {
-        $obj = clone $this;
-        $obj['scheme'] = $scheme;
+        $self = clone $this;
+        $self['scheme'] = $scheme;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -80,9 +80,9 @@ final class Identifier implements BaseModel
      */
     public function withValue(string $value): self
     {
-        $obj = clone $this;
-        $obj['value'] = $value;
+        $self = clone $this;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 }

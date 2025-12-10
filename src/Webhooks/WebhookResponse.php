@@ -78,24 +78,24 @@ final class WebhookResponse implements BaseModel
         string $url,
         ?bool $enabled = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['events'] = $events;
-        $obj['secret'] = $secret;
-        $obj['url'] = $url;
+        $self['id'] = $id;
+        $self['events'] = $events;
+        $self['secret'] = $secret;
+        $self['url'] = $url;
 
-        null !== $enabled && $obj['enabled'] = $enabled;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,33 +103,33 @@ final class WebhookResponse implements BaseModel
      */
     public function withEvents(array $events): self
     {
-        $obj = clone $this;
-        $obj['events'] = $events;
+        $self = clone $this;
+        $self['events'] = $events;
 
-        return $obj;
+        return $self;
     }
 
     public function withSecret(string $secret): self
     {
-        $obj = clone $this;
-        $obj['secret'] = $secret;
+        $self = clone $this;
+        $self['secret'] = $secret;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj['enabled'] = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

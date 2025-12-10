@@ -54,11 +54,11 @@ final class LookupRetrieveParams implements BaseModel
      */
     public static function with(string $peppolID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['peppolID'] = $peppolID;
+        $self['peppolID'] = $peppolID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -66,9 +66,9 @@ final class LookupRetrieveParams implements BaseModel
      */
     public function withPeppolID(string $peppolID): self
     {
-        $obj = clone $this;
-        $obj['peppolID'] = $peppolID;
+        $self = clone $this;
+        $self['peppolID'] = $peppolID;
 
-        return $obj;
+        return $self;
     }
 }

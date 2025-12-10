@@ -115,19 +115,19 @@ final class Endpoint implements BaseModel
         ?string $technicalContactURL = null,
         ?string $technicalInformationURL = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['address'] = $address;
-        $obj['transportProfile'] = $transportProfile;
+        $self['address'] = $address;
+        $self['transportProfile'] = $transportProfile;
 
-        null !== $certificate && $obj['certificate'] = $certificate;
-        null !== $serviceActivationDate && $obj['serviceActivationDate'] = $serviceActivationDate;
-        null !== $serviceDescription && $obj['serviceDescription'] = $serviceDescription;
-        null !== $serviceExpirationDate && $obj['serviceExpirationDate'] = $serviceExpirationDate;
-        null !== $technicalContactURL && $obj['technicalContactURL'] = $technicalContactURL;
-        null !== $technicalInformationURL && $obj['technicalInformationURL'] = $technicalInformationURL;
+        null !== $certificate && $self['certificate'] = $certificate;
+        null !== $serviceActivationDate && $self['serviceActivationDate'] = $serviceActivationDate;
+        null !== $serviceDescription && $self['serviceDescription'] = $serviceDescription;
+        null !== $serviceExpirationDate && $self['serviceExpirationDate'] = $serviceExpirationDate;
+        null !== $technicalContactURL && $self['technicalContactURL'] = $technicalContactURL;
+        null !== $technicalInformationURL && $self['technicalInformationURL'] = $technicalInformationURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -135,10 +135,10 @@ final class Endpoint implements BaseModel
      */
     public function withAddress(string $address): self
     {
-        $obj = clone $this;
-        $obj['address'] = $address;
+        $self = clone $this;
+        $self['address'] = $address;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -146,10 +146,10 @@ final class Endpoint implements BaseModel
      */
     public function withTransportProfile(string $transportProfile): self
     {
-        $obj = clone $this;
-        $obj['transportProfile'] = $transportProfile;
+        $self = clone $this;
+        $self['transportProfile'] = $transportProfile;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -161,10 +161,10 @@ final class Endpoint implements BaseModel
      */
     public function withCertificate(Certificate|array|null $certificate): self
     {
-        $obj = clone $this;
-        $obj['certificate'] = $certificate;
+        $self = clone $this;
+        $self['certificate'] = $certificate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -173,10 +173,10 @@ final class Endpoint implements BaseModel
     public function withServiceActivationDate(
         ?string $serviceActivationDate
     ): self {
-        $obj = clone $this;
-        $obj['serviceActivationDate'] = $serviceActivationDate;
+        $self = clone $this;
+        $self['serviceActivationDate'] = $serviceActivationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -184,10 +184,10 @@ final class Endpoint implements BaseModel
      */
     public function withServiceDescription(?string $serviceDescription): self
     {
-        $obj = clone $this;
-        $obj['serviceDescription'] = $serviceDescription;
+        $self = clone $this;
+        $self['serviceDescription'] = $serviceDescription;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -196,10 +196,10 @@ final class Endpoint implements BaseModel
     public function withServiceExpirationDate(
         ?string $serviceExpirationDate
     ): self {
-        $obj = clone $this;
-        $obj['serviceExpirationDate'] = $serviceExpirationDate;
+        $self = clone $this;
+        $self['serviceExpirationDate'] = $serviceExpirationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -207,10 +207,10 @@ final class Endpoint implements BaseModel
      */
     public function withTechnicalContactURL(?string $technicalContactURL): self
     {
-        $obj = clone $this;
-        $obj['technicalContactURL'] = $technicalContactURL;
+        $self = clone $this;
+        $self['technicalContactURL'] = $technicalContactURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -219,9 +219,9 @@ final class Endpoint implements BaseModel
     public function withTechnicalInformationURL(
         ?string $technicalInformationURL
     ): self {
-        $obj = clone $this;
-        $obj['technicalInformationURL'] = $technicalInformationURL;
+        $self = clone $this;
+        $self['technicalInformationURL'] = $technicalInformationURL;
 
-        return $obj;
+        return $self;
     }
 }

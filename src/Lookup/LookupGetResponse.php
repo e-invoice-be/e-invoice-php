@@ -176,18 +176,18 @@ final class LookupGetResponse implements BaseModel
         ServiceMetadata|array $serviceMetadata,
         string $status,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['businessCard'] = $businessCard;
-        $obj['certificates'] = $certificates;
-        $obj['dnsInfo'] = $dnsInfo;
-        $obj['errors'] = $errors;
-        $obj['executionTimeMs'] = $executionTimeMs;
-        $obj['queryMetadata'] = $queryMetadata;
-        $obj['serviceMetadata'] = $serviceMetadata;
-        $obj['status'] = $status;
+        $self['businessCard'] = $businessCard;
+        $self['certificates'] = $certificates;
+        $self['dnsInfo'] = $dnsInfo;
+        $self['errors'] = $errors;
+        $self['executionTimeMs'] = $executionTimeMs;
+        $self['queryMetadata'] = $queryMetadata;
+        $self['serviceMetadata'] = $serviceMetadata;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -202,10 +202,10 @@ final class LookupGetResponse implements BaseModel
      */
     public function withBusinessCard(BusinessCard|array $businessCard): self
     {
-        $obj = clone $this;
-        $obj['businessCard'] = $businessCard;
+        $self = clone $this;
+        $self['businessCard'] = $businessCard;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -217,10 +217,10 @@ final class LookupGetResponse implements BaseModel
      */
     public function withCertificates(array $certificates): self
     {
-        $obj = clone $this;
-        $obj['certificates'] = $certificates;
+        $self = clone $this;
+        $self['certificates'] = $certificates;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -235,10 +235,10 @@ final class LookupGetResponse implements BaseModel
      */
     public function withDNSInfo(DNSInfo|array $dnsInfo): self
     {
-        $obj = clone $this;
-        $obj['dnsInfo'] = $dnsInfo;
+        $self = clone $this;
+        $self['dnsInfo'] = $dnsInfo;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -248,10 +248,10 @@ final class LookupGetResponse implements BaseModel
      */
     public function withErrors(array $errors): self
     {
-        $obj = clone $this;
-        $obj['errors'] = $errors;
+        $self = clone $this;
+        $self['errors'] = $errors;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -259,10 +259,10 @@ final class LookupGetResponse implements BaseModel
      */
     public function withExecutionTimeMs(float $executionTimeMs): self
     {
-        $obj = clone $this;
-        $obj['executionTimeMs'] = $executionTimeMs;
+        $self = clone $this;
+        $self['executionTimeMs'] = $executionTimeMs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -278,10 +278,10 @@ final class LookupGetResponse implements BaseModel
      */
     public function withQueryMetadata(QueryMetadata|array $queryMetadata): self
     {
-        $obj = clone $this;
-        $obj['queryMetadata'] = $queryMetadata;
+        $self = clone $this;
+        $self['queryMetadata'] = $queryMetadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -297,10 +297,10 @@ final class LookupGetResponse implements BaseModel
     public function withServiceMetadata(
         ServiceMetadata|array $serviceMetadata
     ): self {
-        $obj = clone $this;
-        $obj['serviceMetadata'] = $serviceMetadata;
+        $self = clone $this;
+        $self['serviceMetadata'] = $serviceMetadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -308,9 +308,9 @@ final class LookupGetResponse implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 }

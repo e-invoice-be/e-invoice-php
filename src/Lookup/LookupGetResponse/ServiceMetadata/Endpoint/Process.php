@@ -77,12 +77,12 @@ final class Process implements BaseModel
         array $endpoints,
         ProcessID|array $processID
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['endpoints'] = $endpoints;
-        $obj['processID'] = $processID;
+        $self['endpoints'] = $endpoints;
+        $self['processID'] = $processID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -101,10 +101,10 @@ final class Process implements BaseModel
      */
     public function withEndpoints(array $endpoints): self
     {
-        $obj = clone $this;
-        $obj['endpoints'] = $endpoints;
+        $self = clone $this;
+        $self['endpoints'] = $endpoints;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -114,9 +114,9 @@ final class Process implements BaseModel
      */
     public function withProcessID(ProcessID|array $processID): self
     {
-        $obj = clone $this;
-        $obj['processID'] = $processID;
+        $self = clone $this;
+        $self['processID'] = $processID;
 
-        return $obj;
+        return $self;
     }
 }

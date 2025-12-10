@@ -88,15 +88,15 @@ final class BusinessCard implements BaseModel
         string $status,
         ?string $error = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['entities'] = $entities;
-        $obj['queryTimeMs'] = $queryTimeMs;
-        $obj['status'] = $status;
+        $self['entities'] = $entities;
+        $self['queryTimeMs'] = $queryTimeMs;
+        $self['status'] = $status;
 
-        null !== $error && $obj['error'] = $error;
+        null !== $error && $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,10 +111,10 @@ final class BusinessCard implements BaseModel
      */
     public function withEntities(array $entities): self
     {
-        $obj = clone $this;
-        $obj['entities'] = $entities;
+        $self = clone $this;
+        $self['entities'] = $entities;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -122,10 +122,10 @@ final class BusinessCard implements BaseModel
      */
     public function withQueryTimeMs(float $queryTimeMs): self
     {
-        $obj = clone $this;
-        $obj['queryTimeMs'] = $queryTimeMs;
+        $self = clone $this;
+        $self['queryTimeMs'] = $queryTimeMs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -133,10 +133,10 @@ final class BusinessCard implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -144,9 +144,9 @@ final class BusinessCard implements BaseModel
      */
     public function withError(?string $error): self
     {
-        $obj = clone $this;
-        $obj['error'] = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

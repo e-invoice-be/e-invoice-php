@@ -146,22 +146,22 @@ final class Item implements BaseModel
         UnitOfMeasureCode|string|null $unit = null,
         ?string $unitPrice = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['date'] = $date;
+        $self['date'] = $date;
 
-        null !== $allowances && $obj['allowances'] = $allowances;
-        null !== $amount && $obj['amount'] = $amount;
-        null !== $charges && $obj['charges'] = $charges;
-        null !== $description && $obj['description'] = $description;
-        null !== $productCode && $obj['productCode'] = $productCode;
-        null !== $quantity && $obj['quantity'] = $quantity;
-        null !== $tax && $obj['tax'] = $tax;
-        null !== $taxRate && $obj['taxRate'] = $taxRate;
-        null !== $unit && $obj['unit'] = $unit;
-        null !== $unitPrice && $obj['unitPrice'] = $unitPrice;
+        null !== $allowances && $self['allowances'] = $allowances;
+        null !== $amount && $self['amount'] = $amount;
+        null !== $charges && $self['charges'] = $charges;
+        null !== $description && $self['description'] = $description;
+        null !== $productCode && $self['productCode'] = $productCode;
+        null !== $quantity && $self['quantity'] = $quantity;
+        null !== $tax && $self['tax'] = $tax;
+        null !== $taxRate && $self['taxRate'] = $taxRate;
+        null !== $unit && $self['unit'] = $unit;
+        null !== $unitPrice && $self['unitPrice'] = $unitPrice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -179,10 +179,10 @@ final class Item implements BaseModel
      */
     public function withAllowances(?array $allowances): self
     {
-        $obj = clone $this;
-        $obj['allowances'] = $allowances;
+        $self = clone $this;
+        $self['allowances'] = $allowances;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -190,10 +190,10 @@ final class Item implements BaseModel
      */
     public function withAmount(?string $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -211,10 +211,10 @@ final class Item implements BaseModel
      */
     public function withCharges(?array $charges): self
     {
-        $obj = clone $this;
-        $obj['charges'] = $charges;
+        $self = clone $this;
+        $self['charges'] = $charges;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -222,10 +222,10 @@ final class Item implements BaseModel
      */
     public function withDate(null $date): self
     {
-        $obj = clone $this;
-        $obj['date'] = $date;
+        $self = clone $this;
+        $self['date'] = $date;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -233,10 +233,10 @@ final class Item implements BaseModel
      */
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -244,10 +244,10 @@ final class Item implements BaseModel
      */
     public function withProductCode(?string $productCode): self
     {
-        $obj = clone $this;
-        $obj['productCode'] = $productCode;
+        $self = clone $this;
+        $self['productCode'] = $productCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -255,10 +255,10 @@ final class Item implements BaseModel
      */
     public function withQuantity(?string $quantity): self
     {
-        $obj = clone $this;
-        $obj['quantity'] = $quantity;
+        $self = clone $this;
+        $self['quantity'] = $quantity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -266,10 +266,10 @@ final class Item implements BaseModel
      */
     public function withTax(?string $tax): self
     {
-        $obj = clone $this;
-        $obj['tax'] = $tax;
+        $self = clone $this;
+        $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -277,10 +277,10 @@ final class Item implements BaseModel
      */
     public function withTaxRate(?string $taxRate): self
     {
-        $obj = clone $this;
-        $obj['taxRate'] = $taxRate;
+        $self = clone $this;
+        $self['taxRate'] = $taxRate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -290,10 +290,10 @@ final class Item implements BaseModel
      */
     public function withUnit(UnitOfMeasureCode|string|null $unit): self
     {
-        $obj = clone $this;
-        $obj['unit'] = $unit;
+        $self = clone $this;
+        $self['unit'] = $unit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -301,9 +301,9 @@ final class Item implements BaseModel
      */
     public function withUnitPrice(?string $unitPrice): self
     {
-        $obj = clone $this;
-        $obj['unitPrice'] = $unitPrice;
+        $self = clone $this;
+        $self['unitPrice'] = $unitPrice;
 
-        return $obj;
+        return $self;
     }
 }

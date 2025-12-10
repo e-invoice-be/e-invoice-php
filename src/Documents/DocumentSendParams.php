@@ -60,55 +60,55 @@ final class DocumentSendParams implements BaseModel
         ?string $senderPeppolID = null,
         ?string $senderPeppolScheme = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $email && $obj['email'] = $email;
-        null !== $receiverPeppolID && $obj['receiverPeppolID'] = $receiverPeppolID;
-        null !== $receiverPeppolScheme && $obj['receiverPeppolScheme'] = $receiverPeppolScheme;
-        null !== $senderPeppolID && $obj['senderPeppolID'] = $senderPeppolID;
-        null !== $senderPeppolScheme && $obj['senderPeppolScheme'] = $senderPeppolScheme;
+        null !== $email && $self['email'] = $email;
+        null !== $receiverPeppolID && $self['receiverPeppolID'] = $receiverPeppolID;
+        null !== $receiverPeppolScheme && $self['receiverPeppolScheme'] = $receiverPeppolScheme;
+        null !== $senderPeppolID && $self['senderPeppolID'] = $senderPeppolID;
+        null !== $senderPeppolScheme && $self['senderPeppolScheme'] = $senderPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 
     public function withEmail(?string $email): self
     {
-        $obj = clone $this;
-        $obj['email'] = $email;
+        $self = clone $this;
+        $self['email'] = $email;
 
-        return $obj;
+        return $self;
     }
 
     public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
-        $obj = clone $this;
-        $obj['receiverPeppolID'] = $receiverPeppolID;
+        $self = clone $this;
+        $self['receiverPeppolID'] = $receiverPeppolID;
 
-        return $obj;
+        return $self;
     }
 
     public function withReceiverPeppolScheme(
         ?string $receiverPeppolScheme
     ): self {
-        $obj = clone $this;
-        $obj['receiverPeppolScheme'] = $receiverPeppolScheme;
+        $self = clone $this;
+        $self['receiverPeppolScheme'] = $receiverPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 
     public function withSenderPeppolID(?string $senderPeppolID): self
     {
-        $obj = clone $this;
-        $obj['senderPeppolID'] = $senderPeppolID;
+        $self = clone $this;
+        $self['senderPeppolID'] = $senderPeppolID;
 
-        return $obj;
+        return $self;
     }
 
     public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
-        $obj = clone $this;
-        $obj['senderPeppolScheme'] = $senderPeppolScheme;
+        $self = clone $this;
+        $self['senderPeppolScheme'] = $senderPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 }

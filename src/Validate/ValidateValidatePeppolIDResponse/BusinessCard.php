@@ -46,37 +46,37 @@ final class BusinessCard implements BaseModel
         ?string $name = null,
         ?\DateTimeInterface $registrationDate = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $countryCode && $obj['countryCode'] = $countryCode;
-        null !== $name && $obj['name'] = $name;
-        null !== $registrationDate && $obj['registrationDate'] = $registrationDate;
+        null !== $countryCode && $self['countryCode'] = $countryCode;
+        null !== $name && $self['name'] = $name;
+        null !== $registrationDate && $self['registrationDate'] = $registrationDate;
 
-        return $obj;
+        return $self;
     }
 
     public function withCountryCode(?string $countryCode): self
     {
-        $obj = clone $this;
-        $obj['countryCode'] = $countryCode;
+        $self = clone $this;
+        $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withRegistrationDate(
         ?\DateTimeInterface $registrationDate
     ): self {
-        $obj = clone $this;
-        $obj['registrationDate'] = $registrationDate;
+        $self = clone $this;
+        $self['registrationDate'] = $registrationDate;
 
-        return $obj;
+        return $self;
     }
 }

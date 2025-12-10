@@ -86,40 +86,40 @@ final class UblDocumentValidation implements BaseModel
         array $issues,
         ?string $ublDocument = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['fileName'] = $fileName;
-        $obj['isValid'] = $isValid;
-        $obj['issues'] = $issues;
+        $self['id'] = $id;
+        $self['fileName'] = $fileName;
+        $self['isValid'] = $isValid;
+        $self['issues'] = $issues;
 
-        null !== $ublDocument && $obj['ublDocument'] = $ublDocument;
+        null !== $ublDocument && $self['ublDocument'] = $ublDocument;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(?string $fileName): self
     {
-        $obj = clone $this;
-        $obj['fileName'] = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsValid(bool $isValid): self
     {
-        $obj = clone $this;
-        $obj['isValid'] = $isValid;
+        $self = clone $this;
+        $self['isValid'] = $isValid;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -135,17 +135,17 @@ final class UblDocumentValidation implements BaseModel
      */
     public function withIssues(array $issues): self
     {
-        $obj = clone $this;
-        $obj['issues'] = $issues;
+        $self = clone $this;
+        $self['issues'] = $issues;
 
-        return $obj;
+        return $self;
     }
 
     public function withUblDocument(?string $ublDocument): self
     {
-        $obj = clone $this;
-        $obj['ublDocument'] = $ublDocument;
+        $self = clone $this;
+        $self['ublDocument'] = $ublDocument;
 
-        return $obj;
+        return $self;
     }
 }

@@ -69,55 +69,55 @@ final class DocumentAttachment implements BaseModel
         ?string $fileType = null,
         ?string $fileURL = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['fileName'] = $fileName;
+        $self['id'] = $id;
+        $self['fileName'] = $fileName;
 
-        null !== $fileSize && $obj['fileSize'] = $fileSize;
-        null !== $fileType && $obj['fileType'] = $fileType;
-        null !== $fileURL && $obj['fileURL'] = $fileURL;
+        null !== $fileSize && $self['fileSize'] = $fileSize;
+        null !== $fileType && $self['fileType'] = $fileType;
+        null !== $fileURL && $self['fileURL'] = $fileURL;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(string $fileName): self
     {
-        $obj = clone $this;
-        $obj['fileName'] = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileSize(int $fileSize): self
     {
-        $obj = clone $this;
-        $obj['fileSize'] = $fileSize;
+        $self = clone $this;
+        $self['fileSize'] = $fileSize;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileType(string $fileType): self
     {
-        $obj = clone $this;
-        $obj['fileType'] = $fileType;
+        $self = clone $this;
+        $self['fileType'] = $fileType;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileURL(?string $fileURL): self
     {
-        $obj = clone $this;
-        $obj['fileURL'] = $fileURL;
+        $self = clone $this;
+        $self['fileURL'] = $fileURL;
 
-        return $obj;
+        return $self;
     }
 }
