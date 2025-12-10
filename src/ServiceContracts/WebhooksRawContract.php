@@ -4,68 +4,75 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Webhooks\WebhookCreateParams;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
+use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
-interface WebhooksContract
+interface WebhooksRawContract
 {
     /**
      * @api
      *
-     * @param list<string> $events
+     * @param array<mixed>|WebhookCreateParams $params
+     *
+     * @return BaseResponse<WebhookResponse>
      *
      * @throws APIException
      */
     public function create(
-        array $events,
-        string $url,
-        bool $enabled = true,
-        ?RequestOptions $requestOptions = null,
-    ): WebhookResponse;
+        array|WebhookCreateParams $params,
+        ?RequestOptions $requestOptions = null
+    ): BaseResponse;
 
     /**
      * @api
+     *
+     * @return BaseResponse<WebhookResponse>
      *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
         ?RequestOptions $requestOptions = null
-    ): WebhookResponse;
+    ): BaseResponse;
 
     /**
      * @api
      *
-     * @param list<string>|null $events
+     * @param array<mixed>|WebhookUpdateParams $params
+     *
+     * @return BaseResponse<WebhookResponse>
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        ?bool $enabled = null,
-        ?array $events = null,
-        ?string $url = null,
+        array|WebhookUpdateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): WebhookResponse;
+    ): BaseResponse;
 
     /**
      * @api
      *
-     * @return list<WebhookResponse>
+     * @return BaseResponse<list<WebhookResponse>>
      *
      * @throws APIException
      */
-    public function list(?RequestOptions $requestOptions = null): array;
+    public function list(?RequestOptions $requestOptions = null): BaseResponse;
 
     /**
      * @api
+     *
+     * @return BaseResponse<WebhookDeleteResponse>
      *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
         ?RequestOptions $requestOptions = null
-    ): WebhookDeleteResponse;
+    ): BaseResponse;
 }

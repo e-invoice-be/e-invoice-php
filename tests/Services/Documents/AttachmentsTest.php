@@ -37,7 +37,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->retrieve(
             'attachment_id',
-            ['documentID' => 'document_id']
+            documentID: 'document_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -53,7 +53,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->retrieve(
             'attachment_id',
-            ['documentID' => 'document_id']
+            documentID: 'document_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -82,7 +82,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->delete(
             'attachment_id',
-            ['documentID' => 'document_id']
+            documentID: 'document_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -98,7 +98,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->delete(
             'attachment_id',
-            ['documentID' => 'document_id']
+            documentID: 'document_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -114,7 +114,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add(
             'document_id',
-            ['file' => 'file']
+            file: 'file'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -130,7 +130,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add(
             'document_id',
-            ['file' => 'file']
+            file: 'file'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

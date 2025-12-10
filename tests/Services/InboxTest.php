@@ -34,7 +34,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->list([]);
+        $result = $this->client->inbox->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentsNumberPage::class, $result);
@@ -47,7 +47,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->listCreditNotes([]);
+        $result = $this->client->inbox->listCreditNotes();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentsNumberPage::class, $result);
@@ -60,7 +60,7 @@ final class InboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->inbox->listInvoices([]);
+        $result = $this->client->inbox->listInvoices();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentsNumberPage::class, $result);

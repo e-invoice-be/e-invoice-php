@@ -4,36 +4,41 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\ServiceContracts;
 
+use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
+use EInvoiceAPI\Lookup\LookupRetrieveParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 
-interface LookupContract
+interface LookupRawContract
 {
     /**
      * @api
      *
-     * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
+     * @param array<mixed>|LookupRetrieveParams $params
+     *
+     * @return BaseResponse<LookupGetResponse>
      *
      * @throws APIException
      */
     public function retrieve(
-        string $peppolID,
+        array|LookupRetrieveParams $params,
         ?RequestOptions $requestOptions = null
-    ): LookupGetResponse;
+    ): BaseResponse;
 
     /**
      * @api
      *
-     * @param string $query Query to lookup
-     * @param string|null $countryCode Country code of the company to lookup. If not provided, the search will be global.
+     * @param array<mixed>|LookupRetrieveParticipantsParams $params
+     *
+     * @return BaseResponse<LookupGetParticipantsResponse>
      *
      * @throws APIException
      */
     public function retrieveParticipants(
-        string $query,
-        ?string $countryCode = null,
+        array|LookupRetrieveParticipantsParams $params,
         ?RequestOptions $requestOptions = null,
-    ): LookupGetParticipantsResponse;
+    ): BaseResponse;
 }
