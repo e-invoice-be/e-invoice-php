@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI;
 
 use EInvoiceAPI\Core\BaseClient;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Services\DocumentsService;
 use EInvoiceAPI\Services\InboxService;
 use EInvoiceAPI\Services\LookupService;
@@ -75,9 +76,9 @@ class Client extends BaseClient
                 'User-Agent' => sprintf('e-invoice/PHP %s', '0.0.1'),
                 'X-Stainless-Lang' => 'php',
                 'X-Stainless-Package-Version' => '0.0.1',
-                'X-Stainless-OS' => $this->getNormalizedOS(),
-                'X-Stainless-Arch' => $this->getNormalizedArchitecture(),
-                'X-Stainless-Runtime' => 'php',
+                'X-Stainless-Arch' => Util::machtype(),
+                'X-Stainless-OS' => Util::ostype(),
+                'X-Stainless-Runtime' => php_sapi_name(),
                 'X-Stainless-Runtime-Version' => phpversion(),
             ],
             // x-release-please-end

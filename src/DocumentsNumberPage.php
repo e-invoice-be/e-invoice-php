@@ -35,7 +35,7 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $items */
-    #[Optional(list: Item::class)]
+    #[Optional(list: 'mixed')]
     public ?array $items;
 
     #[Optional]
@@ -75,13 +75,10 @@ final class DocumentsNumberPage implements BaseModel, BasePage
         // @phpstan-ignore-next-line argument.type
         self::__unserialize($this->parsedBody);
 
-        if ($this->offsetGet('items')) {
-            $acc = Conversion::coerce(
-                new ListOf($convert),
-                value: $this->offsetGet('items')
-            );
+        if (is_array($items = $this->offsetGet('items'))) {
+            $parsed = Conversion::coerce(new ListOf($convert), value: $items);
             // @phpstan-ignore-next-line
-            $this->offsetSet('items', $acc);
+            $this->offsetSet('items', value: $parsed);
         }
     }
 
