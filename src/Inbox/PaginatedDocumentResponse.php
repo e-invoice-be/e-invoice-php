@@ -139,15 +139,15 @@ final class PaginatedDocumentResponse implements BaseModel
         int $pages,
         int $total
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['items'] = $items;
-        $obj['page'] = $page;
-        $obj['pageSize'] = $pageSize;
-        $obj['pages'] = $pages;
-        $obj['total'] = $total;
+        $self['items'] = $items;
+        $self['page'] = $page;
+        $self['pageSize'] = $pageSize;
+        $self['pages'] = $pages;
+        $self['total'] = $total;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -204,41 +204,41 @@ final class PaginatedDocumentResponse implements BaseModel
      */
     public function withItems(array $items): self
     {
-        $obj = clone $this;
-        $obj['items'] = $items;
+        $self = clone $this;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 
     public function withPage(int $page): self
     {
-        $obj = clone $this;
-        $obj['page'] = $page;
+        $self = clone $this;
+        $self['page'] = $page;
 
-        return $obj;
+        return $self;
     }
 
     public function withPageSize(int $pageSize): self
     {
-        $obj = clone $this;
-        $obj['pageSize'] = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     public function withPages(int $pages): self
     {
-        $obj = clone $this;
-        $obj['pages'] = $pages;
+        $self = clone $this;
+        $self['pages'] = $pages;
 
-        return $obj;
+        return $self;
     }
 
     public function withTotal(int $total): self
     {
-        $obj = clone $this;
-        $obj['total'] = $total;
+        $self = clone $this;
+        $self['total'] = $total;
 
-        return $obj;
+        return $self;
     }
 }

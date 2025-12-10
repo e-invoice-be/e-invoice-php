@@ -104,17 +104,17 @@ final class Charge implements BaseModel
         TaxCode|string|null $taxCode = null,
         float|string|null $taxRate = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $amount && $obj['amount'] = $amount;
-        null !== $baseAmount && $obj['baseAmount'] = $baseAmount;
-        null !== $multiplierFactor && $obj['multiplierFactor'] = $multiplierFactor;
-        null !== $reason && $obj['reason'] = $reason;
-        null !== $reasonCode && $obj['reasonCode'] = $reasonCode;
-        null !== $taxCode && $obj['taxCode'] = $taxCode;
-        null !== $taxRate && $obj['taxRate'] = $taxRate;
+        null !== $amount && $self['amount'] = $amount;
+        null !== $baseAmount && $self['baseAmount'] = $baseAmount;
+        null !== $multiplierFactor && $self['multiplierFactor'] = $multiplierFactor;
+        null !== $reason && $self['reason'] = $reason;
+        null !== $reasonCode && $self['reasonCode'] = $reasonCode;
+        null !== $taxCode && $self['taxCode'] = $taxCode;
+        null !== $taxRate && $self['taxRate'] = $taxRate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -122,10 +122,10 @@ final class Charge implements BaseModel
      */
     public function withAmount(float|string|null $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -133,10 +133,10 @@ final class Charge implements BaseModel
      */
     public function withBaseAmount(float|string|null $baseAmount): self
     {
-        $obj = clone $this;
-        $obj['baseAmount'] = $baseAmount;
+        $self = clone $this;
+        $self['baseAmount'] = $baseAmount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,10 +145,10 @@ final class Charge implements BaseModel
     public function withMultiplierFactor(
         float|string|null $multiplierFactor
     ): self {
-        $obj = clone $this;
-        $obj['multiplierFactor'] = $multiplierFactor;
+        $self = clone $this;
+        $self['multiplierFactor'] = $multiplierFactor;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -156,10 +156,10 @@ final class Charge implements BaseModel
      */
     public function withReason(?string $reason): self
     {
-        $obj = clone $this;
-        $obj['reason'] = $reason;
+        $self = clone $this;
+        $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -169,10 +169,10 @@ final class Charge implements BaseModel
      */
     public function withReasonCode(ReasonCode|string|null $reasonCode): self
     {
-        $obj = clone $this;
-        $obj['reasonCode'] = $reasonCode;
+        $self = clone $this;
+        $self['reasonCode'] = $reasonCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -187,10 +187,10 @@ final class Charge implements BaseModel
     public function withTaxCode(
         TaxCode|string|null $taxCode,
     ): self {
-        $obj = clone $this;
-        $obj['taxCode'] = $taxCode;
+        $self = clone $this;
+        $self['taxCode'] = $taxCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -198,9 +198,9 @@ final class Charge implements BaseModel
      */
     public function withTaxRate(float|string|null $taxRate): self
     {
-        $obj = clone $this;
-        $obj['taxRate'] = $taxRate;
+        $self = clone $this;
+        $self['taxRate'] = $taxRate;
 
-        return $obj;
+        return $self;
     }
 }

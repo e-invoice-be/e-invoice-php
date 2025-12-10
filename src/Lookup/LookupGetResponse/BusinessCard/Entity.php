@@ -67,14 +67,14 @@ final class Entity implements BaseModel
         ?string $name = null,
         ?string $registrationDate = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $additionalInformation && $obj['additionalInformation'] = $additionalInformation;
-        null !== $countryCode && $obj['countryCode'] = $countryCode;
-        null !== $name && $obj['name'] = $name;
-        null !== $registrationDate && $obj['registrationDate'] = $registrationDate;
+        null !== $additionalInformation && $self['additionalInformation'] = $additionalInformation;
+        null !== $countryCode && $self['countryCode'] = $countryCode;
+        null !== $name && $self['name'] = $name;
+        null !== $registrationDate && $self['registrationDate'] = $registrationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,10 +85,10 @@ final class Entity implements BaseModel
     public function withAdditionalInformation(
         ?array $additionalInformation
     ): self {
-        $obj = clone $this;
-        $obj['additionalInformation'] = $additionalInformation;
+        $self = clone $this;
+        $self['additionalInformation'] = $additionalInformation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,10 +96,10 @@ final class Entity implements BaseModel
      */
     public function withCountryCode(?string $countryCode): self
     {
-        $obj = clone $this;
-        $obj['countryCode'] = $countryCode;
+        $self = clone $this;
+        $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -107,10 +107,10 @@ final class Entity implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -118,9 +118,9 @@ final class Entity implements BaseModel
      */
     public function withRegistrationDate(?string $registrationDate): self
     {
-        $obj = clone $this;
-        $obj['registrationDate'] = $registrationDate;
+        $self = clone $this;
+        $self['registrationDate'] = $registrationDate;
 
-        return $obj;
+        return $self;
     }
 }

@@ -540,58 +540,58 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $vendorName = null,
         ?string $vendorTaxID = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowances && $obj['allowances'] = $allowances;
-        null !== $amountDue && $obj['amountDue'] = $amountDue;
-        null !== $attachments && $obj['attachments'] = $attachments;
-        null !== $billingAddress && $obj['billingAddress'] = $billingAddress;
-        null !== $billingAddressRecipient && $obj['billingAddressRecipient'] = $billingAddressRecipient;
-        null !== $charges && $obj['charges'] = $charges;
-        null !== $currency && $obj['currency'] = $currency;
-        null !== $customerAddress && $obj['customerAddress'] = $customerAddress;
-        null !== $customerAddressRecipient && $obj['customerAddressRecipient'] = $customerAddressRecipient;
-        null !== $customerCompanyID && $obj['customerCompanyID'] = $customerCompanyID;
-        null !== $customerEmail && $obj['customerEmail'] = $customerEmail;
-        null !== $customerID && $obj['customerID'] = $customerID;
-        null !== $customerName && $obj['customerName'] = $customerName;
-        null !== $customerTaxID && $obj['customerTaxID'] = $customerTaxID;
-        null !== $direction && $obj['direction'] = $direction;
-        null !== $documentType && $obj['documentType'] = $documentType;
-        null !== $dueDate && $obj['dueDate'] = $dueDate;
-        null !== $invoiceDate && $obj['invoiceDate'] = $invoiceDate;
-        null !== $invoiceID && $obj['invoiceID'] = $invoiceID;
-        null !== $invoiceTotal && $obj['invoiceTotal'] = $invoiceTotal;
-        null !== $items && $obj['items'] = $items;
-        null !== $note && $obj['note'] = $note;
-        null !== $paymentDetails && $obj['paymentDetails'] = $paymentDetails;
-        null !== $paymentTerm && $obj['paymentTerm'] = $paymentTerm;
-        null !== $previousUnpaidBalance && $obj['previousUnpaidBalance'] = $previousUnpaidBalance;
-        null !== $purchaseOrder && $obj['purchaseOrder'] = $purchaseOrder;
-        null !== $remittanceAddress && $obj['remittanceAddress'] = $remittanceAddress;
-        null !== $remittanceAddressRecipient && $obj['remittanceAddressRecipient'] = $remittanceAddressRecipient;
-        null !== $serviceAddress && $obj['serviceAddress'] = $serviceAddress;
-        null !== $serviceAddressRecipient && $obj['serviceAddressRecipient'] = $serviceAddressRecipient;
-        null !== $serviceEndDate && $obj['serviceEndDate'] = $serviceEndDate;
-        null !== $serviceStartDate && $obj['serviceStartDate'] = $serviceStartDate;
-        null !== $shippingAddress && $obj['shippingAddress'] = $shippingAddress;
-        null !== $shippingAddressRecipient && $obj['shippingAddressRecipient'] = $shippingAddressRecipient;
-        null !== $state && $obj['state'] = $state;
-        null !== $subtotal && $obj['subtotal'] = $subtotal;
-        null !== $taxCode && $obj['taxCode'] = $taxCode;
-        null !== $taxDetails && $obj['taxDetails'] = $taxDetails;
-        null !== $totalDiscount && $obj['totalDiscount'] = $totalDiscount;
-        null !== $totalTax && $obj['totalTax'] = $totalTax;
-        null !== $vatex && $obj['vatex'] = $vatex;
-        null !== $vatexNote && $obj['vatexNote'] = $vatexNote;
-        null !== $vendorAddress && $obj['vendorAddress'] = $vendorAddress;
-        null !== $vendorAddressRecipient && $obj['vendorAddressRecipient'] = $vendorAddressRecipient;
-        null !== $vendorCompanyID && $obj['vendorCompanyID'] = $vendorCompanyID;
-        null !== $vendorEmail && $obj['vendorEmail'] = $vendorEmail;
-        null !== $vendorName && $obj['vendorName'] = $vendorName;
-        null !== $vendorTaxID && $obj['vendorTaxID'] = $vendorTaxID;
+        null !== $allowances && $self['allowances'] = $allowances;
+        null !== $amountDue && $self['amountDue'] = $amountDue;
+        null !== $attachments && $self['attachments'] = $attachments;
+        null !== $billingAddress && $self['billingAddress'] = $billingAddress;
+        null !== $billingAddressRecipient && $self['billingAddressRecipient'] = $billingAddressRecipient;
+        null !== $charges && $self['charges'] = $charges;
+        null !== $currency && $self['currency'] = $currency;
+        null !== $customerAddress && $self['customerAddress'] = $customerAddress;
+        null !== $customerAddressRecipient && $self['customerAddressRecipient'] = $customerAddressRecipient;
+        null !== $customerCompanyID && $self['customerCompanyID'] = $customerCompanyID;
+        null !== $customerEmail && $self['customerEmail'] = $customerEmail;
+        null !== $customerID && $self['customerID'] = $customerID;
+        null !== $customerName && $self['customerName'] = $customerName;
+        null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
+        null !== $direction && $self['direction'] = $direction;
+        null !== $documentType && $self['documentType'] = $documentType;
+        null !== $dueDate && $self['dueDate'] = $dueDate;
+        null !== $invoiceDate && $self['invoiceDate'] = $invoiceDate;
+        null !== $invoiceID && $self['invoiceID'] = $invoiceID;
+        null !== $invoiceTotal && $self['invoiceTotal'] = $invoiceTotal;
+        null !== $items && $self['items'] = $items;
+        null !== $note && $self['note'] = $note;
+        null !== $paymentDetails && $self['paymentDetails'] = $paymentDetails;
+        null !== $paymentTerm && $self['paymentTerm'] = $paymentTerm;
+        null !== $previousUnpaidBalance && $self['previousUnpaidBalance'] = $previousUnpaidBalance;
+        null !== $purchaseOrder && $self['purchaseOrder'] = $purchaseOrder;
+        null !== $remittanceAddress && $self['remittanceAddress'] = $remittanceAddress;
+        null !== $remittanceAddressRecipient && $self['remittanceAddressRecipient'] = $remittanceAddressRecipient;
+        null !== $serviceAddress && $self['serviceAddress'] = $serviceAddress;
+        null !== $serviceAddressRecipient && $self['serviceAddressRecipient'] = $serviceAddressRecipient;
+        null !== $serviceEndDate && $self['serviceEndDate'] = $serviceEndDate;
+        null !== $serviceStartDate && $self['serviceStartDate'] = $serviceStartDate;
+        null !== $shippingAddress && $self['shippingAddress'] = $shippingAddress;
+        null !== $shippingAddressRecipient && $self['shippingAddressRecipient'] = $shippingAddressRecipient;
+        null !== $state && $self['state'] = $state;
+        null !== $subtotal && $self['subtotal'] = $subtotal;
+        null !== $taxCode && $self['taxCode'] = $taxCode;
+        null !== $taxDetails && $self['taxDetails'] = $taxDetails;
+        null !== $totalDiscount && $self['totalDiscount'] = $totalDiscount;
+        null !== $totalTax && $self['totalTax'] = $totalTax;
+        null !== $vatex && $self['vatex'] = $vatex;
+        null !== $vatexNote && $self['vatexNote'] = $vatexNote;
+        null !== $vendorAddress && $self['vendorAddress'] = $vendorAddress;
+        null !== $vendorAddressRecipient && $self['vendorAddressRecipient'] = $vendorAddressRecipient;
+        null !== $vendorCompanyID && $self['vendorCompanyID'] = $vendorCompanyID;
+        null !== $vendorEmail && $self['vendorEmail'] = $vendorEmail;
+        null !== $vendorName && $self['vendorName'] = $vendorName;
+        null !== $vendorTaxID && $self['vendorTaxID'] = $vendorTaxID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -607,10 +607,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withAllowances(?array $allowances): self
     {
-        $obj = clone $this;
-        $obj['allowances'] = $allowances;
+        $self = clone $this;
+        $self['allowances'] = $allowances;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -618,10 +618,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withAmountDue(float|string|null $amountDue): self
     {
-        $obj = clone $this;
-        $obj['amountDue'] = $amountDue;
+        $self = clone $this;
+        $self['amountDue'] = $amountDue;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -634,10 +634,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withAttachments(?array $attachments): self
     {
-        $obj = clone $this;
-        $obj['attachments'] = $attachments;
+        $self = clone $this;
+        $self['attachments'] = $attachments;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -645,10 +645,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withBillingAddress(?string $billingAddress): self
     {
-        $obj = clone $this;
-        $obj['billingAddress'] = $billingAddress;
+        $self = clone $this;
+        $self['billingAddress'] = $billingAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -657,10 +657,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withBillingAddressRecipient(
         ?string $billingAddressRecipient
     ): self {
-        $obj = clone $this;
-        $obj['billingAddressRecipient'] = $billingAddressRecipient;
+        $self = clone $this;
+        $self['billingAddressRecipient'] = $billingAddressRecipient;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -676,10 +676,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCharges(?array $charges): self
     {
-        $obj = clone $this;
-        $obj['charges'] = $charges;
+        $self = clone $this;
+        $self['charges'] = $charges;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -689,10 +689,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCurrency(CurrencyCode|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -700,10 +700,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCustomerAddress(?string $customerAddress): self
     {
-        $obj = clone $this;
-        $obj['customerAddress'] = $customerAddress;
+        $self = clone $this;
+        $self['customerAddress'] = $customerAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -712,10 +712,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withCustomerAddressRecipient(
         ?string $customerAddressRecipient
     ): self {
-        $obj = clone $this;
-        $obj['customerAddressRecipient'] = $customerAddressRecipient;
+        $self = clone $this;
+        $self['customerAddressRecipient'] = $customerAddressRecipient;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -723,10 +723,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCustomerCompanyID(?string $customerCompanyID): self
     {
-        $obj = clone $this;
-        $obj['customerCompanyID'] = $customerCompanyID;
+        $self = clone $this;
+        $self['customerCompanyID'] = $customerCompanyID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -734,10 +734,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCustomerEmail(?string $customerEmail): self
     {
-        $obj = clone $this;
-        $obj['customerEmail'] = $customerEmail;
+        $self = clone $this;
+        $self['customerEmail'] = $customerEmail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -745,10 +745,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCustomerID(?string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -756,10 +756,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCustomerName(?string $customerName): self
     {
-        $obj = clone $this;
-        $obj['customerName'] = $customerName;
+        $self = clone $this;
+        $self['customerName'] = $customerName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -767,10 +767,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withCustomerTaxID(?string $customerTaxID): self
     {
-        $obj = clone $this;
-        $obj['customerTaxID'] = $customerTaxID;
+        $self = clone $this;
+        $self['customerTaxID'] = $customerTaxID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -780,10 +780,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withDirection(DocumentDirection|string $direction): self
     {
-        $obj = clone $this;
-        $obj['direction'] = $direction;
+        $self = clone $this;
+        $self['direction'] = $direction;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -793,10 +793,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withDocumentType(DocumentType|string $documentType): self
     {
-        $obj = clone $this;
-        $obj['documentType'] = $documentType;
+        $self = clone $this;
+        $self['documentType'] = $documentType;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -804,10 +804,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withDueDate(?\DateTimeInterface $dueDate): self
     {
-        $obj = clone $this;
-        $obj['dueDate'] = $dueDate;
+        $self = clone $this;
+        $self['dueDate'] = $dueDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -815,10 +815,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withInvoiceDate(?\DateTimeInterface $invoiceDate): self
     {
-        $obj = clone $this;
-        $obj['invoiceDate'] = $invoiceDate;
+        $self = clone $this;
+        $self['invoiceDate'] = $invoiceDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -826,10 +826,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withInvoiceID(?string $invoiceID): self
     {
-        $obj = clone $this;
-        $obj['invoiceID'] = $invoiceID;
+        $self = clone $this;
+        $self['invoiceID'] = $invoiceID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -837,10 +837,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withInvoiceTotal(float|string|null $invoiceTotal): self
     {
-        $obj = clone $this;
-        $obj['invoiceTotal'] = $invoiceTotal;
+        $self = clone $this;
+        $self['invoiceTotal'] = $invoiceTotal;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -862,10 +862,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withItems(array $items): self
     {
-        $obj = clone $this;
-        $obj['items'] = $items;
+        $self = clone $this;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -873,10 +873,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withNote(?string $note): self
     {
-        $obj = clone $this;
-        $obj['note'] = $note;
+        $self = clone $this;
+        $self['note'] = $note;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -889,10 +889,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withPaymentDetails(?array $paymentDetails): self
     {
-        $obj = clone $this;
-        $obj['paymentDetails'] = $paymentDetails;
+        $self = clone $this;
+        $self['paymentDetails'] = $paymentDetails;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -900,10 +900,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withPaymentTerm(?string $paymentTerm): self
     {
-        $obj = clone $this;
-        $obj['paymentTerm'] = $paymentTerm;
+        $self = clone $this;
+        $self['paymentTerm'] = $paymentTerm;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -912,10 +912,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withPreviousUnpaidBalance(
         float|string|null $previousUnpaidBalance
     ): self {
-        $obj = clone $this;
-        $obj['previousUnpaidBalance'] = $previousUnpaidBalance;
+        $self = clone $this;
+        $self['previousUnpaidBalance'] = $previousUnpaidBalance;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -923,10 +923,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withPurchaseOrder(?string $purchaseOrder): self
     {
-        $obj = clone $this;
-        $obj['purchaseOrder'] = $purchaseOrder;
+        $self = clone $this;
+        $self['purchaseOrder'] = $purchaseOrder;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -934,10 +934,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withRemittanceAddress(?string $remittanceAddress): self
     {
-        $obj = clone $this;
-        $obj['remittanceAddress'] = $remittanceAddress;
+        $self = clone $this;
+        $self['remittanceAddress'] = $remittanceAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -946,10 +946,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withRemittanceAddressRecipient(
         ?string $remittanceAddressRecipient
     ): self {
-        $obj = clone $this;
-        $obj['remittanceAddressRecipient'] = $remittanceAddressRecipient;
+        $self = clone $this;
+        $self['remittanceAddressRecipient'] = $remittanceAddressRecipient;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -957,10 +957,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withServiceAddress(?string $serviceAddress): self
     {
-        $obj = clone $this;
-        $obj['serviceAddress'] = $serviceAddress;
+        $self = clone $this;
+        $self['serviceAddress'] = $serviceAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -969,10 +969,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withServiceAddressRecipient(
         ?string $serviceAddressRecipient
     ): self {
-        $obj = clone $this;
-        $obj['serviceAddressRecipient'] = $serviceAddressRecipient;
+        $self = clone $this;
+        $self['serviceAddressRecipient'] = $serviceAddressRecipient;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -981,10 +981,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withServiceEndDate(
         ?\DateTimeInterface $serviceEndDate
     ): self {
-        $obj = clone $this;
-        $obj['serviceEndDate'] = $serviceEndDate;
+        $self = clone $this;
+        $self['serviceEndDate'] = $serviceEndDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -993,10 +993,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withServiceStartDate(
         ?\DateTimeInterface $serviceStartDate
     ): self {
-        $obj = clone $this;
-        $obj['serviceStartDate'] = $serviceStartDate;
+        $self = clone $this;
+        $self['serviceStartDate'] = $serviceStartDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1004,10 +1004,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withShippingAddress(?string $shippingAddress): self
     {
-        $obj = clone $this;
-        $obj['shippingAddress'] = $shippingAddress;
+        $self = clone $this;
+        $self['shippingAddress'] = $shippingAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1016,10 +1016,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withShippingAddressRecipient(
         ?string $shippingAddressRecipient
     ): self {
-        $obj = clone $this;
-        $obj['shippingAddressRecipient'] = $shippingAddressRecipient;
+        $self = clone $this;
+        $self['shippingAddressRecipient'] = $shippingAddressRecipient;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1029,10 +1029,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withState(DocumentState|string $state): self
     {
-        $obj = clone $this;
-        $obj['state'] = $state;
+        $self = clone $this;
+        $self['state'] = $state;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1040,10 +1040,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withSubtotal(float|string|null $subtotal): self
     {
-        $obj = clone $this;
-        $obj['subtotal'] = $subtotal;
+        $self = clone $this;
+        $self['subtotal'] = $subtotal;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1054,10 +1054,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withTaxCode(
         ValidateValidateJsonParams\TaxCode|string $taxCode
     ): self {
-        $obj = clone $this;
-        $obj['taxCode'] = $taxCode;
+        $self = clone $this;
+        $self['taxCode'] = $taxCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1067,10 +1067,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withTaxDetails(?array $taxDetails): self
     {
-        $obj = clone $this;
-        $obj['taxDetails'] = $taxDetails;
+        $self = clone $this;
+        $self['taxDetails'] = $taxDetails;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1078,10 +1078,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withTotalDiscount(float|string|null $totalDiscount): self
     {
-        $obj = clone $this;
-        $obj['totalDiscount'] = $totalDiscount;
+        $self = clone $this;
+        $self['totalDiscount'] = $totalDiscount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1089,10 +1089,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withTotalTax(float|string|null $totalTax): self
     {
-        $obj = clone $this;
-        $obj['totalTax'] = $totalTax;
+        $self = clone $this;
+        $self['totalTax'] = $totalTax;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1105,10 +1105,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withVatex(Vatex|string|null $vatex): self
     {
-        $obj = clone $this;
-        $obj['vatex'] = $vatex;
+        $self = clone $this;
+        $self['vatex'] = $vatex;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1116,10 +1116,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withVatexNote(?string $vatexNote): self
     {
-        $obj = clone $this;
-        $obj['vatexNote'] = $vatexNote;
+        $self = clone $this;
+        $self['vatexNote'] = $vatexNote;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1127,10 +1127,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withVendorAddress(?string $vendorAddress): self
     {
-        $obj = clone $this;
-        $obj['vendorAddress'] = $vendorAddress;
+        $self = clone $this;
+        $self['vendorAddress'] = $vendorAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1139,10 +1139,10 @@ final class ValidateValidateJsonParams implements BaseModel
     public function withVendorAddressRecipient(
         ?string $vendorAddressRecipient
     ): self {
-        $obj = clone $this;
-        $obj['vendorAddressRecipient'] = $vendorAddressRecipient;
+        $self = clone $this;
+        $self['vendorAddressRecipient'] = $vendorAddressRecipient;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1150,10 +1150,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withVendorCompanyID(?string $vendorCompanyID): self
     {
-        $obj = clone $this;
-        $obj['vendorCompanyID'] = $vendorCompanyID;
+        $self = clone $this;
+        $self['vendorCompanyID'] = $vendorCompanyID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1161,10 +1161,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withVendorEmail(?string $vendorEmail): self
     {
-        $obj = clone $this;
-        $obj['vendorEmail'] = $vendorEmail;
+        $self = clone $this;
+        $self['vendorEmail'] = $vendorEmail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1172,10 +1172,10 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withVendorName(?string $vendorName): self
     {
-        $obj = clone $this;
-        $obj['vendorName'] = $vendorName;
+        $self = clone $this;
+        $self['vendorName'] = $vendorName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1183,9 +1183,9 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     public function withVendorTaxID(?string $vendorTaxID): self
     {
-        $obj = clone $this;
-        $obj['vendorTaxID'] = $vendorTaxID;
+        $self = clone $this;
+        $self['vendorTaxID'] = $vendorTaxID;
 
-        return $obj;
+        return $self;
     }
 }

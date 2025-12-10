@@ -104,16 +104,16 @@ final class LookupGetParticipantsResponse implements BaseModel
         int $usedCount,
         ?array $participants = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['queryTerms'] = $queryTerms;
-        $obj['searchDate'] = $searchDate;
-        $obj['totalCount'] = $totalCount;
-        $obj['usedCount'] = $usedCount;
+        $self['queryTerms'] = $queryTerms;
+        $self['searchDate'] = $searchDate;
+        $self['totalCount'] = $totalCount;
+        $self['usedCount'] = $usedCount;
 
-        null !== $participants && $obj['participants'] = $participants;
+        null !== $participants && $self['participants'] = $participants;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class LookupGetParticipantsResponse implements BaseModel
      */
     public function withQueryTerms(string $queryTerms): self
     {
-        $obj = clone $this;
-        $obj['queryTerms'] = $queryTerms;
+        $self = clone $this;
+        $self['queryTerms'] = $queryTerms;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -132,10 +132,10 @@ final class LookupGetParticipantsResponse implements BaseModel
      */
     public function withSearchDate(string $searchDate): self
     {
-        $obj = clone $this;
-        $obj['searchDate'] = $searchDate;
+        $self = clone $this;
+        $self['searchDate'] = $searchDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,10 +143,10 @@ final class LookupGetParticipantsResponse implements BaseModel
      */
     public function withTotalCount(int $totalCount): self
     {
-        $obj = clone $this;
-        $obj['totalCount'] = $totalCount;
+        $self = clone $this;
+        $self['totalCount'] = $totalCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -154,10 +154,10 @@ final class LookupGetParticipantsResponse implements BaseModel
      */
     public function withUsedCount(int $usedCount): self
     {
-        $obj = clone $this;
-        $obj['usedCount'] = $usedCount;
+        $self = clone $this;
+        $self['usedCount'] = $usedCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -172,9 +172,9 @@ final class LookupGetParticipantsResponse implements BaseModel
      */
     public function withParticipants(array $participants): self
     {
-        $obj = clone $this;
-        $obj['participants'] = $participants;
+        $self = clone $this;
+        $self['participants'] = $participants;
 
-        return $obj;
+        return $self;
     }
 }

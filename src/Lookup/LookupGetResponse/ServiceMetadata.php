@@ -91,15 +91,15 @@ final class ServiceMetadata implements BaseModel
         string $status,
         ?string $error = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['endpoints'] = $endpoints;
-        $obj['queryTimeMs'] = $queryTimeMs;
-        $obj['status'] = $status;
+        $self['endpoints'] = $endpoints;
+        $self['queryTimeMs'] = $queryTimeMs;
+        $self['status'] = $status;
 
-        null !== $error && $obj['error'] = $error;
+        null !== $error && $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class ServiceMetadata implements BaseModel
      */
     public function withEndpoints(array $endpoints): self
     {
-        $obj = clone $this;
-        $obj['endpoints'] = $endpoints;
+        $self = clone $this;
+        $self['endpoints'] = $endpoints;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -126,10 +126,10 @@ final class ServiceMetadata implements BaseModel
      */
     public function withQueryTimeMs(float $queryTimeMs): self
     {
-        $obj = clone $this;
-        $obj['queryTimeMs'] = $queryTimeMs;
+        $self = clone $this;
+        $self['queryTimeMs'] = $queryTimeMs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -137,10 +137,10 @@ final class ServiceMetadata implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -148,9 +148,9 @@ final class ServiceMetadata implements BaseModel
      */
     public function withError(?string $error): self
     {
-        $obj = clone $this;
-        $obj['error'] = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

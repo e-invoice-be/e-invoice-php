@@ -63,37 +63,37 @@ final class DocumentCreateFromPdfParams implements BaseModel
         ?string $customerTaxID = null,
         ?string $vendorTaxID = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['file'] = $file;
+        $self['file'] = $file;
 
-        null !== $customerTaxID && $obj['customerTaxID'] = $customerTaxID;
-        null !== $vendorTaxID && $obj['vendorTaxID'] = $vendorTaxID;
+        null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
+        null !== $vendorTaxID && $self['vendorTaxID'] = $vendorTaxID;
 
-        return $obj;
+        return $self;
     }
 
     public function withFile(string $file): self
     {
-        $obj = clone $this;
-        $obj['file'] = $file;
+        $self = clone $this;
+        $self['file'] = $file;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerTaxID(?string $customerTaxID): self
     {
-        $obj = clone $this;
-        $obj['customerTaxID'] = $customerTaxID;
+        $self = clone $this;
+        $self['customerTaxID'] = $customerTaxID;
 
-        return $obj;
+        return $self;
     }
 
     public function withVendorTaxID(?string $vendorTaxID): self
     {
-        $obj = clone $this;
-        $obj['vendorTaxID'] = $vendorTaxID;
+        $self = clone $this;
+        $self['vendorTaxID'] = $vendorTaxID;
 
-        return $obj;
+        return $self;
     }
 }

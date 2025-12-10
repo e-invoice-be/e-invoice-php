@@ -83,34 +83,34 @@ final class Issue implements BaseModel
         ?string $ruleID = null,
         ?string $test = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['message'] = $message;
-        $obj['schematron'] = $schematron;
-        $obj['type'] = $type;
+        $self['message'] = $message;
+        $self['schematron'] = $schematron;
+        $self['type'] = $type;
 
-        null !== $flag && $obj['flag'] = $flag;
-        null !== $location && $obj['location'] = $location;
-        null !== $ruleID && $obj['ruleID'] = $ruleID;
-        null !== $test && $obj['test'] = $test;
+        null !== $flag && $self['flag'] = $flag;
+        null !== $location && $self['location'] = $location;
+        null !== $ruleID && $self['ruleID'] = $ruleID;
+        null !== $test && $self['test'] = $test;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj['message'] = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withSchematron(string $schematron): self
     {
-        $obj = clone $this;
-        $obj['schematron'] = $schematron;
+        $self = clone $this;
+        $self['schematron'] = $schematron;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -118,41 +118,41 @@ final class Issue implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     public function withFlag(?string $flag): self
     {
-        $obj = clone $this;
-        $obj['flag'] = $flag;
+        $self = clone $this;
+        $self['flag'] = $flag;
 
-        return $obj;
+        return $self;
     }
 
     public function withLocation(?string $location): self
     {
-        $obj = clone $this;
-        $obj['location'] = $location;
+        $self = clone $this;
+        $self['location'] = $location;
 
-        return $obj;
+        return $self;
     }
 
     public function withRuleID(?string $ruleID): self
     {
-        $obj = clone $this;
-        $obj['ruleID'] = $ruleID;
+        $self = clone $this;
+        $self['ruleID'] = $ruleID;
 
-        return $obj;
+        return $self;
     }
 
     public function withTest(?string $test): self
     {
-        $obj = clone $this;
-        $obj['test'] = $test;
+        $self = clone $this;
+        $self['test'] = $test;
 
-        return $obj;
+        return $self;
     }
 }
