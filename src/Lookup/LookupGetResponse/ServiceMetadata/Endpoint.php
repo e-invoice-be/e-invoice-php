@@ -99,16 +99,16 @@ final class Endpoint implements BaseModel
         ?string $error = null,
         ?array $processes = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['documentTypes'] = $documentTypes;
-        $obj['status'] = $status;
-        $obj['url'] = $url;
+        $self['documentTypes'] = $documentTypes;
+        $self['status'] = $status;
+        $self['url'] = $url;
 
-        null !== $error && $obj['error'] = $error;
-        null !== $processes && $obj['processes'] = $processes;
+        null !== $error && $self['error'] = $error;
+        null !== $processes && $self['processes'] = $processes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -118,10 +118,10 @@ final class Endpoint implements BaseModel
      */
     public function withDocumentTypes(array $documentTypes): self
     {
-        $obj = clone $this;
-        $obj['documentTypes'] = $documentTypes;
+        $self = clone $this;
+        $self['documentTypes'] = $documentTypes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -129,10 +129,10 @@ final class Endpoint implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -140,10 +140,10 @@ final class Endpoint implements BaseModel
      */
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -151,10 +151,10 @@ final class Endpoint implements BaseModel
      */
     public function withError(?string $error): self
     {
-        $obj = clone $this;
-        $obj['error'] = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -167,9 +167,9 @@ final class Endpoint implements BaseModel
      */
     public function withProcesses(?array $processes): self
     {
-        $obj = clone $this;
-        $obj['processes'] = $processes;
+        $self = clone $this;
+        $self['processes'] = $processes;
 
-        return $obj;
+        return $self;
     }
 }

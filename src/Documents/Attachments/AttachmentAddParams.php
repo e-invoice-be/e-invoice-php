@@ -51,18 +51,18 @@ final class AttachmentAddParams implements BaseModel
      */
     public static function with(string $file): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['file'] = $file;
+        $self['file'] = $file;
 
-        return $obj;
+        return $self;
     }
 
     public function withFile(string $file): self
     {
-        $obj = clone $this;
-        $obj['file'] = $file;
+        $self = clone $this;
+        $self['file'] = $file;
 
-        return $obj;
+        return $self;
     }
 }

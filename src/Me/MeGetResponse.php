@@ -185,28 +185,28 @@ final class MeGetResponse implements BaseModel
         ?bool $smpRegistration = null,
         ?\DateTimeInterface $smpRegistrationDate = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['creditBalance'] = $creditBalance;
-        $obj['name'] = $name;
-        $obj['plan'] = $plan;
+        $self['creditBalance'] = $creditBalance;
+        $self['name'] = $name;
+        $self['plan'] = $plan;
 
-        null !== $bccRecipientEmail && $obj['bccRecipientEmail'] = $bccRecipientEmail;
-        null !== $companyAddress && $obj['companyAddress'] = $companyAddress;
-        null !== $companyCity && $obj['companyCity'] = $companyCity;
-        null !== $companyCountry && $obj['companyCountry'] = $companyCountry;
-        null !== $companyEmail && $obj['companyEmail'] = $companyEmail;
-        null !== $companyName && $obj['companyName'] = $companyName;
-        null !== $companyNumber && $obj['companyNumber'] = $companyNumber;
-        null !== $companyTaxID && $obj['companyTaxID'] = $companyTaxID;
-        null !== $companyZip && $obj['companyZip'] = $companyZip;
-        null !== $description && $obj['description'] = $description;
-        null !== $ibans && $obj['ibans'] = $ibans;
-        null !== $peppolIDs && $obj['peppolIDs'] = $peppolIDs;
-        null !== $smpRegistration && $obj['smpRegistration'] = $smpRegistration;
-        null !== $smpRegistrationDate && $obj['smpRegistrationDate'] = $smpRegistrationDate;
+        null !== $bccRecipientEmail && $self['bccRecipientEmail'] = $bccRecipientEmail;
+        null !== $companyAddress && $self['companyAddress'] = $companyAddress;
+        null !== $companyCity && $self['companyCity'] = $companyCity;
+        null !== $companyCountry && $self['companyCountry'] = $companyCountry;
+        null !== $companyEmail && $self['companyEmail'] = $companyEmail;
+        null !== $companyName && $self['companyName'] = $companyName;
+        null !== $companyNumber && $self['companyNumber'] = $companyNumber;
+        null !== $companyTaxID && $self['companyTaxID'] = $companyTaxID;
+        null !== $companyZip && $self['companyZip'] = $companyZip;
+        null !== $description && $self['description'] = $description;
+        null !== $ibans && $self['ibans'] = $ibans;
+        null !== $peppolIDs && $self['peppolIDs'] = $peppolIDs;
+        null !== $smpRegistration && $self['smpRegistration'] = $smpRegistration;
+        null !== $smpRegistrationDate && $self['smpRegistrationDate'] = $smpRegistrationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -214,18 +214,18 @@ final class MeGetResponse implements BaseModel
      */
     public function withCreditBalance(int $creditBalance): self
     {
-        $obj = clone $this;
-        $obj['creditBalance'] = $creditBalance;
+        $self = clone $this;
+        $self['creditBalance'] = $creditBalance;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -235,10 +235,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withPlan(Plan|string $plan): self
     {
-        $obj = clone $this;
-        $obj['plan'] = $plan;
+        $self = clone $this;
+        $self['plan'] = $plan;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -246,10 +246,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withBccRecipientEmail(?string $bccRecipientEmail): self
     {
-        $obj = clone $this;
-        $obj['bccRecipientEmail'] = $bccRecipientEmail;
+        $self = clone $this;
+        $self['bccRecipientEmail'] = $bccRecipientEmail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -257,10 +257,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyAddress(?string $companyAddress): self
     {
-        $obj = clone $this;
-        $obj['companyAddress'] = $companyAddress;
+        $self = clone $this;
+        $self['companyAddress'] = $companyAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -268,10 +268,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyCity(?string $companyCity): self
     {
-        $obj = clone $this;
-        $obj['companyCity'] = $companyCity;
+        $self = clone $this;
+        $self['companyCity'] = $companyCity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -279,10 +279,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyCountry(?string $companyCountry): self
     {
-        $obj = clone $this;
-        $obj['companyCountry'] = $companyCountry;
+        $self = clone $this;
+        $self['companyCountry'] = $companyCountry;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -290,10 +290,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyEmail(?string $companyEmail): self
     {
-        $obj = clone $this;
-        $obj['companyEmail'] = $companyEmail;
+        $self = clone $this;
+        $self['companyEmail'] = $companyEmail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -301,10 +301,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyName(?string $companyName): self
     {
-        $obj = clone $this;
-        $obj['companyName'] = $companyName;
+        $self = clone $this;
+        $self['companyName'] = $companyName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -312,10 +312,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyNumber(?string $companyNumber): self
     {
-        $obj = clone $this;
-        $obj['companyNumber'] = $companyNumber;
+        $self = clone $this;
+        $self['companyNumber'] = $companyNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -323,10 +323,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyTaxID(?string $companyTaxID): self
     {
-        $obj = clone $this;
-        $obj['companyTaxID'] = $companyTaxID;
+        $self = clone $this;
+        $self['companyTaxID'] = $companyTaxID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -334,18 +334,18 @@ final class MeGetResponse implements BaseModel
      */
     public function withCompanyZip(?string $companyZip): self
     {
-        $obj = clone $this;
-        $obj['companyZip'] = $companyZip;
+        $self = clone $this;
+        $self['companyZip'] = $companyZip;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -355,10 +355,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withIbans(?array $ibans): self
     {
-        $obj = clone $this;
-        $obj['ibans'] = $ibans;
+        $self = clone $this;
+        $self['ibans'] = $ibans;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -368,10 +368,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withPeppolIDs(?array $peppolIDs): self
     {
-        $obj = clone $this;
-        $obj['peppolIDs'] = $peppolIDs;
+        $self = clone $this;
+        $self['peppolIDs'] = $peppolIDs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -379,10 +379,10 @@ final class MeGetResponse implements BaseModel
      */
     public function withSmpRegistration(?bool $smpRegistration): self
     {
-        $obj = clone $this;
-        $obj['smpRegistration'] = $smpRegistration;
+        $self = clone $this;
+        $self['smpRegistration'] = $smpRegistration;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -391,9 +391,9 @@ final class MeGetResponse implements BaseModel
     public function withSmpRegistrationDate(
         ?\DateTimeInterface $smpRegistrationDate
     ): self {
-        $obj = clone $this;
-        $obj['smpRegistrationDate'] = $smpRegistrationDate;
+        $self = clone $this;
+        $self['smpRegistrationDate'] = $smpRegistrationDate;
 
-        return $obj;
+        return $self;
     }
 }

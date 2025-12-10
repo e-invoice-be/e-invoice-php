@@ -65,13 +65,13 @@ final class LookupRetrieveParticipantsParams implements BaseModel
         string $query,
         ?string $countryCode = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['query'] = $query;
+        $self['query'] = $query;
 
-        null !== $countryCode && $obj['countryCode'] = $countryCode;
+        null !== $countryCode && $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -79,10 +79,10 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      */
     public function withQuery(string $query): self
     {
-        $obj = clone $this;
-        $obj['query'] = $query;
+        $self = clone $this;
+        $self['query'] = $query;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -90,9 +90,9 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      */
     public function withCountryCode(?string $countryCode): self
     {
-        $obj = clone $this;
-        $obj['countryCode'] = $countryCode;
+        $self = clone $this;
+        $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 }

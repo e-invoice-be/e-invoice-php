@@ -61,14 +61,14 @@ final class PaymentDetailCreate implements BaseModel
         ?string $paymentReference = null,
         ?string $swift = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $bankAccountNumber && $obj['bankAccountNumber'] = $bankAccountNumber;
-        null !== $iban && $obj['iban'] = $iban;
-        null !== $paymentReference && $obj['paymentReference'] = $paymentReference;
-        null !== $swift && $obj['swift'] = $swift;
+        null !== $bankAccountNumber && $self['bankAccountNumber'] = $bankAccountNumber;
+        null !== $iban && $self['iban'] = $iban;
+        null !== $paymentReference && $self['paymentReference'] = $paymentReference;
+        null !== $swift && $self['swift'] = $swift;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -76,10 +76,10 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withBankAccountNumber(?string $bankAccountNumber): self
     {
-        $obj = clone $this;
-        $obj['bankAccountNumber'] = $bankAccountNumber;
+        $self = clone $this;
+        $self['bankAccountNumber'] = $bankAccountNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -87,10 +87,10 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withIban(?string $iban): self
     {
-        $obj = clone $this;
-        $obj['iban'] = $iban;
+        $self = clone $this;
+        $self['iban'] = $iban;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -98,10 +98,10 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withPaymentReference(?string $paymentReference): self
     {
-        $obj = clone $this;
-        $obj['paymentReference'] = $paymentReference;
+        $self = clone $this;
+        $self['paymentReference'] = $paymentReference;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -109,9 +109,9 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withSwift(?string $swift): self
     {
-        $obj = clone $this;
-        $obj['swift'] = $swift;
+        $self = clone $this;
+        $self['swift'] = $swift;
 
-        return $obj;
+        return $self;
     }
 }

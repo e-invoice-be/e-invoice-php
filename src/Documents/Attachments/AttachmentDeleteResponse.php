@@ -45,18 +45,18 @@ final class AttachmentDeleteResponse implements BaseModel
      */
     public static function with(bool $isDeleted): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['isDeleted'] = $isDeleted;
+        $self['isDeleted'] = $isDeleted;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsDeleted(bool $isDeleted): self
     {
-        $obj = clone $this;
-        $obj['isDeleted'] = $isDeleted;
+        $self = clone $this;
+        $self['isDeleted'] = $isDeleted;
 
-        return $obj;
+        return $self;
     }
 }
