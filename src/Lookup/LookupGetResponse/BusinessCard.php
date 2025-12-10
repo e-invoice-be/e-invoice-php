@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
@@ -29,25 +30,25 @@ final class BusinessCard implements BaseModel
      *
      * @var list<Entity> $entities
      */
-    #[Api(list: Entity::class)]
+    #[Required(list: Entity::class)]
     public array $entities;
 
     /**
      * Time taken to query the business card in milliseconds.
      */
-    #[Api]
+    #[Required]
     public float $queryTimeMs;
 
     /**
      * Status of the business card lookup: 'success', 'error', or 'pending'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**
      * Error message if business card lookup failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error;
 
     /**
@@ -74,7 +75,12 @@ final class BusinessCard implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Entity> $entities
+     * @param list<Entity|array{
+     *   additionalInformation?: list<string>|null,
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: string|null,
+     * }> $entities
      */
     public static function with(
         array $entities,
@@ -82,28 +88,33 @@ final class BusinessCard implements BaseModel
         string $status,
         ?string $error = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->entities = $entities;
-        $obj->queryTimeMs = $queryTimeMs;
-        $obj->status = $status;
+        $self['entities'] = $entities;
+        $self['queryTimeMs'] = $queryTimeMs;
+        $self['status'] = $status;
 
-        null !== $error && $obj->error = $error;
+        null !== $error && $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of business entities associated with the Peppol ID.
      *
-     * @param list<Entity> $entities
+     * @param list<Entity|array{
+     *   additionalInformation?: list<string>|null,
+     *   countryCode?: string|null,
+     *   name?: string|null,
+     *   registrationDate?: string|null,
+     * }> $entities
      */
     public function withEntities(array $entities): self
     {
-        $obj = clone $this;
-        $obj->entities = $entities;
+        $self = clone $this;
+        $self['entities'] = $entities;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,10 +122,10 @@ final class BusinessCard implements BaseModel
      */
     public function withQueryTimeMs(float $queryTimeMs): self
     {
-        $obj = clone $this;
-        $obj->queryTimeMs = $queryTimeMs;
+        $self = clone $this;
+        $self['queryTimeMs'] = $queryTimeMs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -122,10 +133,10 @@ final class BusinessCard implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj->status = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -133,9 +144,9 @@ final class BusinessCard implements BaseModel
      */
     public function withError(?string $error): self
     {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

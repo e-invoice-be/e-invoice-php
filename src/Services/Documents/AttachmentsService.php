@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
-use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
-use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\AttachmentsContract;
@@ -18,38 +14,36 @@ use EInvoiceAPI\ServiceContracts\Documents\AttachmentsContract;
 final class AttachmentsService implements AttachmentsContract
 {
     /**
+     * @api
+     */
+    public AttachmentsRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new AttachmentsRawService($client);
+    }
 
     /**
      * @api
      *
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
-     * @param array{document_id: string}|AttachmentRetrieveParams $params
-     *
      * @throws APIException
      */
     public function retrieve(
         string $attachmentID,
-        array|AttachmentRetrieveParams $params,
+        string $documentID,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        [$parsed, $options] = AttachmentRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-        $documentID = $parsed['document_id'];
-        unset($parsed['document_id']);
+        $params = ['documentID' => $documentID];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'get',
-            path: ['api/documents/%1$s/attachments/%2$s', $documentID, $attachmentID],
-            options: $options,
-            convert: DocumentAttachment::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($attachmentID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
@@ -65,13 +59,10 @@ final class AttachmentsService implements AttachmentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): array {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'get',
-            path: ['api/documents/%1$s/attachments', $documentID],
-            options: $requestOptions,
-            convert: new ListOf(DocumentAttachment::class),
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list($documentID, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
@@ -79,29 +70,19 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Delete an attachment from an invoice or credit note
      *
-     * @param array{document_id: string}|AttachmentDeleteParams $params
-     *
      * @throws APIException
      */
     public function delete(
         string $attachmentID,
-        array|AttachmentDeleteParams $params,
+        string $documentID,
         ?RequestOptions $requestOptions = null,
     ): AttachmentDeleteResponse {
-        [$parsed, $options] = AttachmentDeleteParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-        $documentID = $parsed['document_id'];
-        unset($parsed['document_id']);
+        $params = ['documentID' => $documentID];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'delete',
-            path: ['api/documents/%1$s/attachments/%2$s', $documentID, $attachmentID],
-            options: $options,
-            convert: AttachmentDeleteResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->delete($attachmentID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
@@ -109,28 +90,18 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Add a new attachment to an invoice or credit note
      *
-     * @param array{file: string}|AttachmentAddParams $params
-     *
      * @throws APIException
      */
     public function add(
         string $documentID,
-        array|AttachmentAddParams $params,
-        ?RequestOptions $requestOptions = null,
+        string $file,
+        ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
-        [$parsed, $options] = AttachmentAddParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['file' => $file];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'post',
-            path: ['api/documents/%1$s/attachments', $documentID],
-            headers: ['Content-Type' => 'multipart/form-data'],
-            body: (object) $parsed,
-            options: $options,
-            convert: DocumentAttachment::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->add($documentID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 }

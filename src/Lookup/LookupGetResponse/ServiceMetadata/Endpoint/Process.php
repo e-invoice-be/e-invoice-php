@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Lookup\Certificate;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Endpoint;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
@@ -14,7 +15,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Proces
  * Process information in the Peppol network.
  *
  * @phpstan-type ProcessShape = array{
- *   endpoints: list<Endpoint>, processId: ProcessID
+ *   endpoints: list<Endpoint>, processID: ProcessID
  * }
  */
 final class Process implements BaseModel
@@ -27,21 +28,21 @@ final class Process implements BaseModel
      *
      * @var list<Endpoint> $endpoints
      */
-    #[Api(list: Endpoint::class)]
+    #[Required(list: Endpoint::class)]
     public array $endpoints;
 
     /**
      * Identifier of the process.
      */
-    #[Api]
-    public ProcessID $processId;
+    #[Required('processId')]
+    public ProcessID $processID;
 
     /**
      * `new Process()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Process::with(endpoints: ..., processId: ...)
+     * Process::with(endpoints: ..., processID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -60,39 +61,62 @@ final class Process implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   address: string,
+     *   transportProfile: string,
+     *   certificate?: Certificate|null,
+     *   serviceActivationDate?: string|null,
+     *   serviceDescription?: string|null,
+     *   serviceExpirationDate?: string|null,
+     *   technicalContactURL?: string|null,
+     *   technicalInformationURL?: string|null,
+     * }> $endpoints
+     * @param ProcessID|array{scheme: string, value: string} $processID
      */
-    public static function with(array $endpoints, ProcessID $processId): self
-    {
-        $obj = new self;
+    public static function with(
+        array $endpoints,
+        ProcessID|array $processID
+    ): self {
+        $self = new self;
 
-        $obj->endpoints = $endpoints;
-        $obj->processId = $processId;
+        $self['endpoints'] = $endpoints;
+        $self['processID'] = $processID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of endpoints supporting this process.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   address: string,
+     *   transportProfile: string,
+     *   certificate?: Certificate|null,
+     *   serviceActivationDate?: string|null,
+     *   serviceDescription?: string|null,
+     *   serviceExpirationDate?: string|null,
+     *   technicalContactURL?: string|null,
+     *   technicalInformationURL?: string|null,
+     * }> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {
-        $obj = clone $this;
-        $obj->endpoints = $endpoints;
+        $self = clone $this;
+        $self['endpoints'] = $endpoints;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Identifier of the process.
+     *
+     * @param ProcessID|array{scheme: string, value: string} $processID
      */
-    public function withProcessID(ProcessID $processID): self
+    public function withProcessID(ProcessID|array $processID): self
     {
-        $obj = clone $this;
-        $obj->processId = $processID;
+        $self = clone $this;
+        $self['processID'] = $processID;
 
-        return $obj;
+        return $self;
     }
 }

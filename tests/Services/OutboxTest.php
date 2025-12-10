@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\DocumentsNumberPage;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -34,10 +35,15 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->outbox->listDraftDocuments([]);
+        $page = $this->client->outbox->listDraftDocuments();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DocumentsNumberPage::class, $result);
+        $this->assertInstanceOf(DocumentsNumberPage::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(DocumentResponse::class, $item);
+        }
     }
 
     #[Test]
@@ -47,9 +53,14 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->outbox->listReceivedDocuments([]);
+        $page = $this->client->outbox->listReceivedDocuments();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DocumentsNumberPage::class, $result);
+        $this->assertInstanceOf(DocumentsNumberPage::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(DocumentResponse::class, $item);
+        }
     }
 }

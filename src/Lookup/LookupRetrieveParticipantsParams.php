@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -15,7 +16,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Services\LookupService::retrieveParticipants()
  *
  * @phpstan-type LookupRetrieveParticipantsParamsShape = array{
- *   query: string, country_code?: string|null
+ *   query: string, countryCode?: string|null
  * }
  */
 final class LookupRetrieveParticipantsParams implements BaseModel
@@ -27,14 +28,14 @@ final class LookupRetrieveParticipantsParams implements BaseModel
     /**
      * Query to lookup.
      */
-    #[Api]
+    #[Required]
     public string $query;
 
     /**
      * Country code of the company to lookup. If not provided, the search will be global.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $country_code;
+    #[Optional(nullable: true)]
+    public ?string $countryCode;
 
     /**
      * `new LookupRetrieveParticipantsParams()` is missing required properties by the API.
@@ -62,15 +63,15 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      */
     public static function with(
         string $query,
-        ?string $country_code = null
+        ?string $countryCode = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->query = $query;
+        $self['query'] = $query;
 
-        null !== $country_code && $obj->country_code = $country_code;
+        null !== $countryCode && $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -78,10 +79,10 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      */
     public function withQuery(string $query): self
     {
-        $obj = clone $this;
-        $obj->query = $query;
+        $self = clone $this;
+        $self['query'] = $query;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -89,9 +90,9 @@ final class LookupRetrieveParticipantsParams implements BaseModel
      */
     public function withCountryCode(?string $countryCode): self
     {
-        $obj = clone $this;
-        $obj->country_code = $countryCode;
+        $self = clone $this;
+        $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 }

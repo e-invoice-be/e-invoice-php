@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class Identifier implements BaseModel
     /**
      * Identifier scheme.
      */
-    #[Api]
+    #[Required]
     public string $scheme;
 
     /**
      * Identifier value.
      */
-    #[Api]
+    #[Required]
     public string $value;
 
     /**
@@ -56,12 +56,12 @@ final class Identifier implements BaseModel
      */
     public static function with(string $scheme, string $value): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->scheme = $scheme;
-        $obj->value = $value;
+        $self['scheme'] = $scheme;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -69,10 +69,10 @@ final class Identifier implements BaseModel
      */
     public function withScheme(string $scheme): self
     {
-        $obj = clone $this;
-        $obj->scheme = $scheme;
+        $self = clone $this;
+        $self['scheme'] = $scheme;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -80,9 +80,9 @@ final class Identifier implements BaseModel
      */
     public function withValue(string $value): self
     {
-        $obj = clone $this;
-        $obj->value = $value;
+        $self = clone $this;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 }

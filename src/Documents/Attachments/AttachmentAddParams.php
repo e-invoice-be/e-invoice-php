@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\Attachments;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -22,7 +22,7 @@ final class AttachmentAddParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api]
+    #[Required]
     public string $file;
 
     /**
@@ -51,18 +51,18 @@ final class AttachmentAddParams implements BaseModel
      */
     public static function with(string $file): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->file = $file;
+        $self['file'] = $file;
 
-        return $obj;
+        return $self;
     }
 
     public function withFile(string $file): self
     {
-        $obj = clone $this;
-        $obj->file = $file;
+        $self = clone $this;
+        $self['file'] = $file;
 
-        return $obj;
+        return $self;
     }
 }

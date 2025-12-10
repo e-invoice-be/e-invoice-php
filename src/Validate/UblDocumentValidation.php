@@ -4,51 +4,49 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Validate;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
+use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
 
 /**
  * @phpstan-type UblDocumentValidationShape = array{
  *   id: string,
- *   file_name: string|null,
- *   is_valid: bool,
+ *   fileName: string|null,
+ *   isValid: bool,
  *   issues: list<Issue>,
- *   ubl_document?: string|null,
+ *   ublDocument?: string|null,
  * }
  */
-final class UblDocumentValidation implements BaseModel, ResponseConverter
+final class UblDocumentValidation implements BaseModel
 {
     /** @use SdkModel<UblDocumentValidationShape> */
     use SdkModel;
 
-    use SdkResponse;
-
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
-    public ?string $file_name;
+    #[Required('file_name')]
+    public ?string $fileName;
 
-    #[Api]
-    public bool $is_valid;
+    #[Required('is_valid')]
+    public bool $isValid;
 
     /** @var list<Issue> $issues */
-    #[Api(list: Issue::class)]
+    #[Required(list: Issue::class)]
     public array $issues;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $ubl_document;
+    #[Optional('ubl_document', nullable: true)]
+    public ?string $ublDocument;
 
     /**
      * `new UblDocumentValidation()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UblDocumentValidation::with(id: ..., file_name: ..., is_valid: ..., issues: ...)
+     * UblDocumentValidation::with(id: ..., fileName: ..., isValid: ..., issues: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -71,67 +69,83 @@ final class UblDocumentValidation implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Issue> $issues
+     * @param list<Issue|array{
+     *   message: string,
+     *   schematron: string,
+     *   type: value-of<Type>,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   ruleID?: string|null,
+     *   test?: string|null,
+     * }> $issues
      */
     public static function with(
         string $id,
-        ?string $file_name,
-        bool $is_valid,
+        ?string $fileName,
+        bool $isValid,
         array $issues,
-        ?string $ubl_document = null,
+        ?string $ublDocument = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->file_name = $file_name;
-        $obj->is_valid = $is_valid;
-        $obj->issues = $issues;
+        $self['id'] = $id;
+        $self['fileName'] = $fileName;
+        $self['isValid'] = $isValid;
+        $self['issues'] = $issues;
 
-        null !== $ubl_document && $obj->ubl_document = $ubl_document;
+        null !== $ublDocument && $self['ublDocument'] = $ublDocument;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(?string $fileName): self
     {
-        $obj = clone $this;
-        $obj->file_name = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsValid(bool $isValid): self
     {
-        $obj = clone $this;
-        $obj->is_valid = $isValid;
+        $self = clone $this;
+        $self['isValid'] = $isValid;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<Issue> $issues
+     * @param list<Issue|array{
+     *   message: string,
+     *   schematron: string,
+     *   type: value-of<Type>,
+     *   flag?: string|null,
+     *   location?: string|null,
+     *   ruleID?: string|null,
+     *   test?: string|null,
+     * }> $issues
      */
     public function withIssues(array $issues): self
     {
-        $obj = clone $this;
-        $obj->issues = $issues;
+        $self = clone $this;
+        $self['issues'] = $issues;
 
-        return $obj;
+        return $self;
     }
 
     public function withUblDocument(?string $ublDocument): self
     {
-        $obj = clone $this;
-        $obj->ubl_document = $ublDocument;
+        $self = clone $this;
+        $self['ublDocument'] = $ublDocument;
 
-        return $obj;
+        return $self;
     }
 }

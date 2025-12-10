@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Validate;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Services\ValidateService::validatePeppolID()
  *
- * @phpstan-type ValidateValidatePeppolIDParamsShape = array{peppol_id: string}
+ * @phpstan-type ValidateValidatePeppolIDParamsShape = array{peppolID: string}
  */
 final class ValidateValidatePeppolIDParams implements BaseModel
 {
@@ -25,15 +25,15 @@ final class ValidateValidatePeppolIDParams implements BaseModel
     /**
      * Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
      */
-    #[Api]
-    public string $peppol_id;
+    #[Required]
+    public string $peppolID;
 
     /**
      * `new ValidateValidatePeppolIDParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ValidateValidatePeppolIDParams::with(peppol_id: ...)
+     * ValidateValidatePeppolIDParams::with(peppolID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -52,13 +52,13 @@ final class ValidateValidatePeppolIDParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $peppol_id): self
+    public static function with(string $peppolID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->peppol_id = $peppol_id;
+        $self['peppolID'] = $peppolID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -66,9 +66,9 @@ final class ValidateValidatePeppolIDParams implements BaseModel
      */
     public function withPeppolID(string $peppolID): self
     {
-        $obj = clone $this;
-        $obj->peppol_id = $peppolID;
+        $self = clone $this;
+        $self['peppolID'] = $peppolID;
 
-        return $obj;
+        return $self;
     }
 }

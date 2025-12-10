@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifier;
@@ -13,12 +13,12 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
  * Represents a business entity.
  *
  * @phpstan-type EntityShape = array{
- *   additional_info?: string|null,
- *   country_code?: string|null,
- *   geo_info?: string|null,
+ *   additionalInfo?: string|null,
+ *   countryCode?: string|null,
+ *   geoInfo?: string|null,
  *   identifiers?: list<Identifier>|null,
  *   name?: string|null,
- *   registration_date?: string|null,
+ *   registrationDate?: string|null,
  *   website?: string|null,
  * }
  */
@@ -30,45 +30,45 @@ final class Entity implements BaseModel
     /**
      * Additional information.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $additional_info;
+    #[Optional('additional_info', nullable: true)]
+    public ?string $additionalInfo;
 
     /**
      * Country code.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $country_code;
+    #[Optional('country_code', nullable: true)]
+    public ?string $countryCode;
 
     /**
      * Geographic information.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $geo_info;
+    #[Optional('geo_info', nullable: true)]
+    public ?string $geoInfo;
 
     /**
      * List of business identifiers.
      *
      * @var list<Identifier>|null $identifiers
      */
-    #[Api(list: Identifier::class, optional: true)]
+    #[Optional(list: Identifier::class)]
     public ?array $identifiers;
 
     /**
      * Business entity name.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
      * Registration date.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $registration_date;
+    #[Optional('registration_date', nullable: true)]
+    public ?string $registrationDate;
 
     /**
      * Website URL.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $website;
 
     public function __construct()
@@ -81,28 +81,28 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Identifier> $identifiers
+     * @param list<Identifier|array{scheme: string, value: string}> $identifiers
      */
     public static function with(
-        ?string $additional_info = null,
-        ?string $country_code = null,
-        ?string $geo_info = null,
+        ?string $additionalInfo = null,
+        ?string $countryCode = null,
+        ?string $geoInfo = null,
         ?array $identifiers = null,
         ?string $name = null,
-        ?string $registration_date = null,
+        ?string $registrationDate = null,
         ?string $website = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $additional_info && $obj->additional_info = $additional_info;
-        null !== $country_code && $obj->country_code = $country_code;
-        null !== $geo_info && $obj->geo_info = $geo_info;
-        null !== $identifiers && $obj->identifiers = $identifiers;
-        null !== $name && $obj->name = $name;
-        null !== $registration_date && $obj->registration_date = $registration_date;
-        null !== $website && $obj->website = $website;
+        null !== $additionalInfo && $self['additionalInfo'] = $additionalInfo;
+        null !== $countryCode && $self['countryCode'] = $countryCode;
+        null !== $geoInfo && $self['geoInfo'] = $geoInfo;
+        null !== $identifiers && $self['identifiers'] = $identifiers;
+        null !== $name && $self['name'] = $name;
+        null !== $registrationDate && $self['registrationDate'] = $registrationDate;
+        null !== $website && $self['website'] = $website;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class Entity implements BaseModel
      */
     public function withAdditionalInfo(?string $additionalInfo): self
     {
-        $obj = clone $this;
-        $obj->additional_info = $additionalInfo;
+        $self = clone $this;
+        $self['additionalInfo'] = $additionalInfo;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class Entity implements BaseModel
      */
     public function withCountryCode(?string $countryCode): self
     {
-        $obj = clone $this;
-        $obj->country_code = $countryCode;
+        $self = clone $this;
+        $self['countryCode'] = $countryCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -132,23 +132,23 @@ final class Entity implements BaseModel
      */
     public function withGeoInfo(?string $geoInfo): self
     {
-        $obj = clone $this;
-        $obj->geo_info = $geoInfo;
+        $self = clone $this;
+        $self['geoInfo'] = $geoInfo;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of business identifiers.
      *
-     * @param list<Identifier> $identifiers
+     * @param list<Identifier|array{scheme: string, value: string}> $identifiers
      */
     public function withIdentifiers(array $identifiers): self
     {
-        $obj = clone $this;
-        $obj->identifiers = $identifiers;
+        $self = clone $this;
+        $self['identifiers'] = $identifiers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -156,10 +156,10 @@ final class Entity implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -167,10 +167,10 @@ final class Entity implements BaseModel
      */
     public function withRegistrationDate(?string $registrationDate): self
     {
-        $obj = clone $this;
-        $obj->registration_date = $registrationDate;
+        $self = clone $this;
+        $self['registrationDate'] = $registrationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -178,9 +178,9 @@ final class Entity implements BaseModel
      */
     public function withWebsite(?string $website): self
     {
-        $obj = clone $this;
-        $obj->website = $website;
+        $self = clone $this;
+        $self['website'] = $website;
 
-        return $obj;
+        return $self;
     }
 }

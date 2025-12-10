@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -21,7 +21,7 @@ final class DNSRecord implements BaseModel
     /**
      * IP address found in the DNS record.
      */
-    #[Api]
+    #[Required]
     public string $ip;
 
     /**
@@ -50,11 +50,11 @@ final class DNSRecord implements BaseModel
      */
     public static function with(string $ip): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->ip = $ip;
+        $self['ip'] = $ip;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -62,9 +62,9 @@ final class DNSRecord implements BaseModel
      */
     public function withIP(string $ip): self
     {
-        $obj = clone $this;
-        $obj->ip = $ip;
+        $self = clone $this;
+        $self['ip'] = $ip;
 
-        return $obj;
+        return $self;
     }
 }

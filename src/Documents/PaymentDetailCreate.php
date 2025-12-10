@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type PaymentDetailCreateShape = array{
- *   bank_account_number?: string|null,
+ *   bankAccountNumber?: string|null,
  *   iban?: string|null,
- *   payment_reference?: string|null,
+ *   paymentReference?: string|null,
  *   swift?: string|null,
  * }
  */
@@ -24,25 +24,25 @@ final class PaymentDetailCreate implements BaseModel
     /**
      * Bank account number (for non-IBAN accounts).
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $bank_account_number;
+    #[Optional('bank_account_number', nullable: true)]
+    public ?string $bankAccountNumber;
 
     /**
      * International Bank Account Number for payment transfers.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $iban;
 
     /**
      * Structured payment reference or communication (e.g., structured communication for Belgian bank transfers).
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $payment_reference;
+    #[Optional('payment_reference', nullable: true)]
+    public ?string $paymentReference;
 
     /**
      * SWIFT/BIC code of the bank.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $swift;
 
     public function __construct()
@@ -56,19 +56,19 @@ final class PaymentDetailCreate implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $bank_account_number = null,
+        ?string $bankAccountNumber = null,
         ?string $iban = null,
-        ?string $payment_reference = null,
+        ?string $paymentReference = null,
         ?string $swift = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $bank_account_number && $obj->bank_account_number = $bank_account_number;
-        null !== $iban && $obj->iban = $iban;
-        null !== $payment_reference && $obj->payment_reference = $payment_reference;
-        null !== $swift && $obj->swift = $swift;
+        null !== $bankAccountNumber && $self['bankAccountNumber'] = $bankAccountNumber;
+        null !== $iban && $self['iban'] = $iban;
+        null !== $paymentReference && $self['paymentReference'] = $paymentReference;
+        null !== $swift && $self['swift'] = $swift;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -76,10 +76,10 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withBankAccountNumber(?string $bankAccountNumber): self
     {
-        $obj = clone $this;
-        $obj->bank_account_number = $bankAccountNumber;
+        $self = clone $this;
+        $self['bankAccountNumber'] = $bankAccountNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -87,10 +87,10 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withIban(?string $iban): self
     {
-        $obj = clone $this;
-        $obj->iban = $iban;
+        $self = clone $this;
+        $self['iban'] = $iban;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -98,10 +98,10 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withPaymentReference(?string $paymentReference): self
     {
-        $obj = clone $this;
-        $obj->payment_reference = $paymentReference;
+        $self = clone $this;
+        $self['paymentReference'] = $paymentReference;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -109,9 +109,9 @@ final class PaymentDetailCreate implements BaseModel
      */
     public function withSwift(?string $swift): self
     {
-        $obj = clone $this;
-        $obj->swift = $swift;
+        $self = clone $this;
+        $self['swift'] = $swift;
 
-        return $obj;
+        return $self;
     }
 }

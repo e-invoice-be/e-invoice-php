@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Outbox;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -17,10 +17,10 @@ use EInvoiceAPI\Inbox\DocumentState;
  * @see EInvoiceAPI\Services\OutboxService::listReceivedDocuments()
  *
  * @phpstan-type OutboxListReceivedDocumentsParamsShape = array{
- *   date_from?: \DateTimeInterface|null,
- *   date_to?: \DateTimeInterface|null,
+ *   dateFrom?: \DateTimeInterface|null,
+ *   dateTo?: \DateTimeInterface|null,
  *   page?: int,
- *   page_size?: int,
+ *   pageSize?: int,
  *   search?: string|null,
  *   sender?: string|null,
  *   state?: null|DocumentState|value-of<DocumentState>,
@@ -36,37 +36,37 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     /**
      * Filter by issue date (from).
      */
-    #[Api(nullable: true, optional: true)]
-    public ?\DateTimeInterface $date_from;
+    #[Optional(nullable: true)]
+    public ?\DateTimeInterface $dateFrom;
 
     /**
      * Filter by issue date (to).
      */
-    #[Api(nullable: true, optional: true)]
-    public ?\DateTimeInterface $date_to;
+    #[Optional(nullable: true)]
+    public ?\DateTimeInterface $dateTo;
 
     /**
      * Page number.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page;
 
     /**
      * Number of items per page.
      */
-    #[Api(optional: true)]
-    public ?int $page_size;
+    #[Optional]
+    public ?int $pageSize;
 
     /**
      * Search in invoice number, seller/buyer names.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $search;
 
     /**
      * Filter by sender ID.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $sender;
 
     /**
@@ -74,7 +74,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      *
      * @var value-of<DocumentState>|null $state
      */
-    #[Api(enum: DocumentState::class, nullable: true, optional: true)]
+    #[Optional(enum: DocumentState::class, nullable: true)]
     public ?string $state;
 
     /**
@@ -82,7 +82,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      *
      * @var value-of<DocumentType>|null $type
      */
-    #[Api(enum: DocumentType::class, nullable: true, optional: true)]
+    #[Optional(enum: DocumentType::class, nullable: true)]
     public ?string $type;
 
     public function __construct()
@@ -99,27 +99,27 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      * @param DocumentType|value-of<DocumentType>|null $type
      */
     public static function with(
-        ?\DateTimeInterface $date_from = null,
-        ?\DateTimeInterface $date_to = null,
+        ?\DateTimeInterface $dateFrom = null,
+        ?\DateTimeInterface $dateTo = null,
         ?int $page = null,
-        ?int $page_size = null,
+        ?int $pageSize = null,
         ?string $search = null,
         ?string $sender = null,
         DocumentState|string|null $state = null,
         DocumentType|string|null $type = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $date_from && $obj->date_from = $date_from;
-        null !== $date_to && $obj->date_to = $date_to;
-        null !== $page && $obj->page = $page;
-        null !== $page_size && $obj->page_size = $page_size;
-        null !== $search && $obj->search = $search;
-        null !== $sender && $obj->sender = $sender;
-        null !== $state && $obj['state'] = $state;
-        null !== $type && $obj['type'] = $type;
+        null !== $dateFrom && $self['dateFrom'] = $dateFrom;
+        null !== $dateTo && $self['dateTo'] = $dateTo;
+        null !== $page && $self['page'] = $page;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
+        null !== $search && $self['search'] = $search;
+        null !== $sender && $self['sender'] = $sender;
+        null !== $state && $self['state'] = $state;
+        null !== $type && $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -127,10 +127,10 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withDateFrom(?\DateTimeInterface $dateFrom): self
     {
-        $obj = clone $this;
-        $obj->date_from = $dateFrom;
+        $self = clone $this;
+        $self['dateFrom'] = $dateFrom;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -138,10 +138,10 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withDateTo(?\DateTimeInterface $dateTo): self
     {
-        $obj = clone $this;
-        $obj->date_to = $dateTo;
+        $self = clone $this;
+        $self['dateTo'] = $dateTo;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -149,10 +149,10 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withPage(int $page): self
     {
-        $obj = clone $this;
-        $obj->page = $page;
+        $self = clone $this;
+        $self['page'] = $page;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -160,10 +160,10 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withPageSize(int $pageSize): self
     {
-        $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -171,10 +171,10 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withSearch(?string $search): self
     {
-        $obj = clone $this;
-        $obj->search = $search;
+        $self = clone $this;
+        $self['search'] = $search;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -182,10 +182,10 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withSender(?string $sender): self
     {
-        $obj = clone $this;
-        $obj->sender = $sender;
+        $self = clone $this;
+        $self['sender'] = $sender;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -195,10 +195,10 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withState(DocumentState|string|null $state): self
     {
-        $obj = clone $this;
-        $obj['state'] = $state;
+        $self = clone $this;
+        $self['state'] = $state;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -208,9 +208,9 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      */
     public function withType(DocumentType|string|null $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

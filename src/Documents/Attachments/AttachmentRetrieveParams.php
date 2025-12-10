@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\Attachments;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -14,7 +14,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Services\Documents\AttachmentsService::retrieve()
  *
- * @phpstan-type AttachmentRetrieveParamsShape = array{document_id: string}
+ * @phpstan-type AttachmentRetrieveParamsShape = array{documentID: string}
  */
 final class AttachmentRetrieveParams implements BaseModel
 {
@@ -22,15 +22,15 @@ final class AttachmentRetrieveParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api]
-    public string $document_id;
+    #[Required]
+    public string $documentID;
 
     /**
      * `new AttachmentRetrieveParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * AttachmentRetrieveParams::with(document_id: ...)
+     * AttachmentRetrieveParams::with(documentID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,20 +49,20 @@ final class AttachmentRetrieveParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $document_id): self
+    public static function with(string $documentID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->document_id = $document_id;
+        $self['documentID'] = $documentID;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentID(string $documentID): self
     {
-        $obj = clone $this;
-        $obj->document_id = $documentID;
+        $self = clone $this;
+        $self['documentID'] = $documentID;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\DocumentResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentResponse\Charge\ReasonCode;
@@ -13,12 +13,12 @@ use EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode;
 /**
  * @phpstan-type ChargeShape = array{
  *   amount?: string|null,
- *   base_amount?: string|null,
- *   multiplier_factor?: string|null,
+ *   baseAmount?: string|null,
+ *   multiplierFactor?: string|null,
  *   reason?: string|null,
- *   reason_code?: value-of<ReasonCode>|null,
- *   tax_code?: value-of<\EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode>|null,
- *   tax_rate?: string|null,
+ *   reasonCode?: value-of<ReasonCode>|null,
+ *   taxCode?: value-of<\EInvoiceAPI\Documents\DocumentResponse\Charge\TaxCode>|null,
+ *   taxRate?: string|null,
  * }
  */
 final class Charge implements BaseModel
@@ -29,34 +29,34 @@ final class Charge implements BaseModel
     /**
      * The charge amount, without VAT. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $amount;
 
     /**
      * The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $base_amount;
+    #[Optional('base_amount', nullable: true)]
+    public ?string $baseAmount;
 
     /**
      * The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $multiplier_factor;
+    #[Optional('multiplier_factor', nullable: true)]
+    public ?string $multiplierFactor;
 
     /**
      * The reason for the charge.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
     /**
      * Charge reason codes for invoice charges and fees.
      *
-     * @var value-of<ReasonCode>|null $reason_code
+     * @var value-of<ReasonCode>|null $reasonCode
      */
-    #[Api(enum: ReasonCode::class, nullable: true, optional: true)]
-    public ?string $reason_code;
+    #[Optional('reason_code', enum: ReasonCode::class, nullable: true)]
+    public ?string $reasonCode;
 
     /**
      * Duty or tax or fee category codes (Subset of UNCL5305).
@@ -65,20 +65,20 @@ final class Charge implements BaseModel
      * Version: D.16B
      * Subset: OpenPEPPOL
      *
-     * @var value-of<TaxCode>|null $tax_code
+     * @var value-of<TaxCode>|null $taxCode
      */
-    #[Api(
+    #[Optional(
+        'tax_code',
         enum: TaxCode::class,
         nullable: true,
-        optional: true,
     )]
-    public ?string $tax_code;
+    public ?string $taxCode;
 
     /**
      * The VAT rate, represented as percentage that applies to the charge.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $tax_rate;
+    #[Optional('tax_rate', nullable: true)]
+    public ?string $taxRate;
 
     public function __construct()
     {
@@ -90,29 +90,29 @@ final class Charge implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ReasonCode|value-of<ReasonCode>|null $reason_code
-     * @param TaxCode|value-of<TaxCode>|null $tax_code
+     * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
+     * @param TaxCode|value-of<TaxCode>|null $taxCode
      */
     public static function with(
         ?string $amount = null,
-        ?string $base_amount = null,
-        ?string $multiplier_factor = null,
+        ?string $baseAmount = null,
+        ?string $multiplierFactor = null,
         ?string $reason = null,
-        ReasonCode|string|null $reason_code = null,
-        TaxCode|string|null $tax_code = null,
-        ?string $tax_rate = null,
+        ReasonCode|string|null $reasonCode = null,
+        TaxCode|string|null $taxCode = null,
+        ?string $taxRate = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $amount && $obj->amount = $amount;
-        null !== $base_amount && $obj->base_amount = $base_amount;
-        null !== $multiplier_factor && $obj->multiplier_factor = $multiplier_factor;
-        null !== $reason && $obj->reason = $reason;
-        null !== $reason_code && $obj['reason_code'] = $reason_code;
-        null !== $tax_code && $obj['tax_code'] = $tax_code;
-        null !== $tax_rate && $obj->tax_rate = $tax_rate;
+        null !== $amount && $self['amount'] = $amount;
+        null !== $baseAmount && $self['baseAmount'] = $baseAmount;
+        null !== $multiplierFactor && $self['multiplierFactor'] = $multiplierFactor;
+        null !== $reason && $self['reason'] = $reason;
+        null !== $reasonCode && $self['reasonCode'] = $reasonCode;
+        null !== $taxCode && $self['taxCode'] = $taxCode;
+        null !== $taxRate && $self['taxRate'] = $taxRate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -120,10 +120,10 @@ final class Charge implements BaseModel
      */
     public function withAmount(?string $amount): self
     {
-        $obj = clone $this;
-        $obj->amount = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -131,10 +131,10 @@ final class Charge implements BaseModel
      */
     public function withBaseAmount(?string $baseAmount): self
     {
-        $obj = clone $this;
-        $obj->base_amount = $baseAmount;
+        $self = clone $this;
+        $self['baseAmount'] = $baseAmount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -142,10 +142,10 @@ final class Charge implements BaseModel
      */
     public function withMultiplierFactor(?string $multiplierFactor): self
     {
-        $obj = clone $this;
-        $obj->multiplier_factor = $multiplierFactor;
+        $self = clone $this;
+        $self['multiplierFactor'] = $multiplierFactor;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -153,10 +153,10 @@ final class Charge implements BaseModel
      */
     public function withReason(?string $reason): self
     {
-        $obj = clone $this;
-        $obj->reason = $reason;
+        $self = clone $this;
+        $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -166,10 +166,10 @@ final class Charge implements BaseModel
      */
     public function withReasonCode(ReasonCode|string|null $reasonCode): self
     {
-        $obj = clone $this;
-        $obj['reason_code'] = $reasonCode;
+        $self = clone $this;
+        $self['reasonCode'] = $reasonCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -184,10 +184,10 @@ final class Charge implements BaseModel
     public function withTaxCode(
         TaxCode|string|null $taxCode
     ): self {
-        $obj = clone $this;
-        $obj['tax_code'] = $taxCode;
+        $self = clone $this;
+        $self['taxCode'] = $taxCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -195,9 +195,9 @@ final class Charge implements BaseModel
      */
     public function withTaxRate(?string $taxRate): self
     {
-        $obj = clone $this;
-        $obj->tax_rate = $taxRate;
+        $self = clone $this;
+        $self['taxRate'] = $taxRate;
 
-        return $obj;
+        return $self;
     }
 }

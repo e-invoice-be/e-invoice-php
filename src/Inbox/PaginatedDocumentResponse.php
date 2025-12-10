@@ -4,16 +4,27 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Inbox;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
+use EInvoiceAPI\Documents\CurrencyCode;
+use EInvoiceAPI\Documents\DocumentDirection;
 use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\DocumentResponse\Allowance;
+use EInvoiceAPI\Documents\DocumentResponse\Charge;
+use EInvoiceAPI\Documents\DocumentResponse\Item;
+use EInvoiceAPI\Documents\DocumentResponse\PaymentDetail;
+use EInvoiceAPI\Documents\DocumentResponse\TaxCode;
+use EInvoiceAPI\Documents\DocumentResponse\TaxDetail;
+use EInvoiceAPI\Documents\DocumentResponse\Vatex;
+use EInvoiceAPI\Documents\DocumentType;
 
 /**
  * @phpstan-type PaginatedDocumentResponseShape = array{
  *   items: list<DocumentResponse>,
  *   page: int,
- *   page_size: int,
+ *   pageSize: int,
  *   pages: int,
  *   total: int,
  * }
@@ -24,19 +35,19 @@ final class PaginatedDocumentResponse implements BaseModel
     use SdkModel;
 
     /** @var list<DocumentResponse> $items */
-    #[Api(list: DocumentResponse::class)]
+    #[Required(list: DocumentResponse::class)]
     public array $items;
 
-    #[Api]
+    #[Required]
     public int $page;
 
-    #[Api]
-    public int $page_size;
+    #[Required('page_size')]
+    public int $pageSize;
 
-    #[Api]
+    #[Required]
     public int $pages;
 
-    #[Api]
+    #[Required]
     public int $total;
 
     /**
@@ -45,7 +56,7 @@ final class PaginatedDocumentResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * PaginatedDocumentResponse::with(
-     *   items: ..., page: ..., page_size: ..., pages: ..., total: ...
+     *   items: ..., page: ..., pageSize: ..., pages: ..., total: ...
      * )
      * ```
      *
@@ -70,66 +81,164 @@ final class PaginatedDocumentResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentResponse> $items
+     * @param list<DocumentResponse|array{
+     *   id: string,
+     *   allowances?: list<Allowance>|null,
+     *   amountDue?: string|null,
+     *   attachments?: list<DocumentAttachment>|null,
+     *   billingAddress?: string|null,
+     *   billingAddressRecipient?: string|null,
+     *   charges?: list<Charge>|null,
+     *   currency?: value-of<CurrencyCode>|null,
+     *   customerAddress?: string|null,
+     *   customerAddressRecipient?: string|null,
+     *   customerCompanyID?: string|null,
+     *   customerEmail?: string|null,
+     *   customerID?: string|null,
+     *   customerName?: string|null,
+     *   customerTaxID?: string|null,
+     *   direction?: value-of<DocumentDirection>|null,
+     *   documentType?: value-of<DocumentType>|null,
+     *   dueDate?: \DateTimeInterface|null,
+     *   invoiceDate?: \DateTimeInterface|null,
+     *   invoiceID?: string|null,
+     *   invoiceTotal?: string|null,
+     *   items?: list<Item>|null,
+     *   note?: string|null,
+     *   paymentDetails?: list<PaymentDetail>|null,
+     *   paymentTerm?: string|null,
+     *   purchaseOrder?: string|null,
+     *   remittanceAddress?: string|null,
+     *   remittanceAddressRecipient?: string|null,
+     *   serviceAddress?: string|null,
+     *   serviceAddressRecipient?: string|null,
+     *   serviceEndDate?: \DateTimeInterface|null,
+     *   serviceStartDate?: \DateTimeInterface|null,
+     *   shippingAddress?: string|null,
+     *   shippingAddressRecipient?: string|null,
+     *   state?: value-of<DocumentState>|null,
+     *   subtotal?: string|null,
+     *   taxCode?: value-of<TaxCode>|null,
+     *   taxDetails?: list<TaxDetail>|null,
+     *   totalDiscount?: string|null,
+     *   totalTax?: string|null,
+     *   vatex?: value-of<Vatex>|null,
+     *   vatexNote?: string|null,
+     *   vendorAddress?: string|null,
+     *   vendorAddressRecipient?: string|null,
+     *   vendorCompanyID?: string|null,
+     *   vendorEmail?: string|null,
+     *   vendorName?: string|null,
+     *   vendorTaxID?: string|null,
+     * }> $items
      */
     public static function with(
         array $items,
         int $page,
-        int $page_size,
+        int $pageSize,
         int $pages,
         int $total
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->items = $items;
-        $obj->page = $page;
-        $obj->page_size = $page_size;
-        $obj->pages = $pages;
-        $obj->total = $total;
+        $self['items'] = $items;
+        $self['page'] = $page;
+        $self['pageSize'] = $pageSize;
+        $self['pages'] = $pages;
+        $self['total'] = $total;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<DocumentResponse> $items
+     * @param list<DocumentResponse|array{
+     *   id: string,
+     *   allowances?: list<Allowance>|null,
+     *   amountDue?: string|null,
+     *   attachments?: list<DocumentAttachment>|null,
+     *   billingAddress?: string|null,
+     *   billingAddressRecipient?: string|null,
+     *   charges?: list<Charge>|null,
+     *   currency?: value-of<CurrencyCode>|null,
+     *   customerAddress?: string|null,
+     *   customerAddressRecipient?: string|null,
+     *   customerCompanyID?: string|null,
+     *   customerEmail?: string|null,
+     *   customerID?: string|null,
+     *   customerName?: string|null,
+     *   customerTaxID?: string|null,
+     *   direction?: value-of<DocumentDirection>|null,
+     *   documentType?: value-of<DocumentType>|null,
+     *   dueDate?: \DateTimeInterface|null,
+     *   invoiceDate?: \DateTimeInterface|null,
+     *   invoiceID?: string|null,
+     *   invoiceTotal?: string|null,
+     *   items?: list<Item>|null,
+     *   note?: string|null,
+     *   paymentDetails?: list<PaymentDetail>|null,
+     *   paymentTerm?: string|null,
+     *   purchaseOrder?: string|null,
+     *   remittanceAddress?: string|null,
+     *   remittanceAddressRecipient?: string|null,
+     *   serviceAddress?: string|null,
+     *   serviceAddressRecipient?: string|null,
+     *   serviceEndDate?: \DateTimeInterface|null,
+     *   serviceStartDate?: \DateTimeInterface|null,
+     *   shippingAddress?: string|null,
+     *   shippingAddressRecipient?: string|null,
+     *   state?: value-of<DocumentState>|null,
+     *   subtotal?: string|null,
+     *   taxCode?: value-of<TaxCode>|null,
+     *   taxDetails?: list<TaxDetail>|null,
+     *   totalDiscount?: string|null,
+     *   totalTax?: string|null,
+     *   vatex?: value-of<Vatex>|null,
+     *   vatexNote?: string|null,
+     *   vendorAddress?: string|null,
+     *   vendorAddressRecipient?: string|null,
+     *   vendorCompanyID?: string|null,
+     *   vendorEmail?: string|null,
+     *   vendorName?: string|null,
+     *   vendorTaxID?: string|null,
+     * }> $items
      */
     public function withItems(array $items): self
     {
-        $obj = clone $this;
-        $obj->items = $items;
+        $self = clone $this;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 
     public function withPage(int $page): self
     {
-        $obj = clone $this;
-        $obj->page = $page;
+        $self = clone $this;
+        $self['page'] = $page;
 
-        return $obj;
+        return $self;
     }
 
     public function withPageSize(int $pageSize): self
     {
-        $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     public function withPages(int $pages): self
     {
-        $obj = clone $this;
-        $obj->pages = $pages;
+        $self = clone $this;
+        $self['pages'] = $pages;
 
-        return $obj;
+        return $self;
     }
 
     public function withTotal(int $total): self
     {
-        $obj = clone $this;
-        $obj->total = $total;
+        $self = clone $this;
+        $self['total'] = $total;
 
-        return $obj;
+        return $self;
     }
 }

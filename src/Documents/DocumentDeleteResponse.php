@@ -4,31 +4,27 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type DocumentDeleteResponseShape = array{is_deleted: bool}
+ * @phpstan-type DocumentDeleteResponseShape = array{isDeleted: bool}
  */
-final class DocumentDeleteResponse implements BaseModel, ResponseConverter
+final class DocumentDeleteResponse implements BaseModel
 {
     /** @use SdkModel<DocumentDeleteResponseShape> */
     use SdkModel;
 
-    use SdkResponse;
-
-    #[Api]
-    public bool $is_deleted;
+    #[Required('is_deleted')]
+    public bool $isDeleted;
 
     /**
      * `new DocumentDeleteResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * DocumentDeleteResponse::with(is_deleted: ...)
+     * DocumentDeleteResponse::with(isDeleted: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -47,20 +43,20 @@ final class DocumentDeleteResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(bool $is_deleted): self
+    public static function with(bool $isDeleted): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->is_deleted = $is_deleted;
+        $self['isDeleted'] = $isDeleted;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsDeleted(bool $isDeleted): self
     {
-        $obj = clone $this;
-        $obj->is_deleted = $isDeleted;
+        $self = clone $this;
+        $self['isDeleted'] = $isDeleted;
 
-        return $obj;
+        return $self;
     }
 }

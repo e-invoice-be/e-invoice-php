@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -16,10 +16,10 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @phpstan-type DocumentSendParamsShape = array{
  *   email?: string|null,
- *   receiver_peppol_id?: string|null,
- *   receiver_peppol_scheme?: string|null,
- *   sender_peppol_id?: string|null,
- *   sender_peppol_scheme?: string|null,
+ *   receiverPeppolID?: string|null,
+ *   receiverPeppolScheme?: string|null,
+ *   senderPeppolID?: string|null,
+ *   senderPeppolScheme?: string|null,
  * }
  */
 final class DocumentSendParams implements BaseModel
@@ -28,20 +28,20 @@ final class DocumentSendParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $email;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $receiver_peppol_id;
+    #[Optional(nullable: true)]
+    public ?string $receiverPeppolID;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $receiver_peppol_scheme;
+    #[Optional(nullable: true)]
+    public ?string $receiverPeppolScheme;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $sender_peppol_id;
+    #[Optional(nullable: true)]
+    public ?string $senderPeppolID;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $sender_peppol_scheme;
+    #[Optional(nullable: true)]
+    public ?string $senderPeppolScheme;
 
     public function __construct()
     {
@@ -55,60 +55,60 @@ final class DocumentSendParams implements BaseModel
      */
     public static function with(
         ?string $email = null,
-        ?string $receiver_peppol_id = null,
-        ?string $receiver_peppol_scheme = null,
-        ?string $sender_peppol_id = null,
-        ?string $sender_peppol_scheme = null,
+        ?string $receiverPeppolID = null,
+        ?string $receiverPeppolScheme = null,
+        ?string $senderPeppolID = null,
+        ?string $senderPeppolScheme = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $email && $obj->email = $email;
-        null !== $receiver_peppol_id && $obj->receiver_peppol_id = $receiver_peppol_id;
-        null !== $receiver_peppol_scheme && $obj->receiver_peppol_scheme = $receiver_peppol_scheme;
-        null !== $sender_peppol_id && $obj->sender_peppol_id = $sender_peppol_id;
-        null !== $sender_peppol_scheme && $obj->sender_peppol_scheme = $sender_peppol_scheme;
+        null !== $email && $self['email'] = $email;
+        null !== $receiverPeppolID && $self['receiverPeppolID'] = $receiverPeppolID;
+        null !== $receiverPeppolScheme && $self['receiverPeppolScheme'] = $receiverPeppolScheme;
+        null !== $senderPeppolID && $self['senderPeppolID'] = $senderPeppolID;
+        null !== $senderPeppolScheme && $self['senderPeppolScheme'] = $senderPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 
     public function withEmail(?string $email): self
     {
-        $obj = clone $this;
-        $obj->email = $email;
+        $self = clone $this;
+        $self['email'] = $email;
 
-        return $obj;
+        return $self;
     }
 
     public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
-        $obj = clone $this;
-        $obj->receiver_peppol_id = $receiverPeppolID;
+        $self = clone $this;
+        $self['receiverPeppolID'] = $receiverPeppolID;
 
-        return $obj;
+        return $self;
     }
 
     public function withReceiverPeppolScheme(
         ?string $receiverPeppolScheme
     ): self {
-        $obj = clone $this;
-        $obj->receiver_peppol_scheme = $receiverPeppolScheme;
+        $self = clone $this;
+        $self['receiverPeppolScheme'] = $receiverPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 
     public function withSenderPeppolID(?string $senderPeppolID): self
     {
-        $obj = clone $this;
-        $obj->sender_peppol_id = $senderPeppolID;
+        $self = clone $this;
+        $self['senderPeppolID'] = $senderPeppolID;
 
-        return $obj;
+        return $self;
     }
 
     public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
-        $obj = clone $this;
-        $obj->sender_peppol_scheme = $senderPeppolScheme;
+        $self = clone $this;
+        $self['senderPeppolScheme'] = $senderPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 }

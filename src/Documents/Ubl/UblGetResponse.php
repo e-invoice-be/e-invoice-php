@@ -4,69 +4,66 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\Ubl;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type UblGetResponseShape = array{
  *   id: string,
- *   file_name: string,
- *   file_hash?: string|null,
- *   file_size?: int|null,
- *   receiver_peppol_id?: string|null,
- *   receiver_peppol_scheme?: string|null,
- *   sender_peppol_id?: string|null,
- *   sender_peppol_scheme?: string|null,
- *   signed_url?: string|null,
- *   validated_at?: \DateTimeInterface|null,
+ *   fileName: string,
+ *   fileHash?: string|null,
+ *   fileSize?: int|null,
+ *   receiverPeppolID?: string|null,
+ *   receiverPeppolScheme?: string|null,
+ *   senderPeppolID?: string|null,
+ *   senderPeppolScheme?: string|null,
+ *   signedURL?: string|null,
+ *   validatedAt?: \DateTimeInterface|null,
  * }
  */
-final class UblGetResponse implements BaseModel, ResponseConverter
+final class UblGetResponse implements BaseModel
 {
     /** @use SdkModel<UblGetResponseShape> */
     use SdkModel;
 
-    use SdkResponse;
-
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
-    public string $file_name;
+    #[Required('file_name')]
+    public string $fileName;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $file_hash;
+    #[Optional('file_hash', nullable: true)]
+    public ?string $fileHash;
 
-    #[Api(optional: true)]
-    public ?int $file_size;
+    #[Optional('file_size')]
+    public ?int $fileSize;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $receiver_peppol_id;
+    #[Optional('receiver_peppol_id', nullable: true)]
+    public ?string $receiverPeppolID;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $receiver_peppol_scheme;
+    #[Optional('receiver_peppol_scheme', nullable: true)]
+    public ?string $receiverPeppolScheme;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $sender_peppol_id;
+    #[Optional('sender_peppol_id', nullable: true)]
+    public ?string $senderPeppolID;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $sender_peppol_scheme;
+    #[Optional('sender_peppol_scheme', nullable: true)]
+    public ?string $senderPeppolScheme;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $signed_url;
+    #[Optional('signed_url', nullable: true)]
+    public ?string $signedURL;
 
-    #[Api(nullable: true, optional: true)]
-    public ?\DateTimeInterface $validated_at;
+    #[Optional('validated_at', nullable: true)]
+    public ?\DateTimeInterface $validatedAt;
 
     /**
      * `new UblGetResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UblGetResponse::with(id: ..., file_name: ...)
+     * UblGetResponse::with(id: ..., fileName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -87,111 +84,111 @@ final class UblGetResponse implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $file_name,
-        ?string $file_hash = null,
-        ?int $file_size = null,
-        ?string $receiver_peppol_id = null,
-        ?string $receiver_peppol_scheme = null,
-        ?string $sender_peppol_id = null,
-        ?string $sender_peppol_scheme = null,
-        ?string $signed_url = null,
-        ?\DateTimeInterface $validated_at = null,
+        string $fileName,
+        ?string $fileHash = null,
+        ?int $fileSize = null,
+        ?string $receiverPeppolID = null,
+        ?string $receiverPeppolScheme = null,
+        ?string $senderPeppolID = null,
+        ?string $senderPeppolScheme = null,
+        ?string $signedURL = null,
+        ?\DateTimeInterface $validatedAt = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->file_name = $file_name;
+        $self['id'] = $id;
+        $self['fileName'] = $fileName;
 
-        null !== $file_hash && $obj->file_hash = $file_hash;
-        null !== $file_size && $obj->file_size = $file_size;
-        null !== $receiver_peppol_id && $obj->receiver_peppol_id = $receiver_peppol_id;
-        null !== $receiver_peppol_scheme && $obj->receiver_peppol_scheme = $receiver_peppol_scheme;
-        null !== $sender_peppol_id && $obj->sender_peppol_id = $sender_peppol_id;
-        null !== $sender_peppol_scheme && $obj->sender_peppol_scheme = $sender_peppol_scheme;
-        null !== $signed_url && $obj->signed_url = $signed_url;
-        null !== $validated_at && $obj->validated_at = $validated_at;
+        null !== $fileHash && $self['fileHash'] = $fileHash;
+        null !== $fileSize && $self['fileSize'] = $fileSize;
+        null !== $receiverPeppolID && $self['receiverPeppolID'] = $receiverPeppolID;
+        null !== $receiverPeppolScheme && $self['receiverPeppolScheme'] = $receiverPeppolScheme;
+        null !== $senderPeppolID && $self['senderPeppolID'] = $senderPeppolID;
+        null !== $senderPeppolScheme && $self['senderPeppolScheme'] = $senderPeppolScheme;
+        null !== $signedURL && $self['signedURL'] = $signedURL;
+        null !== $validatedAt && $self['validatedAt'] = $validatedAt;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(string $fileName): self
     {
-        $obj = clone $this;
-        $obj->file_name = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileHash(?string $fileHash): self
     {
-        $obj = clone $this;
-        $obj->file_hash = $fileHash;
+        $self = clone $this;
+        $self['fileHash'] = $fileHash;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileSize(int $fileSize): self
     {
-        $obj = clone $this;
-        $obj->file_size = $fileSize;
+        $self = clone $this;
+        $self['fileSize'] = $fileSize;
 
-        return $obj;
+        return $self;
     }
 
     public function withReceiverPeppolID(?string $receiverPeppolID): self
     {
-        $obj = clone $this;
-        $obj->receiver_peppol_id = $receiverPeppolID;
+        $self = clone $this;
+        $self['receiverPeppolID'] = $receiverPeppolID;
 
-        return $obj;
+        return $self;
     }
 
     public function withReceiverPeppolScheme(
         ?string $receiverPeppolScheme
     ): self {
-        $obj = clone $this;
-        $obj->receiver_peppol_scheme = $receiverPeppolScheme;
+        $self = clone $this;
+        $self['receiverPeppolScheme'] = $receiverPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 
     public function withSenderPeppolID(?string $senderPeppolID): self
     {
-        $obj = clone $this;
-        $obj->sender_peppol_id = $senderPeppolID;
+        $self = clone $this;
+        $self['senderPeppolID'] = $senderPeppolID;
 
-        return $obj;
+        return $self;
     }
 
     public function withSenderPeppolScheme(?string $senderPeppolScheme): self
     {
-        $obj = clone $this;
-        $obj->sender_peppol_scheme = $senderPeppolScheme;
+        $self = clone $this;
+        $self['senderPeppolScheme'] = $senderPeppolScheme;
 
-        return $obj;
+        return $self;
     }
 
     public function withSignedURL(?string $signedURL): self
     {
-        $obj = clone $this;
-        $obj->signed_url = $signedURL;
+        $self = clone $this;
+        $self['signedURL'] = $signedURL;
 
-        return $obj;
+        return $self;
     }
 
     public function withValidatedAt(?\DateTimeInterface $validatedAt): self
     {
-        $obj = clone $this;
-        $obj->validated_at = $validatedAt;
+        $self = clone $this;
+        $self['validatedAt'] = $validatedAt;
 
-        return $obj;
+        return $self;
     }
 }

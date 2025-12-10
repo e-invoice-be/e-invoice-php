@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Webhooks;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -25,13 +26,13 @@ final class WebhookCreateParams implements BaseModel
     use SdkParams;
 
     /** @var list<string> $events */
-    #[Api(list: 'string')]
+    #[Required(list: 'string')]
     public array $events;
 
-    #[Api]
+    #[Required]
     public string $url;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $enabled;
 
     /**
@@ -65,14 +66,14 @@ final class WebhookCreateParams implements BaseModel
         string $url,
         ?bool $enabled = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->events = $events;
-        $obj->url = $url;
+        $self['events'] = $events;
+        $self['url'] = $url;
 
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -80,25 +81,25 @@ final class WebhookCreateParams implements BaseModel
      */
     public function withEvents(array $events): self
     {
-        $obj = clone $this;
-        $obj->events = $events;
+        $self = clone $this;
+        $self['events'] = $events;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj->url = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj->enabled = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

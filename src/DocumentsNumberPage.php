@@ -2,7 +2,7 @@
 
 namespace EInvoiceAPI;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkPage;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -11,7 +11,6 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\DocumentsNumberPage\Item;
 use Psr\Http\Message\ResponseInterface;
 
@@ -19,7 +18,7 @@ use Psr\Http\Message\ResponseInterface;
  * @phpstan-type DocumentsNumberPageShape = array{
  *   items?: list<Item>|null,
  *   page?: int|null,
- *   page_size?: int|null,
+ *   pageSize?: int|null,
  *   total?: int|null,
  * }
  *
@@ -36,16 +35,16 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $items */
-    #[Api(list: Item::class, optional: true)]
+    #[Optional(list: Item::class)]
     public ?array $items;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page;
 
-    #[Api(optional: true)]
-    public ?int $page_size;
+    #[Optional('page_size')]
+    public ?int $pageSize;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $total;
 
     /**
@@ -57,25 +56,24 @@ final class DocumentsNumberPage implements BaseModel, BasePage
      *   query: array<string,mixed>,
      *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
-     * } $request
+     * } $requestInfo
      */
     public function __construct(
         private string|Converter|ConverterSource $convert,
         private Client $client,
-        private array $request,
+        private array $requestInfo,
         private RequestOptions $options,
-        ResponseInterface $response,
+        private ResponseInterface $response,
+        private mixed $parsedBody,
     ) {
         $this->initialize();
 
-        $data = Util::decodeContent($response);
-
-        if (!is_array($data)) {
+        if (!is_array($this->parsedBody)) {
             return;
         }
 
         // @phpstan-ignore-next-line argument.type
-        self::__unserialize($data);
+        self::__unserialize($this->parsedBody);
 
         if ($this->offsetGet('items')) {
             $acc = Conversion::coerce(
@@ -117,7 +115,7 @@ final class DocumentsNumberPage implements BaseModel, BasePage
         }
 
         $nextRequest = array_merge_recursive(
-            $this->request,
+            $this->requestInfo,
             ['query' => $curr + 1]
         );
 

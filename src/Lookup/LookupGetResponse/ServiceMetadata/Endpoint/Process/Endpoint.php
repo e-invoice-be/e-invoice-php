@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\Certificate;
@@ -19,8 +20,8 @@ use EInvoiceAPI\Lookup\Certificate;
  *   serviceActivationDate?: string|null,
  *   serviceDescription?: string|null,
  *   serviceExpirationDate?: string|null,
- *   technicalContactUrl?: string|null,
- *   technicalInformationUrl?: string|null,
+ *   technicalContactURL?: string|null,
+ *   technicalInformationURL?: string|null,
  * }
  */
 final class Endpoint implements BaseModel
@@ -31,50 +32,50 @@ final class Endpoint implements BaseModel
     /**
      * URL or address of the endpoint.
      */
-    #[Api]
+    #[Required]
     public string $address;
 
     /**
      * Transport profile used by this endpoint.
      */
-    #[Api]
+    #[Required]
     public string $transportProfile;
 
     /**
      * Certificate information for a Peppol endpoint.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?Certificate $certificate;
 
     /**
      * ISO 8601 date when the service was activated.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $serviceActivationDate;
 
     /**
      * Human-readable description of the service.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $serviceDescription;
 
     /**
      * ISO 8601 date when the service will expire.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $serviceExpirationDate;
 
     /**
      * URL for technical contact information.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $technicalContactUrl;
+    #[Optional('technicalContactUrl', nullable: true)]
+    public ?string $technicalContactURL;
 
     /**
      * URL for technical documentation.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $technicalInformationUrl;
+    #[Optional('technicalInformationUrl', nullable: true)]
+    public ?string $technicalInformationURL;
 
     /**
      * `new Endpoint()` is missing required properties by the API.
@@ -99,30 +100,34 @@ final class Endpoint implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Certificate|array{
+     *   status: string, details?: array<string,mixed>|null, error?: string|null
+     * }|null $certificate
      */
     public static function with(
         string $address,
         string $transportProfile,
-        ?Certificate $certificate = null,
+        Certificate|array|null $certificate = null,
         ?string $serviceActivationDate = null,
         ?string $serviceDescription = null,
         ?string $serviceExpirationDate = null,
-        ?string $technicalContactUrl = null,
-        ?string $technicalInformationUrl = null,
+        ?string $technicalContactURL = null,
+        ?string $technicalInformationURL = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->address = $address;
-        $obj->transportProfile = $transportProfile;
+        $self['address'] = $address;
+        $self['transportProfile'] = $transportProfile;
 
-        null !== $certificate && $obj->certificate = $certificate;
-        null !== $serviceActivationDate && $obj->serviceActivationDate = $serviceActivationDate;
-        null !== $serviceDescription && $obj->serviceDescription = $serviceDescription;
-        null !== $serviceExpirationDate && $obj->serviceExpirationDate = $serviceExpirationDate;
-        null !== $technicalContactUrl && $obj->technicalContactUrl = $technicalContactUrl;
-        null !== $technicalInformationUrl && $obj->technicalInformationUrl = $technicalInformationUrl;
+        null !== $certificate && $self['certificate'] = $certificate;
+        null !== $serviceActivationDate && $self['serviceActivationDate'] = $serviceActivationDate;
+        null !== $serviceDescription && $self['serviceDescription'] = $serviceDescription;
+        null !== $serviceExpirationDate && $self['serviceExpirationDate'] = $serviceExpirationDate;
+        null !== $technicalContactURL && $self['technicalContactURL'] = $technicalContactURL;
+        null !== $technicalInformationURL && $self['technicalInformationURL'] = $technicalInformationURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -130,10 +135,10 @@ final class Endpoint implements BaseModel
      */
     public function withAddress(string $address): self
     {
-        $obj = clone $this;
-        $obj->address = $address;
+        $self = clone $this;
+        $self['address'] = $address;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -141,21 +146,25 @@ final class Endpoint implements BaseModel
      */
     public function withTransportProfile(string $transportProfile): self
     {
-        $obj = clone $this;
-        $obj->transportProfile = $transportProfile;
+        $self = clone $this;
+        $self['transportProfile'] = $transportProfile;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Certificate information for a Peppol endpoint.
+     *
+     * @param Certificate|array{
+     *   status: string, details?: array<string,mixed>|null, error?: string|null
+     * }|null $certificate
      */
-    public function withCertificate(?Certificate $certificate): self
+    public function withCertificate(Certificate|array|null $certificate): self
     {
-        $obj = clone $this;
-        $obj->certificate = $certificate;
+        $self = clone $this;
+        $self['certificate'] = $certificate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -164,10 +173,10 @@ final class Endpoint implements BaseModel
     public function withServiceActivationDate(
         ?string $serviceActivationDate
     ): self {
-        $obj = clone $this;
-        $obj->serviceActivationDate = $serviceActivationDate;
+        $self = clone $this;
+        $self['serviceActivationDate'] = $serviceActivationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -175,10 +184,10 @@ final class Endpoint implements BaseModel
      */
     public function withServiceDescription(?string $serviceDescription): self
     {
-        $obj = clone $this;
-        $obj->serviceDescription = $serviceDescription;
+        $self = clone $this;
+        $self['serviceDescription'] = $serviceDescription;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -187,10 +196,10 @@ final class Endpoint implements BaseModel
     public function withServiceExpirationDate(
         ?string $serviceExpirationDate
     ): self {
-        $obj = clone $this;
-        $obj->serviceExpirationDate = $serviceExpirationDate;
+        $self = clone $this;
+        $self['serviceExpirationDate'] = $serviceExpirationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -198,10 +207,10 @@ final class Endpoint implements BaseModel
      */
     public function withTechnicalContactURL(?string $technicalContactURL): self
     {
-        $obj = clone $this;
-        $obj->technicalContactUrl = $technicalContactURL;
+        $self = clone $this;
+        $self['technicalContactURL'] = $technicalContactURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -210,9 +219,9 @@ final class Endpoint implements BaseModel
     public function withTechnicalInformationURL(
         ?string $technicalInformationURL
     ): self {
-        $obj = clone $this;
-        $obj->technicalInformationUrl = $technicalInformationURL;
+        $self = clone $this;
+        $self['technicalInformationURL'] = $technicalInformationURL;
 
-        return $obj;
+        return $self;
     }
 }

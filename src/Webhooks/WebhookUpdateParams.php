@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Webhooks;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -24,14 +24,14 @@ final class WebhookUpdateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $enabled;
 
     /** @var list<string>|null $events */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $events;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $url;
 
     public function __construct()
@@ -51,21 +51,21 @@ final class WebhookUpdateParams implements BaseModel
         ?array $events = null,
         ?string $url = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $enabled && $obj->enabled = $enabled;
-        null !== $events && $obj->events = $events;
-        null !== $url && $obj->url = $url;
+        null !== $enabled && $self['enabled'] = $enabled;
+        null !== $events && $self['events'] = $events;
+        null !== $url && $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(?bool $enabled): self
     {
-        $obj = clone $this;
-        $obj->enabled = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -73,17 +73,17 @@ final class WebhookUpdateParams implements BaseModel
      */
     public function withEvents(?array $events): self
     {
-        $obj = clone $this;
-        $obj->events = $events;
+        $self = clone $this;
+        $self['events'] = $events;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(?string $url): self
     {
-        $obj = clone $this;
-        $obj->url = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

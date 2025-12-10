@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type DocumentAttachmentCreateShape = array{
- *   file_name: string,
- *   file_data?: string|null,
- *   file_size?: int|null,
- *   file_type?: string|null,
+ *   fileName: string,
+ *   fileData?: string|null,
+ *   fileSize?: int|null,
+ *   fileType?: string|null,
  * }
  */
 final class DocumentAttachmentCreate implements BaseModel
@@ -21,27 +22,27 @@ final class DocumentAttachmentCreate implements BaseModel
     /** @use SdkModel<DocumentAttachmentCreateShape> */
     use SdkModel;
 
-    #[Api]
-    public string $file_name;
+    #[Required('file_name')]
+    public string $fileName;
 
     /**
      * Base64 encoded file data.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $file_data;
+    #[Optional('file_data', nullable: true)]
+    public ?string $fileData;
 
-    #[Api(optional: true)]
-    public ?int $file_size;
+    #[Optional('file_size')]
+    public ?int $fileSize;
 
-    #[Api(optional: true)]
-    public ?string $file_type;
+    #[Optional('file_type')]
+    public ?string $fileType;
 
     /**
      * `new DocumentAttachmentCreate()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * DocumentAttachmentCreate::with(file_name: ...)
+     * DocumentAttachmentCreate::with(fileName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -61,28 +62,28 @@ final class DocumentAttachmentCreate implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $file_name,
-        ?string $file_data = null,
-        ?int $file_size = null,
-        ?string $file_type = null,
+        string $fileName,
+        ?string $fileData = null,
+        ?int $fileSize = null,
+        ?string $fileType = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->file_name = $file_name;
+        $self['fileName'] = $fileName;
 
-        null !== $file_data && $obj->file_data = $file_data;
-        null !== $file_size && $obj->file_size = $file_size;
-        null !== $file_type && $obj->file_type = $file_type;
+        null !== $fileData && $self['fileData'] = $fileData;
+        null !== $fileSize && $self['fileSize'] = $fileSize;
+        null !== $fileType && $self['fileType'] = $fileType;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(string $fileName): self
     {
-        $obj = clone $this;
-        $obj->file_name = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -90,25 +91,25 @@ final class DocumentAttachmentCreate implements BaseModel
      */
     public function withFileData(?string $fileData): self
     {
-        $obj = clone $this;
-        $obj->file_data = $fileData;
+        $self = clone $this;
+        $self['fileData'] = $fileData;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileSize(int $fileSize): self
     {
-        $obj = clone $this;
-        $obj->file_size = $fileSize;
+        $self = clone $this;
+        $self['fileSize'] = $fileSize;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileType(string $fileType): self
     {
-        $obj = clone $this;
-        $obj->file_type = $fileType;
+        $self = clone $this;
+        $self['fileType'] = $fileType;
 
-        return $obj;
+        return $self;
     }
 }

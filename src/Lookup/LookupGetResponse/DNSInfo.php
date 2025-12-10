@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo\DNSRecord;
@@ -29,25 +30,25 @@ final class DNSInfo implements BaseModel
      *
      * @var list<DNSRecord> $dnsRecords
      */
-    #[Api(list: DNSRecord::class)]
+    #[Required(list: DNSRecord::class)]
     public array $dnsRecords;
 
     /**
      * Hostname of the SML used for the query.
      */
-    #[Api]
+    #[Required]
     public string $smlHostname;
 
     /**
      * Status of the DNS lookup: 'success', 'error', or 'pending'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**
      * Error message if the DNS lookup failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error;
 
     /**
@@ -74,7 +75,7 @@ final class DNSInfo implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DNSRecord> $dnsRecords
+     * @param list<DNSRecord|array{ip: string}> $dnsRecords
      */
     public static function with(
         array $dnsRecords,
@@ -82,28 +83,28 @@ final class DNSInfo implements BaseModel
         string $status,
         ?string $error = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->dnsRecords = $dnsRecords;
-        $obj->smlHostname = $smlHostname;
-        $obj->status = $status;
+        $self['dnsRecords'] = $dnsRecords;
+        $self['smlHostname'] = $smlHostname;
+        $self['status'] = $status;
 
-        null !== $error && $obj->error = $error;
+        null !== $error && $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of DNS records found for the Peppol participant.
      *
-     * @param list<DNSRecord> $dnsRecords
+     * @param list<DNSRecord|array{ip: string}> $dnsRecords
      */
     public function withDNSRecords(array $dnsRecords): self
     {
-        $obj = clone $this;
-        $obj->dnsRecords = $dnsRecords;
+        $self = clone $this;
+        $self['dnsRecords'] = $dnsRecords;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,10 +112,10 @@ final class DNSInfo implements BaseModel
      */
     public function withSmlHostname(string $smlHostname): self
     {
-        $obj = clone $this;
-        $obj->smlHostname = $smlHostname;
+        $self = clone $this;
+        $self['smlHostname'] = $smlHostname;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -122,10 +123,10 @@ final class DNSInfo implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj->status = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -133,9 +134,9 @@ final class DNSInfo implements BaseModel
      */
     public function withError(?string $error): self
     {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

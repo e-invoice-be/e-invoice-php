@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
@@ -27,31 +27,31 @@ final class QueryMetadata implements BaseModel
     /**
      * Scheme of the identifier, typically 'iso6523-actorid-upis'.
      */
-    #[Api]
+    #[Required]
     public string $identifierScheme;
 
     /**
      * The actual Peppol ID value being queried.
      */
-    #[Api]
+    #[Required]
     public string $identifierValue;
 
     /**
      * Domain of the SML (Service Metadata Locator) used for the lookup.
      */
-    #[Api]
+    #[Required]
     public string $smlDomain;
 
     /**
      * ISO 8601 timestamp of when the query was executed.
      */
-    #[Api]
+    #[Required]
     public string $timestamp;
 
     /**
      * Version of the API used for the lookup.
      */
-    #[Api]
+    #[Required]
     public string $version;
 
     /**
@@ -96,15 +96,15 @@ final class QueryMetadata implements BaseModel
         string $timestamp,
         string $version,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->identifierScheme = $identifierScheme;
-        $obj->identifierValue = $identifierValue;
-        $obj->smlDomain = $smlDomain;
-        $obj->timestamp = $timestamp;
-        $obj->version = $version;
+        $self['identifierScheme'] = $identifierScheme;
+        $self['identifierValue'] = $identifierValue;
+        $self['smlDomain'] = $smlDomain;
+        $self['timestamp'] = $timestamp;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -112,10 +112,10 @@ final class QueryMetadata implements BaseModel
      */
     public function withIdentifierScheme(string $identifierScheme): self
     {
-        $obj = clone $this;
-        $obj->identifierScheme = $identifierScheme;
+        $self = clone $this;
+        $self['identifierScheme'] = $identifierScheme;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -123,10 +123,10 @@ final class QueryMetadata implements BaseModel
      */
     public function withIdentifierValue(string $identifierValue): self
     {
-        $obj = clone $this;
-        $obj->identifierValue = $identifierValue;
+        $self = clone $this;
+        $self['identifierValue'] = $identifierValue;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -134,10 +134,10 @@ final class QueryMetadata implements BaseModel
      */
     public function withSmlDomain(string $smlDomain): self
     {
-        $obj = clone $this;
-        $obj->smlDomain = $smlDomain;
+        $self = clone $this;
+        $self['smlDomain'] = $smlDomain;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,10 +145,10 @@ final class QueryMetadata implements BaseModel
      */
     public function withTimestamp(string $timestamp): self
     {
-        $obj = clone $this;
-        $obj->timestamp = $timestamp;
+        $self = clone $this;
+        $self['timestamp'] = $timestamp;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -156,9 +156,9 @@ final class QueryMetadata implements BaseModel
      */
     public function withVersion(string $version): self
     {
-        $obj = clone $this;
-        $obj->version = $version;
+        $self = clone $this;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 }

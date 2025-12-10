@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.6.0 (2025-12-10)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.5.0...v0.6.0)
+
+### ⚠ BREAKING CHANGES
+
+* use camel casing for all class properties
+
+### Features
+
+* add `BaseResponse` class for accessing raw responses ([ebca89e](https://github.com/e-invoice-be/e-invoice-php/commit/ebca89eaa03eff90dd4ee4435910fb2c0658703e))
+* allow both model class instances and arrays in setters ([f22de1a](https://github.com/e-invoice-be/e-invoice-php/commit/f22de1aa99924f6721be1ab4a593f76e935661b9))
+* split out services into normal & raw types ([e290c64](https://github.com/e-invoice-be/e-invoice-php/commit/e290c6404f5c8db7ebea93902d3e69e54d9d9bf4))
+* use camel casing for all class properties ([9a81036](https://github.com/e-invoice-be/e-invoice-php/commit/9a81036ee96d23c0ab1cc22f68fde1555cb51f56))
+
+
+### Chores
+
+* ensure constant values are marked as optional in array types ([9cf1177](https://github.com/e-invoice-be/e-invoice-php/commit/9cf11779ff1e150b328100531e3e52d3f5f4d2ba))
+* **internal:** improve pagination tests ([e2a20ee](https://github.com/e-invoice-be/e-invoice-php/commit/e2a20ee5fa4bc6830ecfb9484082042ddfc61694))
+* switch from `#[Api(optional: true|false)]` to `#[Required]|#[Optional]` for annotations ([e2085d4](https://github.com/e-invoice-be/e-invoice-php/commit/e2085d469c3dac597e44ffc38f3cabef6401e8d3))
+* use `$self = clone $this;` instead of `$obj = clone $this;` ([3d841fa](https://github.com/e-invoice-be/e-invoice-php/commit/3d841fa738d64708d78b6b321b66bf13651c774f))
+
 ## 0.5.0 (2025-12-05)
 
 Full Changelog: [v0.4.1...v0.5.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.4.1...v0.5.0)

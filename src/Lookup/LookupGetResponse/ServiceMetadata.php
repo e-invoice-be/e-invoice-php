@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup\LookupGetResponse;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
+use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
+use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
 /**
  * Service metadata information for the Peppol participant.
@@ -29,25 +32,25 @@ final class ServiceMetadata implements BaseModel
      *
      * @var list<Endpoint> $endpoints
      */
-    #[Api(list: Endpoint::class)]
+    #[Required(list: Endpoint::class)]
     public array $endpoints;
 
     /**
      * Time taken to query the service metadata in milliseconds.
      */
-    #[Api]
+    #[Required]
     public float $queryTimeMs;
 
     /**
      * Status of the service metadata lookup: 'success', 'error', or 'pending'.
      */
-    #[Api]
+    #[Required]
     public string $status;
 
     /**
      * Error message if service metadata lookup failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error;
 
     /**
@@ -74,7 +77,13 @@ final class ServiceMetadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   documentTypes: list<DocumentType>,
+     *   status: string,
+     *   url: string,
+     *   error?: string|null,
+     *   processes?: list<Process>|null,
+     * }> $endpoints
      */
     public static function with(
         array $endpoints,
@@ -82,28 +91,34 @@ final class ServiceMetadata implements BaseModel
         string $status,
         ?string $error = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->endpoints = $endpoints;
-        $obj->queryTimeMs = $queryTimeMs;
-        $obj->status = $status;
+        $self['endpoints'] = $endpoints;
+        $self['queryTimeMs'] = $queryTimeMs;
+        $self['status'] = $status;
 
-        null !== $error && $obj->error = $error;
+        null !== $error && $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of endpoints found for the Peppol participant.
      *
-     * @param list<Endpoint> $endpoints
+     * @param list<Endpoint|array{
+     *   documentTypes: list<DocumentType>,
+     *   status: string,
+     *   url: string,
+     *   error?: string|null,
+     *   processes?: list<Process>|null,
+     * }> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {
-        $obj = clone $this;
-        $obj->endpoints = $endpoints;
+        $self = clone $this;
+        $self['endpoints'] = $endpoints;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,10 +126,10 @@ final class ServiceMetadata implements BaseModel
      */
     public function withQueryTimeMs(float $queryTimeMs): self
     {
-        $obj = clone $this;
-        $obj->queryTimeMs = $queryTimeMs;
+        $self = clone $this;
+        $self['queryTimeMs'] = $queryTimeMs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -122,10 +137,10 @@ final class ServiceMetadata implements BaseModel
      */
     public function withStatus(string $status): self
     {
-        $obj = clone $this;
-        $obj->status = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -133,9 +148,9 @@ final class ServiceMetadata implements BaseModel
      */
     public function withError(?string $error): self
     {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

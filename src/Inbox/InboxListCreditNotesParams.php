@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Inbox;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -15,7 +15,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Services\InboxService::listCreditNotes()
  *
  * @phpstan-type InboxListCreditNotesParamsShape = array{
- *   page?: int, page_size?: int
+ *   page?: int, pageSize?: int
  * }
  */
 final class InboxListCreditNotesParams implements BaseModel
@@ -27,14 +27,14 @@ final class InboxListCreditNotesParams implements BaseModel
     /**
      * Page number.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page;
 
     /**
      * Number of items per page.
      */
-    #[Api(optional: true)]
-    public ?int $page_size;
+    #[Optional]
+    public ?int $pageSize;
 
     public function __construct()
     {
@@ -46,14 +46,14 @@ final class InboxListCreditNotesParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?int $page = null, ?int $page_size = null): self
+    public static function with(?int $page = null, ?int $pageSize = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $page && $obj->page = $page;
-        null !== $page_size && $obj->page_size = $page_size;
+        null !== $page && $self['page'] = $page;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -61,10 +61,10 @@ final class InboxListCreditNotesParams implements BaseModel
      */
     public function withPage(int $page): self
     {
-        $obj = clone $this;
-        $obj->page = $page;
+        $self = clone $this;
+        $self['page'] = $page;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -72,9 +72,9 @@ final class InboxListCreditNotesParams implements BaseModel
      */
     public function withPageSize(int $pageSize): self
     {
-        $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 }

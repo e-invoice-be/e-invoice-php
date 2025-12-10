@@ -4,48 +4,45 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Me;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Me\MeGetResponse\Plan;
 
 /**
  * @phpstan-type MeGetResponseShape = array{
- *   credit_balance: int,
+ *   creditBalance: int,
  *   name: string,
  *   plan: value-of<Plan>,
- *   bcc_recipient_email?: string|null,
- *   company_address?: string|null,
- *   company_city?: string|null,
- *   company_country?: string|null,
- *   company_email?: string|null,
- *   company_name?: string|null,
- *   company_number?: string|null,
- *   company_tax_id?: string|null,
- *   company_zip?: string|null,
+ *   bccRecipientEmail?: string|null,
+ *   companyAddress?: string|null,
+ *   companyCity?: string|null,
+ *   companyCountry?: string|null,
+ *   companyEmail?: string|null,
+ *   companyName?: string|null,
+ *   companyNumber?: string|null,
+ *   companyTaxID?: string|null,
+ *   companyZip?: string|null,
  *   description?: string|null,
  *   ibans?: list<string>|null,
- *   peppol_ids?: list<string>|null,
- *   smp_registration?: bool|null,
- *   smp_registration_date?: \DateTimeInterface|null,
+ *   peppolIDs?: list<string>|null,
+ *   smpRegistration?: bool|null,
+ *   smpRegistrationDate?: \DateTimeInterface|null,
  * }
  */
-final class MeGetResponse implements BaseModel, ResponseConverter
+final class MeGetResponse implements BaseModel
 {
     /** @use SdkModel<MeGetResponseShape> */
     use SdkModel;
 
-    use SdkResponse;
-
     /**
      * Credit balance of the tenant.
      */
-    #[Api]
-    public int $credit_balance;
+    #[Required('credit_balance')]
+    public int $creditBalance;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
@@ -53,64 +50,64 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      *
      * @var value-of<Plan> $plan
      */
-    #[Api(enum: Plan::class)]
+    #[Required(enum: Plan::class)]
     public string $plan;
 
     /**
      * BCC recipient email to deliver documents.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $bcc_recipient_email;
+    #[Optional('bcc_recipient_email', nullable: true)]
+    public ?string $bccRecipientEmail;
 
     /**
      * Address of the company. Must be in the form of `Street Name Street Number`.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_address;
+    #[Optional('company_address', nullable: true)]
+    public ?string $companyAddress;
 
     /**
      * City of the company.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_city;
+    #[Optional('company_city', nullable: true)]
+    public ?string $companyCity;
 
     /**
      * Country of the company.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_country;
+    #[Optional('company_country', nullable: true)]
+    public ?string $companyCountry;
 
     /**
      * Email of the company.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_email;
+    #[Optional('company_email', nullable: true)]
+    public ?string $companyEmail;
 
     /**
      * Name of the company. Must include the company type. For example: `BV`, `NV`, `CVBA`, `VOF`.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_name;
+    #[Optional('company_name', nullable: true)]
+    public ?string $companyName;
 
     /**
      * Company number. For Belgium this is the CBE number or their EUID (European Unique Identifier) number.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_number;
+    #[Optional('company_number', nullable: true)]
+    public ?string $companyNumber;
 
     /**
      * Company tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_tax_id;
+    #[Optional('company_tax_id', nullable: true)]
+    public ?string $companyTaxID;
 
     /**
      * Zip code of the company.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $company_zip;
+    #[Optional('company_zip', nullable: true)]
+    public ?string $companyZip;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
@@ -118,35 +115,35 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      *
      * @var list<string>|null $ibans
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $ibans;
 
     /**
      * Peppol IDs of the tenant.
      *
-     * @var list<string>|null $peppol_ids
+     * @var list<string>|null $peppolIDs
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
-    public ?array $peppol_ids;
+    #[Optional('peppol_ids', list: 'string', nullable: true)]
+    public ?array $peppolIDs;
 
     /**
      * Whether the tenant is registered on our SMP.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?bool $smp_registration;
+    #[Optional('smp_registration', nullable: true)]
+    public ?bool $smpRegistration;
 
     /**
      * Date when the tenant was registered on SMP.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?\DateTimeInterface $smp_registration_date;
+    #[Optional('smp_registration_date', nullable: true)]
+    public ?\DateTimeInterface $smpRegistrationDate;
 
     /**
      * `new MeGetResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MeGetResponse::with(credit_balance: ..., name: ..., plan: ...)
+     * MeGetResponse::with(creditBalance: ..., name: ..., plan: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -167,49 +164,49 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      *
      * @param Plan|value-of<Plan> $plan
      * @param list<string>|null $ibans
-     * @param list<string>|null $peppol_ids
+     * @param list<string>|null $peppolIDs
      */
     public static function with(
-        int $credit_balance,
+        int $creditBalance,
         string $name,
         Plan|string $plan,
-        ?string $bcc_recipient_email = null,
-        ?string $company_address = null,
-        ?string $company_city = null,
-        ?string $company_country = null,
-        ?string $company_email = null,
-        ?string $company_name = null,
-        ?string $company_number = null,
-        ?string $company_tax_id = null,
-        ?string $company_zip = null,
+        ?string $bccRecipientEmail = null,
+        ?string $companyAddress = null,
+        ?string $companyCity = null,
+        ?string $companyCountry = null,
+        ?string $companyEmail = null,
+        ?string $companyName = null,
+        ?string $companyNumber = null,
+        ?string $companyTaxID = null,
+        ?string $companyZip = null,
         ?string $description = null,
         ?array $ibans = null,
-        ?array $peppol_ids = null,
-        ?bool $smp_registration = null,
-        ?\DateTimeInterface $smp_registration_date = null,
+        ?array $peppolIDs = null,
+        ?bool $smpRegistration = null,
+        ?\DateTimeInterface $smpRegistrationDate = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->credit_balance = $credit_balance;
-        $obj->name = $name;
-        $obj['plan'] = $plan;
+        $self['creditBalance'] = $creditBalance;
+        $self['name'] = $name;
+        $self['plan'] = $plan;
 
-        null !== $bcc_recipient_email && $obj->bcc_recipient_email = $bcc_recipient_email;
-        null !== $company_address && $obj->company_address = $company_address;
-        null !== $company_city && $obj->company_city = $company_city;
-        null !== $company_country && $obj->company_country = $company_country;
-        null !== $company_email && $obj->company_email = $company_email;
-        null !== $company_name && $obj->company_name = $company_name;
-        null !== $company_number && $obj->company_number = $company_number;
-        null !== $company_tax_id && $obj->company_tax_id = $company_tax_id;
-        null !== $company_zip && $obj->company_zip = $company_zip;
-        null !== $description && $obj->description = $description;
-        null !== $ibans && $obj->ibans = $ibans;
-        null !== $peppol_ids && $obj->peppol_ids = $peppol_ids;
-        null !== $smp_registration && $obj->smp_registration = $smp_registration;
-        null !== $smp_registration_date && $obj->smp_registration_date = $smp_registration_date;
+        null !== $bccRecipientEmail && $self['bccRecipientEmail'] = $bccRecipientEmail;
+        null !== $companyAddress && $self['companyAddress'] = $companyAddress;
+        null !== $companyCity && $self['companyCity'] = $companyCity;
+        null !== $companyCountry && $self['companyCountry'] = $companyCountry;
+        null !== $companyEmail && $self['companyEmail'] = $companyEmail;
+        null !== $companyName && $self['companyName'] = $companyName;
+        null !== $companyNumber && $self['companyNumber'] = $companyNumber;
+        null !== $companyTaxID && $self['companyTaxID'] = $companyTaxID;
+        null !== $companyZip && $self['companyZip'] = $companyZip;
+        null !== $description && $self['description'] = $description;
+        null !== $ibans && $self['ibans'] = $ibans;
+        null !== $peppolIDs && $self['peppolIDs'] = $peppolIDs;
+        null !== $smpRegistration && $self['smpRegistration'] = $smpRegistration;
+        null !== $smpRegistrationDate && $self['smpRegistrationDate'] = $smpRegistrationDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -217,18 +214,18 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCreditBalance(int $creditBalance): self
     {
-        $obj = clone $this;
-        $obj->credit_balance = $creditBalance;
+        $self = clone $this;
+        $self['creditBalance'] = $creditBalance;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -238,10 +235,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withPlan(Plan|string $plan): self
     {
-        $obj = clone $this;
-        $obj['plan'] = $plan;
+        $self = clone $this;
+        $self['plan'] = $plan;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -249,10 +246,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withBccRecipientEmail(?string $bccRecipientEmail): self
     {
-        $obj = clone $this;
-        $obj->bcc_recipient_email = $bccRecipientEmail;
+        $self = clone $this;
+        $self['bccRecipientEmail'] = $bccRecipientEmail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -260,10 +257,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyAddress(?string $companyAddress): self
     {
-        $obj = clone $this;
-        $obj->company_address = $companyAddress;
+        $self = clone $this;
+        $self['companyAddress'] = $companyAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -271,10 +268,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyCity(?string $companyCity): self
     {
-        $obj = clone $this;
-        $obj->company_city = $companyCity;
+        $self = clone $this;
+        $self['companyCity'] = $companyCity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -282,10 +279,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyCountry(?string $companyCountry): self
     {
-        $obj = clone $this;
-        $obj->company_country = $companyCountry;
+        $self = clone $this;
+        $self['companyCountry'] = $companyCountry;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -293,10 +290,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyEmail(?string $companyEmail): self
     {
-        $obj = clone $this;
-        $obj->company_email = $companyEmail;
+        $self = clone $this;
+        $self['companyEmail'] = $companyEmail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -304,10 +301,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyName(?string $companyName): self
     {
-        $obj = clone $this;
-        $obj->company_name = $companyName;
+        $self = clone $this;
+        $self['companyName'] = $companyName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -315,10 +312,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyNumber(?string $companyNumber): self
     {
-        $obj = clone $this;
-        $obj->company_number = $companyNumber;
+        $self = clone $this;
+        $self['companyNumber'] = $companyNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -326,10 +323,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyTaxID(?string $companyTaxID): self
     {
-        $obj = clone $this;
-        $obj->company_tax_id = $companyTaxID;
+        $self = clone $this;
+        $self['companyTaxID'] = $companyTaxID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -337,18 +334,18 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withCompanyZip(?string $companyZip): self
     {
-        $obj = clone $this;
-        $obj->company_zip = $companyZip;
+        $self = clone $this;
+        $self['companyZip'] = $companyZip;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj->description = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -358,10 +355,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withIbans(?array $ibans): self
     {
-        $obj = clone $this;
-        $obj->ibans = $ibans;
+        $self = clone $this;
+        $self['ibans'] = $ibans;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -371,10 +368,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withPeppolIDs(?array $peppolIDs): self
     {
-        $obj = clone $this;
-        $obj->peppol_ids = $peppolIDs;
+        $self = clone $this;
+        $self['peppolIDs'] = $peppolIDs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -382,10 +379,10 @@ final class MeGetResponse implements BaseModel, ResponseConverter
      */
     public function withSmpRegistration(?bool $smpRegistration): self
     {
-        $obj = clone $this;
-        $obj->smp_registration = $smpRegistration;
+        $self = clone $this;
+        $self['smpRegistration'] = $smpRegistration;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -394,9 +391,9 @@ final class MeGetResponse implements BaseModel, ResponseConverter
     public function withSmpRegistrationDate(
         ?\DateTimeInterface $smpRegistrationDate
     ): self {
-        $obj = clone $this;
-        $obj->smp_registration_date = $smpRegistrationDate;
+        $self = clone $this;
+        $self['smpRegistrationDate'] = $smpRegistrationDate;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,49 +4,46 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents\Attachments;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DocumentAttachmentShape = array{
  *   id: string,
- *   file_name: string,
- *   file_size?: int|null,
- *   file_type?: string|null,
- *   file_url?: string|null,
+ *   fileName: string,
+ *   fileSize?: int|null,
+ *   fileType?: string|null,
+ *   fileURL?: string|null,
  * }
  */
-final class DocumentAttachment implements BaseModel, ResponseConverter
+final class DocumentAttachment implements BaseModel
 {
     /** @use SdkModel<DocumentAttachmentShape> */
     use SdkModel;
 
-    use SdkResponse;
-
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
-    public string $file_name;
+    #[Required('file_name')]
+    public string $fileName;
 
-    #[Api(optional: true)]
-    public ?int $file_size;
+    #[Optional('file_size')]
+    public ?int $fileSize;
 
-    #[Api(optional: true)]
-    public ?string $file_type;
+    #[Optional('file_type')]
+    public ?string $fileType;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $file_url;
+    #[Optional('file_url', nullable: true)]
+    public ?string $fileURL;
 
     /**
      * `new DocumentAttachment()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * DocumentAttachment::with(id: ..., file_name: ...)
+     * DocumentAttachment::with(id: ..., fileName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -67,60 +64,60 @@ final class DocumentAttachment implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $file_name,
-        ?int $file_size = null,
-        ?string $file_type = null,
-        ?string $file_url = null,
+        string $fileName,
+        ?int $fileSize = null,
+        ?string $fileType = null,
+        ?string $fileURL = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->file_name = $file_name;
+        $self['id'] = $id;
+        $self['fileName'] = $fileName;
 
-        null !== $file_size && $obj->file_size = $file_size;
-        null !== $file_type && $obj->file_type = $file_type;
-        null !== $file_url && $obj->file_url = $file_url;
+        null !== $fileSize && $self['fileSize'] = $fileSize;
+        null !== $fileType && $self['fileType'] = $fileType;
+        null !== $fileURL && $self['fileURL'] = $fileURL;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(string $fileName): self
     {
-        $obj = clone $this;
-        $obj->file_name = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileSize(int $fileSize): self
     {
-        $obj = clone $this;
-        $obj->file_size = $fileSize;
+        $self = clone $this;
+        $self['fileSize'] = $fileSize;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileType(string $fileType): self
     {
-        $obj = clone $this;
-        $obj->file_type = $fileType;
+        $self = clone $this;
+        $self['fileType'] = $fileType;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileURL(?string $fileURL): self
     {
-        $obj = clone $this;
-        $obj->file_url = $fileURL;
+        $self = clone $this;
+        $self['fileURL'] = $fileURL;
 
-        return $obj;
+        return $self;
     }
 }

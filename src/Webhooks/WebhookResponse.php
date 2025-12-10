@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Webhooks;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * Response model for webhook API endpoints.
@@ -21,27 +20,25 @@ use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
  *   enabled?: bool|null,
  * }
  */
-final class WebhookResponse implements BaseModel, ResponseConverter
+final class WebhookResponse implements BaseModel
 {
     /** @use SdkModel<WebhookResponseShape> */
     use SdkModel;
 
-    use SdkResponse;
-
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var list<string> $events */
-    #[Api(list: 'string')]
+    #[Required(list: 'string')]
     public array $events;
 
-    #[Api]
+    #[Required]
     public string $secret;
 
-    #[Api]
+    #[Required]
     public string $url;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $enabled;
 
     /**
@@ -81,24 +78,24 @@ final class WebhookResponse implements BaseModel, ResponseConverter
         string $url,
         ?bool $enabled = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->events = $events;
-        $obj->secret = $secret;
-        $obj->url = $url;
+        $self['id'] = $id;
+        $self['events'] = $events;
+        $self['secret'] = $secret;
+        $self['url'] = $url;
 
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -106,33 +103,33 @@ final class WebhookResponse implements BaseModel, ResponseConverter
      */
     public function withEvents(array $events): self
     {
-        $obj = clone $this;
-        $obj->events = $events;
+        $self = clone $this;
+        $self['events'] = $events;
 
-        return $obj;
+        return $self;
     }
 
     public function withSecret(string $secret): self
     {
-        $obj = clone $this;
-        $obj->secret = $secret;
+        $self = clone $this;
+        $self['secret'] = $secret;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj->url = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj->enabled = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

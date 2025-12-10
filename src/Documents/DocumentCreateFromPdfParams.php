@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Documents;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
@@ -15,7 +16,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Services\DocumentsService::createFromPdf()
  *
  * @phpstan-type DocumentCreateFromPdfParamsShape = array{
- *   file: string, customer_tax_id?: string|null, vendor_tax_id?: string|null
+ *   file: string, customerTaxID?: string|null, vendorTaxID?: string|null
  * }
  */
 final class DocumentCreateFromPdfParams implements BaseModel
@@ -24,14 +25,14 @@ final class DocumentCreateFromPdfParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api]
+    #[Required]
     public string $file;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $customer_tax_id;
+    #[Optional(nullable: true)]
+    public ?string $customerTaxID;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $vendor_tax_id;
+    #[Optional(nullable: true)]
+    public ?string $vendorTaxID;
 
     /**
      * `new DocumentCreateFromPdfParams()` is missing required properties by the API.
@@ -59,40 +60,40 @@ final class DocumentCreateFromPdfParams implements BaseModel
      */
     public static function with(
         string $file,
-        ?string $customer_tax_id = null,
-        ?string $vendor_tax_id = null
+        ?string $customerTaxID = null,
+        ?string $vendorTaxID = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->file = $file;
+        $self['file'] = $file;
 
-        null !== $customer_tax_id && $obj->customer_tax_id = $customer_tax_id;
-        null !== $vendor_tax_id && $obj->vendor_tax_id = $vendor_tax_id;
+        null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
+        null !== $vendorTaxID && $self['vendorTaxID'] = $vendorTaxID;
 
-        return $obj;
+        return $self;
     }
 
     public function withFile(string $file): self
     {
-        $obj = clone $this;
-        $obj->file = $file;
+        $self = clone $this;
+        $self['file'] = $file;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerTaxID(?string $customerTaxID): self
     {
-        $obj = clone $this;
-        $obj->customer_tax_id = $customerTaxID;
+        $self = clone $this;
+        $self['customerTaxID'] = $customerTaxID;
 
-        return $obj;
+        return $self;
     }
 
     public function withVendorTaxID(?string $vendorTaxID): self
     {
-        $obj = clone $this;
-        $obj->vendor_tax_id = $vendorTaxID;
+        $self = clone $this;
+        $self['vendorTaxID'] = $vendorTaxID;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,61 +4,60 @@ declare(strict_types=1);
 
 namespace EInvoiceAPI\Lookup;
 
-use EInvoiceAPI\Core\Attributes\Api;
+use EInvoiceAPI\Core\Attributes\Optional;
+use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
-use EInvoiceAPI\Core\Concerns\SdkResponse;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Core\Conversion\Contracts\ResponseConverter;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
+use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
+use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
 
 /**
  * Represents the result of a Peppol directory search.
  *
  * @phpstan-type LookupGetParticipantsResponseShape = array{
- *   query_terms: string,
- *   search_date: string,
- *   total_count: int,
- *   used_count: int,
+ *   queryTerms: string,
+ *   searchDate: string,
+ *   totalCount: int,
+ *   usedCount: int,
  *   participants?: list<Participant>|null,
  * }
  */
-final class LookupGetParticipantsResponse implements BaseModel, ResponseConverter
+final class LookupGetParticipantsResponse implements BaseModel
 {
     /** @use SdkModel<LookupGetParticipantsResponseShape> */
     use SdkModel;
 
-    use SdkResponse;
-
     /**
      * Query terms used for search.
      */
-    #[Api]
-    public string $query_terms;
+    #[Required('query_terms')]
+    public string $queryTerms;
 
     /**
      * Search date of the result.
      */
-    #[Api]
-    public string $search_date;
+    #[Required('search_date')]
+    public string $searchDate;
 
     /**
      * Total number of results.
      */
-    #[Api]
-    public int $total_count;
+    #[Required('total_count')]
+    public int $totalCount;
 
     /**
      * Number of results returned by the API.
      */
-    #[Api]
-    public int $used_count;
+    #[Required('used_count')]
+    public int $usedCount;
 
     /**
      * List of participants.
      *
      * @var list<Participant>|null $participants
      */
-    #[Api(list: Participant::class, optional: true)]
+    #[Optional(list: Participant::class)]
     public ?array $participants;
 
     /**
@@ -67,7 +66,7 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
      * To enforce required parameters use
      * ```
      * LookupGetParticipantsResponse::with(
-     *   query_terms: ..., search_date: ..., total_count: ..., used_count: ...
+     *   queryTerms: ..., searchDate: ..., totalCount: ..., usedCount: ...
      * )
      * ```
      *
@@ -91,25 +90,30 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Participant> $participants
+     * @param list<Participant|array{
+     *   peppolID: string,
+     *   peppolScheme: string,
+     *   documentTypes?: list<DocumentType>|null,
+     *   entities?: list<Entity>|null,
+     * }> $participants
      */
     public static function with(
-        string $query_terms,
-        string $search_date,
-        int $total_count,
-        int $used_count,
+        string $queryTerms,
+        string $searchDate,
+        int $totalCount,
+        int $usedCount,
         ?array $participants = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->query_terms = $query_terms;
-        $obj->search_date = $search_date;
-        $obj->total_count = $total_count;
-        $obj->used_count = $used_count;
+        $self['queryTerms'] = $queryTerms;
+        $self['searchDate'] = $searchDate;
+        $self['totalCount'] = $totalCount;
+        $self['usedCount'] = $usedCount;
 
-        null !== $participants && $obj->participants = $participants;
+        null !== $participants && $self['participants'] = $participants;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -117,10 +121,10 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
      */
     public function withQueryTerms(string $queryTerms): self
     {
-        $obj = clone $this;
-        $obj->query_terms = $queryTerms;
+        $self = clone $this;
+        $self['queryTerms'] = $queryTerms;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -128,10 +132,10 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
      */
     public function withSearchDate(string $searchDate): self
     {
-        $obj = clone $this;
-        $obj->search_date = $searchDate;
+        $self = clone $this;
+        $self['searchDate'] = $searchDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -139,10 +143,10 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
      */
     public function withTotalCount(int $totalCount): self
     {
-        $obj = clone $this;
-        $obj->total_count = $totalCount;
+        $self = clone $this;
+        $self['totalCount'] = $totalCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -150,22 +154,27 @@ final class LookupGetParticipantsResponse implements BaseModel, ResponseConverte
      */
     public function withUsedCount(int $usedCount): self
     {
-        $obj = clone $this;
-        $obj->used_count = $usedCount;
+        $self = clone $this;
+        $self['usedCount'] = $usedCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of participants.
      *
-     * @param list<Participant> $participants
+     * @param list<Participant|array{
+     *   peppolID: string,
+     *   peppolScheme: string,
+     *   documentTypes?: list<DocumentType>|null,
+     *   entities?: list<Entity>|null,
+     * }> $participants
      */
     public function withParticipants(array $participants): self
     {
-        $obj = clone $this;
-        $obj->participants = $participants;
+        $self = clone $this;
+        $self['participants'] = $participants;
 
-        return $obj;
+        return $self;
     }
 }
