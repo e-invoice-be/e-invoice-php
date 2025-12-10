@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
-use EInvoiceAPI\Documents\Ubl\UblCreateFromUblParams;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\UblContract;
@@ -16,37 +14,33 @@ use EInvoiceAPI\ServiceContracts\Documents\UblContract;
 final class UblService implements UblContract
 {
     /**
+     * @api
+     */
+    public UblRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new UblRawService($client);
+    }
 
     /**
      * @api
      *
      * Create a new invoice or credit note from a UBL file
      *
-     * @param array{file: string}|UblCreateFromUblParams $params
-     *
      * @throws APIException
      */
     public function createFromUbl(
-        array|UblCreateFromUblParams $params,
+        string $file,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        [$parsed, $options] = UblCreateFromUblParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['file' => $file];
 
-        /** @var BaseResponse<DocumentResponse> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'api/documents/ubl',
-            headers: ['Content-Type' => 'multipart/form-data'],
-            body: (object) $parsed,
-            options: $options,
-            convert: DocumentResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->createFromUbl(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -62,13 +56,8 @@ final class UblService implements UblContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblGetResponse {
-        /** @var BaseResponse<UblGetResponse> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['api/documents/%1$s/ubl', $documentID],
-            options: $requestOptions,
-            convert: UblGetResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->get($documentID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

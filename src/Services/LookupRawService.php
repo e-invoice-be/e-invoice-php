@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+namespace EInvoiceAPI\Services;
+
+use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Contracts\BaseResponse;
+use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
+use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
+use EInvoiceAPI\Lookup\LookupGetResponse;
+use EInvoiceAPI\Lookup\LookupRetrieveParams;
+use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
+use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\LookupRawContract;
+
+final class LookupRawService implements LookupRawContract
+{
+    // @phpstan-ignore-next-line
+    /**
+     * @internal
+     */
+    public function __construct(private Client $client) {}
+
+    /**
+     * @api
+     *
+     * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
+     *
+     * @param array{peppolID: string}|LookupRetrieveParams $params
+     *
+     * @return BaseResponse<LookupGetResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieve(
+        array|LookupRetrieveParams $params,
+        ?RequestOptions $requestOptions = null
+    ): BaseResponse {
+        [$parsed, $options] = LookupRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: 'api/lookup',
+            query: Util::array_transform_keys($parsed, ['peppolID' => 'peppol_id']),
+            options: $options,
+            convert: LookupGetResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
+     *
+     * @param array{
+     *   query: string, countryCode?: string|null
+     * }|LookupRetrieveParticipantsParams $params
+     *
+     * @return BaseResponse<LookupGetParticipantsResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveParticipants(
+        array|LookupRetrieveParticipantsParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = LookupRetrieveParticipantsParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: 'api/lookup/participants',
+            query: Util::array_transform_keys(
+                $parsed,
+                ['countryCode' => 'country_code']
+            ),
+            options: $options,
+            convert: LookupGetParticipantsResponse::class,
+        );
+    }
+}

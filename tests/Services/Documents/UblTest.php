@@ -35,7 +35,7 @@ final class UblTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->ubl->createFromUbl(['file' => 'file']);
+        $result = $this->client->documents->ubl->createFromUbl(file: 'file');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);
@@ -48,7 +48,7 @@ final class UblTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->ubl->createFromUbl(['file' => 'file']);
+        $result = $this->client->documents->ubl->createFromUbl(file: 'file');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);

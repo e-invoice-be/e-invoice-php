@@ -6,23 +6,23 @@ namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\RequestOptions;
-use EInvoiceAPI\Webhooks\WebhookCreateParams;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
-use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
 interface WebhooksContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|WebhookCreateParams $params
+     * @param list<string> $events
      *
      * @throws APIException
      */
     public function create(
-        array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        array $events,
+        string $url,
+        bool $enabled = true,
+        ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 
     /**
@@ -38,13 +38,15 @@ interface WebhooksContract
     /**
      * @api
      *
-     * @param array<mixed>|WebhookUpdateParams $params
+     * @param list<string>|null $events
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        array|WebhookUpdateParams $params,
+        ?bool $enabled = null,
+        ?array $events = null,
+        ?string $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 

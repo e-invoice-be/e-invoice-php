@@ -6,7 +6,6 @@ namespace EInvoiceAPI\ServiceContracts\Documents;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentResponse;
-use EInvoiceAPI\Documents\Ubl\UblCreateFromUblParams;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 
@@ -15,13 +14,11 @@ interface UblContract
     /**
      * @api
      *
-     * @param array<mixed>|UblCreateFromUblParams $params
-     *
      * @throws APIException
      */
     public function createFromUbl(
-        array|UblCreateFromUblParams $params,
-        ?RequestOptions $requestOptions = null,
+        string $file,
+        ?RequestOptions $requestOptions = null
     ): DocumentResponse;
 
     /**
