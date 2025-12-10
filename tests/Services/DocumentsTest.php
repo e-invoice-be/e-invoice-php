@@ -37,7 +37,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->create([]);
+        $result = $this->client->documents->create();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);
@@ -76,7 +76,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->createFromPdf(['file' => 'file']);
+        $result = $this->client->documents->createFromPdf(file: 'file');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
@@ -89,11 +89,11 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->createFromPdf([
-            'file' => 'file',
-            'customerTaxID' => 'customer_tax_id',
-            'vendorTaxID' => 'vendor_tax_id',
-        ]);
+        $result = $this->client->documents->createFromPdf(
+            file: 'file',
+            customerTaxID: 'customer_tax_id',
+            vendorTaxID: 'vendor_tax_id',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
@@ -106,7 +106,7 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->documents->send('document_id', []);
+        $result = $this->client->documents->send('document_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);

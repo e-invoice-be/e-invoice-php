@@ -35,7 +35,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+        $result = $this->client->lookup->retrieve(peppolID: 'peppol_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LookupGetResponse::class, $result);
@@ -48,7 +48,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieve(['peppolID' => 'peppol_id']);
+        $result = $this->client->lookup->retrieve(peppolID: 'peppol_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LookupGetResponse::class, $result);
@@ -61,7 +61,7 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieveParticipants(['query' => 'query']);
+        $result = $this->client->lookup->retrieveParticipants(query: 'query');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LookupGetParticipantsResponse::class, $result);
@@ -74,9 +74,10 @@ final class LookupTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->lookup->retrieveParticipants([
-            'query' => 'query', 'countryCode' => 'country_code',
-        ]);
+        $result = $this->client->lookup->retrieveParticipants(
+            query: 'query',
+            countryCode: 'country_code'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LookupGetParticipantsResponse::class, $result);

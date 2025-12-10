@@ -49,7 +49,7 @@ use EInvoiceAPI\Client;
 
 $client = new Client(apiKey: getenv('E_INVOICE_API_KEY') ?: 'My API Key');
 
-$documentResponse = $client->documents->create([]);
+$documentResponse = $client->documents->create();
 
 var_dump($documentResponse->id);
 ```
@@ -74,7 +74,7 @@ use EInvoiceAPI\Client;
 
 $client = new Client(apiKey: getenv('E_INVOICE_API_KEY') ?: 'My API Key');
 
-$page = $client->inbox->list([]);
+$page = $client->inbox->list();
 
 var_dump($page);
 
@@ -98,11 +98,11 @@ When the library is unable to connect to the API, or if the API returns a non-su
 use EInvoiceAPI\Core\Exceptions\APIConnectionException;
 
 try {
-  $documentResponse = $client->documents->create([]);
+  $documentResponse = $client->documents->create();
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
-} catch (RateLimitError $_) {
+} catch (RateLimitError $e) {
   echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
   echo "Another non-200-range status code was received", PHP_EOL;
@@ -144,7 +144,9 @@ use EInvoiceAPI\RequestOptions;
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
-$result = $client->documents->create([], RequestOptions::with(maxRetries: 5));
+$result = $client->documents->create(
+  requestOptions: RequestOptions::with(maxRetries: 5)
+);
 ```
 
 ## Advanced concepts
@@ -163,8 +165,7 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 use EInvoiceAPI\RequestOptions;
 
 $documentResponse = $client->documents->create(
-  [],
-  RequestOptions::with(
+  requestOptions: RequestOptions::with(
     extraQueryParams: ['my_query_parameter' => 'value'],
     extraBodyParams: ['my_body_parameter' => 'value'],
     extraHeaders: ['my-header' => 'value'],

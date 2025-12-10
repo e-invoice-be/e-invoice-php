@@ -34,7 +34,7 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->outbox->listDraftDocuments([]);
+        $result = $this->client->outbox->listDraftDocuments();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentsNumberPage::class, $result);
@@ -47,7 +47,7 @@ final class OutboxTest extends TestCase
             $this->markTestSkipped('Prism tests are disabled');
         }
 
-        $result = $this->client->outbox->listReceivedDocuments([]);
+        $result = $this->client->outbox->listReceivedDocuments();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentsNumberPage::class, $result);
