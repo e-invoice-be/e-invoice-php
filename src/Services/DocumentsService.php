@@ -91,8 +91,8 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $customerTaxID Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
      * @param 'INBOUND'|'OUTBOUND'|DocumentDirection $direction The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
      * @param 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType $documentType The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
-     * @param string|\DateTimeInterface|null $dueDate The date when payment is due
-     * @param string|\DateTimeInterface|null $invoiceDate The date when the invoice was issued
+     * @param string|null $dueDate The date when payment is due
+     * @param string|null $invoiceDate The date when the invoice was issued
      * @param string|null $invoiceID The unique invoice identifier/number
      * @param float|string|null $invoiceTotal The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
      * @param list<array{
@@ -138,8 +138,8 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $remittanceAddressRecipient The recipient name at the remittance address
      * @param string|null $serviceAddress The address where services were performed or goods were delivered
      * @param string|null $serviceAddressRecipient The recipient name at the service address
-     * @param string|\DateTimeInterface|null $serviceEndDate The end date of the service period or delivery period
-     * @param string|\DateTimeInterface|null $serviceStartDate The start date of the service period or delivery period
+     * @param string|null $serviceEndDate The end date of the service period or delivery period
+     * @param string|null $serviceStartDate The start date of the service period or delivery period
      * @param string|null $shippingAddress The shipping/delivery address
      * @param string|null $shippingAddressRecipient The recipient name at the shipping address
      * @param 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState $state The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
@@ -181,8 +181,8 @@ final class DocumentsService implements DocumentsContract
         ?string $customerTaxID = null,
         string|DocumentDirection|null $direction = null,
         string|DocumentType|null $documentType = null,
-        string|\DateTimeInterface|null $dueDate = null,
-        string|\DateTimeInterface|null $invoiceDate = null,
+        ?string $dueDate = null,
+        ?string $invoiceDate = null,
         ?string $invoiceID = null,
         float|string|null $invoiceTotal = null,
         ?array $items = null,
@@ -195,8 +195,8 @@ final class DocumentsService implements DocumentsContract
         ?string $remittanceAddressRecipient = null,
         ?string $serviceAddress = null,
         ?string $serviceAddressRecipient = null,
-        string|\DateTimeInterface|null $serviceEndDate = null,
-        string|\DateTimeInterface|null $serviceStartDate = null,
+        ?string $serviceEndDate = null,
+        ?string $serviceStartDate = null,
         ?string $shippingAddress = null,
         ?string $shippingAddressRecipient = null,
         string|DocumentState|null $state = null,

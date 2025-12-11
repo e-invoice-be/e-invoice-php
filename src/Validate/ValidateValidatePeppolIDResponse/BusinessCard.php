@@ -12,9 +12,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * Business card information for the Peppol ID.
  *
  * @phpstan-type BusinessCardShape = array{
- *   countryCode?: string|null,
- *   name?: string|null,
- *   registrationDate?: \DateTimeInterface|null,
+ *   countryCode?: string|null, name?: string|null, registrationDate?: string|null
  * }
  */
 final class BusinessCard implements BaseModel
@@ -29,7 +27,7 @@ final class BusinessCard implements BaseModel
     public ?string $name;
 
     #[Optional('registration_date', nullable: true)]
-    public ?\DateTimeInterface $registrationDate;
+    public ?string $registrationDate;
 
     public function __construct()
     {
@@ -44,7 +42,7 @@ final class BusinessCard implements BaseModel
     public static function with(
         ?string $countryCode = null,
         ?string $name = null,
-        ?\DateTimeInterface $registrationDate = null,
+        ?string $registrationDate = null,
     ): self {
         $self = new self;
 
@@ -71,9 +69,8 @@ final class BusinessCard implements BaseModel
         return $self;
     }
 
-    public function withRegistrationDate(
-        ?\DateTimeInterface $registrationDate
-    ): self {
+    public function withRegistrationDate(?string $registrationDate): self
+    {
         $self = clone $this;
         $self['registrationDate'] = $registrationDate;
 

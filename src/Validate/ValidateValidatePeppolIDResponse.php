@@ -88,9 +88,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BusinessCard|array{
-     *   countryCode?: string|null,
-     *   name?: string|null,
-     *   registrationDate?: \DateTimeInterface|null,
+     *   countryCode?: string|null, name?: string|null, registrationDate?: string|null
      * }|null $businessCard
      * @param list<string> $supportedDocumentTypes
      */
@@ -117,9 +115,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      * Business card information for the Peppol ID.
      *
      * @param BusinessCard|array{
-     *   countryCode?: string|null,
-     *   name?: string|null,
-     *   registrationDate?: \DateTimeInterface|null,
+     *   countryCode?: string|null, name?: string|null, registrationDate?: string|null
      * }|null $businessCard
      */
     public function withBusinessCard(

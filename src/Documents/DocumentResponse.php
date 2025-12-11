@@ -36,8 +36,8 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   customerTaxID?: string|null,
  *   direction?: value-of<DocumentDirection>|null,
  *   documentType?: value-of<DocumentType>|null,
- *   dueDate?: \DateTimeInterface|null,
- *   invoiceDate?: \DateTimeInterface|null,
+ *   dueDate?: string|null,
+ *   invoiceDate?: string|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: string|null,
  *   items?: list<Item>|null,
@@ -49,8 +49,8 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   remittanceAddressRecipient?: string|null,
  *   serviceAddress?: string|null,
  *   serviceAddressRecipient?: string|null,
- *   serviceEndDate?: \DateTimeInterface|null,
- *   serviceStartDate?: \DateTimeInterface|null,
+ *   serviceEndDate?: string|null,
+ *   serviceStartDate?: string|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
  *   state?: value-of<DocumentState>|null,
@@ -183,13 +183,13 @@ final class DocumentResponse implements BaseModel
      * The date when payment is due.
      */
     #[Optional('due_date', nullable: true)]
-    public ?\DateTimeInterface $dueDate;
+    public ?string $dueDate;
 
     /**
      * The date when the invoice was issued.
      */
     #[Optional('invoice_date', nullable: true)]
-    public ?\DateTimeInterface $invoiceDate;
+    public ?string $invoiceDate;
 
     /**
      * The unique invoice identifier/number.
@@ -257,13 +257,13 @@ final class DocumentResponse implements BaseModel
      * The end date of the service period or delivery period.
      */
     #[Optional('service_end_date', nullable: true)]
-    public ?\DateTimeInterface $serviceEndDate;
+    public ?string $serviceEndDate;
 
     /**
      * The start date of the service period or delivery period.
      */
     #[Optional('service_start_date', nullable: true)]
-    public ?\DateTimeInterface $serviceStartDate;
+    public ?string $serviceStartDate;
 
     /**
      * The shipping/delivery address.
@@ -464,8 +464,8 @@ final class DocumentResponse implements BaseModel
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
-        ?\DateTimeInterface $dueDate = null,
-        ?\DateTimeInterface $invoiceDate = null,
+        ?string $dueDate = null,
+        ?string $invoiceDate = null,
         ?string $invoiceID = null,
         ?string $invoiceTotal = null,
         ?array $items = null,
@@ -477,8 +477,8 @@ final class DocumentResponse implements BaseModel
         ?string $remittanceAddressRecipient = null,
         ?string $serviceAddress = null,
         ?string $serviceAddressRecipient = null,
-        ?\DateTimeInterface $serviceEndDate = null,
-        ?\DateTimeInterface $serviceStartDate = null,
+        ?string $serviceEndDate = null,
+        ?string $serviceStartDate = null,
         ?string $shippingAddress = null,
         ?string $shippingAddressRecipient = null,
         DocumentState|string|null $state = null,
@@ -768,7 +768,7 @@ final class DocumentResponse implements BaseModel
     /**
      * The date when payment is due.
      */
-    public function withDueDate(?\DateTimeInterface $dueDate): self
+    public function withDueDate(?string $dueDate): self
     {
         $self = clone $this;
         $self['dueDate'] = $dueDate;
@@ -779,7 +779,7 @@ final class DocumentResponse implements BaseModel
     /**
      * The date when the invoice was issued.
      */
-    public function withInvoiceDate(?\DateTimeInterface $invoiceDate): self
+    public function withInvoiceDate(?string $invoiceDate): self
     {
         $self = clone $this;
         $self['invoiceDate'] = $invoiceDate;
@@ -930,9 +930,8 @@ final class DocumentResponse implements BaseModel
     /**
      * The end date of the service period or delivery period.
      */
-    public function withServiceEndDate(
-        ?\DateTimeInterface $serviceEndDate
-    ): self {
+    public function withServiceEndDate(?string $serviceEndDate): self
+    {
         $self = clone $this;
         $self['serviceEndDate'] = $serviceEndDate;
 
@@ -942,9 +941,8 @@ final class DocumentResponse implements BaseModel
     /**
      * The start date of the service period or delivery period.
      */
-    public function withServiceStartDate(
-        ?\DateTimeInterface $serviceStartDate
-    ): self {
+    public function withServiceStartDate(?string $serviceStartDate): self
+    {
         $self = clone $this;
         $self['serviceStartDate'] = $serviceStartDate;
 
