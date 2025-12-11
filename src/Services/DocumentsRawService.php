@@ -215,14 +215,14 @@ final class DocumentsRawService implements DocumentsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['customer_tax_id', 'vendor_tax_id']);
+        $query_params = array_flip(['customerTaxID', 'vendorTaxID']);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/pdf',
             query: Util::array_transform_keys(
-                array_diff_key($parsed, $query_params),
+                array_intersect_key($parsed, $query_params),
                 [
                     'customerTaxID' => 'customer_tax_id', 'vendorTaxID' => 'vendor_tax_id',
                 ],

@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
@@ -38,7 +39,7 @@ final class AttachmentsService implements AttachmentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null,
     ): DocumentAttachment {
-        $params = ['documentID' => $documentID];
+        $params = Util::removeNulls(['documentID' => $documentID]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($attachmentID, params: $params, requestOptions: $requestOptions);
@@ -77,7 +78,7 @@ final class AttachmentsService implements AttachmentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null,
     ): AttachmentDeleteResponse {
-        $params = ['documentID' => $documentID];
+        $params = Util::removeNulls(['documentID' => $documentID]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($attachmentID, params: $params, requestOptions: $requestOptions);
@@ -97,7 +98,7 @@ final class AttachmentsService implements AttachmentsContract
         string $file,
         ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
-        $params = ['file' => $file];
+        $params = Util::removeNulls(['file' => $file]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->add($documentID, params: $params, requestOptions: $requestOptions);

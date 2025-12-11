@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
@@ -45,9 +46,7 @@ final class OutboxService implements OutboxContract
         int $pageSize = 20,
         ?RequestOptions $requestOptions = null
     ): DocumentsNumberPage {
-        $params = ['page' => $page, 'pageSize' => $pageSize];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['page' => $page, 'pageSize' => $pageSize]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listDraftDocuments(params: $params, requestOptions: $requestOptions);
@@ -84,18 +83,18 @@ final class OutboxService implements OutboxContract
         string|DocumentType|null $type = null,
         ?RequestOptions $requestOptions = null,
     ): DocumentsNumberPage {
-        $params = [
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'page' => $page,
-            'pageSize' => $pageSize,
-            'search' => $search,
-            'sender' => $sender,
-            'state' => $state,
-            'type' => $type,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+                'page' => $page,
+                'pageSize' => $pageSize,
+                'search' => $search,
+                'sender' => $sender,
+                'state' => $state,
+                'type' => $type,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listReceivedDocuments(params: $params, requestOptions: $requestOptions);

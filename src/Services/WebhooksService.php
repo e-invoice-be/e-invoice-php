@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\WebhooksContract;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
@@ -41,9 +42,9 @@ final class WebhooksService implements WebhooksContract
         bool $enabled = true,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        $params = ['events' => $events, 'url' => $url, 'enabled' => $enabled];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['events' => $events, 'url' => $url, 'enabled' => $enabled]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -84,9 +85,9 @@ final class WebhooksService implements WebhooksContract
         ?string $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        $params = ['enabled' => $enabled, 'events' => $events, 'url' => $url];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['enabled' => $enabled, 'events' => $events, 'url' => $url]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($webhookID, params: $params, requestOptions: $requestOptions);

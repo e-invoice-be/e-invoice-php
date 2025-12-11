@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
@@ -199,58 +200,58 @@ final class ValidateService implements ValidateContract
         ?string $vendorTaxID = null,
         ?RequestOptions $requestOptions = null,
     ): UblDocumentValidation {
-        $params = [
-            'allowances' => $allowances,
-            'amountDue' => $amountDue,
-            'attachments' => $attachments,
-            'billingAddress' => $billingAddress,
-            'billingAddressRecipient' => $billingAddressRecipient,
-            'charges' => $charges,
-            'currency' => $currency,
-            'customerAddress' => $customerAddress,
-            'customerAddressRecipient' => $customerAddressRecipient,
-            'customerCompanyID' => $customerCompanyID,
-            'customerEmail' => $customerEmail,
-            'customerID' => $customerID,
-            'customerName' => $customerName,
-            'customerTaxID' => $customerTaxID,
-            'direction' => $direction,
-            'documentType' => $documentType,
-            'dueDate' => $dueDate,
-            'invoiceDate' => $invoiceDate,
-            'invoiceID' => $invoiceID,
-            'invoiceTotal' => $invoiceTotal,
-            'items' => $items,
-            'note' => $note,
-            'paymentDetails' => $paymentDetails,
-            'paymentTerm' => $paymentTerm,
-            'previousUnpaidBalance' => $previousUnpaidBalance,
-            'purchaseOrder' => $purchaseOrder,
-            'remittanceAddress' => $remittanceAddress,
-            'remittanceAddressRecipient' => $remittanceAddressRecipient,
-            'serviceAddress' => $serviceAddress,
-            'serviceAddressRecipient' => $serviceAddressRecipient,
-            'serviceEndDate' => $serviceEndDate,
-            'serviceStartDate' => $serviceStartDate,
-            'shippingAddress' => $shippingAddress,
-            'shippingAddressRecipient' => $shippingAddressRecipient,
-            'state' => $state,
-            'subtotal' => $subtotal,
-            'taxCode' => $taxCode,
-            'taxDetails' => $taxDetails,
-            'totalDiscount' => $totalDiscount,
-            'totalTax' => $totalTax,
-            'vatex' => $vatex,
-            'vatexNote' => $vatexNote,
-            'vendorAddress' => $vendorAddress,
-            'vendorAddressRecipient' => $vendorAddressRecipient,
-            'vendorCompanyID' => $vendorCompanyID,
-            'vendorEmail' => $vendorEmail,
-            'vendorName' => $vendorName,
-            'vendorTaxID' => $vendorTaxID,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'allowances' => $allowances,
+                'amountDue' => $amountDue,
+                'attachments' => $attachments,
+                'billingAddress' => $billingAddress,
+                'billingAddressRecipient' => $billingAddressRecipient,
+                'charges' => $charges,
+                'currency' => $currency,
+                'customerAddress' => $customerAddress,
+                'customerAddressRecipient' => $customerAddressRecipient,
+                'customerCompanyID' => $customerCompanyID,
+                'customerEmail' => $customerEmail,
+                'customerID' => $customerID,
+                'customerName' => $customerName,
+                'customerTaxID' => $customerTaxID,
+                'direction' => $direction,
+                'documentType' => $documentType,
+                'dueDate' => $dueDate,
+                'invoiceDate' => $invoiceDate,
+                'invoiceID' => $invoiceID,
+                'invoiceTotal' => $invoiceTotal,
+                'items' => $items,
+                'note' => $note,
+                'paymentDetails' => $paymentDetails,
+                'paymentTerm' => $paymentTerm,
+                'previousUnpaidBalance' => $previousUnpaidBalance,
+                'purchaseOrder' => $purchaseOrder,
+                'remittanceAddress' => $remittanceAddress,
+                'remittanceAddressRecipient' => $remittanceAddressRecipient,
+                'serviceAddress' => $serviceAddress,
+                'serviceAddressRecipient' => $serviceAddressRecipient,
+                'serviceEndDate' => $serviceEndDate,
+                'serviceStartDate' => $serviceStartDate,
+                'shippingAddress' => $shippingAddress,
+                'shippingAddressRecipient' => $shippingAddressRecipient,
+                'state' => $state,
+                'subtotal' => $subtotal,
+                'taxCode' => $taxCode,
+                'taxDetails' => $taxDetails,
+                'totalDiscount' => $totalDiscount,
+                'totalTax' => $totalTax,
+                'vatex' => $vatex,
+                'vatexNote' => $vatexNote,
+                'vendorAddress' => $vendorAddress,
+                'vendorAddressRecipient' => $vendorAddressRecipient,
+                'vendorCompanyID' => $vendorCompanyID,
+                'vendorEmail' => $vendorEmail,
+                'vendorName' => $vendorName,
+                'vendorTaxID' => $vendorTaxID,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validateJson(params: $params, requestOptions: $requestOptions);
@@ -271,7 +272,7 @@ final class ValidateService implements ValidateContract
         string $peppolID,
         ?RequestOptions $requestOptions = null
     ): ValidateValidatePeppolIDResponse {
-        $params = ['peppolID' => $peppolID];
+        $params = Util::removeNulls(['peppolID' => $peppolID]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validatePeppolID(params: $params, requestOptions: $requestOptions);
@@ -290,7 +291,7 @@ final class ValidateService implements ValidateContract
         string $file,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
-        $params = ['file' => $file];
+        $params = Util::removeNulls(['file' => $file]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validateUbl(params: $params, requestOptions: $requestOptions);

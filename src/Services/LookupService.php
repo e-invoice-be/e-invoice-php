@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
 use EInvoiceAPI\RequestOptions;
@@ -39,7 +40,7 @@ final class LookupService implements LookupContract
         string $peppolID,
         ?RequestOptions $requestOptions = null
     ): LookupGetResponse {
-        $params = ['peppolID' => $peppolID];
+        $params = Util::removeNulls(['peppolID' => $peppolID]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve(params: $params, requestOptions: $requestOptions);
@@ -62,9 +63,9 @@ final class LookupService implements LookupContract
         ?string $countryCode = null,
         ?RequestOptions $requestOptions = null,
     ): LookupGetParticipantsResponse {
-        $params = ['query' => $query, 'countryCode' => $countryCode];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['query' => $query, 'countryCode' => $countryCode]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveParticipants(params: $params, requestOptions: $requestOptions);
