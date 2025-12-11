@@ -87,9 +87,11 @@ final class AttachmentsService implements AttachmentsContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
-     * Add a new attachment to an invoice or credit note
+     * Add one or more attachments when creating a new invoice or credit note via POST /api/documents/
      *
      * @throws APIException
      */

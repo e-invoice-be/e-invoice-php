@@ -111,9 +111,11 @@ final class AttachmentsRawService implements AttachmentsRawContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
-     * Add a new attachment to an invoice or credit note
+     * Add one or more attachments when creating a new invoice or credit note via POST /api/documents/
      *
      * @param array{file: string}|AttachmentAddParams $params
      *

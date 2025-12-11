@@ -46,6 +46,8 @@ interface AttachmentsContract
     ): AttachmentDeleteResponse;
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @throws APIException

@@ -10,8 +10,9 @@ use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
- * Add a new attachment to an invoice or credit note.
+ * Add one or more attachments when creating a new invoice or credit note via POST /api/documents/.
  *
+ * @deprecated
  * @see EInvoiceAPI\Services\Documents\AttachmentsService::add()
  *
  * @phpstan-type AttachmentAddParamsShape = array{file: string}
