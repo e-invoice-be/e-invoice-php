@@ -15,7 +15,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Services\OutboxService::listDraftDocuments()
  *
  * @phpstan-type OutboxListDraftDocumentsParamsShape = array{
- *   page?: int, pageSize?: int
+ *   page?: int|null, pageSize?: int|null
  * }
  */
 final class OutboxListDraftDocumentsParams implements BaseModel

@@ -9,14 +9,15 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
-use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
 
 /**
+ * @phpstan-import-type IssueShape from \EInvoiceAPI\Validate\UblDocumentValidation\Issue
+ *
  * @phpstan-type UblDocumentValidationShape = array{
  *   id: string,
  *   fileName: string|null,
  *   isValid: bool,
- *   issues: list<Issue>,
+ *   issues: list<IssueShape>,
  *   ublDocument?: string|null,
  * }
  */
@@ -69,15 +70,7 @@ final class UblDocumentValidation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Issue|array{
-     *   message: string,
-     *   schematron: string,
-     *   type: value-of<Type>,
-     *   flag?: string|null,
-     *   location?: string|null,
-     *   ruleID?: string|null,
-     *   test?: string|null,
-     * }> $issues
+     * @param list<IssueShape> $issues
      */
     public static function with(
         string $id,
@@ -123,15 +116,7 @@ final class UblDocumentValidation implements BaseModel
     }
 
     /**
-     * @param list<Issue|array{
-     *   message: string,
-     *   schematron: string,
-     *   type: value-of<Type>,
-     *   flag?: string|null,
-     *   location?: string|null,
-     *   ruleID?: string|null,
-     *   test?: string|null,
-     * }> $issues
+     * @param list<IssueShape> $issues
      */
     public function withIssues(array $issues): self
     {

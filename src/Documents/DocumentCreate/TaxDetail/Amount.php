@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * The tax amount for this tax category. Must be rounded to maximum 2 decimals.
+ *
+ * @phpstan-type AmountShape = float|string
  */
 final class Amount implements ConverterSource
 {

@@ -16,8 +16,8 @@ use EInvoiceAPI\Documents\DocumentResponse\Allowance\TaxCode;
  *   baseAmount?: string|null,
  *   multiplierFactor?: string|null,
  *   reason?: string|null,
- *   reasonCode?: value-of<ReasonCode>|null,
- *   taxCode?: value-of<\EInvoiceAPI\Documents\DocumentResponse\Allowance\TaxCode>|null,
+ *   reasonCode?: null|ReasonCode|value-of<ReasonCode>,
+ *   taxCode?: null|\EInvoiceAPI\Documents\DocumentResponse\Allowance\TaxCode|value-of<\EInvoiceAPI\Documents\DocumentResponse\Allowance\TaxCode>,
  *   taxRate?: string|null,
  * }
  */

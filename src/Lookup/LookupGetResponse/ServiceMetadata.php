@@ -9,14 +9,14 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
-use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
-use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
 
 /**
  * Service metadata information for the Peppol participant.
  *
+ * @phpstan-import-type EndpointShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint
+ *
  * @phpstan-type ServiceMetadataShape = array{
- *   endpoints: list<Endpoint>,
+ *   endpoints: list<EndpointShape>,
  *   queryTimeMs: float,
  *   status: string,
  *   error?: string|null,
@@ -77,13 +77,7 @@ final class ServiceMetadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Endpoint|array{
-     *   documentTypes: list<DocumentType>,
-     *   status: string,
-     *   url: string,
-     *   error?: string|null,
-     *   processes?: list<Process>|null,
-     * }> $endpoints
+     * @param list<EndpointShape> $endpoints
      */
     public static function with(
         array $endpoints,
@@ -105,13 +99,7 @@ final class ServiceMetadata implements BaseModel
     /**
      * List of endpoints found for the Peppol participant.
      *
-     * @param list<Endpoint|array{
-     *   documentTypes: list<DocumentType>,
-     *   status: string,
-     *   url: string,
-     *   error?: string|null,
-     *   processes?: list<Process>|null,
-     * }> $endpoints
+     * @param list<EndpointShape> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {

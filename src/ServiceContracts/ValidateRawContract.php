@@ -18,7 +18,7 @@ interface ValidateRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ValidateValidateJsonParams $params
+     * @param array<string,mixed>|ValidateValidateJsonParams $params
      *
      * @return BaseResponse<UblDocumentValidation>
      *
@@ -32,7 +32,7 @@ interface ValidateRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ValidateValidatePeppolIDParams $params
+     * @param array<string,mixed>|ValidateValidatePeppolIDParams $params
      *
      * @return BaseResponse<ValidateValidatePeppolIDResponse>
      *
@@ -46,7 +46,7 @@ interface ValidateRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ValidateValidateUblParams $params
+     * @param array<string,mixed>|ValidateValidateUblParams $params
      *
      * @return BaseResponse<UblDocumentValidation>
      *

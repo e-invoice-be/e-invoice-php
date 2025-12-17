@@ -13,14 +13,19 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\TaxCode;
 /**
  * An allowance is a discount for example for early payment, volume discount, etc.
  *
+ * @phpstan-import-type AmountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\Amount
+ * @phpstan-import-type BaseAmountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\BaseAmount
+ * @phpstan-import-type MultiplierFactorShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\MultiplierFactor
+ * @phpstan-import-type TaxRateShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\TaxRate
+ *
  * @phpstan-type AllowanceShape = array{
- *   amount?: float|string|null,
- *   baseAmount?: float|string|null,
- *   multiplierFactor?: float|string|null,
+ *   amount?: AmountShape|null,
+ *   baseAmount?: BaseAmountShape|null,
+ *   multiplierFactor?: MultiplierFactorShape|null,
  *   reason?: string|null,
- *   reasonCode?: value-of<ReasonCode>|null,
- *   taxCode?: value-of<TaxCode>|null,
- *   taxRate?: float|string|null,
+ *   reasonCode?: null|ReasonCode|value-of<ReasonCode>,
+ *   taxCode?: null|TaxCode|value-of<TaxCode>,
+ *   taxRate?: TaxRateShape|null,
  * }
  */
 final class Allowance implements BaseModel
@@ -84,8 +89,12 @@ final class Allowance implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param AmountShape|null $amount
+     * @param BaseAmountShape|null $baseAmount
+     * @param MultiplierFactorShape|null $multiplierFactor
      * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
      * @param TaxCode|value-of<TaxCode> $taxCode
+     * @param TaxRateShape|null $taxRate
      */
     public static function with(
         float|string|null $amount = null,
@@ -111,6 +120,8 @@ final class Allowance implements BaseModel
 
     /**
      * The allowance amount, without VAT. Must be rounded to maximum 2 decimals.
+     *
+     * @param AmountShape|null $amount
      */
     public function withAmount(float|string|null $amount): self
     {
@@ -122,6 +133,8 @@ final class Allowance implements BaseModel
 
     /**
      * The base amount that may be used, in conjunction with the allowance percentage, to calculate the allowance amount. Must be rounded to maximum 2 decimals.
+     *
+     * @param BaseAmountShape|null $baseAmount
      */
     public function withBaseAmount(float|string|null $baseAmount): self
     {
@@ -133,6 +146,8 @@ final class Allowance implements BaseModel
 
     /**
      * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20. Must be rounded to maximum 2 decimals.
+     *
+     * @param MultiplierFactorShape|null $multiplierFactor
      */
     public function withMultiplierFactor(
         float|string|null $multiplierFactor
@@ -182,6 +197,8 @@ final class Allowance implements BaseModel
 
     /**
      * The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals.
+     *
+     * @param TaxRateShape|null $taxRate
      */
     public function withTaxRate(float|string|null $taxRate): self
     {

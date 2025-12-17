@@ -13,10 +13,12 @@ use EInvoiceAPI\Lookup\Certificate;
 /**
  * Endpoint information for a specific Peppol process.
  *
+ * @phpstan-import-type CertificateShape from \EInvoiceAPI\Lookup\Certificate
+ *
  * @phpstan-type EndpointShape = array{
  *   address: string,
  *   transportProfile: string,
- *   certificate?: Certificate|null,
+ *   certificate?: null|Certificate|CertificateShape,
  *   serviceActivationDate?: string|null,
  *   serviceDescription?: string|null,
  *   serviceExpirationDate?: string|null,
@@ -101,9 +103,7 @@ final class Endpoint implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Certificate|array{
-     *   status: string, details?: array<string,mixed>|null, error?: string|null
-     * }|null $certificate
+     * @param CertificateShape|null $certificate
      */
     public static function with(
         string $address,
@@ -155,9 +155,7 @@ final class Endpoint implements BaseModel
     /**
      * Certificate information for a Peppol endpoint.
      *
-     * @param Certificate|array{
-     *   status: string, details?: array<string,mixed>|null, error?: string|null
-     * }|null $certificate
+     * @param CertificateShape|null $certificate
      */
     public function withCertificate(Certificate|array|null $certificate): self
     {

@@ -79,9 +79,9 @@ final class ValidateRawService implements ValidateRawContract
      *   invoiceID?: string|null,
      *   invoiceTotal?: float|string|null,
      *   items?: list<array{
-     *     allowances?: list<array<mixed>>|null,
+     *     allowances?: list<array<string,mixed>>|null,
      *     amount?: float|string|null,
-     *     charges?: list<array<mixed>>|null,
+     *     charges?: list<array<string,mixed>>|null,
      *     date?: null|null,
      *     description?: string|null,
      *     productCode?: string|null,

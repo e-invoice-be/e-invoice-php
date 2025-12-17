@@ -8,12 +8,9 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard;
-use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
 use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo;
-use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo\DNSRecord;
 use EInvoiceAPI\Lookup\LookupGetResponse\QueryMetadata;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
-use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 
 /**
  * Response from a Peppol ID lookup operation.
@@ -27,14 +24,20 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
  *     service metadata with supported document types and processes, business card information
  *     with organization details, and certificate data.
  *
+ * @phpstan-import-type BusinessCardShape from \EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard
+ * @phpstan-import-type CertificateShape from \EInvoiceAPI\Lookup\Certificate
+ * @phpstan-import-type DNSInfoShape from \EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo
+ * @phpstan-import-type QueryMetadataShape from \EInvoiceAPI\Lookup\LookupGetResponse\QueryMetadata
+ * @phpstan-import-type ServiceMetadataShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata
+ *
  * @phpstan-type LookupGetResponseShape = array{
- *   businessCard: BusinessCard,
- *   certificates: list<Certificate>,
- *   dnsInfo: DNSInfo,
+ *   businessCard: BusinessCard|BusinessCardShape,
+ *   certificates: list<CertificateShape>,
+ *   dnsInfo: DNSInfo|DNSInfoShape,
  *   errors: list<string>,
  *   executionTimeMs: float,
- *   queryMetadata: QueryMetadata,
- *   serviceMetadata: ServiceMetadata,
+ *   queryMetadata: QueryMetadata|QueryMetadataShape,
+ *   serviceMetadata: ServiceMetadata|ServiceMetadataShape,
  *   status: string,
  * }
  */
@@ -136,35 +139,12 @@ final class LookupGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BusinessCard|array{
-     *   entities: list<Entity>,
-     *   queryTimeMs: float,
-     *   status: string,
-     *   error?: string|null,
-     * } $businessCard
-     * @param list<Certificate|array{
-     *   status: string, details?: array<string,mixed>|null, error?: string|null
-     * }> $certificates
-     * @param DNSInfo|array{
-     *   dnsRecords: list<DNSRecord>,
-     *   smlHostname: string,
-     *   status: string,
-     *   error?: string|null,
-     * } $dnsInfo
+     * @param BusinessCardShape $businessCard
+     * @param list<CertificateShape> $certificates
+     * @param DNSInfoShape $dnsInfo
      * @param list<string> $errors
-     * @param QueryMetadata|array{
-     *   identifierScheme: string,
-     *   identifierValue: string,
-     *   smlDomain: string,
-     *   timestamp: string,
-     *   version: string,
-     * } $queryMetadata
-     * @param ServiceMetadata|array{
-     *   endpoints: list<Endpoint>,
-     *   queryTimeMs: float,
-     *   status: string,
-     *   error?: string|null,
-     * } $serviceMetadata
+     * @param QueryMetadataShape $queryMetadata
+     * @param ServiceMetadataShape $serviceMetadata
      */
     public static function with(
         BusinessCard|array $businessCard,
@@ -193,12 +173,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Business card information for the Peppol participant.
      *
-     * @param BusinessCard|array{
-     *   entities: list<Entity>,
-     *   queryTimeMs: float,
-     *   status: string,
-     *   error?: string|null,
-     * } $businessCard
+     * @param BusinessCardShape $businessCard
      */
     public function withBusinessCard(BusinessCard|array $businessCard): self
     {
@@ -211,9 +186,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * List of certificates found for the Peppol participant.
      *
-     * @param list<Certificate|array{
-     *   status: string, details?: array<string,mixed>|null, error?: string|null
-     * }> $certificates
+     * @param list<CertificateShape> $certificates
      */
     public function withCertificates(array $certificates): self
     {
@@ -226,12 +199,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Information about the DNS lookup performed.
      *
-     * @param DNSInfo|array{
-     *   dnsRecords: list<DNSRecord>,
-     *   smlHostname: string,
-     *   status: string,
-     *   error?: string|null,
-     * } $dnsInfo
+     * @param DNSInfoShape $dnsInfo
      */
     public function withDNSInfo(DNSInfo|array $dnsInfo): self
     {
@@ -268,13 +236,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Metadata about the query that was performed.
      *
-     * @param QueryMetadata|array{
-     *   identifierScheme: string,
-     *   identifierValue: string,
-     *   smlDomain: string,
-     *   timestamp: string,
-     *   version: string,
-     * } $queryMetadata
+     * @param QueryMetadataShape $queryMetadata
      */
     public function withQueryMetadata(QueryMetadata|array $queryMetadata): self
     {
@@ -287,12 +249,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Service metadata information for the Peppol participant.
      *
-     * @param ServiceMetadata|array{
-     *   endpoints: list<Endpoint>,
-     *   queryTimeMs: float,
-     *   status: string,
-     *   error?: string|null,
-     * } $serviceMetadata
+     * @param ServiceMetadataShape $serviceMetadata
      */
     public function withServiceMetadata(
         ServiceMetadata|array $serviceMetadata

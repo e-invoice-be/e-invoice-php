@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * The VAT rate, represented as percentage that applies to the charge.
+ *
+ * @phpstan-type TaxRateShape = float|string
  */
 final class TaxRate implements ConverterSource
 {

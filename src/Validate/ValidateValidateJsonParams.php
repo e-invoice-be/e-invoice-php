@@ -13,13 +13,11 @@ use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Documents\PaymentDetailCreate;
-use EInvoiceAPI\Documents\UnitOfMeasureCode;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Allowance;
-use EInvoiceAPI\Validate\ValidateValidateJsonParams\Allowance\ReasonCode;
-use EInvoiceAPI\Validate\ValidateValidateJsonParams\Allowance\TaxCode;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Charge;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxCode;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
 
@@ -28,35 +26,27 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *
  * @see EInvoiceAPI\Services\ValidateService::validateJson()
  *
+ * @phpstan-import-type AllowanceShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Allowance
+ * @phpstan-import-type AmountDueShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\AmountDue
+ * @phpstan-import-type DocumentAttachmentCreateShape from \EInvoiceAPI\Documents\DocumentAttachmentCreate
+ * @phpstan-import-type ChargeShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Charge
+ * @phpstan-import-type InvoiceTotalShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\InvoiceTotal
+ * @phpstan-import-type ItemShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item
+ * @phpstan-import-type PaymentDetailCreateShape from \EInvoiceAPI\Documents\PaymentDetailCreate
+ * @phpstan-import-type PreviousUnpaidBalanceShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\PreviousUnpaidBalance
+ * @phpstan-import-type SubtotalShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Subtotal
+ * @phpstan-import-type TaxDetailShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail
+ * @phpstan-import-type TotalDiscountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\TotalDiscount
+ * @phpstan-import-type TotalTaxShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\TotalTax
+ *
  * @phpstan-type ValidateValidateJsonParamsShape = array{
- *   allowances?: list<Allowance|array{
- *     amount?: float|string|null,
- *     baseAmount?: float|string|null,
- *     multiplierFactor?: float|string|null,
- *     reason?: string|null,
- *     reasonCode?: value-of<ReasonCode>|null,
- *     taxCode?: value-of<TaxCode>|null,
- *     taxRate?: float|string|null,
- *   }>|null,
- *   amountDue?: float|string|null,
- *   attachments?: list<DocumentAttachmentCreate|array{
- *     fileName: string,
- *     fileData?: string|null,
- *     fileSize?: int|null,
- *     fileType?: string|null,
- *   }>|null,
+ *   allowances?: list<AllowanceShape>|null,
+ *   amountDue?: AmountDueShape|null,
+ *   attachments?: list<DocumentAttachmentCreateShape>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   charges?: list<Charge|array{
- *     amount?: float|string|null,
- *     baseAmount?: float|string|null,
- *     multiplierFactor?: float|string|null,
- *     reason?: string|null,
- *     reasonCode?: value-of<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Charge\ReasonCode>|null,
- *     taxCode?: value-of<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Charge\TaxCode>|null,
- *     taxRate?: float|string|null,
- *   }>|null,
- *   currency?: CurrencyCode|value-of<CurrencyCode>,
+ *   charges?: list<ChargeShape>|null,
+ *   currency?: null|CurrencyCode|value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
  *   customerCompanyID?: string|null,
@@ -64,34 +54,17 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerTaxID?: string|null,
- *   direction?: DocumentDirection|value-of<DocumentDirection>,
- *   documentType?: DocumentType|value-of<DocumentType>,
+ *   direction?: null|DocumentDirection|value-of<DocumentDirection>,
+ *   documentType?: null|DocumentType|value-of<DocumentType>,
  *   dueDate?: string|null,
  *   invoiceDate?: string|null,
  *   invoiceID?: string|null,
- *   invoiceTotal?: float|string|null,
- *   items?: list<Item|array{
- *     allowances?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance>|null,
- *     amount?: float|string|null,
- *     charges?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge>|null,
- *     date?: null|null,
- *     description?: string|null,
- *     productCode?: string|null,
- *     quantity?: float|string|null,
- *     tax?: float|string|null,
- *     taxRate?: float|string|null,
- *     unit?: value-of<UnitOfMeasureCode>|null,
- *     unitPrice?: float|string|null,
- *   }>,
+ *   invoiceTotal?: InvoiceTotalShape|null,
+ *   items?: list<ItemShape>|null,
  *   note?: string|null,
- *   paymentDetails?: list<PaymentDetailCreate|array{
- *     bankAccountNumber?: string|null,
- *     iban?: string|null,
- *     paymentReference?: string|null,
- *     swift?: string|null,
- *   }>|null,
+ *   paymentDetails?: list<PaymentDetailCreateShape>|null,
  *   paymentTerm?: string|null,
- *   previousUnpaidBalance?: float|string|null,
+ *   previousUnpaidBalance?: PreviousUnpaidBalanceShape|null,
  *   purchaseOrder?: string|null,
  *   remittanceAddress?: string|null,
  *   remittanceAddressRecipient?: string|null,
@@ -101,14 +74,12 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *   serviceStartDate?: string|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
- *   state?: DocumentState|value-of<DocumentState>,
- *   subtotal?: float|string|null,
- *   taxCode?: \EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxCode|value-of<\EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxCode>,
- *   taxDetails?: list<TaxDetail|array{
- *     amount?: float|string|null, rate?: string|null
- *   }>|null,
- *   totalDiscount?: float|string|null,
- *   totalTax?: float|string|null,
+ *   state?: null|DocumentState|value-of<DocumentState>,
+ *   subtotal?: SubtotalShape|null,
+ *   taxCode?: null|TaxCode|value-of<TaxCode>,
+ *   taxDetails?: list<TaxDetailShape>|null,
+ *   totalDiscount?: TotalDiscountShape|null,
+ *   totalTax?: TotalTaxShape|null,
  *   vatex?: null|Vatex|value-of<Vatex>,
  *   vatexNote?: string|null,
  *   vendorAddress?: string|null,
@@ -350,12 +321,9 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt).
      *
-     * @var value-of<ValidateValidateJsonParams\TaxCode>|null $taxCode
+     * @var value-of<TaxCode>|null $taxCode
      */
-    #[Optional(
-        'tax_code',
-        enum: ValidateValidateJsonParams\TaxCode::class,
-    )]
+    #[Optional('tax_code', enum: TaxCode::class)]
     public ?string $taxCode;
 
     /** @var list<TaxDetail>|null $taxDetails */
@@ -437,57 +405,23 @@ final class ValidateValidateJsonParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Allowance|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $allowances
-     * @param list<DocumentAttachmentCreate|array{
-     *   fileName: string,
-     *   fileData?: string|null,
-     *   fileSize?: int|null,
-     *   fileType?: string|null,
-     * }>|null $attachments
-     * @param list<Charge|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<Charge\ReasonCode>|null,
-     *   taxCode?: value-of<Charge\TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $charges
+     * @param list<AllowanceShape>|null $allowances
+     * @param AmountDueShape|null $amountDue
+     * @param list<DocumentAttachmentCreateShape>|null $attachments
+     * @param list<ChargeShape>|null $charges
      * @param CurrencyCode|value-of<CurrencyCode> $currency
      * @param DocumentDirection|value-of<DocumentDirection> $direction
      * @param DocumentType|value-of<DocumentType> $documentType
-     * @param list<Item|array{
-     *   allowances?: list<Item\Allowance>|null,
-     *   amount?: float|string|null,
-     *   charges?: list<Item\Charge>|null,
-     *   date?: null|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: float|string|null,
-     *   tax?: float|string|null,
-     *   taxRate?: float|string|null,
-     *   unit?: value-of<UnitOfMeasureCode>|null,
-     *   unitPrice?: float|string|null,
-     * }> $items
-     * @param list<PaymentDetailCreate|array{
-     *   bankAccountNumber?: string|null,
-     *   iban?: string|null,
-     *   paymentReference?: string|null,
-     *   swift?: string|null,
-     * }>|null $paymentDetails
+     * @param InvoiceTotalShape|null $invoiceTotal
+     * @param list<ItemShape> $items
+     * @param list<PaymentDetailCreateShape>|null $paymentDetails
+     * @param PreviousUnpaidBalanceShape|null $previousUnpaidBalance
      * @param DocumentState|value-of<DocumentState> $state
-     * @param ValidateValidateJsonParams\TaxCode|value-of<ValidateValidateJsonParams\TaxCode> $taxCode
-     * @param list<TaxDetail|array{
-     *   amount?: float|string|null, rate?: string|null
-     * }>|null $taxDetails
+     * @param SubtotalShape|null $subtotal
+     * @param TaxCode|value-of<TaxCode> $taxCode
+     * @param list<TaxDetailShape>|null $taxDetails
+     * @param TotalDiscountShape|null $totalDiscount
+     * @param TotalTaxShape|null $totalTax
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
@@ -527,7 +461,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $shippingAddressRecipient = null,
         DocumentState|string|null $state = null,
         float|string|null $subtotal = null,
-        ValidateValidateJsonParams\TaxCode|string|null $taxCode = null,
+        TaxCode|string|null $taxCode = null,
         ?array $taxDetails = null,
         float|string|null $totalDiscount = null,
         float|string|null $totalTax = null,
@@ -595,15 +529,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * @param list<Allowance|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $allowances
+     * @param list<AllowanceShape>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
@@ -615,6 +541,8 @@ final class ValidateValidateJsonParams implements BaseModel
 
     /**
      * The amount due for payment. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @param AmountDueShape|null $amountDue
      */
     public function withAmountDue(float|string|null $amountDue): self
     {
@@ -625,12 +553,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * @param list<DocumentAttachmentCreate|array{
-     *   fileName: string,
-     *   fileData?: string|null,
-     *   fileSize?: int|null,
-     *   fileType?: string|null,
-     * }>|null $attachments
+     * @param list<DocumentAttachmentCreateShape>|null $attachments
      */
     public function withAttachments(?array $attachments): self
     {
@@ -664,15 +587,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * @param list<Charge|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<Charge\ReasonCode>|null,
-     *   taxCode?: value-of<Charge\TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $charges
+     * @param list<ChargeShape>|null $charges
      */
     public function withCharges(?array $charges): self
     {
@@ -834,6 +749,8 @@ final class ValidateValidateJsonParams implements BaseModel
 
     /**
      * The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
+     *
+     * @param InvoiceTotalShape|null $invoiceTotal
      */
     public function withInvoiceTotal(float|string|null $invoiceTotal): self
     {
@@ -846,19 +763,7 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * At least one line item is required.
      *
-     * @param list<Item|array{
-     *   allowances?: list<Item\Allowance>|null,
-     *   amount?: float|string|null,
-     *   charges?: list<Item\Charge>|null,
-     *   date?: null|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: float|string|null,
-     *   tax?: float|string|null,
-     *   taxRate?: float|string|null,
-     *   unit?: value-of<UnitOfMeasureCode>|null,
-     *   unitPrice?: float|string|null,
-     * }> $items
+     * @param list<ItemShape> $items
      */
     public function withItems(array $items): self
     {
@@ -880,12 +785,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * @param list<PaymentDetailCreate|array{
-     *   bankAccountNumber?: string|null,
-     *   iban?: string|null,
-     *   paymentReference?: string|null,
-     *   swift?: string|null,
-     * }>|null $paymentDetails
+     * @param list<PaymentDetailCreateShape>|null $paymentDetails
      */
     public function withPaymentDetails(?array $paymentDetails): self
     {
@@ -908,6 +808,8 @@ final class ValidateValidateJsonParams implements BaseModel
 
     /**
      * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @param PreviousUnpaidBalanceShape|null $previousUnpaidBalance
      */
     public function withPreviousUnpaidBalance(
         float|string|null $previousUnpaidBalance
@@ -1035,6 +937,8 @@ final class ValidateValidateJsonParams implements BaseModel
 
     /**
      * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @param SubtotalShape|null $subtotal
      */
     public function withSubtotal(float|string|null $subtotal): self
     {
@@ -1047,11 +951,10 @@ final class ValidateValidateJsonParams implements BaseModel
     /**
      * Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt).
      *
-     * @param ValidateValidateJsonParams\TaxCode|value-of<ValidateValidateJsonParams\TaxCode> $taxCode
+     * @param TaxCode|value-of<TaxCode> $taxCode
      */
-    public function withTaxCode(
-        ValidateValidateJsonParams\TaxCode|string $taxCode
-    ): self {
+    public function withTaxCode(TaxCode|string $taxCode): self
+    {
         $self = clone $this;
         $self['taxCode'] = $taxCode;
 
@@ -1059,9 +962,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * @param list<TaxDetail|array{
-     *   amount?: float|string|null, rate?: string|null
-     * }>|null $taxDetails
+     * @param list<TaxDetailShape>|null $taxDetails
      */
     public function withTaxDetails(?array $taxDetails): self
     {
@@ -1073,6 +974,8 @@ final class ValidateValidateJsonParams implements BaseModel
 
     /**
      * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals.
+     *
+     * @param TotalDiscountShape|null $totalDiscount
      */
     public function withTotalDiscount(float|string|null $totalDiscount): self
     {
@@ -1084,6 +987,8 @@ final class ValidateValidateJsonParams implements BaseModel
 
     /**
      * The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @param TotalTaxShape|null $totalTax
      */
     public function withTotalTax(float|string|null $totalTax): self
     {

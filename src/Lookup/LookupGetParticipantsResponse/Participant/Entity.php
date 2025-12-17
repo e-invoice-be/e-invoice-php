@@ -12,11 +12,13 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
 /**
  * Represents a business entity.
  *
+ * @phpstan-import-type IdentifierShape from \EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifier
+ *
  * @phpstan-type EntityShape = array{
  *   additionalInfo?: string|null,
  *   countryCode?: string|null,
  *   geoInfo?: string|null,
- *   identifiers?: list<Identifier>|null,
+ *   identifiers?: list<IdentifierShape>|null,
  *   name?: string|null,
  *   registrationDate?: string|null,
  *   website?: string|null,
@@ -81,7 +83,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Identifier|array{scheme: string, value: string}> $identifiers
+     * @param list<IdentifierShape> $identifiers
      */
     public static function with(
         ?string $additionalInfo = null,
@@ -141,7 +143,7 @@ final class Entity implements BaseModel
     /**
      * List of business identifiers.
      *
-     * @param list<Identifier|array{scheme: string, value: string}> $identifiers
+     * @param list<IdentifierShape> $identifiers
      */
     public function withIdentifiers(array $identifiers): self
     {

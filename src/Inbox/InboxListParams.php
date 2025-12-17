@@ -18,8 +18,8 @@ use EInvoiceAPI\Documents\DocumentType;
  * @phpstan-type InboxListParamsShape = array{
  *   dateFrom?: \DateTimeInterface|null,
  *   dateTo?: \DateTimeInterface|null,
- *   page?: int,
- *   pageSize?: int,
+ *   page?: int|null,
+ *   pageSize?: int|null,
  *   search?: string|null,
  *   sender?: string|null,
  *   state?: null|DocumentState|value-of<DocumentState>,

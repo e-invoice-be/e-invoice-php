@@ -9,7 +9,8 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
-use EInvoiceAPI\Documents\DocumentResponse\Allowance\ReasonCode;
+use EInvoiceAPI\Documents\DocumentResponse\Allowance;
+use EInvoiceAPI\Documents\DocumentResponse\Charge;
 use EInvoiceAPI\Documents\DocumentResponse\Item;
 use EInvoiceAPI\Documents\DocumentResponse\PaymentDetail;
 use EInvoiceAPI\Documents\DocumentResponse\TaxCode;
@@ -18,15 +19,22 @@ use EInvoiceAPI\Documents\DocumentResponse\Vatex;
 use EInvoiceAPI\Inbox\DocumentState;
 
 /**
+ * @phpstan-import-type AllowanceShape from \EInvoiceAPI\Documents\DocumentResponse\Allowance
+ * @phpstan-import-type DocumentAttachmentShape from \EInvoiceAPI\Documents\Attachments\DocumentAttachment
+ * @phpstan-import-type ChargeShape from \EInvoiceAPI\Documents\DocumentResponse\Charge
+ * @phpstan-import-type ItemShape from \EInvoiceAPI\Documents\DocumentResponse\Item
+ * @phpstan-import-type PaymentDetailShape from \EInvoiceAPI\Documents\DocumentResponse\PaymentDetail
+ * @phpstan-import-type TaxDetailShape from \EInvoiceAPI\Documents\DocumentResponse\TaxDetail
+ *
  * @phpstan-type DocumentResponseShape = array{
  *   id: string,
- *   allowances?: list<\EInvoiceAPI\Documents\DocumentResponse\Allowance>|null,
+ *   allowances?: list<AllowanceShape>|null,
  *   amountDue?: string|null,
- *   attachments?: list<DocumentAttachment>|null,
+ *   attachments?: list<DocumentAttachmentShape>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   charges?: list<\EInvoiceAPI\Documents\DocumentResponse\Charge>|null,
- *   currency?: value-of<CurrencyCode>|null,
+ *   charges?: list<ChargeShape>|null,
+ *   currency?: null|CurrencyCode|value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
  *   customerCompanyID?: string|null,
@@ -34,15 +42,15 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerTaxID?: string|null,
- *   direction?: value-of<DocumentDirection>|null,
- *   documentType?: value-of<DocumentType>|null,
+ *   direction?: null|DocumentDirection|value-of<DocumentDirection>,
+ *   documentType?: null|DocumentType|value-of<DocumentType>,
  *   dueDate?: string|null,
  *   invoiceDate?: string|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: string|null,
- *   items?: list<Item>|null,
+ *   items?: list<ItemShape>|null,
  *   note?: string|null,
- *   paymentDetails?: list<PaymentDetail>|null,
+ *   paymentDetails?: list<PaymentDetailShape>|null,
  *   paymentTerm?: string|null,
  *   purchaseOrder?: string|null,
  *   remittanceAddress?: string|null,
@@ -53,13 +61,13 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   serviceStartDate?: string|null,
  *   shippingAddress?: string|null,
  *   shippingAddressRecipient?: string|null,
- *   state?: value-of<DocumentState>|null,
+ *   state?: null|DocumentState|value-of<DocumentState>,
  *   subtotal?: string|null,
- *   taxCode?: value-of<TaxCode>|null,
- *   taxDetails?: list<TaxDetail>|null,
+ *   taxCode?: null|TaxCode|value-of<TaxCode>,
+ *   taxDetails?: list<TaxDetailShape>|null,
  *   totalDiscount?: string|null,
  *   totalTax?: string|null,
- *   vatex?: value-of<Vatex>|null,
+ *   vatex?: null|Vatex|value-of<Vatex>,
  *   vatexNote?: string|null,
  *   vendorAddress?: string|null,
  *   vendorAddressRecipient?: string|null,
@@ -77,9 +85,9 @@ final class DocumentResponse implements BaseModel
     #[Required]
     public string $id;
 
-    /** @var list<DocumentResponse\Allowance>|null $allowances */
+    /** @var list<Allowance>|null $allowances */
     #[Optional(
-        list: DocumentResponse\Allowance::class,
+        list: Allowance::class,
         nullable: true,
     )]
     public ?array $allowances;
@@ -106,9 +114,9 @@ final class DocumentResponse implements BaseModel
     #[Optional('billing_address_recipient', nullable: true)]
     public ?string $billingAddressRecipient;
 
-    /** @var list<DocumentResponse\Charge>|null $charges */
+    /** @var list<Charge>|null $charges */
     #[Optional(
-        list: DocumentResponse\Charge::class,
+        list: Charge::class,
         nullable: true
     )]
     public ?array $charges;
@@ -392,58 +400,17 @@ final class DocumentResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentResponse\Allowance|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<DocumentResponse\Allowance\TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $allowances
-     * @param list<DocumentAttachment|array{
-     *   id: string,
-     *   fileName: string,
-     *   fileSize?: int|null,
-     *   fileType?: string|null,
-     *   fileURL?: string|null,
-     * }>|null $attachments
-     * @param list<DocumentResponse\Charge|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<DocumentResponse\Charge\ReasonCode>|null,
-     *   taxCode?: value-of<DocumentResponse\Charge\TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $charges
+     * @param list<AllowanceShape>|null $allowances
+     * @param list<DocumentAttachmentShape>|null $attachments
+     * @param list<ChargeShape>|null $charges
      * @param CurrencyCode|value-of<CurrencyCode> $currency
      * @param DocumentDirection|value-of<DocumentDirection> $direction
      * @param DocumentType|value-of<DocumentType> $documentType
-     * @param list<Item|array{
-     *   allowances?: list<Allowance>|null,
-     *   amount?: string|null,
-     *   charges?: list<Charge>|null,
-     *   date?: null|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: string|null,
-     *   tax?: string|null,
-     *   taxRate?: string|null,
-     *   unit?: value-of<UnitOfMeasureCode>|null,
-     *   unitPrice?: string|null,
-     * }>|null $items
-     * @param list<PaymentDetail|array{
-     *   bankAccountNumber?: string|null,
-     *   iban?: string|null,
-     *   paymentReference?: string|null,
-     *   swift?: string|null,
-     * }>|null $paymentDetails
+     * @param list<ItemShape>|null $items
+     * @param list<PaymentDetailShape>|null $paymentDetails
      * @param DocumentState|value-of<DocumentState> $state
      * @param TaxCode|value-of<TaxCode> $taxCode
-     * @param list<TaxDetail|array{
-     *   amount?: string|null, rate?: string|null
-     * }>|null $taxDetails
+     * @param list<TaxDetailShape>|null $taxDetails
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
@@ -560,15 +527,7 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<DocumentResponse\Allowance|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<DocumentResponse\Allowance\TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $allowances
+     * @param list<AllowanceShape>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
@@ -590,13 +549,7 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<DocumentAttachment|array{
-     *   id: string,
-     *   fileName: string,
-     *   fileSize?: int|null,
-     *   fileType?: string|null,
-     *   fileURL?: string|null,
-     * }>|null $attachments
+     * @param list<DocumentAttachmentShape>|null $attachments
      */
     public function withAttachments(?array $attachments): self
     {
@@ -630,15 +583,7 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<DocumentResponse\Charge|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<DocumentResponse\Charge\ReasonCode>|null,
-     *   taxCode?: value-of<DocumentResponse\Charge\TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $charges
+     * @param list<ChargeShape>|null $charges
      */
     public function withCharges(?array $charges): self
     {
@@ -810,19 +755,7 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<Item|array{
-     *   allowances?: list<Allowance>|null,
-     *   amount?: string|null,
-     *   charges?: list<Charge>|null,
-     *   date?: null|null,
-     *   description?: string|null,
-     *   productCode?: string|null,
-     *   quantity?: string|null,
-     *   tax?: string|null,
-     *   taxRate?: string|null,
-     *   unit?: value-of<UnitOfMeasureCode>|null,
-     *   unitPrice?: string|null,
-     * }>|null $items
+     * @param list<ItemShape>|null $items
      */
     public function withItems(?array $items): self
     {
@@ -844,12 +777,7 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<PaymentDetail|array{
-     *   bankAccountNumber?: string|null,
-     *   iban?: string|null,
-     *   paymentReference?: string|null,
-     *   swift?: string|null,
-     * }>|null $paymentDetails
+     * @param list<PaymentDetailShape>|null $paymentDetails
      */
     public function withPaymentDetails(?array $paymentDetails): self
     {
@@ -1010,9 +938,7 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<TaxDetail|array{
-     *   amount?: string|null, rate?: string|null
-     * }>|null $taxDetails
+     * @param list<TaxDetailShape>|null $taxDetails
      */
     public function withTaxDetails(?array $taxDetails): self
     {

@@ -14,7 +14,7 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue\Type;
  * @phpstan-type IssueShape = array{
  *   message: string,
  *   schematron: string,
- *   type: value-of<Type>,
+ *   type: Type|value-of<Type>,
  *   flag?: string|null,
  *   location?: string|null,
  *   ruleID?: string|null,

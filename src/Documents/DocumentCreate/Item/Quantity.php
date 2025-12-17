@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals. Can be negative for credit notes or corrections.
+ *
+ * @phpstan-type QuantityShape = float|string
  */
 final class Quantity implements ConverterSource
 {

@@ -18,7 +18,7 @@ interface InboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|InboxListParams $params
+     * @param array<string,mixed>|InboxListParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -32,7 +32,7 @@ interface InboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|InboxListCreditNotesParams $params
+     * @param array<string,mixed>|InboxListCreditNotesParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -46,7 +46,7 @@ interface InboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|InboxListInvoicesParams $params
+     * @param array<string,mixed>|InboxListInvoicesParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *

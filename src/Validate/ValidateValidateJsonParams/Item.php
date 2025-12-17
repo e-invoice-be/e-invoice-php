@@ -9,23 +9,29 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance;
-use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\ReasonCode;
-use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\TaxCode;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge;
 
 /**
+ * @phpstan-import-type AllowanceShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance
+ * @phpstan-import-type AmountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Amount
+ * @phpstan-import-type ChargeShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge
+ * @phpstan-import-type QuantityShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Quantity
+ * @phpstan-import-type TaxShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Tax
+ * @phpstan-import-type TaxRateShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\TaxRate
+ * @phpstan-import-type UnitPriceShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\UnitPrice
+ *
  * @phpstan-type ItemShape = array{
- *   allowances?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance>|null,
- *   amount?: float|string|null,
- *   charges?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge>|null,
+ *   allowances?: list<AllowanceShape>|null,
+ *   amount?: AmountShape|null,
+ *   charges?: list<ChargeShape>|null,
  *   date?: null|null,
  *   description?: string|null,
  *   productCode?: string|null,
- *   quantity?: float|string|null,
- *   tax?: float|string|null,
- *   taxRate?: float|string|null,
- *   unit?: value-of<UnitOfMeasureCode>|null,
- *   unitPrice?: float|string|null,
+ *   quantity?: QuantityShape|null,
+ *   tax?: TaxShape|null,
+ *   taxRate?: TaxRateShape|null,
+ *   unit?: null|UnitOfMeasureCode|value-of<UnitOfMeasureCode>,
+ *   unitPrice?: UnitPriceShape|null,
  * }
  */
 final class Item implements BaseModel
@@ -119,25 +125,14 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Allowance|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $allowances
-     * @param list<Charge|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<Charge\ReasonCode>|null,
-     *   taxCode?: value-of<Charge\TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $charges
+     * @param list<AllowanceShape>|null $allowances
+     * @param AmountShape|null $amount
+     * @param list<ChargeShape>|null $charges
+     * @param QuantityShape|null $quantity
+     * @param TaxShape|null $tax
+     * @param TaxRateShape|null $taxRate
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
+     * @param UnitPriceShape|null $unitPrice
      */
     public static function with(
         ?array $allowances = null,
@@ -173,15 +168,7 @@ final class Item implements BaseModel
     /**
      * The allowances of the line item.
      *
-     * @param list<Allowance|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $allowances
+     * @param list<AllowanceShape>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
@@ -193,6 +180,8 @@ final class Item implements BaseModel
 
     /**
      * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
+     *
+     * @param AmountShape|null $amount
      */
     public function withAmount(float|string|null $amount): self
     {
@@ -205,15 +194,7 @@ final class Item implements BaseModel
     /**
      * The charges of the line item.
      *
-     * @param list<Charge|array{
-     *   amount?: float|string|null,
-     *   baseAmount?: float|string|null,
-     *   multiplierFactor?: float|string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<Charge\ReasonCode>|null,
-     *   taxCode?: value-of<Charge\TaxCode>|null,
-     *   taxRate?: float|string|null,
-     * }>|null $charges
+     * @param list<ChargeShape>|null $charges
      */
     public function withCharges(?array $charges): self
     {
@@ -258,6 +239,8 @@ final class Item implements BaseModel
 
     /**
      * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals. Can be negative for credit notes or corrections.
+     *
+     * @param QuantityShape|null $quantity
      */
     public function withQuantity(float|string|null $quantity): self
     {
@@ -269,6 +252,8 @@ final class Item implements BaseModel
 
     /**
      * The total VAT amount for the line item. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
+     *
+     * @param TaxShape|null $tax
      */
     public function withTax(float|string|null $tax): self
     {
@@ -280,6 +265,8 @@ final class Item implements BaseModel
 
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals.
+     *
+     * @param TaxRateShape|null $taxRate
      */
     public function withTaxRate(float|string|null $taxRate): self
     {
@@ -304,6 +291,8 @@ final class Item implements BaseModel
 
     /**
      * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
+     *
+     * @param UnitPriceShape|null $unitPrice
      */
     public function withUnitPrice(float|string|null $unitPrice): self
     {

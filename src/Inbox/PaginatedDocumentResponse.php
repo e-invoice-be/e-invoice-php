@@ -7,22 +7,13 @@ namespace EInvoiceAPI\Inbox;
 use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
-use EInvoiceAPI\Documents\CurrencyCode;
-use EInvoiceAPI\Documents\DocumentDirection;
 use EInvoiceAPI\Documents\DocumentResponse;
-use EInvoiceAPI\Documents\DocumentResponse\Allowance;
-use EInvoiceAPI\Documents\DocumentResponse\Charge;
-use EInvoiceAPI\Documents\DocumentResponse\Item;
-use EInvoiceAPI\Documents\DocumentResponse\PaymentDetail;
-use EInvoiceAPI\Documents\DocumentResponse\TaxCode;
-use EInvoiceAPI\Documents\DocumentResponse\TaxDetail;
-use EInvoiceAPI\Documents\DocumentResponse\Vatex;
-use EInvoiceAPI\Documents\DocumentType;
 
 /**
+ * @phpstan-import-type DocumentResponseShape from \EInvoiceAPI\Documents\DocumentResponse
+ *
  * @phpstan-type PaginatedDocumentResponseShape = array{
- *   items: list<DocumentResponse>,
+ *   items: list<DocumentResponseShape>,
  *   page: int,
  *   pageSize: int,
  *   pages: int,
@@ -81,56 +72,7 @@ final class PaginatedDocumentResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentResponse|array{
-     *   id: string,
-     *   allowances?: list<Allowance>|null,
-     *   amountDue?: string|null,
-     *   attachments?: list<DocumentAttachment>|null,
-     *   billingAddress?: string|null,
-     *   billingAddressRecipient?: string|null,
-     *   charges?: list<Charge>|null,
-     *   currency?: value-of<CurrencyCode>|null,
-     *   customerAddress?: string|null,
-     *   customerAddressRecipient?: string|null,
-     *   customerCompanyID?: string|null,
-     *   customerEmail?: string|null,
-     *   customerID?: string|null,
-     *   customerName?: string|null,
-     *   customerTaxID?: string|null,
-     *   direction?: value-of<DocumentDirection>|null,
-     *   documentType?: value-of<DocumentType>|null,
-     *   dueDate?: string|null,
-     *   invoiceDate?: string|null,
-     *   invoiceID?: string|null,
-     *   invoiceTotal?: string|null,
-     *   items?: list<Item>|null,
-     *   note?: string|null,
-     *   paymentDetails?: list<PaymentDetail>|null,
-     *   paymentTerm?: string|null,
-     *   purchaseOrder?: string|null,
-     *   remittanceAddress?: string|null,
-     *   remittanceAddressRecipient?: string|null,
-     *   serviceAddress?: string|null,
-     *   serviceAddressRecipient?: string|null,
-     *   serviceEndDate?: string|null,
-     *   serviceStartDate?: string|null,
-     *   shippingAddress?: string|null,
-     *   shippingAddressRecipient?: string|null,
-     *   state?: value-of<DocumentState>|null,
-     *   subtotal?: string|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxDetails?: list<TaxDetail>|null,
-     *   totalDiscount?: string|null,
-     *   totalTax?: string|null,
-     *   vatex?: value-of<Vatex>|null,
-     *   vatexNote?: string|null,
-     *   vendorAddress?: string|null,
-     *   vendorAddressRecipient?: string|null,
-     *   vendorCompanyID?: string|null,
-     *   vendorEmail?: string|null,
-     *   vendorName?: string|null,
-     *   vendorTaxID?: string|null,
-     * }> $items
+     * @param list<DocumentResponseShape> $items
      */
     public static function with(
         array $items,
@@ -151,56 +93,7 @@ final class PaginatedDocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<DocumentResponse|array{
-     *   id: string,
-     *   allowances?: list<Allowance>|null,
-     *   amountDue?: string|null,
-     *   attachments?: list<DocumentAttachment>|null,
-     *   billingAddress?: string|null,
-     *   billingAddressRecipient?: string|null,
-     *   charges?: list<Charge>|null,
-     *   currency?: value-of<CurrencyCode>|null,
-     *   customerAddress?: string|null,
-     *   customerAddressRecipient?: string|null,
-     *   customerCompanyID?: string|null,
-     *   customerEmail?: string|null,
-     *   customerID?: string|null,
-     *   customerName?: string|null,
-     *   customerTaxID?: string|null,
-     *   direction?: value-of<DocumentDirection>|null,
-     *   documentType?: value-of<DocumentType>|null,
-     *   dueDate?: string|null,
-     *   invoiceDate?: string|null,
-     *   invoiceID?: string|null,
-     *   invoiceTotal?: string|null,
-     *   items?: list<Item>|null,
-     *   note?: string|null,
-     *   paymentDetails?: list<PaymentDetail>|null,
-     *   paymentTerm?: string|null,
-     *   purchaseOrder?: string|null,
-     *   remittanceAddress?: string|null,
-     *   remittanceAddressRecipient?: string|null,
-     *   serviceAddress?: string|null,
-     *   serviceAddressRecipient?: string|null,
-     *   serviceEndDate?: string|null,
-     *   serviceStartDate?: string|null,
-     *   shippingAddress?: string|null,
-     *   shippingAddressRecipient?: string|null,
-     *   state?: value-of<DocumentState>|null,
-     *   subtotal?: string|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxDetails?: list<TaxDetail>|null,
-     *   totalDiscount?: string|null,
-     *   totalTax?: string|null,
-     *   vatex?: value-of<Vatex>|null,
-     *   vatexNote?: string|null,
-     *   vendorAddress?: string|null,
-     *   vendorAddressRecipient?: string|null,
-     *   vendorCompanyID?: string|null,
-     *   vendorEmail?: string|null,
-     *   vendorName?: string|null,
-     *   vendorTaxID?: string|null,
-     * }> $items
+     * @param list<DocumentResponseShape> $items
      */
     public function withItems(array $items): self
     {

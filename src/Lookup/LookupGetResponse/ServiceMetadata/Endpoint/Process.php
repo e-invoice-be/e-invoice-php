@@ -7,15 +7,17 @@ namespace EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
 use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use EInvoiceAPI\Lookup\Certificate;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Endpoint;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
 /**
  * Process information in the Peppol network.
  *
+ * @phpstan-import-type EndpointShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Endpoint
+ * @phpstan-import-type ProcessIDShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID
+ *
  * @phpstan-type ProcessShape = array{
- *   endpoints: list<Endpoint>, processID: ProcessID
+ *   endpoints: list<EndpointShape>, processID: ProcessID|ProcessIDShape
  * }
  */
 final class Process implements BaseModel
@@ -61,17 +63,8 @@ final class Process implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Endpoint|array{
-     *   address: string,
-     *   transportProfile: string,
-     *   certificate?: Certificate|null,
-     *   serviceActivationDate?: string|null,
-     *   serviceDescription?: string|null,
-     *   serviceExpirationDate?: string|null,
-     *   technicalContactURL?: string|null,
-     *   technicalInformationURL?: string|null,
-     * }> $endpoints
-     * @param ProcessID|array{scheme: string, value: string} $processID
+     * @param list<EndpointShape> $endpoints
+     * @param ProcessIDShape $processID
      */
     public static function with(
         array $endpoints,
@@ -88,16 +81,7 @@ final class Process implements BaseModel
     /**
      * List of endpoints supporting this process.
      *
-     * @param list<Endpoint|array{
-     *   address: string,
-     *   transportProfile: string,
-     *   certificate?: Certificate|null,
-     *   serviceActivationDate?: string|null,
-     *   serviceDescription?: string|null,
-     *   serviceExpirationDate?: string|null,
-     *   technicalContactURL?: string|null,
-     *   technicalInformationURL?: string|null,
-     * }> $endpoints
+     * @param list<EndpointShape> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {
@@ -110,7 +94,7 @@ final class Process implements BaseModel
     /**
      * Identifier of the process.
      *
-     * @param ProcessID|array{scheme: string, value: string} $processID
+     * @param ProcessIDShape $processID
      */
     public function withProcessID(ProcessID|array $processID): self
     {

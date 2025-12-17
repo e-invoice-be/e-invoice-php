@@ -16,8 +16,10 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
  * This model represents the validation result of a Peppol ID in the Peppol network,
  * including whether the ID is valid and what document types it supports.
  *
+ * @phpstan-import-type BusinessCardShape from \EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard
+ *
  * @phpstan-type ValidateValidatePeppolIDResponseShape = array{
- *   businessCard: BusinessCard|null,
+ *   businessCard: null|BusinessCard|BusinessCardShape,
  *   businessCardValid: bool,
  *   dnsValid: bool,
  *   isValid: bool,
@@ -87,9 +89,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BusinessCard|array{
-     *   countryCode?: string|null, name?: string|null, registrationDate?: string|null
-     * }|null $businessCard
+     * @param BusinessCardShape|null $businessCard
      * @param list<string> $supportedDocumentTypes
      */
     public static function with(
@@ -114,9 +114,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     /**
      * Business card information for the Peppol ID.
      *
-     * @param BusinessCard|array{
-     *   countryCode?: string|null, name?: string|null, registrationDate?: string|null
-     * }|null $businessCard
+     * @param BusinessCardShape|null $businessCard
      */
     public function withBusinessCard(
         BusinessCard|array|null $businessCard

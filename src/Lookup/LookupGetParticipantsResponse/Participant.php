@@ -10,16 +10,18 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
-use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifier;
 
 /**
  * Represents a Peppol participant with their details.
  *
+ * @phpstan-import-type DocumentTypeShape from \EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType
+ * @phpstan-import-type EntityShape from \EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity
+ *
  * @phpstan-type ParticipantShape = array{
  *   peppolID: string,
  *   peppolScheme: string,
- *   documentTypes?: list<DocumentType>|null,
- *   entities?: list<Entity>|null,
+ *   documentTypes?: list<DocumentTypeShape>|null,
+ *   entities?: list<EntityShape>|null,
  * }
  */
 final class Participant implements BaseModel
@@ -79,16 +81,8 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
-     * @param list<Entity|array{
-     *   additionalInfo?: string|null,
-     *   countryCode?: string|null,
-     *   geoInfo?: string|null,
-     *   identifiers?: list<Identifier>|null,
-     *   name?: string|null,
-     *   registrationDate?: string|null,
-     *   website?: string|null,
-     * }> $entities
+     * @param list<DocumentTypeShape> $documentTypes
+     * @param list<EntityShape> $entities
      */
     public static function with(
         string $peppolID,
@@ -132,7 +126,7 @@ final class Participant implements BaseModel
     /**
      * List of supported document types.
      *
-     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
+     * @param list<DocumentTypeShape> $documentTypes
      */
     public function withDocumentTypes(array $documentTypes): self
     {
@@ -145,15 +139,7 @@ final class Participant implements BaseModel
     /**
      * List of business entities.
      *
-     * @param list<Entity|array{
-     *   additionalInfo?: string|null,
-     *   countryCode?: string|null,
-     *   geoInfo?: string|null,
-     *   identifiers?: list<Identifier>|null,
-     *   name?: string|null,
-     *   registrationDate?: string|null,
-     *   website?: string|null,
-     * }> $entities
+     * @param list<EntityShape> $entities
      */
     public function withEntities(array $entities): self
     {

@@ -9,8 +9,10 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type AmountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail\Amount
+ *
  * @phpstan-type TaxDetailShape = array{
- *   amount?: float|string|null, rate?: string|null
+ *   amount?: AmountShape|null, rate?: string|null
  * }
  */
 final class TaxDetail implements BaseModel
@@ -39,6 +41,8 @@ final class TaxDetail implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param AmountShape|null $amount
      */
     public static function with(
         float|string|null $amount = null,
@@ -54,6 +58,8 @@ final class TaxDetail implements BaseModel
 
     /**
      * The tax amount for this tax category. Must be rounded to maximum 2 decimals.
+     *
+     * @param AmountShape|null $amount
      */
     public function withAmount(float|string|null $amount): self
     {

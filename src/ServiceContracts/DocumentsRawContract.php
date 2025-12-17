@@ -20,7 +20,7 @@ interface DocumentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DocumentCreateParams $params
+     * @param array<string,mixed>|DocumentCreateParams $params
      *
      * @return BaseResponse<DocumentResponse>
      *
@@ -58,7 +58,7 @@ interface DocumentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DocumentCreateFromPdfParams $params
+     * @param array<string,mixed>|DocumentCreateFromPdfParams $params
      *
      * @return BaseResponse<DocumentNewFromPdfResponse>
      *
@@ -72,7 +72,7 @@ interface DocumentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DocumentSendParams $params
+     * @param array<string,mixed>|DocumentSendParams $params
      *
      * @return BaseResponse<DocumentResponse>
      *

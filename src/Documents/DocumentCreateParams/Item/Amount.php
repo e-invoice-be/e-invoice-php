@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
+ *
+ * @phpstan-type AmountShape = float|string
  */
 final class Amount implements ConverterSource
 {

@@ -8,23 +8,24 @@ use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\Allowance;
-use EInvoiceAPI\Documents\Allowance\ReasonCode;
-use EInvoiceAPI\Documents\Allowance\TaxCode;
 use EInvoiceAPI\Documents\Charge;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
 /**
+ * @phpstan-import-type AllowanceShape from \EInvoiceAPI\Documents\Allowance
+ * @phpstan-import-type ChargeShape from \EInvoiceAPI\Documents\Charge
+ *
  * @phpstan-type ItemShape = array{
- *   allowances?: list<Allowance>|null,
+ *   allowances?: list<AllowanceShape>|null,
  *   amount?: string|null,
- *   charges?: list<Charge>|null,
+ *   charges?: list<ChargeShape>|null,
  *   date?: null|null,
  *   description?: string|null,
  *   productCode?: string|null,
  *   quantity?: string|null,
  *   tax?: string|null,
  *   taxRate?: string|null,
- *   unit?: value-of<UnitOfMeasureCode>|null,
+ *   unit?: null|UnitOfMeasureCode|value-of<UnitOfMeasureCode>,
  *   unitPrice?: string|null,
  * }
  */
@@ -113,24 +114,8 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Allowance|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $allowances
-     * @param list<Charge|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<Charge\ReasonCode>|null,
-     *   taxCode?: value-of<Charge\TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $charges
+     * @param list<AllowanceShape>|null $allowances
+     * @param list<ChargeShape>|null $charges
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
     public static function with(
@@ -167,15 +152,7 @@ final class Item implements BaseModel
     /**
      * The allowances of the line item.
      *
-     * @param list<Allowance|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<ReasonCode>|null,
-     *   taxCode?: value-of<TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $allowances
+     * @param list<AllowanceShape>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
@@ -199,15 +176,7 @@ final class Item implements BaseModel
     /**
      * The charges of the line item.
      *
-     * @param list<Charge|array{
-     *   amount?: string|null,
-     *   baseAmount?: string|null,
-     *   multiplierFactor?: string|null,
-     *   reason?: string|null,
-     *   reasonCode?: value-of<Charge\ReasonCode>|null,
-     *   taxCode?: value-of<Charge\TaxCode>|null,
-     *   taxRate?: string|null,
-     * }>|null $charges
+     * @param list<ChargeShape>|null $charges
      */
     public function withCharges(?array $charges): self
     {

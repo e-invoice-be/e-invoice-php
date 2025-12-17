@@ -14,7 +14,7 @@ use EInvoiceAPI\Me\MeGetResponse\Plan;
  * @phpstan-type MeGetResponseShape = array{
  *   creditBalance: int,
  *   name: string,
- *   plan: value-of<Plan>,
+ *   plan: Plan|value-of<Plan>,
  *   bccRecipientEmail?: string|null,
  *   companyAddress?: string|null,
  *   companyCity?: string|null,

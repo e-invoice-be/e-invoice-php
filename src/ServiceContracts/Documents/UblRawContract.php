@@ -16,7 +16,7 @@ interface UblRawContract
     /**
      * @api
      *
-     * @param array<mixed>|UblCreateFromUblParams $params
+     * @param array<string,mixed>|UblCreateFromUblParams $params
      *
      * @return BaseResponse<DocumentResponse>
      *

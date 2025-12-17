@@ -14,7 +14,9 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  *
  * @see EInvoiceAPI\Services\InboxService::listInvoices()
  *
- * @phpstan-type InboxListInvoicesParamsShape = array{page?: int, pageSize?: int}
+ * @phpstan-type InboxListInvoicesParamsShape = array{
+ *   page?: int|null, pageSize?: int|null
+ * }
  */
 final class InboxListInvoicesParams implements BaseModel
 {

@@ -17,7 +17,7 @@ interface LookupRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LookupRetrieveParams $params
+     * @param array<string,mixed>|LookupRetrieveParams $params
      *
      * @return BaseResponse<LookupGetResponse>
      *
@@ -31,7 +31,7 @@ interface LookupRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LookupRetrieveParticipantsParams $params
+     * @param array<string,mixed>|LookupRetrieveParticipantsParams $params
      *
      * @return BaseResponse<LookupGetParticipantsResponse>
      *

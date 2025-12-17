@@ -17,7 +17,7 @@ interface OutboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|OutboxListDraftDocumentsParams $params
+     * @param array<string,mixed>|OutboxListDraftDocumentsParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -31,7 +31,7 @@ interface OutboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|OutboxListReceivedDocumentsParams $params
+     * @param array<string,mixed>|OutboxListReceivedDocumentsParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *

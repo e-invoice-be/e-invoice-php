@@ -18,7 +18,7 @@ interface AttachmentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|AttachmentRetrieveParams $params
+     * @param array<string,mixed>|AttachmentRetrieveParams $params
      *
      * @return BaseResponse<DocumentAttachment>
      *
@@ -45,7 +45,7 @@ interface AttachmentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|AttachmentDeleteParams $params
+     * @param array<string,mixed>|AttachmentDeleteParams $params
      *
      * @return BaseResponse<AttachmentDeleteResponse>
      *
@@ -62,7 +62,7 @@ interface AttachmentsRawContract
      *
      * @api
      *
-     * @param array<mixed>|AttachmentAddParams $params
+     * @param array<string,mixed>|AttachmentAddParams $params
      *
      * @return BaseResponse<DocumentAttachment>
      *

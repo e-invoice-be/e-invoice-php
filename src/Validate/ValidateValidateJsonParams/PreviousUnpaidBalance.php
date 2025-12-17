@@ -10,6 +10,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
+ *
+ * @phpstan-type PreviousUnpaidBalanceShape = float|string
  */
 final class PreviousUnpaidBalance implements ConverterSource
 {

@@ -13,8 +13,10 @@ use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo\DNSRecord;
 /**
  * Information about the DNS lookup performed.
  *
+ * @phpstan-import-type DNSRecordShape from \EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo\DNSRecord
+ *
  * @phpstan-type DNSInfoShape = array{
- *   dnsRecords: list<DNSRecord>,
+ *   dnsRecords: list<DNSRecordShape>,
  *   smlHostname: string,
  *   status: string,
  *   error?: string|null,
@@ -75,7 +77,7 @@ final class DNSInfo implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DNSRecord|array{ip: string}> $dnsRecords
+     * @param list<DNSRecordShape> $dnsRecords
      */
     public static function with(
         array $dnsRecords,
@@ -97,7 +99,7 @@ final class DNSInfo implements BaseModel
     /**
      * List of DNS records found for the Peppol participant.
      *
-     * @param list<DNSRecord|array{ip: string}> $dnsRecords
+     * @param list<DNSRecordShape> $dnsRecords
      */
     public function withDNSRecords(array $dnsRecords): self
     {

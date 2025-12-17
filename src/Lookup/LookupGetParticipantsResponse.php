@@ -9,18 +9,18 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
-use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\DocumentType;
-use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
 
 /**
  * Represents the result of a Peppol directory search.
+ *
+ * @phpstan-import-type ParticipantShape from \EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant
  *
  * @phpstan-type LookupGetParticipantsResponseShape = array{
  *   queryTerms: string,
  *   searchDate: string,
  *   totalCount: int,
  *   usedCount: int,
- *   participants?: list<Participant>|null,
+ *   participants?: list<ParticipantShape>|null,
  * }
  */
 final class LookupGetParticipantsResponse implements BaseModel
@@ -90,12 +90,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Participant|array{
-     *   peppolID: string,
-     *   peppolScheme: string,
-     *   documentTypes?: list<DocumentType>|null,
-     *   entities?: list<Entity>|null,
-     * }> $participants
+     * @param list<ParticipantShape> $participants
      */
     public static function with(
         string $queryTerms,
@@ -163,12 +158,7 @@ final class LookupGetParticipantsResponse implements BaseModel
     /**
      * List of participants.
      *
-     * @param list<Participant|array{
-     *   peppolID: string,
-     *   peppolScheme: string,
-     *   documentTypes?: list<DocumentType>|null,
-     *   entities?: list<Entity>|null,
-     * }> $participants
+     * @param list<ParticipantShape> $participants
      */
     public function withParticipants(array $participants): self
     {

@@ -13,14 +13,19 @@ use EInvoiceAPI\Documents\DocumentCreateParams\Charge\TaxCode;
 /**
  * A charge is an additional fee for example for late payment, late delivery, etc.
  *
+ * @phpstan-import-type AmountShape from \EInvoiceAPI\Documents\DocumentCreateParams\Charge\Amount
+ * @phpstan-import-type BaseAmountShape from \EInvoiceAPI\Documents\DocumentCreateParams\Charge\BaseAmount
+ * @phpstan-import-type MultiplierFactorShape from \EInvoiceAPI\Documents\DocumentCreateParams\Charge\MultiplierFactor
+ * @phpstan-import-type TaxRateShape from \EInvoiceAPI\Documents\DocumentCreateParams\Charge\TaxRate
+ *
  * @phpstan-type ChargeShape = array{
- *   amount?: float|string|null,
- *   baseAmount?: float|string|null,
- *   multiplierFactor?: float|string|null,
+ *   amount?: AmountShape|null,
+ *   baseAmount?: BaseAmountShape|null,
+ *   multiplierFactor?: MultiplierFactorShape|null,
  *   reason?: string|null,
- *   reasonCode?: value-of<ReasonCode>|null,
- *   taxCode?: value-of<\EInvoiceAPI\Documents\DocumentCreateParams\Charge\TaxCode>|null,
- *   taxRate?: float|string|null,
+ *   reasonCode?: null|ReasonCode|value-of<ReasonCode>,
+ *   taxCode?: null|\EInvoiceAPI\Documents\DocumentCreateParams\Charge\TaxCode|value-of<\EInvoiceAPI\Documents\DocumentCreateParams\Charge\TaxCode>,
+ *   taxRate?: TaxRateShape|null,
  * }
  */
 final class Charge implements BaseModel
@@ -92,8 +97,12 @@ final class Charge implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param AmountShape|null $amount
+     * @param BaseAmountShape|null $baseAmount
+     * @param MultiplierFactorShape|null $multiplierFactor
      * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
      * @param TaxCode|value-of<TaxCode>|null $taxCode
+     * @param TaxRateShape|null $taxRate
      */
     public static function with(
         float|string|null $amount = null,
@@ -119,6 +128,8 @@ final class Charge implements BaseModel
 
     /**
      * The charge amount, without VAT. Must be rounded to maximum 2 decimals.
+     *
+     * @param AmountShape|null $amount
      */
     public function withAmount(float|string|null $amount): self
     {
@@ -130,6 +141,8 @@ final class Charge implements BaseModel
 
     /**
      * The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals.
+     *
+     * @param BaseAmountShape|null $baseAmount
      */
     public function withBaseAmount(float|string|null $baseAmount): self
     {
@@ -141,6 +154,8 @@ final class Charge implements BaseModel
 
     /**
      * The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20.
+     *
+     * @param MultiplierFactorShape|null $multiplierFactor
      */
     public function withMultiplierFactor(
         float|string|null $multiplierFactor
@@ -195,6 +210,8 @@ final class Charge implements BaseModel
 
     /**
      * The VAT rate, represented as percentage that applies to the charge.
+     *
+     * @param TaxRateShape|null $taxRate
      */
     public function withTaxRate(float|string|null $taxRate): self
     {

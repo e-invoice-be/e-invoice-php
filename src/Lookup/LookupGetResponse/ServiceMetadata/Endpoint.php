@@ -10,17 +10,19 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType;
 use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
-use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID;
 
 /**
  * Information about a Peppol participant's endpoint.
  *
+ * @phpstan-import-type DocumentTypeShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\DocumentType
+ * @phpstan-import-type ProcessShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process
+ *
  * @phpstan-type EndpointShape = array{
- *   documentTypes: list<DocumentType>,
+ *   documentTypes: list<DocumentTypeShape>,
  *   status: string,
  *   url: string,
  *   error?: string|null,
- *   processes?: list<Process>|null,
+ *   processes?: list<ProcessShape>|null,
  * }
  */
 final class Endpoint implements BaseModel
@@ -86,11 +88,8 @@ final class Endpoint implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
-     * @param list<Process|array{
-     *   endpoints: list<Process\Endpoint>,
-     *   processID: ProcessID,
-     * }>|null $processes
+     * @param list<DocumentTypeShape> $documentTypes
+     * @param list<ProcessShape>|null $processes
      */
     public static function with(
         array $documentTypes,
@@ -114,7 +113,7 @@ final class Endpoint implements BaseModel
     /**
      * List of document types supported by this endpoint.
      *
-     * @param list<DocumentType|array{scheme: string, value: string}> $documentTypes
+     * @param list<DocumentTypeShape> $documentTypes
      */
     public function withDocumentTypes(array $documentTypes): self
     {
@@ -160,10 +159,7 @@ final class Endpoint implements BaseModel
     /**
      * List of processes supported by this endpoint.
      *
-     * @param list<Process|array{
-     *   endpoints: list<Process\Endpoint>,
-     *   processID: ProcessID,
-     * }>|null $processes
+     * @param list<ProcessShape>|null $processes
      */
     public function withProcesses(?array $processes): self
     {
