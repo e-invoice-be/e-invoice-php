@@ -83,7 +83,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<IdentifierShape> $identifiers
+     * @param list<IdentifierShape>|null $identifiers
      */
     public static function with(
         ?string $additionalInfo = null,

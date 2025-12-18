@@ -89,8 +89,8 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BusinessCardShape|null $businessCard
-     * @param list<string> $supportedDocumentTypes
+     * @param BusinessCard|BusinessCardShape|null $businessCard
+     * @param list<string>|null $supportedDocumentTypes
      */
     public static function with(
         BusinessCard|array|null $businessCard,
@@ -114,7 +114,7 @@ final class ValidateValidatePeppolIDResponse implements BaseModel
     /**
      * Business card information for the Peppol ID.
      *
-     * @param BusinessCardShape|null $businessCard
+     * @param BusinessCard|BusinessCardShape|null $businessCard
      */
     public function withBusinessCard(
         BusinessCard|array|null $businessCard

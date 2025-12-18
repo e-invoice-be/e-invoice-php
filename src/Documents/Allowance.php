@@ -85,7 +85,7 @@ final class Allowance implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
-     * @param TaxCode|value-of<TaxCode> $taxCode
+     * @param TaxCode|value-of<TaxCode>|null $taxCode
      */
     public static function with(
         ?string $amount = null,

@@ -403,13 +403,13 @@ final class DocumentResponse implements BaseModel
      * @param list<AllowanceShape>|null $allowances
      * @param list<DocumentAttachmentShape>|null $attachments
      * @param list<ChargeShape>|null $charges
-     * @param CurrencyCode|value-of<CurrencyCode> $currency
-     * @param DocumentDirection|value-of<DocumentDirection> $direction
-     * @param DocumentType|value-of<DocumentType> $documentType
+     * @param CurrencyCode|value-of<CurrencyCode>|null $currency
+     * @param DocumentDirection|value-of<DocumentDirection>|null $direction
+     * @param DocumentType|value-of<DocumentType>|null $documentType
      * @param list<ItemShape>|null $items
      * @param list<PaymentDetailShape>|null $paymentDetails
-     * @param DocumentState|value-of<DocumentState> $state
-     * @param TaxCode|value-of<TaxCode> $taxCode
+     * @param DocumentState|value-of<DocumentState>|null $state
+     * @param TaxCode|value-of<TaxCode>|null $taxCode
      * @param list<TaxDetailShape>|null $taxDetails
      * @param Vatex|value-of<Vatex>|null $vatex
      */

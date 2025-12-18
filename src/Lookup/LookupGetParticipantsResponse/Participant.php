@@ -81,8 +81,8 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentTypeShape> $documentTypes
-     * @param list<EntityShape> $entities
+     * @param list<DocumentTypeShape>|null $documentTypes
+     * @param list<EntityShape>|null $entities
      */
     public static function with(
         string $peppolID,

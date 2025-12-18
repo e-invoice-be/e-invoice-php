@@ -139,12 +139,12 @@ final class LookupGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BusinessCardShape $businessCard
+     * @param BusinessCard|BusinessCardShape $businessCard
      * @param list<CertificateShape> $certificates
-     * @param DNSInfoShape $dnsInfo
+     * @param DNSInfo|DNSInfoShape $dnsInfo
      * @param list<string> $errors
-     * @param QueryMetadataShape $queryMetadata
-     * @param ServiceMetadataShape $serviceMetadata
+     * @param QueryMetadata|QueryMetadataShape $queryMetadata
+     * @param ServiceMetadata|ServiceMetadataShape $serviceMetadata
      */
     public static function with(
         BusinessCard|array $businessCard,
@@ -173,7 +173,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Business card information for the Peppol participant.
      *
-     * @param BusinessCardShape $businessCard
+     * @param BusinessCard|BusinessCardShape $businessCard
      */
     public function withBusinessCard(BusinessCard|array $businessCard): self
     {
@@ -199,7 +199,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Information about the DNS lookup performed.
      *
-     * @param DNSInfoShape $dnsInfo
+     * @param DNSInfo|DNSInfoShape $dnsInfo
      */
     public function withDNSInfo(DNSInfo|array $dnsInfo): self
     {
@@ -236,7 +236,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Metadata about the query that was performed.
      *
-     * @param QueryMetadataShape $queryMetadata
+     * @param QueryMetadata|QueryMetadataShape $queryMetadata
      */
     public function withQueryMetadata(QueryMetadata|array $queryMetadata): self
     {
@@ -249,7 +249,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * Service metadata information for the Peppol participant.
      *
-     * @param ServiceMetadataShape $serviceMetadata
+     * @param ServiceMetadata|ServiceMetadataShape $serviceMetadata
      */
     public function withServiceMetadata(
         ServiceMetadata|array $serviceMetadata

@@ -409,16 +409,16 @@ final class ValidateValidateJsonParams implements BaseModel
      * @param AmountDueShape|null $amountDue
      * @param list<DocumentAttachmentCreateShape>|null $attachments
      * @param list<ChargeShape>|null $charges
-     * @param CurrencyCode|value-of<CurrencyCode> $currency
-     * @param DocumentDirection|value-of<DocumentDirection> $direction
-     * @param DocumentType|value-of<DocumentType> $documentType
+     * @param CurrencyCode|value-of<CurrencyCode>|null $currency
+     * @param DocumentDirection|value-of<DocumentDirection>|null $direction
+     * @param DocumentType|value-of<DocumentType>|null $documentType
      * @param InvoiceTotalShape|null $invoiceTotal
-     * @param list<ItemShape> $items
+     * @param list<ItemShape>|null $items
      * @param list<PaymentDetailCreateShape>|null $paymentDetails
      * @param PreviousUnpaidBalanceShape|null $previousUnpaidBalance
-     * @param DocumentState|value-of<DocumentState> $state
+     * @param DocumentState|value-of<DocumentState>|null $state
      * @param SubtotalShape|null $subtotal
-     * @param TaxCode|value-of<TaxCode> $taxCode
+     * @param TaxCode|value-of<TaxCode>|null $taxCode
      * @param list<TaxDetailShape>|null $taxDetails
      * @param TotalDiscountShape|null $totalDiscount
      * @param TotalTaxShape|null $totalTax

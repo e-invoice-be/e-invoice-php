@@ -64,7 +64,7 @@ final class Process implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<EndpointShape> $endpoints
-     * @param ProcessIDShape $processID
+     * @param ProcessID|ProcessIDShape $processID
      */
     public static function with(
         array $endpoints,
@@ -94,7 +94,7 @@ final class Process implements BaseModel
     /**
      * Identifier of the process.
      *
-     * @param ProcessIDShape $processID
+     * @param ProcessID|ProcessIDShape $processID
      */
     public function withProcessID(ProcessID|array $processID): self
     {

@@ -103,7 +103,7 @@ final class Endpoint implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CertificateShape|null $certificate
+     * @param Certificate|CertificateShape|null $certificate
      */
     public static function with(
         string $address,
@@ -155,7 +155,7 @@ final class Endpoint implements BaseModel
     /**
      * Certificate information for a Peppol endpoint.
      *
-     * @param CertificateShape|null $certificate
+     * @param Certificate|CertificateShape|null $certificate
      */
     public function withCertificate(Certificate|array|null $certificate): self
     {

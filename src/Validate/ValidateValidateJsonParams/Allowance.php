@@ -96,7 +96,7 @@ final class Allowance implements BaseModel
      * @param BaseAmountShape|null $baseAmount
      * @param MultiplierFactorShape|null $multiplierFactor
      * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
-     * @param TaxCode|value-of<TaxCode> $taxCode
+     * @param TaxCode|value-of<TaxCode>|null $taxCode
      * @param TaxRateShape|null $taxRate
      */
     public static function with(
