@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace EInvoiceAPI\Core\Contracts;
 
 /**
- * @internal
+ * @phpstan-import-type NormalizedRequest from \EInvoiceAPI\Core\BaseClient
  *
- * @phpstan-import-type normalized_request from \EInvoiceAPI\Core\BaseClient
+ * @internal
  *
  * @template Item
  *
