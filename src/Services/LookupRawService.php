@@ -15,6 +15,9 @@ use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\LookupRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class LookupRawService implements LookupRawContract
 {
     // @phpstan-ignore-next-line
@@ -29,6 +32,7 @@ final class LookupRawService implements LookupRawContract
      * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
      * @param array{peppolID: string}|LookupRetrieveParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LookupGetResponse>
      *
@@ -36,7 +40,7 @@ final class LookupRawService implements LookupRawContract
      */
     public function retrieve(
         array|LookupRetrieveParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LookupRetrieveParams::parseRequest(
             $params,
@@ -61,6 +65,7 @@ final class LookupRawService implements LookupRawContract
      * @param array{
      *   query: string, countryCode?: string|null
      * }|LookupRetrieveParticipantsParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LookupGetParticipantsResponse>
      *
@@ -68,7 +73,7 @@ final class LookupRawService implements LookupRawContract
      */
     public function retrieveParticipants(
         array|LookupRetrieveParticipantsParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LookupRetrieveParticipantsParams::parseRequest(
             $params,

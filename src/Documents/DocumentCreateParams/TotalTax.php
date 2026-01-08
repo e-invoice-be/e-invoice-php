@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals.
  *
- * @phpstan-type TotalTaxShape = float|string
+ * @phpstan-type TotalTaxVariants = float|string
+ * @phpstan-type TotalTaxShape = TotalTaxVariants
  */
 final class TotalTax implements ConverterSource
 {

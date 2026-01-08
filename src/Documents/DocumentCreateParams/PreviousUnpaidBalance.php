@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
  *
- * @phpstan-type PreviousUnpaidBalanceShape = float|string
+ * @phpstan-type PreviousUnpaidBalanceVariants = float|string
+ * @phpstan-type PreviousUnpaidBalanceShape = PreviousUnpaidBalanceVariants
  */
 final class PreviousUnpaidBalance implements ConverterSource
 {

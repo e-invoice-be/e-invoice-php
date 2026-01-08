@@ -21,6 +21,12 @@ use EInvoiceAPI\Inbox\DocumentState;
  *
  * @see EInvoiceAPI\Services\DocumentsService::create()
  *
+ * @phpstan-import-type AmountDueVariants from \EInvoiceAPI\Documents\DocumentCreateParams\AmountDue
+ * @phpstan-import-type InvoiceTotalVariants from \EInvoiceAPI\Documents\DocumentCreateParams\InvoiceTotal
+ * @phpstan-import-type PreviousUnpaidBalanceVariants from \EInvoiceAPI\Documents\DocumentCreateParams\PreviousUnpaidBalance
+ * @phpstan-import-type SubtotalVariants from \EInvoiceAPI\Documents\DocumentCreateParams\Subtotal
+ * @phpstan-import-type TotalDiscountVariants from \EInvoiceAPI\Documents\DocumentCreateParams\TotalDiscount
+ * @phpstan-import-type TotalTaxVariants from \EInvoiceAPI\Documents\DocumentCreateParams\TotalTax
  * @phpstan-import-type AllowanceShape from \EInvoiceAPI\Documents\DocumentCreateParams\Allowance
  * @phpstan-import-type AmountDueShape from \EInvoiceAPI\Documents\DocumentCreateParams\AmountDue
  * @phpstan-import-type DocumentAttachmentCreateShape from \EInvoiceAPI\Documents\DocumentAttachmentCreate
@@ -35,12 +41,12 @@ use EInvoiceAPI\Inbox\DocumentState;
  * @phpstan-import-type TotalTaxShape from \EInvoiceAPI\Documents\DocumentCreateParams\TotalTax
  *
  * @phpstan-type DocumentCreateParamsShape = array{
- *   allowances?: list<AllowanceShape>|null,
+ *   allowances?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Allowance|AllowanceShape>|null,
  *   amountDue?: AmountDueShape|null,
- *   attachments?: list<DocumentAttachmentCreateShape>|null,
+ *   attachments?: list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
- *   charges?: list<ChargeShape>|null,
+ *   charges?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Charge|ChargeShape>|null,
  *   currency?: null|CurrencyCode|value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
@@ -55,9 +61,9 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   invoiceDate?: string|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: InvoiceTotalShape|null,
- *   items?: list<ItemShape>|null,
+ *   items?: list<Item|ItemShape>|null,
  *   note?: string|null,
- *   paymentDetails?: list<PaymentDetailCreateShape>|null,
+ *   paymentDetails?: list<PaymentDetailCreate|PaymentDetailCreateShape>|null,
  *   paymentTerm?: string|null,
  *   previousUnpaidBalance?: PreviousUnpaidBalanceShape|null,
  *   purchaseOrder?: string|null,
@@ -72,7 +78,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   state?: null|DocumentState|value-of<DocumentState>,
  *   subtotal?: SubtotalShape|null,
  *   taxCode?: null|TaxCode|value-of<TaxCode>,
- *   taxDetails?: list<TaxDetailShape>|null,
+ *   taxDetails?: list<TaxDetail|TaxDetailShape>|null,
  *   totalDiscount?: TotalDiscountShape|null,
  *   totalTax?: TotalTaxShape|null,
  *   vatex?: null|Vatex|value-of<Vatex>,
@@ -102,6 +108,8 @@ final class DocumentCreateParams implements BaseModel
 
     /**
      * The amount due for payment. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @var AmountDueVariants|null $amountDue
      */
     #[Optional('amount_due', nullable: true)]
     public float|string|null $amountDue;
@@ -215,6 +223,8 @@ final class DocumentCreateParams implements BaseModel
 
     /**
      * The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
+     *
+     * @var InvoiceTotalVariants|null $invoiceTotal
      */
     #[Optional('invoice_total', nullable: true)]
     public float|string|null $invoiceTotal;
@@ -249,6 +259,8 @@ final class DocumentCreateParams implements BaseModel
 
     /**
      * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @var PreviousUnpaidBalanceVariants|null $previousUnpaidBalance
      */
     #[Optional('previous_unpaid_balance', nullable: true)]
     public float|string|null $previousUnpaidBalance;
@@ -317,6 +329,8 @@ final class DocumentCreateParams implements BaseModel
 
     /**
      * The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @var SubtotalVariants|null $subtotal
      */
     #[Optional(nullable: true)]
     public float|string|null $subtotal;
@@ -335,12 +349,16 @@ final class DocumentCreateParams implements BaseModel
 
     /**
      * The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals.
+     *
+     * @var TotalDiscountVariants|null $totalDiscount
      */
     #[Optional('total_discount', nullable: true)]
     public float|string|null $totalDiscount;
 
     /**
      * The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals.
+     *
+     * @var TotalTaxVariants|null $totalTax
      */
     #[Optional('total_tax', nullable: true)]
     public float|string|null $totalTax;
@@ -408,21 +426,21 @@ final class DocumentCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowanceShape>|null $allowances
+     * @param list<Allowance|AllowanceShape>|null $allowances
      * @param AmountDueShape|null $amountDue
-     * @param list<DocumentAttachmentCreateShape>|null $attachments
-     * @param list<ChargeShape>|null $charges
+     * @param list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null $attachments
+     * @param list<Charge|ChargeShape>|null $charges
      * @param CurrencyCode|value-of<CurrencyCode>|null $currency
      * @param DocumentDirection|value-of<DocumentDirection>|null $direction
      * @param DocumentType|value-of<DocumentType>|null $documentType
      * @param InvoiceTotalShape|null $invoiceTotal
-     * @param list<ItemShape>|null $items
-     * @param list<PaymentDetailCreateShape>|null $paymentDetails
+     * @param list<Item|ItemShape>|null $items
+     * @param list<PaymentDetailCreate|PaymentDetailCreateShape>|null $paymentDetails
      * @param PreviousUnpaidBalanceShape|null $previousUnpaidBalance
      * @param DocumentState|value-of<DocumentState>|null $state
      * @param SubtotalShape|null $subtotal
      * @param TaxCode|value-of<TaxCode>|null $taxCode
-     * @param list<TaxDetailShape>|null $taxDetails
+     * @param list<TaxDetail|TaxDetailShape>|null $taxDetails
      * @param TotalDiscountShape|null $totalDiscount
      * @param TotalTaxShape|null $totalTax
      * @param Vatex|value-of<Vatex>|null $vatex
@@ -532,7 +550,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * @param list<AllowanceShape>|null $allowances
+     * @param list<Allowance|AllowanceShape>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
@@ -556,7 +574,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * @param list<DocumentAttachmentCreateShape>|null $attachments
+     * @param list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null $attachments
      */
     public function withAttachments(?array $attachments): self
     {
@@ -590,7 +608,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * @param list<ChargeShape>|null $charges
+     * @param list<Charge|ChargeShape>|null $charges
      */
     public function withCharges(?array $charges): self
     {
@@ -766,7 +784,7 @@ final class DocumentCreateParams implements BaseModel
     /**
      * At least one line item is required.
      *
-     * @param list<ItemShape> $items
+     * @param list<Item|ItemShape> $items
      */
     public function withItems(array $items): self
     {
@@ -788,7 +806,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * @param list<PaymentDetailCreateShape>|null $paymentDetails
+     * @param list<PaymentDetailCreate|PaymentDetailCreateShape>|null $paymentDetails
      */
     public function withPaymentDetails(?array $paymentDetails): self
     {
@@ -965,7 +983,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * @param list<TaxDetailShape>|null $taxDetails
+     * @param list<TaxDetail|TaxDetailShape>|null $taxDetails
      */
     public function withTaxDetails(?array $taxDetails): self
     {

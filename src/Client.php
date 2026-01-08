@@ -17,8 +17,8 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
 /**
- * @phpstan-import-type NormalizedRequest from \EInvoiceAPI\Core\BaseClient
  * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ * @phpstan-import-type NormalizedRequest from \EInvoiceAPI\Core\BaseClient
  */
 class Client extends BaseClient
 {

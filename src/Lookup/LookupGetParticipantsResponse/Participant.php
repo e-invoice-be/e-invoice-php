@@ -20,8 +20,8 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity;
  * @phpstan-type ParticipantShape = array{
  *   peppolID: string,
  *   peppolScheme: string,
- *   documentTypes?: list<DocumentTypeShape>|null,
- *   entities?: list<EntityShape>|null,
+ *   documentTypes?: list<DocumentType|DocumentTypeShape>|null,
+ *   entities?: list<Entity|EntityShape>|null,
  * }
  */
 final class Participant implements BaseModel
@@ -81,8 +81,8 @@ final class Participant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentTypeShape>|null $documentTypes
-     * @param list<EntityShape>|null $entities
+     * @param list<DocumentType|DocumentTypeShape>|null $documentTypes
+     * @param list<Entity|EntityShape>|null $entities
      */
     public static function with(
         string $peppolID,
@@ -126,7 +126,7 @@ final class Participant implements BaseModel
     /**
      * List of supported document types.
      *
-     * @param list<DocumentTypeShape> $documentTypes
+     * @param list<DocumentType|DocumentTypeShape> $documentTypes
      */
     public function withDocumentTypes(array $documentTypes): self
     {
@@ -139,7 +139,7 @@ final class Participant implements BaseModel
     /**
      * List of business entities.
      *
-     * @param list<EntityShape> $entities
+     * @param list<Entity|EntityShape> $entities
      */
     public function withEntities(array $entities): self
     {

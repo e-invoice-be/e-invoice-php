@@ -16,7 +16,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity;
  * @phpstan-import-type EntityShape from \EInvoiceAPI\Lookup\LookupGetResponse\BusinessCard\Entity
  *
  * @phpstan-type BusinessCardShape = array{
- *   entities: list<EntityShape>,
+ *   entities: list<Entity|EntityShape>,
  *   queryTimeMs: float,
  *   status: string,
  *   error?: string|null,
@@ -77,7 +77,7 @@ final class BusinessCard implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<EntityShape> $entities
+     * @param list<Entity|EntityShape> $entities
      */
     public static function with(
         array $entities,
@@ -99,7 +99,7 @@ final class BusinessCard implements BaseModel
     /**
      * List of business entities associated with the Peppol ID.
      *
-     * @param list<EntityShape> $entities
+     * @param list<Entity|EntityShape> $entities
      */
     public function withEntities(array $entities): self
     {

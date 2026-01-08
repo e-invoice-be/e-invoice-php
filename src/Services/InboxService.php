@@ -14,6 +14,9 @@ use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\InboxContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class InboxService implements InboxContract
 {
     /**
@@ -34,29 +37,30 @@ final class InboxService implements InboxContract
      *
      * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
      *
-     * @param string|\DateTimeInterface|null $dateFrom Filter by issue date (from)
-     * @param string|\DateTimeInterface|null $dateTo Filter by issue date (to)
+     * @param \DateTimeInterface|null $dateFrom Filter by issue date (from)
+     * @param \DateTimeInterface|null $dateTo Filter by issue date (to)
      * @param int $page Page number
      * @param int $pageSize Number of items per page
      * @param string|null $search Search in invoice number, seller/buyer names
      * @param string|null $sender Filter by sender ID
-     * @param 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null $state Filter by document state
-     * @param 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType|null $type Filter by document type
+     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
+     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
+     * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
      * @throws APIException
      */
     public function list(
-        string|\DateTimeInterface|null $dateFrom = null,
-        string|\DateTimeInterface|null $dateTo = null,
+        ?\DateTimeInterface $dateFrom = null,
+        ?\DateTimeInterface $dateTo = null,
         int $page = 1,
         int $pageSize = 20,
         ?string $search = null,
         ?string $sender = null,
-        string|DocumentState|null $state = null,
-        string|DocumentType|null $type = null,
-        ?RequestOptions $requestOptions = null,
+        DocumentState|string|null $state = null,
+        DocumentType|string|null $type = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DocumentsNumberPage {
         $params = Util::removeNulls(
             [
@@ -84,6 +88,7 @@ final class InboxService implements InboxContract
      *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
+     * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
@@ -92,7 +97,7 @@ final class InboxService implements InboxContract
     public function listCreditNotes(
         int $page = 1,
         int $pageSize = 20,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): DocumentsNumberPage {
         $params = Util::removeNulls(['page' => $page, 'pageSize' => $pageSize]);
 
@@ -109,6 +114,7 @@ final class InboxService implements InboxContract
      *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
+     * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>
      *
@@ -117,7 +123,7 @@ final class InboxService implements InboxContract
     public function listInvoices(
         int $page = 1,
         int $pageSize = 20,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): DocumentsNumberPage {
         $params = Util::removeNulls(['page' => $page, 'pageSize' => $pageSize]);
 

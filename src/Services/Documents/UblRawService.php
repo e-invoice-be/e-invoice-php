@@ -13,6 +13,9 @@ use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\UblRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class UblRawService implements UblRawContract
 {
     // @phpstan-ignore-next-line
@@ -27,6 +30,7 @@ final class UblRawService implements UblRawContract
      * Create a new invoice or credit note from a UBL file
      *
      * @param array{file: string}|UblCreateFromUblParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentResponse>
      *
@@ -34,7 +38,7 @@ final class UblRawService implements UblRawContract
      */
     public function createFromUbl(
         array|UblCreateFromUblParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = UblCreateFromUblParams::parseRequest(
             $params,
@@ -57,13 +61,15 @@ final class UblRawService implements UblRawContract
      *
      * Get the UBL for an invoice or credit note
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<UblGetResponse>
      *
      * @throws APIException
      */
     public function get(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

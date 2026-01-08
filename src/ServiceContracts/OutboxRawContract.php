@@ -12,12 +12,16 @@ use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
 use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface OutboxRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|OutboxListDraftDocumentsParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -25,13 +29,14 @@ interface OutboxRawContract
      */
     public function listDraftDocuments(
         array|OutboxListDraftDocumentsParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|OutboxListReceivedDocumentsParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -39,6 +44,6 @@ interface OutboxRawContract
      */
     public function listReceivedDocuments(
         array|OutboxListReceivedDocumentsParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

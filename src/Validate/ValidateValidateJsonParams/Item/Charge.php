@@ -13,6 +13,10 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\TaxCode;
 /**
  * A charge is an additional fee for example for late payment, late delivery, etc.
  *
+ * @phpstan-import-type AmountVariants from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\Amount
+ * @phpstan-import-type BaseAmountVariants from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\BaseAmount
+ * @phpstan-import-type MultiplierFactorVariants from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\MultiplierFactor
+ * @phpstan-import-type TaxRateVariants from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\TaxRate
  * @phpstan-import-type AmountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\Amount
  * @phpstan-import-type BaseAmountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\BaseAmount
  * @phpstan-import-type MultiplierFactorShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\MultiplierFactor
@@ -35,18 +39,24 @@ final class Charge implements BaseModel
 
     /**
      * The charge amount, without VAT. Must be rounded to maximum 2 decimals.
+     *
+     * @var AmountVariants|null $amount
      */
     #[Optional(nullable: true)]
     public float|string|null $amount;
 
     /**
      * The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals.
+     *
+     * @var BaseAmountVariants|null $baseAmount
      */
     #[Optional('base_amount', nullable: true)]
     public float|string|null $baseAmount;
 
     /**
      * The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20.
+     *
+     * @var MultiplierFactorVariants|null $multiplierFactor
      */
     #[Optional('multiplier_factor', nullable: true)]
     public float|string|null $multiplierFactor;
@@ -79,6 +89,8 @@ final class Charge implements BaseModel
 
     /**
      * The VAT rate, represented as percentage that applies to the charge.
+     *
+     * @var TaxRateVariants|null $taxRate
      */
     #[Optional('tax_rate', nullable: true)]
     public float|string|null $taxRate;

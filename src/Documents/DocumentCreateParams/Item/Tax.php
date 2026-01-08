@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The total VAT amount for the line item. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
  *
- * @phpstan-type TaxShape = float|string
+ * @phpstan-type TaxVariants = float|string
+ * @phpstan-type TaxShape = TaxVariants
  */
 final class Tax implements ConverterSource
 {

@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals.
  *
- * @phpstan-type InvoiceTotalShape = float|string
+ * @phpstan-type InvoiceTotalVariants = float|string
+ * @phpstan-type InvoiceTotalShape = InvoiceTotalVariants
  */
 final class InvoiceTotal implements ConverterSource
 {

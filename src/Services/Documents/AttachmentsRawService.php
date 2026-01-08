@@ -16,6 +16,9 @@ use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\AttachmentsRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class AttachmentsRawService implements AttachmentsRawContract
 {
     // @phpstan-ignore-next-line
@@ -30,6 +33,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
      * @param array{documentID: string}|AttachmentRetrieveParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentAttachment>
      *
@@ -38,7 +42,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
     public function retrieve(
         string $attachmentID,
         array|AttachmentRetrieveParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = AttachmentRetrieveParams::parseRequest(
             $params,
@@ -61,13 +65,15 @@ final class AttachmentsRawService implements AttachmentsRawContract
      *
      * Get all attachments for an invoice or credit note
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<list<DocumentAttachment>>
      *
      * @throws APIException
      */
     public function list(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -84,6 +90,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
      * Delete an attachment from an invoice or credit note
      *
      * @param array{documentID: string}|AttachmentDeleteParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AttachmentDeleteResponse>
      *
@@ -92,7 +99,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
     public function delete(
         string $attachmentID,
         array|AttachmentDeleteParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = AttachmentDeleteParams::parseRequest(
             $params,
@@ -118,6 +125,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
      * Add one or more attachments when creating a new invoice or credit note via POST /api/documents/
      *
      * @param array{file: string}|AttachmentAddParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentAttachment>
      *
@@ -126,7 +134,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
     public function add(
         string $documentID,
         array|AttachmentAddParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = AttachmentAddParams::parseRequest(
             $params,

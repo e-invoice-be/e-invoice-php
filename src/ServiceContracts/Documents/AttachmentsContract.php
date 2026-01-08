@@ -9,21 +9,28 @@ use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface AttachmentsContract
 {
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $attachmentID,
         string $documentID,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DocumentAttachment;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return list<DocumentAttachment>
      *
@@ -31,18 +38,20 @@ interface AttachmentsContract
      */
     public function list(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): array;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function delete(
         string $attachmentID,
         string $documentID,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): AttachmentDeleteResponse;
 
     /**
@@ -50,11 +59,13 @@ interface AttachmentsContract
      *
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function add(
         string $documentID,
         string $file,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): DocumentAttachment;
 }

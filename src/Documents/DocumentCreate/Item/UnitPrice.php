@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
  *
- * @phpstan-type UnitPriceShape = float|string
+ * @phpstan-type UnitPriceVariants = float|string
+ * @phpstan-type UnitPriceShape = UnitPriceVariants
  */
 final class UnitPrice implements ConverterSource
 {

@@ -18,7 +18,7 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant\Entity\Identifi
  *   additionalInfo?: string|null,
  *   countryCode?: string|null,
  *   geoInfo?: string|null,
- *   identifiers?: list<IdentifierShape>|null,
+ *   identifiers?: list<Identifier|IdentifierShape>|null,
  *   name?: string|null,
  *   registrationDate?: string|null,
  *   website?: string|null,
@@ -83,7 +83,7 @@ final class Entity implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<IdentifierShape>|null $identifiers
+     * @param list<Identifier|IdentifierShape>|null $identifiers
      */
     public static function with(
         ?string $additionalInfo = null,
@@ -143,7 +143,7 @@ final class Entity implements BaseModel
     /**
      * List of business identifiers.
      *
-     * @param list<IdentifierShape> $identifiers
+     * @param list<Identifier|IdentifierShape> $identifiers
      */
     public function withIdentifiers(array $identifiers): self
     {

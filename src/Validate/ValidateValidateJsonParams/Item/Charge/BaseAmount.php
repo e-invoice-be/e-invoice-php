@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The base amount that may be used, in conjunction with the charge percentage, to calculate the charge amount. Must be rounded to maximum 2 decimals.
  *
- * @phpstan-type BaseAmountShape = float|string
+ * @phpstan-type BaseAmountVariants = float|string
+ * @phpstan-type BaseAmountShape = BaseAmountVariants
  */
 final class BaseAmount implements ConverterSource
 {

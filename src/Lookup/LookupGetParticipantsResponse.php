@@ -20,7 +20,7 @@ use EInvoiceAPI\Lookup\LookupGetParticipantsResponse\Participant;
  *   searchDate: string,
  *   totalCount: int,
  *   usedCount: int,
- *   participants?: list<ParticipantShape>|null,
+ *   participants?: list<Participant|ParticipantShape>|null,
  * }
  */
 final class LookupGetParticipantsResponse implements BaseModel
@@ -90,7 +90,7 @@ final class LookupGetParticipantsResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ParticipantShape>|null $participants
+     * @param list<Participant|ParticipantShape>|null $participants
      */
     public static function with(
         string $queryTerms,
@@ -158,7 +158,7 @@ final class LookupGetParticipantsResponse implements BaseModel
     /**
      * List of participants.
      *
-     * @param list<ParticipantShape> $participants
+     * @param list<Participant|ParticipantShape> $participants
      */
     public function withParticipants(array $participants): self
     {

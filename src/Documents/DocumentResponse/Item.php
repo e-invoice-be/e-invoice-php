@@ -16,9 +16,9 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  * @phpstan-import-type ChargeShape from \EInvoiceAPI\Documents\Charge
  *
  * @phpstan-type ItemShape = array{
- *   allowances?: list<AllowanceShape>|null,
+ *   allowances?: list<\EInvoiceAPI\Documents\Allowance|AllowanceShape>|null,
  *   amount?: string|null,
- *   charges?: list<ChargeShape>|null,
+ *   charges?: list<\EInvoiceAPI\Documents\Charge|ChargeShape>|null,
  *   date?: null|null,
  *   description?: string|null,
  *   productCode?: string|null,
@@ -114,8 +114,8 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowanceShape>|null $allowances
-     * @param list<ChargeShape>|null $charges
+     * @param list<Allowance|AllowanceShape>|null $allowances
+     * @param list<Charge|ChargeShape>|null $charges
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
     public static function with(
@@ -152,7 +152,7 @@ final class Item implements BaseModel
     /**
      * The allowances of the line item.
      *
-     * @param list<AllowanceShape>|null $allowances
+     * @param list<Allowance|AllowanceShape>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
@@ -176,7 +176,7 @@ final class Item implements BaseModel
     /**
      * The charges of the line item.
      *
-     * @param list<ChargeShape>|null $charges
+     * @param list<Charge|ChargeShape>|null $charges
      */
     public function withCharges(?array $charges): self
     {

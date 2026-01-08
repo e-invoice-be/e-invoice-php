@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The allowance amount, without VAT. Must be rounded to maximum 2 decimals.
  *
- * @phpstan-type AmountShape = float|string
+ * @phpstan-type AmountVariants = float|string
+ * @phpstan-type AmountShape = AmountVariants
  */
 final class Amount implements ConverterSource
 {

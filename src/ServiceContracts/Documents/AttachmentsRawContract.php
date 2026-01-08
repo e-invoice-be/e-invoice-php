@@ -13,12 +13,16 @@ use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface AttachmentsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|AttachmentRetrieveParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentAttachment>
      *
@@ -27,11 +31,13 @@ interface AttachmentsRawContract
     public function retrieve(
         string $attachmentID,
         array|AttachmentRetrieveParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<list<DocumentAttachment>>
      *
@@ -39,13 +45,14 @@ interface AttachmentsRawContract
      */
     public function list(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|AttachmentDeleteParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AttachmentDeleteResponse>
      *
@@ -54,7 +61,7 @@ interface AttachmentsRawContract
     public function delete(
         string $attachmentID,
         array|AttachmentDeleteParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -63,6 +70,7 @@ interface AttachmentsRawContract
      * @api
      *
      * @param array<string,mixed>|AttachmentAddParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentAttachment>
      *
@@ -71,6 +79,6 @@ interface AttachmentsRawContract
     public function add(
         string $documentID,
         array|AttachmentAddParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

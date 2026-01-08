@@ -17,7 +17,7 @@ use EInvoiceAPI\Validate\UblDocumentValidation\Issue;
  *   id: string,
  *   fileName: string|null,
  *   isValid: bool,
- *   issues: list<IssueShape>,
+ *   issues: list<Issue|IssueShape>,
  *   ublDocument?: string|null,
  * }
  */
@@ -70,7 +70,7 @@ final class UblDocumentValidation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<IssueShape> $issues
+     * @param list<Issue|IssueShape> $issues
      */
     public static function with(
         string $id,
@@ -116,7 +116,7 @@ final class UblDocumentValidation implements BaseModel
     }
 
     /**
-     * @param list<IssueShape> $issues
+     * @param list<Issue|IssueShape> $issues
      */
     public function withIssues(array $issues): self
     {

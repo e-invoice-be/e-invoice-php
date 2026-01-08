@@ -10,6 +10,9 @@ use EInvoiceAPI\Me\MeGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\MeContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class MeService implements MeContract
 {
     /**
@@ -30,10 +33,12 @@ final class MeService implements MeContract
      *
      * Retrieve information about your account.
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function retrieve(
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): MeGetResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve(requestOptions: $requestOptions);

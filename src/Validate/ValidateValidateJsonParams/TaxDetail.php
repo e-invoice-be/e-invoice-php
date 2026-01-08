@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type AmountVariants from \EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail\Amount
  * @phpstan-import-type AmountShape from \EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail\Amount
  *
  * @phpstan-type TaxDetailShape = array{
@@ -22,6 +23,8 @@ final class TaxDetail implements BaseModel
 
     /**
      * The tax amount for this tax category. Must be rounded to maximum 2 decimals.
+     *
+     * @var AmountVariants|null $amount
      */
     #[Optional(nullable: true)]
     public float|string|null $amount;

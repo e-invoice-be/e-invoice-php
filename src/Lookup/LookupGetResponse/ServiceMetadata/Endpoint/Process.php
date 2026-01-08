@@ -17,7 +17,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\Proces
  * @phpstan-import-type ProcessIDShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process\ProcessID
  *
  * @phpstan-type ProcessShape = array{
- *   endpoints: list<EndpointShape>, processID: ProcessID|ProcessIDShape
+ *   endpoints: list<Endpoint|EndpointShape>, processID: ProcessID|ProcessIDShape
  * }
  */
 final class Process implements BaseModel
@@ -63,7 +63,7 @@ final class Process implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<EndpointShape> $endpoints
+     * @param list<Endpoint|EndpointShape> $endpoints
      * @param ProcessID|ProcessIDShape $processID
      */
     public static function with(
@@ -81,7 +81,7 @@ final class Process implements BaseModel
     /**
      * List of endpoints supporting this process.
      *
-     * @param list<EndpointShape> $endpoints
+     * @param list<Endpoint|EndpointShape> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {

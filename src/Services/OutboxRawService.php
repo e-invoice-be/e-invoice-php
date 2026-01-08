@@ -17,6 +17,9 @@ use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\OutboxRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class OutboxRawService implements OutboxRawContract
 {
     // @phpstan-ignore-next-line
@@ -31,6 +34,7 @@ final class OutboxRawService implements OutboxRawContract
      * Retrieve a paginated list of draft documents with filtering options.
      *
      * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -38,7 +42,7 @@ final class OutboxRawService implements OutboxRawContract
      */
     public function listDraftDocuments(
         array|OutboxListDraftDocumentsParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = OutboxListDraftDocumentsParams::parseRequest(
             $params,
@@ -62,15 +66,16 @@ final class OutboxRawService implements OutboxRawContract
      * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
      *
      * @param array{
-     *   dateFrom?: string|\DateTimeInterface|null,
-     *   dateTo?: string|\DateTimeInterface|null,
+     *   dateFrom?: \DateTimeInterface|null,
+     *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
-     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType|null,
+     *   state?: DocumentState|value-of<DocumentState>|null,
+     *   type?: DocumentType|value-of<DocumentType>|null,
      * }|OutboxListReceivedDocumentsParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -78,7 +83,7 @@ final class OutboxRawService implements OutboxRawContract
      */
     public function listReceivedDocuments(
         array|OutboxListReceivedDocumentsParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = OutboxListReceivedDocumentsParams::parseRequest(
             $params,

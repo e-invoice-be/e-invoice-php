@@ -12,6 +12,9 @@ use EInvoiceAPI\Lookup\LookupGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\LookupContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class LookupService implements LookupContract
 {
     /**
@@ -33,12 +36,13 @@ final class LookupService implements LookupContract
      * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
      * @param string $peppolID Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgian company.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $peppolID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): LookupGetResponse {
         $params = Util::removeNulls(['peppolID' => $peppolID]);
 
@@ -55,13 +59,14 @@ final class LookupService implements LookupContract
      *
      * @param string $query Query to lookup
      * @param string|null $countryCode Country code of the company to lookup. If not provided, the search will be global.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieveParticipants(
         string $query,
         ?string $countryCode = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): LookupGetParticipantsResponse {
         $params = Util::removeNulls(
             ['query' => $query, 'countryCode' => $countryCode]

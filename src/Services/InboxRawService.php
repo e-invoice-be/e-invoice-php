@@ -18,6 +18,9 @@ use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\InboxRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class InboxRawService implements InboxRawContract
 {
     // @phpstan-ignore-next-line
@@ -32,15 +35,16 @@ final class InboxRawService implements InboxRawContract
      * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
      *
      * @param array{
-     *   dateFrom?: string|\DateTimeInterface|null,
-     *   dateTo?: string|\DateTimeInterface|null,
+     *   dateFrom?: \DateTimeInterface|null,
+     *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
-     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType|null,
+     *   state?: DocumentState|value-of<DocumentState>|null,
+     *   type?: DocumentType|value-of<DocumentType>|null,
      * }|InboxListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -48,7 +52,7 @@ final class InboxRawService implements InboxRawContract
      */
     public function list(
         array|InboxListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = InboxListParams::parseRequest(
             $params,
@@ -79,6 +83,7 @@ final class InboxRawService implements InboxRawContract
      * Retrieve a paginated list of received credit notes with filtering options.
      *
      * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -86,7 +91,7 @@ final class InboxRawService implements InboxRawContract
      */
     public function listCreditNotes(
         array|InboxListCreditNotesParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = InboxListCreditNotesParams::parseRequest(
             $params,
@@ -110,6 +115,7 @@ final class InboxRawService implements InboxRawContract
      * Retrieve a paginated list of received invoices with filtering options.
      *
      * @param array{page?: int, pageSize?: int}|InboxListInvoicesParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -117,7 +123,7 @@ final class InboxRawService implements InboxRawContract
      */
     public function listInvoices(
         array|InboxListInvoicesParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = InboxListInvoicesParams::parseRequest(
             $params,

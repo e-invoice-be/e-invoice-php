@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The amount due for payment. Must be positive and rounded to maximum 2 decimals.
  *
- * @phpstan-type AmountDueShape = float|string
+ * @phpstan-type AmountDueVariants = float|string
+ * @phpstan-type AmountDueShape = AmountDueVariants
  */
 final class AmountDue implements ConverterSource
 {

@@ -32,7 +32,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata;
  *
  * @phpstan-type LookupGetResponseShape = array{
  *   businessCard: BusinessCard|BusinessCardShape,
- *   certificates: list<CertificateShape>,
+ *   certificates: list<Certificate|CertificateShape>,
  *   dnsInfo: DNSInfo|DNSInfoShape,
  *   errors: list<string>,
  *   executionTimeMs: float,
@@ -140,7 +140,7 @@ final class LookupGetResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BusinessCard|BusinessCardShape $businessCard
-     * @param list<CertificateShape> $certificates
+     * @param list<Certificate|CertificateShape> $certificates
      * @param DNSInfo|DNSInfoShape $dnsInfo
      * @param list<string> $errors
      * @param QueryMetadata|QueryMetadataShape $queryMetadata
@@ -186,7 +186,7 @@ final class LookupGetResponse implements BaseModel
     /**
      * List of certificates found for the Peppol participant.
      *
-     * @param list<CertificateShape> $certificates
+     * @param list<Certificate|CertificateShape> $certificates
      */
     public function withCertificates(array $certificates): self
     {

@@ -12,6 +12,9 @@ use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\AttachmentsContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class AttachmentsService implements AttachmentsContract
 {
     /**
@@ -32,12 +35,14 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function retrieve(
         string $attachmentID,
         string $documentID,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DocumentAttachment {
         $params = Util::removeNulls(['documentID' => $documentID]);
 
@@ -52,13 +57,15 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Get all attachments for an invoice or credit note
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return list<DocumentAttachment>
      *
      * @throws APIException
      */
     public function list(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): array {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list($documentID, requestOptions: $requestOptions);
@@ -71,12 +78,14 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Delete an attachment from an invoice or credit note
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function delete(
         string $attachmentID,
         string $documentID,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): AttachmentDeleteResponse {
         $params = Util::removeNulls(['documentID' => $documentID]);
 
@@ -93,12 +102,14 @@ final class AttachmentsService implements AttachmentsContract
      *
      * Add one or more attachments when creating a new invoice or credit note via POST /api/documents/
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function add(
         string $documentID,
         string $file,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): DocumentAttachment {
         $params = Util::removeNulls(['file' => $file]);
 

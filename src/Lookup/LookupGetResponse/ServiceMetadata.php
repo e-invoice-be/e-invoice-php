@@ -16,7 +16,7 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint;
  * @phpstan-import-type EndpointShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint
  *
  * @phpstan-type ServiceMetadataShape = array{
- *   endpoints: list<EndpointShape>,
+ *   endpoints: list<Endpoint|EndpointShape>,
  *   queryTimeMs: float,
  *   status: string,
  *   error?: string|null,
@@ -77,7 +77,7 @@ final class ServiceMetadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<EndpointShape> $endpoints
+     * @param list<Endpoint|EndpointShape> $endpoints
      */
     public static function with(
         array $endpoints,
@@ -99,7 +99,7 @@ final class ServiceMetadata implements BaseModel
     /**
      * List of endpoints found for the Peppol participant.
      *
-     * @param list<EndpointShape> $endpoints
+     * @param list<Endpoint|EndpointShape> $endpoints
      */
     public function withEndpoints(array $endpoints): self
     {

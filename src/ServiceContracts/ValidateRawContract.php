@@ -13,12 +13,16 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDParams;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 use EInvoiceAPI\Validate\ValidateValidateUblParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface ValidateRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|ValidateValidateJsonParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UblDocumentValidation>
      *
@@ -26,13 +30,14 @@ interface ValidateRawContract
      */
     public function validateJson(
         array|ValidateValidateJsonParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|ValidateValidatePeppolIDParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ValidateValidatePeppolIDResponse>
      *
@@ -40,13 +45,14 @@ interface ValidateRawContract
      */
     public function validatePeppolID(
         array|ValidateValidatePeppolIDParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|ValidateValidateUblParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UblDocumentValidation>
      *
@@ -54,6 +60,6 @@ interface ValidateRawContract
      */
     public function validateUbl(
         array|ValidateValidateUblParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

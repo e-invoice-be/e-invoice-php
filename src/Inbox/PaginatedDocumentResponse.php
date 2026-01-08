@@ -13,7 +13,7 @@ use EInvoiceAPI\Documents\DocumentResponse;
  * @phpstan-import-type DocumentResponseShape from \EInvoiceAPI\Documents\DocumentResponse
  *
  * @phpstan-type PaginatedDocumentResponseShape = array{
- *   items: list<DocumentResponseShape>,
+ *   items: list<DocumentResponse|DocumentResponseShape>,
  *   page: int,
  *   pageSize: int,
  *   pages: int,
@@ -72,7 +72,7 @@ final class PaginatedDocumentResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentResponseShape> $items
+     * @param list<DocumentResponse|DocumentResponseShape> $items
      */
     public static function with(
         array $items,
@@ -93,7 +93,7 @@ final class PaginatedDocumentResponse implements BaseModel
     }
 
     /**
-     * @param list<DocumentResponseShape> $items
+     * @param list<DocumentResponse|DocumentResponseShape> $items
      */
     public function withItems(array $items): self
     {

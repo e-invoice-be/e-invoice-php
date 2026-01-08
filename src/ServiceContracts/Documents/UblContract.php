@@ -9,25 +9,32 @@ use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface UblContract
 {
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function createFromUbl(
         string $file,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): DocumentResponse;
 
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function get(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): UblGetResponse;
 }

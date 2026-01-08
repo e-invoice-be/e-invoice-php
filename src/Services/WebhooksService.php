@@ -12,6 +12,9 @@ use EInvoiceAPI\ServiceContracts\WebhooksContract;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class WebhooksService implements WebhooksContract
 {
     /**
@@ -33,6 +36,7 @@ final class WebhooksService implements WebhooksContract
      * Create a new webhook
      *
      * @param list<string> $events
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -40,7 +44,7 @@ final class WebhooksService implements WebhooksContract
         array $events,
         string $url,
         bool $enabled = true,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): WebhookResponse {
         $params = Util::removeNulls(
             ['events' => $events, 'url' => $url, 'enabled' => $enabled]
@@ -57,11 +61,13 @@ final class WebhooksService implements WebhooksContract
      *
      * Get a webhook by ID
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): WebhookResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($webhookID, requestOptions: $requestOptions);
@@ -75,6 +81,7 @@ final class WebhooksService implements WebhooksContract
      * Update a webhook by ID
      *
      * @param list<string>|null $events
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -83,7 +90,7 @@ final class WebhooksService implements WebhooksContract
         ?bool $enabled = null,
         ?array $events = null,
         ?string $url = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): WebhookResponse {
         $params = Util::removeNulls(
             ['enabled' => $enabled, 'events' => $events, 'url' => $url]
@@ -100,12 +107,15 @@ final class WebhooksService implements WebhooksContract
      *
      * Get all webhooks for the current tenant
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return list<WebhookResponse>
      *
      * @throws APIException
      */
-    public function list(?RequestOptions $requestOptions = null): array
-    {
+    public function list(
+        RequestOptions|array|null $requestOptions = null
+    ): array {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(requestOptions: $requestOptions);
 
@@ -117,11 +127,13 @@ final class WebhooksService implements WebhooksContract
      *
      * Delete a webhook
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): WebhookDeleteResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($webhookID, requestOptions: $requestOptions);

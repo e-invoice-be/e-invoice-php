@@ -12,6 +12,9 @@ use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\UblContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class UblService implements UblContract
 {
     /**
@@ -32,11 +35,13 @@ final class UblService implements UblContract
      *
      * Create a new invoice or credit note from a UBL file
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function createFromUbl(
         string $file,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): DocumentResponse {
         $params = Util::removeNulls(['file' => $file]);
 
@@ -51,11 +56,13 @@ final class UblService implements UblContract
      *
      * Get the UBL for an invoice or credit note
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function get(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): UblGetResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->get($documentID, requestOptions: $requestOptions);

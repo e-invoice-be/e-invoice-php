@@ -11,6 +11,9 @@ use EInvoiceAPI\Me\MeGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\MeRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class MeRawService implements MeRawContract
 {
     // @phpstan-ignore-next-line
@@ -24,12 +27,14 @@ final class MeRawService implements MeRawContract
      *
      * Retrieve information about your account.
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<MeGetResponse>
      *
      * @throws APIException
      */
     public function retrieve(
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

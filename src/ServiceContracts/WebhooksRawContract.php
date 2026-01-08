@@ -12,12 +12,16 @@ use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface WebhooksRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|WebhookCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -25,11 +29,13 @@ interface WebhooksRawContract
      */
     public function create(
         array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -37,13 +43,14 @@ interface WebhooksRawContract
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|WebhookUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -52,20 +59,26 @@ interface WebhooksRawContract
     public function update(
         string $webhookID,
         array|WebhookUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<list<WebhookResponse>>
      *
      * @throws APIException
      */
-    public function list(?RequestOptions $requestOptions = null): BaseResponse;
+    public function list(
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDeleteResponse>
      *
@@ -73,6 +86,6 @@ interface WebhooksRawContract
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

@@ -13,6 +13,10 @@ use EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\TaxCode;
 /**
  * An allowance is a discount for example for early payment, volume discount, etc.
  *
+ * @phpstan-import-type AmountVariants from \EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\Amount
+ * @phpstan-import-type BaseAmountVariants from \EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\BaseAmount
+ * @phpstan-import-type MultiplierFactorVariants from \EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\MultiplierFactor
+ * @phpstan-import-type TaxRateVariants from \EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\TaxRate
  * @phpstan-import-type AmountShape from \EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\Amount
  * @phpstan-import-type BaseAmountShape from \EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\BaseAmount
  * @phpstan-import-type MultiplierFactorShape from \EInvoiceAPI\Documents\DocumentCreate\Item\Allowance\MultiplierFactor
@@ -35,18 +39,24 @@ final class Allowance implements BaseModel
 
     /**
      * The allowance amount, without VAT. Must be rounded to maximum 2 decimals.
+     *
+     * @var AmountVariants|null $amount
      */
     #[Optional(nullable: true)]
     public float|string|null $amount;
 
     /**
      * The base amount that may be used, in conjunction with the allowance percentage, to calculate the allowance amount. Must be rounded to maximum 2 decimals.
+     *
+     * @var BaseAmountVariants|null $baseAmount
      */
     #[Optional('base_amount', nullable: true)]
     public float|string|null $baseAmount;
 
     /**
      * The percentage that may be used, in conjunction with the allowance base amount, to calculate the allowance amount. To state 20%, use value 20. Must be rounded to maximum 2 decimals.
+     *
+     * @var MultiplierFactorVariants|null $multiplierFactor
      */
     #[Optional('multiplier_factor', nullable: true)]
     public float|string|null $multiplierFactor;
@@ -75,6 +85,8 @@ final class Allowance implements BaseModel
 
     /**
      * The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals.
+     *
+     * @var TaxRateVariants|null $taxRate
      */
     #[Optional('tax_rate', nullable: true)]
     public float|string|null $taxRate;

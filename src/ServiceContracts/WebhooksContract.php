@@ -9,12 +9,16 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface WebhooksContract
 {
     /**
      * @api
      *
      * @param list<string> $events
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -22,23 +26,26 @@ interface WebhooksContract
         array $events,
         string $url,
         bool $enabled = true,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): WebhookResponse;
 
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): WebhookResponse;
 
     /**
      * @api
      *
      * @param list<string>|null $events
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -47,25 +54,31 @@ interface WebhooksContract
         ?bool $enabled = null,
         ?array $events = null,
         ?string $url = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): WebhookResponse;
 
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return list<WebhookResponse>
      *
      * @throws APIException
      */
-    public function list(?RequestOptions $requestOptions = null): array;
+    public function list(
+        RequestOptions|array|null $requestOptions = null
+    ): array;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): WebhookDeleteResponse;
 }

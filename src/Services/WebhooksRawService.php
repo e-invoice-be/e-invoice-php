@@ -15,6 +15,9 @@ use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 final class WebhooksRawService implements WebhooksRawContract
 {
     // @phpstan-ignore-next-line
@@ -31,6 +34,7 @@ final class WebhooksRawService implements WebhooksRawContract
      * @param array{
      *   events: list<string>, url: string, enabled?: bool
      * }|WebhookCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -38,7 +42,7 @@ final class WebhooksRawService implements WebhooksRawContract
      */
     public function create(
         array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = WebhookCreateParams::parseRequest(
             $params,
@@ -60,13 +64,15 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Get a webhook by ID
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<WebhookResponse>
      *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -85,6 +91,7 @@ final class WebhooksRawService implements WebhooksRawContract
      * @param array{
      *   enabled?: bool|null, events?: list<string>|null, url?: string|null
      * }|WebhookUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -93,7 +100,7 @@ final class WebhooksRawService implements WebhooksRawContract
     public function update(
         string $webhookID,
         array|WebhookUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
             $params,
@@ -115,12 +122,15 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Get all webhooks for the current tenant
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<list<WebhookResponse>>
      *
      * @throws APIException
      */
-    public function list(?RequestOptions $requestOptions = null): BaseResponse
-    {
+    public function list(
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
@@ -135,13 +145,15 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Delete a webhook
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<WebhookDeleteResponse>
      *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

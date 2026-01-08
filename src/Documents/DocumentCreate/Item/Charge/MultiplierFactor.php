@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The percentage that may be used, in conjunction with the charge base amount, to calculate the charge amount. To state 20%, use value 20.
  *
- * @phpstan-type MultiplierFactorShape = float|string
+ * @phpstan-type MultiplierFactorVariants = float|string
+ * @phpstan-type MultiplierFactorShape = MultiplierFactorVariants
  */
 final class MultiplierFactor implements ConverterSource
 {

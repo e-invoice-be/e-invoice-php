@@ -18,11 +18,11 @@ use EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process;
  * @phpstan-import-type ProcessShape from \EInvoiceAPI\Lookup\LookupGetResponse\ServiceMetadata\Endpoint\Process
  *
  * @phpstan-type EndpointShape = array{
- *   documentTypes: list<DocumentTypeShape>,
+ *   documentTypes: list<DocumentType|DocumentTypeShape>,
  *   status: string,
  *   url: string,
  *   error?: string|null,
- *   processes?: list<ProcessShape>|null,
+ *   processes?: list<Process|ProcessShape>|null,
  * }
  */
 final class Endpoint implements BaseModel
@@ -88,8 +88,8 @@ final class Endpoint implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentTypeShape> $documentTypes
-     * @param list<ProcessShape>|null $processes
+     * @param list<DocumentType|DocumentTypeShape> $documentTypes
+     * @param list<Process|ProcessShape>|null $processes
      */
     public static function with(
         array $documentTypes,
@@ -113,7 +113,7 @@ final class Endpoint implements BaseModel
     /**
      * List of document types supported by this endpoint.
      *
-     * @param list<DocumentTypeShape> $documentTypes
+     * @param list<DocumentType|DocumentTypeShape> $documentTypes
      */
     public function withDocumentTypes(array $documentTypes): self
     {
@@ -159,7 +159,7 @@ final class Endpoint implements BaseModel
     /**
      * List of processes supported by this endpoint.
      *
-     * @param list<ProcessShape>|null $processes
+     * @param list<Process|ProcessShape>|null $processes
      */
     public function withProcesses(?array $processes): self
     {

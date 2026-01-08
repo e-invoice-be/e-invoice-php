@@ -15,12 +15,16 @@ use EInvoiceAPI\Documents\DocumentSendParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface DocumentsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|DocumentCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentResponse>
      *
@@ -28,11 +32,13 @@ interface DocumentsRawContract
      */
     public function create(
         array|DocumentCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentResponse>
      *
@@ -40,11 +46,13 @@ interface DocumentsRawContract
      */
     public function retrieve(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentDeleteResponse>
      *
@@ -52,13 +60,14 @@ interface DocumentsRawContract
      */
     public function delete(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|DocumentCreateFromPdfParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentNewFromPdfResponse>
      *
@@ -66,13 +75,14 @@ interface DocumentsRawContract
      */
     public function createFromPdf(
         array|DocumentCreateFromPdfParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|DocumentSendParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentResponse>
      *
@@ -81,11 +91,13 @@ interface DocumentsRawContract
     public function send(
         string $documentID,
         array|DocumentSendParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UblDocumentValidation>
      *
@@ -93,6 +105,6 @@ interface DocumentsRawContract
      */
     public function validate(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

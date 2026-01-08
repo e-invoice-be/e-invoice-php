@@ -11,12 +11,16 @@ use EInvoiceAPI\Documents\Ubl\UblCreateFromUblParams;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \EInvoiceAPI\RequestOptions
+ */
 interface UblRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|UblCreateFromUblParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentResponse>
      *
@@ -24,11 +28,13 @@ interface UblRawContract
      */
     public function createFromUbl(
         array|UblCreateFromUblParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UblGetResponse>
      *
@@ -36,6 +42,6 @@ interface UblRawContract
      */
     public function get(
         string $documentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

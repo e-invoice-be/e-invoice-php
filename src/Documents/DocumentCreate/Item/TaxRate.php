@@ -11,7 +11,8 @@ use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 /**
  * The VAT rate of the line item expressed as percentage with 2 decimals.
  *
- * @phpstan-type TaxRateShape = float|string
+ * @phpstan-type TaxRateVariants = float|string
+ * @phpstan-type TaxRateShape = TaxRateVariants
  */
 final class TaxRate implements ConverterSource
 {

@@ -12,6 +12,11 @@ use EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
 /**
+ * @phpstan-import-type AmountVariants from \EInvoiceAPI\Documents\DocumentCreateParams\Item\Amount
+ * @phpstan-import-type QuantityVariants from \EInvoiceAPI\Documents\DocumentCreateParams\Item\Quantity
+ * @phpstan-import-type TaxVariants from \EInvoiceAPI\Documents\DocumentCreateParams\Item\Tax
+ * @phpstan-import-type TaxRateVariants from \EInvoiceAPI\Documents\DocumentCreateParams\Item\TaxRate
+ * @phpstan-import-type UnitPriceVariants from \EInvoiceAPI\Documents\DocumentCreateParams\Item\UnitPrice
  * @phpstan-import-type AllowanceShape from \EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance
  * @phpstan-import-type AmountShape from \EInvoiceAPI\Documents\DocumentCreateParams\Item\Amount
  * @phpstan-import-type ChargeShape from \EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge
@@ -21,9 +26,9 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  * @phpstan-import-type UnitPriceShape from \EInvoiceAPI\Documents\DocumentCreateParams\Item\UnitPrice
  *
  * @phpstan-type ItemShape = array{
- *   allowances?: list<AllowanceShape>|null,
+ *   allowances?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance|AllowanceShape>|null,
  *   amount?: AmountShape|null,
- *   charges?: list<ChargeShape>|null,
+ *   charges?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge|ChargeShape>|null,
  *   date?: null|null,
  *   description?: string|null,
  *   productCode?: string|null,
@@ -52,6 +57,8 @@ final class Item implements BaseModel
 
     /**
      * The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level allowances and charges. Calculated as: ((unit_price / price_base_quantity) * quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
+     *
+     * @var AmountVariants|null $amount
      */
     #[Optional(nullable: true)]
     public float|string|null $amount;
@@ -85,18 +92,24 @@ final class Item implements BaseModel
 
     /**
      * The quantity of items (goods or services) that is the subject of the line item. Must be rounded to maximum 4 decimals. Can be negative for credit notes or corrections.
+     *
+     * @var QuantityVariants|null $quantity
      */
     #[Optional(nullable: true)]
     public float|string|null $quantity;
 
     /**
      * The total VAT amount for the line item. Must be rounded to maximum 2 decimals. Can be negative for credit notes or corrections.
+     *
+     * @var TaxVariants|null $tax
      */
     #[Optional(nullable: true)]
     public float|string|null $tax;
 
     /**
      * The VAT rate of the line item expressed as percentage with 2 decimals.
+     *
+     * @var TaxRateVariants|null $taxRate
      */
     #[Optional('tax_rate', nullable: true)]
     public float|string|null $taxRate;
@@ -111,6 +124,8 @@ final class Item implements BaseModel
 
     /**
      * The item net price (BT-146). The price of an item, exclusive of VAT, after subtracting item price discount. Must be rounded to maximum 4 decimals.
+     *
+     * @var UnitPriceVariants|null $unitPrice
      */
     #[Optional('unit_price', nullable: true)]
     public float|string|null $unitPrice;
@@ -125,9 +140,9 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowanceShape>|null $allowances
+     * @param list<Allowance|AllowanceShape>|null $allowances
      * @param AmountShape|null $amount
-     * @param list<ChargeShape>|null $charges
+     * @param list<Charge|ChargeShape>|null $charges
      * @param QuantityShape|null $quantity
      * @param TaxShape|null $tax
      * @param TaxRateShape|null $taxRate
@@ -168,7 +183,7 @@ final class Item implements BaseModel
     /**
      * The allowances of the line item.
      *
-     * @param list<AllowanceShape>|null $allowances
+     * @param list<Allowance|AllowanceShape>|null $allowances
      */
     public function withAllowances(?array $allowances): self
     {
@@ -194,7 +209,7 @@ final class Item implements BaseModel
     /**
      * The charges of the line item.
      *
-     * @param list<ChargeShape>|null $charges
+     * @param list<Charge|ChargeShape>|null $charges
      */
     public function withCharges(?array $charges): self
     {
