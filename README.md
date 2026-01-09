@@ -138,15 +138,12 @@ You can use the `maxRetries` option to configure or disable this:
 <?php
 
 use EInvoiceAPI\Client;
-use EInvoiceAPI\RequestOptions;
 
 // Configure the default for all requests:
-$client = new Client(maxRetries: 0);
+$client = new Client(requestOptions: ['maxRetries' => 0]);
 
 // Or, configure per-request:
-$result = $client->documents->create(
-  requestOptions: RequestOptions::with(maxRetries: 5)
-);
+$result = $client->documents->create(requestOptions: ['maxRetries' => 5]);
 ```
 
 ## Advanced concepts
@@ -162,14 +159,12 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
-use EInvoiceAPI\RequestOptions;
-
 $documentResponse = $client->documents->create(
-  requestOptions: RequestOptions::with(
-    extraQueryParams: ['my_query_parameter' => 'value'],
-    extraBodyParams: ['my_body_parameter' => 'value'],
-    extraHeaders: ['my-header' => 'value'],
-  ),
+  requestOptions: [
+    'extraQueryParams' => ['my_query_parameter' => 'value'],
+    'extraBodyParams' => ['my_body_parameter' => 'value'],
+    'extraHeaders' => ['my-header' => 'value'],
+  ],
 );
 ```
 
