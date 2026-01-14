@@ -177,9 +177,9 @@ interface DocumentsContract
     /**
      * @api
      *
-     * @param string $file Body param:
-     * @param string|null $customerTaxID Query param:
-     * @param string|null $vendorTaxID Query param:
+     * @param string $file Body param
+     * @param string|null $customerTaxID Query param
+     * @param string|null $vendorTaxID Query param
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

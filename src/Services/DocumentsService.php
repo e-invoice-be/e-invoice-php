@@ -283,9 +283,9 @@ final class DocumentsService implements DocumentsContract
      *
      * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
      *
-     * @param string $file Body param:
-     * @param string|null $customerTaxID Query param:
-     * @param string|null $vendorTaxID Query param:
+     * @param string $file Body param
+     * @param string|null $customerTaxID Query param
+     * @param string|null $vendorTaxID Query param
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
