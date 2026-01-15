@@ -9,6 +9,8 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Inbox\InboxListParams\SortBy;
+use EInvoiceAPI\Inbox\InboxListParams\SortOrder;
 
 /**
  * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
@@ -22,6 +24,8 @@ use EInvoiceAPI\Documents\DocumentType;
  *   pageSize?: int|null,
  *   search?: string|null,
  *   sender?: string|null,
+ *   sortBy?: null|SortBy|value-of<SortBy>,
+ *   sortOrder?: null|SortOrder|value-of<SortOrder>,
  *   state?: null|DocumentState|value-of<DocumentState>,
  *   type?: null|DocumentType|value-of<DocumentType>,
  * }
@@ -63,10 +67,26 @@ final class InboxListParams implements BaseModel
     public ?string $search;
 
     /**
-     * Filter by sender ID.
+     * Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id).
      */
     #[Optional(nullable: true)]
     public ?string $sender;
+
+    /**
+     * Field to sort by.
+     *
+     * @var value-of<SortBy>|null $sortBy
+     */
+    #[Optional(enum: SortBy::class)]
+    public ?string $sortBy;
+
+    /**
+     * Sort direction (asc/desc).
+     *
+     * @var value-of<SortOrder>|null $sortOrder
+     */
+    #[Optional(enum: SortOrder::class)]
+    public ?string $sortOrder;
 
     /**
      * Filter by document state.
@@ -94,6 +114,8 @@ final class InboxListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param SortBy|value-of<SortBy>|null $sortBy
+     * @param SortOrder|value-of<SortOrder>|null $sortOrder
      * @param DocumentState|value-of<DocumentState>|null $state
      * @param DocumentType|value-of<DocumentType>|null $type
      */
@@ -104,6 +126,8 @@ final class InboxListParams implements BaseModel
         ?int $pageSize = null,
         ?string $search = null,
         ?string $sender = null,
+        SortBy|string|null $sortBy = null,
+        SortOrder|string|null $sortOrder = null,
         DocumentState|string|null $state = null,
         DocumentType|string|null $type = null,
     ): self {
@@ -115,6 +139,8 @@ final class InboxListParams implements BaseModel
         null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $search && $self['search'] = $search;
         null !== $sender && $self['sender'] = $sender;
+        null !== $sortBy && $self['sortBy'] = $sortBy;
+        null !== $sortOrder && $self['sortOrder'] = $sortOrder;
         null !== $state && $self['state'] = $state;
         null !== $type && $self['type'] = $type;
 
@@ -177,12 +203,38 @@ final class InboxListParams implements BaseModel
     }
 
     /**
-     * Filter by sender ID.
+     * Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id).
      */
     public function withSender(?string $sender): self
     {
         $self = clone $this;
         $self['sender'] = $sender;
+
+        return $self;
+    }
+
+    /**
+     * Field to sort by.
+     *
+     * @param SortBy|value-of<SortBy> $sortBy
+     */
+    public function withSortBy(SortBy|string $sortBy): self
+    {
+        $self = clone $this;
+        $self['sortBy'] = $sortBy;
+
+        return $self;
+    }
+
+    /**
+     * Sort direction (asc/desc).
+     *
+     * @param SortOrder|value-of<SortOrder> $sortOrder
+     */
+    public function withSortOrder(SortOrder|string $sortOrder): self
+    {
+        $self = clone $this;
+        $self['sortOrder'] = $sortOrder;
 
         return $self;
     }
