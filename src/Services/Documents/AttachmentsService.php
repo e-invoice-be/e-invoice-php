@@ -100,7 +100,7 @@ final class AttachmentsService implements AttachmentsContract
      *
      * @api
      *
-     * Add one or more attachments when creating a new invoice or credit note via POST /api/documents/
+     * Add one or more attachments to an invoice. Be careful: the attachments ARE NOT ADDED to the UBL! They are only stored in our database and can be downloaded later. To add attachments to the UBL, you need to add the attachment(s) via POST /api/documents
      *
      * @param RequestOpts|null $requestOptions
      *

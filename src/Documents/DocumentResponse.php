@@ -28,6 +28,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *
  * @phpstan-type DocumentResponseShape = array{
  *   id: string,
+ *   createdAt: \DateTimeInterface,
  *   allowances?: list<\EInvoiceAPI\Documents\DocumentResponse\Allowance|AllowanceShape>|null,
  *   amountDue?: string|null,
  *   attachments?: list<DocumentAttachment|DocumentAttachmentShape>|null,
@@ -84,6 +85,9 @@ final class DocumentResponse implements BaseModel
 
     #[Required]
     public string $id;
+
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /** @var list<Allowance>|null $allowances */
     #[Optional(
@@ -381,13 +385,13 @@ final class DocumentResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * DocumentResponse::with(id: ...)
+     * DocumentResponse::with(id: ..., createdAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DocumentResponse)->withID(...)
+     * (new DocumentResponse)->withID(...)->withCreatedAt(...)
      * ```
      */
     public function __construct()
@@ -415,6 +419,7 @@ final class DocumentResponse implements BaseModel
      */
     public static function with(
         string $id,
+        \DateTimeInterface $createdAt,
         ?array $allowances = null,
         ?string $amountDue = null,
         ?array $attachments = null,
@@ -466,6 +471,7 @@ final class DocumentResponse implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['createdAt'] = $createdAt;
 
         null !== $allowances && $self['allowances'] = $allowances;
         null !== $amountDue && $self['amountDue'] = $amountDue;
@@ -522,6 +528,14 @@ final class DocumentResponse implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
         return $self;
     }
