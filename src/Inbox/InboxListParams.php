@@ -89,7 +89,7 @@ final class InboxListParams implements BaseModel
     public ?string $sortOrder;
 
     /**
-     * Filter by document state.
+     * Filter by document state. If not provided, returns all states.
      *
      * @var value-of<DocumentState>|null $state
      */
@@ -97,7 +97,7 @@ final class InboxListParams implements BaseModel
     public ?string $state;
 
     /**
-     * Filter by document type.
+     * Filter by document type. If not provided, returns all types.
      *
      * @var value-of<DocumentType>|null $type
      */
@@ -240,7 +240,7 @@ final class InboxListParams implements BaseModel
     }
 
     /**
-     * Filter by document state.
+     * Filter by document state. If not provided, returns all states.
      *
      * @param DocumentState|value-of<DocumentState>|null $state
      */
@@ -253,7 +253,7 @@ final class InboxListParams implements BaseModel
     }
 
     /**
-     * Filter by document type.
+     * Filter by document type. If not provided, returns all types.
      *
      * @param DocumentType|value-of<DocumentType>|null $type
      */

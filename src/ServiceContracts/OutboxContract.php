@@ -57,8 +57,8 @@ interface OutboxContract
      * @param string|null $sender (Deprecated) Filter by sender ID
      * @param \EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams\SortBy|value-of<\EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams\SortBy> $sortBy Field to sort by
      * @param \EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams\SortOrder|value-of<\EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams\SortOrder> $sortOrder Sort direction (asc/desc)
-     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
-     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
+     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state. If not provided, returns all states.
+     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type. If not provided, returns all types.
      * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>

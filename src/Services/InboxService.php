@@ -47,8 +47,8 @@ final class InboxService implements InboxContract
      * @param string|null $sender Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
      * @param SortBy|value-of<SortBy> $sortBy Field to sort by
      * @param SortOrder|value-of<SortOrder> $sortOrder Sort direction (asc/desc)
-     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
-     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
+     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state. If not provided, returns all states.
+     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type. If not provided, returns all types.
      * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>
