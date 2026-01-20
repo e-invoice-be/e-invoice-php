@@ -11,7 +11,6 @@ use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
 use EInvoiceAPI\Inbox\InboxListInvoicesParams;
 use EInvoiceAPI\Inbox\InboxListParams;
@@ -45,7 +44,6 @@ final class InboxRawService implements InboxRawContract
      *   sender?: string|null,
      *   sortBy?: value-of<SortBy>,
      *   sortOrder?: SortOrder|value-of<SortOrder>,
-     *   state?: DocumentState|value-of<DocumentState>|null,
      *   type?: value-of<DocumentType>,
      * }|InboxListParams $params
      * @param RequestOpts|null $requestOptions

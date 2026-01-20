@@ -26,7 +26,6 @@ use EInvoiceAPI\Inbox\InboxListParams\SortOrder;
  *   sender?: string|null,
  *   sortBy?: null|SortBy|value-of<SortBy>,
  *   sortOrder?: null|SortOrder|value-of<SortOrder>,
- *   state?: null|DocumentState|value-of<DocumentState>,
  *   type?: null|DocumentType|value-of<DocumentType>,
  * }
  */
@@ -89,14 +88,6 @@ final class InboxListParams implements BaseModel
     public ?string $sortOrder;
 
     /**
-     * Filter by document state. If not provided, returns all states.
-     *
-     * @var value-of<DocumentState>|null $state
-     */
-    #[Optional(enum: DocumentState::class, nullable: true)]
-    public ?string $state;
-
-    /**
      * Filter by document type. If not provided, returns all types.
      *
      * @var value-of<DocumentType>|null $type
@@ -116,7 +107,6 @@ final class InboxListParams implements BaseModel
      *
      * @param SortBy|value-of<SortBy>|null $sortBy
      * @param SortOrder|value-of<SortOrder>|null $sortOrder
-     * @param DocumentState|value-of<DocumentState>|null $state
      * @param DocumentType|value-of<DocumentType>|null $type
      */
     public static function with(
@@ -128,7 +118,6 @@ final class InboxListParams implements BaseModel
         ?string $sender = null,
         SortBy|string|null $sortBy = null,
         SortOrder|string|null $sortOrder = null,
-        DocumentState|string|null $state = null,
         DocumentType|string|null $type = null,
     ): self {
         $self = new self;
@@ -141,7 +130,6 @@ final class InboxListParams implements BaseModel
         null !== $sender && $self['sender'] = $sender;
         null !== $sortBy && $self['sortBy'] = $sortBy;
         null !== $sortOrder && $self['sortOrder'] = $sortOrder;
-        null !== $state && $self['state'] = $state;
         null !== $type && $self['type'] = $type;
 
         return $self;
@@ -235,19 +223,6 @@ final class InboxListParams implements BaseModel
     {
         $self = clone $this;
         $self['sortOrder'] = $sortOrder;
-
-        return $self;
-    }
-
-    /**
-     * Filter by document state. If not provided, returns all states.
-     *
-     * @param DocumentState|value-of<DocumentState>|null $state
-     */
-    public function withState(DocumentState|string|null $state): self
-    {
-        $self = clone $this;
-        $self['state'] = $state;
 
         return $self;
     }

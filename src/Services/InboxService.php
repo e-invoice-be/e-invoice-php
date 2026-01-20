@@ -10,7 +10,6 @@ use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Inbox\InboxListParams\SortBy;
 use EInvoiceAPI\Inbox\InboxListParams\SortOrder;
 use EInvoiceAPI\RequestOptions;
@@ -47,7 +46,6 @@ final class InboxService implements InboxContract
      * @param string|null $sender Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
      * @param SortBy|value-of<SortBy> $sortBy Field to sort by
      * @param SortOrder|value-of<SortOrder> $sortOrder Sort direction (asc/desc)
-     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state. If not provided, returns all states.
      * @param DocumentType|value-of<DocumentType>|null $type Filter by document type. If not provided, returns all types.
      * @param RequestOpts|null $requestOptions
      *
@@ -64,7 +62,6 @@ final class InboxService implements InboxContract
         ?string $sender = null,
         SortBy|string $sortBy = 'created_at',
         SortOrder|string $sortOrder = 'desc',
-        DocumentState|string|null $state = null,
         DocumentType|string|null $type = null,
         RequestOptions|array|null $requestOptions = null,
     ): DocumentsNumberPage {
@@ -78,7 +75,6 @@ final class InboxService implements InboxContract
                 'sender' => $sender,
                 'sortBy' => $sortBy,
                 'sortOrder' => $sortOrder,
-                'state' => $state,
                 'type' => $type,
             ],
         );

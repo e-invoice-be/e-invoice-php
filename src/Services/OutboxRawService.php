@@ -92,7 +92,6 @@ final class OutboxRawService implements OutboxRawContract
      *   sender?: string|null,
      *   sortBy?: value-of<OutboxListReceivedDocumentsParams\SortBy>,
      *   sortOrder?: OutboxListReceivedDocumentsParams\SortOrder|value-of<OutboxListReceivedDocumentsParams\SortOrder>,
-     *   state?: DocumentState|value-of<DocumentState>|null,
      *   type?: value-of<DocumentType>,
      * }|OutboxListReceivedDocumentsParams $params
      * @param RequestOpts|null $requestOptions
