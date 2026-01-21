@@ -19,6 +19,8 @@ use EInvoiceAPI\RequestOptions;
 interface OutboxContract
 {
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param int $page Page number

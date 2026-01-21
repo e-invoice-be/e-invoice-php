@@ -35,6 +35,8 @@ final class OutboxService implements OutboxContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * Retrieve a paginated list of draft documents with filtering options including state and text search.

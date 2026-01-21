@@ -31,6 +31,8 @@ final class OutboxRawService implements OutboxRawContract
     public function __construct(private Client $client) {}
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * Retrieve a paginated list of draft documents with filtering options including state and text search.

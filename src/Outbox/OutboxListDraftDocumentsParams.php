@@ -16,6 +16,7 @@ use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams\SortOrder;
 /**
  * Retrieve a paginated list of draft documents with filtering options including state and text search.
  *
+ * @deprecated
  * @see EInvoiceAPI\Services\OutboxService::listDraftDocuments()
  *
  * @phpstan-type OutboxListDraftDocumentsParamsShape = array{

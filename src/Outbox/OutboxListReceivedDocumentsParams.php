@@ -73,9 +73,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public ?string $search;
 
     /**
-     * @deprecated
-     *
-     * (Deprecated) Filter by sender ID
+     * (Deprecated) Filter by sender ID.
      */
     #[Optional(nullable: true)]
     public ?string $sender;
