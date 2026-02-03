@@ -67,9 +67,11 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
-        $this->apiKey = (string) ($apiKey ?? getenv('E_INVOICE_API_KEY'));
+        $this->apiKey = (string) ($apiKey ?? Util::getenv('E_INVOICE_API_KEY'));
 
-        $baseUrl ??= getenv('E_INVOICE_BASE_URL') ?: 'https://api.e-invoice.be';
+        $baseUrl ??= Util::getenv(
+            'E_INVOICE_BASE_URL'
+        ) ?: 'https://api.e-invoice.be';
 
         $options = RequestOptions::parse(
             RequestOptions::with(
