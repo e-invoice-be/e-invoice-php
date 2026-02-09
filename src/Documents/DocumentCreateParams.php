@@ -41,6 +41,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  * @phpstan-import-type TotalTaxShape from \EInvoiceAPI\Documents\DocumentCreateParams\TotalTax
  *
  * @phpstan-type DocumentCreateParamsShape = array{
+ *   constructPdf?: bool|null,
  *   allowances?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Allowance|AllowanceShape>|null,
  *   amountDue?: AmountDueShape|null,
  *   attachments?: list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null,
@@ -96,6 +97,12 @@ final class DocumentCreateParams implements BaseModel
     /** @use SdkModel<DocumentCreateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL.
+     */
+    #[Optional]
+    public ?bool $constructPdf;
 
     /**
      * @var list<Allowance>|null $allowances
@@ -446,6 +453,7 @@ final class DocumentCreateParams implements BaseModel
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
+        ?bool $constructPdf = null,
         ?array $allowances = null,
         float|string|null $amountDue = null,
         ?array $attachments = null,
@@ -497,6 +505,7 @@ final class DocumentCreateParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $constructPdf && $self['constructPdf'] = $constructPdf;
         null !== $allowances && $self['allowances'] = $allowances;
         null !== $amountDue && $self['amountDue'] = $amountDue;
         null !== $attachments && $self['attachments'] = $attachments;
@@ -545,6 +554,17 @@ final class DocumentCreateParams implements BaseModel
         null !== $vendorEmail && $self['vendorEmail'] = $vendorEmail;
         null !== $vendorName && $self['vendorName'] = $vendorName;
         null !== $vendorTaxID && $self['vendorTaxID'] = $vendorTaxID;
+
+        return $self;
+    }
+
+    /**
+     * If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL.
+     */
+    public function withConstructPdf(bool $constructPdf): self
+    {
+        $self = clone $this;
+        $self['constructPdf'] = $constructPdf;
 
         return $self;
     }

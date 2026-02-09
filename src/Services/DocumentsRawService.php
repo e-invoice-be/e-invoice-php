@@ -59,6 +59,7 @@ final class DocumentsRawService implements DocumentsRawContract
      * Create a new invoice or credit note
      *
      * @param array{
+     *   constructPdf?: bool,
      *   allowances?: list<Allowance|AllowanceShape>|null,
      *   amountDue?: AmountDueShape|null,
      *   attachments?: list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null,
@@ -122,12 +123,17 @@ final class DocumentsRawService implements DocumentsRawContract
             $params,
             $requestOptions,
         );
+        $query_params = array_flip(['constructPdf']);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/',
-            body: (object) $parsed,
+            query: Util::array_transform_keys(
+                array_intersect_key($parsed, $query_params),
+                ['constructPdf' => 'construct_pdf'],
+            ),
+            body: (object) array_diff_key($parsed, $query_params),
             options: $options,
             convert: DocumentResponse::class,
         );
