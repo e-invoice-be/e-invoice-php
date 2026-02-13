@@ -42,7 +42,6 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
- *   customerPeppolID?: string|null,
  *   customerTaxID?: string|null,
  *   direction?: null|DocumentDirection|value-of<DocumentDirection>,
  *   documentType?: null|DocumentType|value-of<DocumentType>,
@@ -169,12 +168,6 @@ final class DocumentResponse implements BaseModel
      */
     #[Optional('customer_name', nullable: true)]
     public ?string $customerName;
-
-    /**
-     * Customer Peppol ID.
-     */
-    #[Optional('customer_peppol_id', nullable: true)]
-    public ?string $customerPeppolID;
 
     /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
@@ -440,7 +433,6 @@ final class DocumentResponse implements BaseModel
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
-        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
@@ -494,7 +486,6 @@ final class DocumentResponse implements BaseModel
         null !== $customerEmail && $self['customerEmail'] = $customerEmail;
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $customerName && $self['customerName'] = $customerName;
-        null !== $customerPeppolID && $self['customerPeppolID'] = $customerPeppolID;
         null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
         null !== $direction && $self['direction'] = $direction;
         null !== $documentType && $self['documentType'] = $documentType;
@@ -692,17 +683,6 @@ final class DocumentResponse implements BaseModel
     {
         $self = clone $this;
         $self['customerName'] = $customerName;
-
-        return $self;
-    }
-
-    /**
-     * Customer Peppol ID.
-     */
-    public function withCustomerPeppolID(?string $customerPeppolID): self
-    {
-        $self = clone $this;
-        $self['customerPeppolID'] = $customerPeppolID;
 
         return $self;
     }

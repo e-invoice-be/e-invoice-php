@@ -70,7 +70,6 @@ final class ValidateRawService implements ValidateRawContract
      *   customerEmail?: string|null,
      *   customerID?: string|null,
      *   customerName?: string|null,
-     *   customerPeppolID?: string|null,
      *   customerTaxID?: string|null,
      *   direction?: DocumentDirection|value-of<DocumentDirection>,
      *   documentType?: value-of<DocumentType>,
