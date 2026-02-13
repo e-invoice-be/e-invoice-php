@@ -89,6 +89,7 @@ final class DocumentsService implements DocumentsContract
      * @param string|null $customerEmail Body param: The email address of the customer
      * @param string|null $customerID Body param: The unique identifier for the customer in your system
      * @param string|null $customerName Body param: The company name of the customer/buyer
+     * @param string|null $customerPeppolID Body param: Customer Peppol ID
      * @param string|null $customerTaxID Body param: Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
      * @param DocumentDirection|value-of<DocumentDirection> $direction Body param: The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
      * @param DocumentType|value-of<DocumentType> $documentType Body param: The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
@@ -146,6 +147,7 @@ final class DocumentsService implements DocumentsContract
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
+        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
@@ -199,6 +201,7 @@ final class DocumentsService implements DocumentsContract
                 'customerEmail' => $customerEmail,
                 'customerID' => $customerID,
                 'customerName' => $customerName,
+                'customerPeppolID' => $customerPeppolID,
                 'customerTaxID' => $customerTaxID,
                 'direction' => $direction,
                 'documentType' => $documentType,
