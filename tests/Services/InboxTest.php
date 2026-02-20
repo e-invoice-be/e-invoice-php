@@ -33,7 +33,7 @@ final class InboxTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->inbox->list();
@@ -51,7 +51,7 @@ final class InboxTest extends TestCase
     public function testListCreditNotes(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->inbox->listCreditNotes();
@@ -69,7 +69,7 @@ final class InboxTest extends TestCase
     public function testListInvoices(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->inbox->listInvoices();

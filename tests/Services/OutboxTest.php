@@ -33,7 +33,7 @@ final class OutboxTest extends TestCase
     public function testListDraftDocuments(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->outbox->listDraftDocuments();
@@ -51,7 +51,7 @@ final class OutboxTest extends TestCase
     public function testListReceivedDocuments(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $page = $this->client->outbox->listReceivedDocuments();

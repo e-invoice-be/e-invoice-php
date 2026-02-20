@@ -33,7 +33,7 @@ final class ValidateTest extends TestCase
     public function testValidateJson(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->validate->validateJson();
@@ -46,7 +46,7 @@ final class ValidateTest extends TestCase
     public function testValidatePeppolID(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->validate->validatePeppolID(peppolID: 'peppol_id');
@@ -59,7 +59,7 @@ final class ValidateTest extends TestCase
     public function testValidatePeppolIDWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->validate->validatePeppolID(peppolID: 'peppol_id');
@@ -72,7 +72,7 @@ final class ValidateTest extends TestCase
     public function testValidateUbl(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->validate->validateUbl(file: 'file');
@@ -85,7 +85,7 @@ final class ValidateTest extends TestCase
     public function testValidateUblWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->validate->validateUbl(file: 'file');

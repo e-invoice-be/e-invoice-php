@@ -33,7 +33,7 @@ final class LookupTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->lookup->retrieve(peppolID: 'peppol_id');
@@ -46,7 +46,7 @@ final class LookupTest extends TestCase
     public function testRetrieveWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->lookup->retrieve(peppolID: 'peppol_id');
@@ -59,7 +59,7 @@ final class LookupTest extends TestCase
     public function testRetrieveParticipants(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->lookup->retrieveParticipants(query: 'query');
@@ -72,7 +72,7 @@ final class LookupTest extends TestCase
     public function testRetrieveParticipantsWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
+            $this->markTestSkipped('Mock server tests are disabled');
         }
 
         $result = $this->client->lookup->retrieveParticipants(
