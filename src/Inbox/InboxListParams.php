@@ -9,6 +9,8 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Inbox\InboxListParams\SortBy;
+use EInvoiceAPI\Inbox\InboxListParams\SortOrder;
 
 /**
  * Retrieve a paginated list of received documents with filtering options including state, type, sender, date range, and text search.
@@ -22,7 +24,8 @@ use EInvoiceAPI\Documents\DocumentType;
  *   pageSize?: int|null,
  *   search?: string|null,
  *   sender?: string|null,
- *   state?: null|DocumentState|value-of<DocumentState>,
+ *   sortBy?: null|SortBy|value-of<SortBy>,
+ *   sortOrder?: null|SortOrder|value-of<SortOrder>,
  *   type?: null|DocumentType|value-of<DocumentType>,
  * }
  */
@@ -63,21 +66,29 @@ final class InboxListParams implements BaseModel
     public ?string $search;
 
     /**
-     * Filter by sender ID.
+     * Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id).
      */
     #[Optional(nullable: true)]
     public ?string $sender;
 
     /**
-     * Filter by document state.
+     * Field to sort by.
      *
-     * @var value-of<DocumentState>|null $state
+     * @var value-of<SortBy>|null $sortBy
      */
-    #[Optional(enum: DocumentState::class, nullable: true)]
-    public ?string $state;
+    #[Optional(enum: SortBy::class)]
+    public ?string $sortBy;
 
     /**
-     * Filter by document type.
+     * Sort direction (asc/desc).
+     *
+     * @var value-of<SortOrder>|null $sortOrder
+     */
+    #[Optional(enum: SortOrder::class)]
+    public ?string $sortOrder;
+
+    /**
+     * Filter by document type. If not provided, returns all types.
      *
      * @var value-of<DocumentType>|null $type
      */
@@ -94,7 +105,8 @@ final class InboxListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DocumentState|value-of<DocumentState>|null $state
+     * @param SortBy|value-of<SortBy>|null $sortBy
+     * @param SortOrder|value-of<SortOrder>|null $sortOrder
      * @param DocumentType|value-of<DocumentType>|null $type
      */
     public static function with(
@@ -104,7 +116,8 @@ final class InboxListParams implements BaseModel
         ?int $pageSize = null,
         ?string $search = null,
         ?string $sender = null,
-        DocumentState|string|null $state = null,
+        SortBy|string|null $sortBy = null,
+        SortOrder|string|null $sortOrder = null,
         DocumentType|string|null $type = null,
     ): self {
         $self = new self;
@@ -115,7 +128,8 @@ final class InboxListParams implements BaseModel
         null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $search && $self['search'] = $search;
         null !== $sender && $self['sender'] = $sender;
-        null !== $state && $self['state'] = $state;
+        null !== $sortBy && $self['sortBy'] = $sortBy;
+        null !== $sortOrder && $self['sortOrder'] = $sortOrder;
         null !== $type && $self['type'] = $type;
 
         return $self;
@@ -177,7 +191,7 @@ final class InboxListParams implements BaseModel
     }
 
     /**
-     * Filter by sender ID.
+     * Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id).
      */
     public function withSender(?string $sender): self
     {
@@ -188,20 +202,33 @@ final class InboxListParams implements BaseModel
     }
 
     /**
-     * Filter by document state.
+     * Field to sort by.
      *
-     * @param DocumentState|value-of<DocumentState>|null $state
+     * @param SortBy|value-of<SortBy> $sortBy
      */
-    public function withState(DocumentState|string|null $state): self
+    public function withSortBy(SortBy|string $sortBy): self
     {
         $self = clone $this;
-        $self['state'] = $state;
+        $self['sortBy'] = $sortBy;
 
         return $self;
     }
 
     /**
-     * Filter by document type.
+     * Sort direction (asc/desc).
+     *
+     * @param SortOrder|value-of<SortOrder> $sortOrder
+     */
+    public function withSortOrder(SortOrder|string $sortOrder): self
+    {
+        $self = clone $this;
+        $self['sortOrder'] = $sortOrder;
+
+        return $self;
+    }
+
+    /**
+     * Filter by document type. If not provided, returns all types.
      *
      * @param DocumentType|value-of<DocumentType>|null $type
      */

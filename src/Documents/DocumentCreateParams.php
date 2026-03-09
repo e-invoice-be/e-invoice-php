@@ -41,6 +41,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  * @phpstan-import-type TotalTaxShape from \EInvoiceAPI\Documents\DocumentCreateParams\TotalTax
  *
  * @phpstan-type DocumentCreateParamsShape = array{
+ *   constructPdf?: bool|null,
  *   allowances?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Allowance|AllowanceShape>|null,
  *   amountDue?: AmountDueShape|null,
  *   attachments?: list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null,
@@ -54,6 +55,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
+ *   customerPeppolID?: string|null,
  *   customerTaxID?: string|null,
  *   direction?: null|DocumentDirection|value-of<DocumentDirection>,
  *   documentType?: null|DocumentType|value-of<DocumentType>,
@@ -96,6 +98,12 @@ final class DocumentCreateParams implements BaseModel
     /** @use SdkModel<DocumentCreateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL.
+     */
+    #[Optional]
+    public ?bool $constructPdf;
 
     /**
      * @var list<Allowance>|null $allowances
@@ -180,6 +188,12 @@ final class DocumentCreateParams implements BaseModel
      */
     #[Optional('customer_name', nullable: true)]
     public ?string $customerName;
+
+    /**
+     * Customer Peppol ID.
+     */
+    #[Optional('customer_peppol_id', nullable: true)]
+    public ?string $customerPeppolID;
 
     /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
@@ -446,6 +460,7 @@ final class DocumentCreateParams implements BaseModel
      * @param Vatex|value-of<Vatex>|null $vatex
      */
     public static function with(
+        ?bool $constructPdf = null,
         ?array $allowances = null,
         float|string|null $amountDue = null,
         ?array $attachments = null,
@@ -459,6 +474,7 @@ final class DocumentCreateParams implements BaseModel
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
+        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
@@ -497,6 +513,7 @@ final class DocumentCreateParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $constructPdf && $self['constructPdf'] = $constructPdf;
         null !== $allowances && $self['allowances'] = $allowances;
         null !== $amountDue && $self['amountDue'] = $amountDue;
         null !== $attachments && $self['attachments'] = $attachments;
@@ -510,6 +527,7 @@ final class DocumentCreateParams implements BaseModel
         null !== $customerEmail && $self['customerEmail'] = $customerEmail;
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $customerName && $self['customerName'] = $customerName;
+        null !== $customerPeppolID && $self['customerPeppolID'] = $customerPeppolID;
         null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
         null !== $direction && $self['direction'] = $direction;
         null !== $documentType && $self['documentType'] = $documentType;
@@ -545,6 +563,17 @@ final class DocumentCreateParams implements BaseModel
         null !== $vendorEmail && $self['vendorEmail'] = $vendorEmail;
         null !== $vendorName && $self['vendorName'] = $vendorName;
         null !== $vendorTaxID && $self['vendorTaxID'] = $vendorTaxID;
+
+        return $self;
+    }
+
+    /**
+     * If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL.
+     */
+    public function withConstructPdf(bool $constructPdf): self
+    {
+        $self = clone $this;
+        $self['constructPdf'] = $constructPdf;
 
         return $self;
     }
@@ -694,6 +723,17 @@ final class DocumentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['customerName'] = $customerName;
+
+        return $self;
+    }
+
+    /**
+     * Customer Peppol ID.
+     */
+    public function withCustomerPeppolID(?string $customerPeppolID): self
+    {
+        $self = clone $this;
+        $self['customerPeppolID'] = $customerPeppolID;
 
         return $self;
     }
