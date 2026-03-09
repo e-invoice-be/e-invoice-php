@@ -28,7 +28,6 @@ use EInvoiceAPI\Inbox\DocumentState;
  *
  * @phpstan-type DocumentResponseShape = array{
  *   id: string,
- *   createdAt: \DateTimeInterface,
  *   allowances?: list<\EInvoiceAPI\Documents\DocumentResponse\Allowance|AllowanceShape>|null,
  *   amountDue?: string|null,
  *   attachments?: list<DocumentAttachment|DocumentAttachmentShape>|null,
@@ -42,7 +41,6 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
- *   customerPeppolID?: string|null,
  *   customerTaxID?: string|null,
  *   direction?: null|DocumentDirection|value-of<DocumentDirection>,
  *   documentType?: null|DocumentType|value-of<DocumentType>,
@@ -86,9 +84,6 @@ final class DocumentResponse implements BaseModel
 
     #[Required]
     public string $id;
-
-    #[Required('created_at')]
-    public \DateTimeInterface $createdAt;
 
     /** @var list<Allowance>|null $allowances */
     #[Optional(
@@ -169,12 +164,6 @@ final class DocumentResponse implements BaseModel
      */
     #[Optional('customer_name', nullable: true)]
     public ?string $customerName;
-
-    /**
-     * Customer Peppol ID.
-     */
-    #[Optional('customer_peppol_id', nullable: true)]
-    public ?string $customerPeppolID;
 
     /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
@@ -392,13 +381,13 @@ final class DocumentResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * DocumentResponse::with(id: ..., createdAt: ...)
+     * DocumentResponse::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DocumentResponse)->withID(...)->withCreatedAt(...)
+     * (new DocumentResponse)->withID(...)
      * ```
      */
     public function __construct()
@@ -426,7 +415,6 @@ final class DocumentResponse implements BaseModel
      */
     public static function with(
         string $id,
-        \DateTimeInterface $createdAt,
         ?array $allowances = null,
         ?string $amountDue = null,
         ?array $attachments = null,
@@ -440,7 +428,6 @@ final class DocumentResponse implements BaseModel
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
-        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
@@ -479,7 +466,6 @@ final class DocumentResponse implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
-        $self['createdAt'] = $createdAt;
 
         null !== $allowances && $self['allowances'] = $allowances;
         null !== $amountDue && $self['amountDue'] = $amountDue;
@@ -494,7 +480,6 @@ final class DocumentResponse implements BaseModel
         null !== $customerEmail && $self['customerEmail'] = $customerEmail;
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $customerName && $self['customerName'] = $customerName;
-        null !== $customerPeppolID && $self['customerPeppolID'] = $customerPeppolID;
         null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
         null !== $direction && $self['direction'] = $direction;
         null !== $documentType && $self['documentType'] = $documentType;
@@ -537,14 +522,6 @@ final class DocumentResponse implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
-
-        return $self;
-    }
-
-    public function withCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $self = clone $this;
-        $self['createdAt'] = $createdAt;
 
         return $self;
     }
@@ -692,17 +669,6 @@ final class DocumentResponse implements BaseModel
     {
         $self = clone $this;
         $self['customerName'] = $customerName;
-
-        return $self;
-    }
-
-    /**
-     * Customer Peppol ID.
-     */
-    public function withCustomerPeppolID(?string $customerPeppolID): self
-    {
-        $self = clone $this;
-        $self['customerPeppolID'] = $customerPeppolID;
 
         return $self;
     }

@@ -11,11 +11,10 @@ use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
+use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
 use EInvoiceAPI\Inbox\InboxListInvoicesParams;
 use EInvoiceAPI\Inbox\InboxListParams;
-use EInvoiceAPI\Inbox\InboxListParams\SortBy;
-use EInvoiceAPI\Inbox\InboxListParams\SortOrder;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\InboxRawContract;
 
@@ -42,9 +41,8 @@ final class InboxRawService implements InboxRawContract
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   sortBy?: value-of<SortBy>,
-     *   sortOrder?: SortOrder|value-of<SortOrder>,
-     *   type?: value-of<DocumentType>,
+     *   state?: DocumentState|value-of<DocumentState>|null,
+     *   type?: DocumentType|value-of<DocumentType>|null,
      * }|InboxListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -71,8 +69,6 @@ final class InboxRawService implements InboxRawContract
                     'dateFrom' => 'date_from',
                     'dateTo' => 'date_to',
                     'pageSize' => 'page_size',
-                    'sortBy' => 'sort_by',
-                    'sortOrder' => 'sort_order',
                 ],
             ),
             options: $options,
@@ -86,12 +82,7 @@ final class InboxRawService implements InboxRawContract
      *
      * Retrieve a paginated list of received credit notes with filtering options.
      *
-     * @param array{
-     *   page?: int,
-     *   pageSize?: int,
-     *   sortBy?: value-of<InboxListCreditNotesParams\SortBy>,
-     *   sortOrder?: InboxListCreditNotesParams\SortOrder|value-of<InboxListCreditNotesParams\SortOrder>,
-     * }|InboxListCreditNotesParams $params
+     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
@@ -111,14 +102,7 @@ final class InboxRawService implements InboxRawContract
         return $this->client->request(
             method: 'get',
             path: 'api/inbox/credit-notes',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'pageSize' => 'page_size',
-                    'sortBy' => 'sort_by',
-                    'sortOrder' => 'sort_order',
-                ],
-            ),
+            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
@@ -130,12 +114,7 @@ final class InboxRawService implements InboxRawContract
      *
      * Retrieve a paginated list of received invoices with filtering options.
      *
-     * @param array{
-     *   page?: int,
-     *   pageSize?: int,
-     *   sortBy?: value-of<InboxListInvoicesParams\SortBy>,
-     *   sortOrder?: InboxListInvoicesParams\SortOrder|value-of<InboxListInvoicesParams\SortOrder>,
-     * }|InboxListInvoicesParams $params
+     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
@@ -155,14 +134,7 @@ final class InboxRawService implements InboxRawContract
         return $this->client->request(
             method: 'get',
             path: 'api/inbox/invoices',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'pageSize' => 'page_size',
-                    'sortBy' => 'sort_by',
-                    'sortOrder' => 'sort_order',
-                ],
-            ),
+            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,

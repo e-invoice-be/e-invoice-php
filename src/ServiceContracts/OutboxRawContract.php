@@ -18,8 +18,6 @@ use EInvoiceAPI\RequestOptions;
 interface OutboxRawContract
 {
     /**
-     * @deprecated
-     *
      * @api
      *
      * @param array<string,mixed>|OutboxListDraftDocumentsParams $params

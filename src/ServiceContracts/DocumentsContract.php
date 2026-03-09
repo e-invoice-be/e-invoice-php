@@ -43,65 +43,62 @@ interface DocumentsContract
     /**
      * @api
      *
-     * @param bool $constructPdf query param: If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL
-     * @param list<Allowance|AllowanceShape>|null $allowances Body param
-     * @param AmountDueShape|null $amountDue Body param: The amount due for payment. Must be positive and rounded to maximum 2 decimals
-     * @param list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null $attachments Body param
-     * @param string|null $billingAddress Body param: The billing address (if different from customer address)
-     * @param string|null $billingAddressRecipient Body param: The recipient name at the billing address
-     * @param list<Charge|ChargeShape>|null $charges Body param
-     * @param CurrencyCode|value-of<CurrencyCode> $currency Body param: Currency of the invoice (ISO 4217 currency code)
-     * @param string|null $customerAddress Body param: The address of the customer/buyer
-     * @param string|null $customerAddressRecipient Body param: The recipient name at the customer address
-     * @param string|null $customerCompanyID Body param: Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
-     * @param string|null $customerEmail Body param: The email address of the customer
-     * @param string|null $customerID Body param: The unique identifier for the customer in your system
-     * @param string|null $customerName Body param: The company name of the customer/buyer
-     * @param string|null $customerPeppolID Body param: Customer Peppol ID
-     * @param string|null $customerTaxID Body param: Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
-     * @param DocumentDirection|value-of<DocumentDirection> $direction Body param: The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
-     * @param DocumentType|value-of<DocumentType> $documentType Body param: The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
-     * @param string|null $dueDate Body param: The date when payment is due
-     * @param string|null $invoiceDate Body param: The date when the invoice was issued
-     * @param string|null $invoiceID Body param: The unique invoice identifier/number
-     * @param InvoiceTotalShape|null $invoiceTotal Body param: The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
-     * @param list<Item|ItemShape> $items Body param: At least one line item is required
-     * @param string|null $note Body param: Additional notes or comments for the invoice
-     * @param list<PaymentDetailCreate|PaymentDetailCreateShape>|null $paymentDetails Body param
-     * @param string|null $paymentTerm Body param: The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
-     * @param PreviousUnpaidBalanceShape|null $previousUnpaidBalance Body param: The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals
-     * @param string|null $purchaseOrder Body param: The purchase order reference number
-     * @param string|null $remittanceAddress Body param: The address where payment should be sent or remitted to
-     * @param string|null $remittanceAddressRecipient Body param: The recipient name at the remittance address
-     * @param string|null $serviceAddress Body param: The address where services were performed or goods were delivered
-     * @param string|null $serviceAddressRecipient Body param: The recipient name at the service address
-     * @param string|null $serviceEndDate Body param: The end date of the service period or delivery period
-     * @param string|null $serviceStartDate Body param: The start date of the service period or delivery period
-     * @param string|null $shippingAddress Body param: The shipping/delivery address
-     * @param string|null $shippingAddressRecipient Body param: The recipient name at the shipping address
-     * @param DocumentState|value-of<DocumentState> $state Body param: The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
-     * @param SubtotalShape|null $subtotal Body param: The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals
-     * @param TaxCode|value-of<TaxCode> $taxCode Body param: Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt)
-     * @param list<TaxDetail|TaxDetailShape>|null $taxDetails Body param
-     * @param TotalDiscountShape|null $totalDiscount Body param: The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals
-     * @param TotalTaxShape|null $totalTax Body param: The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals
-     * @param Vatex|value-of<Vatex>|null $vatex Body param: VATEX code list for VAT exemption reasons
+     * @param list<Allowance|AllowanceShape>|null $allowances
+     * @param AmountDueShape|null $amountDue The amount due for payment. Must be positive and rounded to maximum 2 decimals
+     * @param list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null $attachments
+     * @param string|null $billingAddress The billing address (if different from customer address)
+     * @param string|null $billingAddressRecipient The recipient name at the billing address
+     * @param list<Charge|ChargeShape>|null $charges
+     * @param CurrencyCode|value-of<CurrencyCode> $currency Currency of the invoice (ISO 4217 currency code)
+     * @param string|null $customerAddress The address of the customer/buyer
+     * @param string|null $customerAddressRecipient The recipient name at the customer address
+     * @param string|null $customerCompanyID Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
+     * @param string|null $customerEmail The email address of the customer
+     * @param string|null $customerID The unique identifier for the customer in your system
+     * @param string|null $customerName The company name of the customer/buyer
+     * @param string|null $customerTaxID Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
+     * @param DocumentDirection|value-of<DocumentDirection> $direction The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
+     * @param DocumentType|value-of<DocumentType> $documentType The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+     * @param string|null $dueDate The date when payment is due
+     * @param string|null $invoiceDate The date when the invoice was issued
+     * @param string|null $invoiceID The unique invoice identifier/number
+     * @param InvoiceTotalShape|null $invoiceTotal The total amount of the invoice including tax (invoice_total = subtotal + total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
+     * @param list<Item|ItemShape> $items At least one line item is required
+     * @param string|null $note Additional notes or comments for the invoice
+     * @param list<PaymentDetailCreate|PaymentDetailCreateShape>|null $paymentDetails
+     * @param string|null $paymentTerm The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+     * @param PreviousUnpaidBalanceShape|null $previousUnpaidBalance The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals
+     * @param string|null $purchaseOrder The purchase order reference number
+     * @param string|null $remittanceAddress The address where payment should be sent or remitted to
+     * @param string|null $remittanceAddressRecipient The recipient name at the remittance address
+     * @param string|null $serviceAddress The address where services were performed or goods were delivered
+     * @param string|null $serviceAddressRecipient The recipient name at the service address
+     * @param string|null $serviceEndDate The end date of the service period or delivery period
+     * @param string|null $serviceStartDate The start date of the service period or delivery period
+     * @param string|null $shippingAddress The shipping/delivery address
+     * @param string|null $shippingAddressRecipient The recipient name at the shipping address
+     * @param DocumentState|value-of<DocumentState> $state The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+     * @param SubtotalShape|null $subtotal The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals
+     * @param TaxCode|value-of<TaxCode> $taxCode Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt)
+     * @param list<TaxDetail|TaxDetailShape>|null $taxDetails
+     * @param TotalDiscountShape|null $totalDiscount The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals
+     * @param TotalTaxShape|null $totalTax The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals
+     * @param Vatex|value-of<Vatex>|null $vatex VATEX code list for VAT exemption reasons
      *
      * Agency: CEF
      * Identifier: vatex
-     * @param string|null $vatexNote Body param: Textual explanation for VAT exemption
-     * @param string|null $vendorAddress Body param: The address of the vendor/seller
-     * @param string|null $vendorAddressRecipient Body param: The recipient name at the vendor address
-     * @param string|null $vendorCompanyID Body param: Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
-     * @param string|null $vendorEmail Body param: The email address of the vendor
-     * @param string|null $vendorName Body param: The name of the vendor/seller/supplier
-     * @param string|null $vendorTaxID Body param: Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix
+     * @param string|null $vatexNote Textual explanation for VAT exemption
+     * @param string|null $vendorAddress The address of the vendor/seller
+     * @param string|null $vendorAddressRecipient The recipient name at the vendor address
+     * @param string|null $vendorCompanyID Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
+     * @param string|null $vendorEmail The email address of the vendor
+     * @param string|null $vendorName The name of the vendor/seller/supplier
+     * @param string|null $vendorTaxID Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
-        bool $constructPdf = false,
         ?array $allowances = null,
         float|string|null $amountDue = null,
         ?array $attachments = null,
@@ -115,7 +112,6 @@ interface DocumentsContract
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
-        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,

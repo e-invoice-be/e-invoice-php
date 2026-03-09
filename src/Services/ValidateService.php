@@ -72,7 +72,6 @@ final class ValidateService implements ValidateContract
      * @param string|null $customerEmail The email address of the customer
      * @param string|null $customerID The unique identifier for the customer in your system
      * @param string|null $customerName The company name of the customer/buyer
-     * @param string|null $customerPeppolID Customer Peppol ID
      * @param string|null $customerTaxID Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
      * @param DocumentDirection|value-of<DocumentDirection> $direction The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
      * @param DocumentType|value-of<DocumentType> $documentType The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
@@ -129,7 +128,6 @@ final class ValidateService implements ValidateContract
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
-        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
@@ -182,7 +180,6 @@ final class ValidateService implements ValidateContract
                 'customerEmail' => $customerEmail,
                 'customerID' => $customerID,
                 'customerName' => $customerName,
-                'customerPeppolID' => $customerPeppolID,
                 'customerTaxID' => $customerTaxID,
                 'direction' => $direction,
                 'documentType' => $documentType,

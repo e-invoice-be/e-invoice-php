@@ -12,7 +12,9 @@ use EInvoiceAPI\Me\MeGetResponse\Plan;
 
 /**
  * @phpstan-type MeGetResponseShape = array{
+ *   creditBalance: int,
  *   name: string,
+ *   plan: Plan|value-of<Plan>,
  *   bccRecipientEmail?: string|null,
  *   companyAddress?: string|null,
  *   companyCity?: string|null,
@@ -22,11 +24,9 @@ use EInvoiceAPI\Me\MeGetResponse\Plan;
  *   companyNumber?: string|null,
  *   companyTaxID?: string|null,
  *   companyZip?: string|null,
- *   creditBalance?: int|null,
  *   description?: string|null,
  *   ibans?: list<string>|null,
  *   peppolIDs?: list<string>|null,
- *   plan?: null|Plan|value-of<Plan>,
  *   smpRegistration?: bool|null,
  *   smpRegistrationDate?: \DateTimeInterface|null,
  * }
@@ -36,8 +36,22 @@ final class MeGetResponse implements BaseModel
     /** @use SdkModel<MeGetResponseShape> */
     use SdkModel;
 
+    /**
+     * Credit balance of the tenant.
+     */
+    #[Required('credit_balance')]
+    public int $creditBalance;
+
     #[Required]
     public string $name;
+
+    /**
+     * Plan of the tenant.
+     *
+     * @var value-of<Plan> $plan
+     */
+    #[Required(enum: Plan::class)]
+    public string $plan;
 
     /**
      * BCC recipient email to deliver documents.
@@ -93,12 +107,6 @@ final class MeGetResponse implements BaseModel
     #[Optional('company_zip', nullable: true)]
     public ?string $companyZip;
 
-    /**
-     * Credit balance of the tenant.
-     */
-    #[Optional('credit_balance')]
-    public ?int $creditBalance;
-
     #[Optional(nullable: true)]
     public ?string $description;
 
@@ -119,14 +127,6 @@ final class MeGetResponse implements BaseModel
     public ?array $peppolIDs;
 
     /**
-     * Plan of the tenant.
-     *
-     * @var value-of<Plan>|null $plan
-     */
-    #[Optional(enum: Plan::class)]
-    public ?string $plan;
-
-    /**
      * Whether the tenant is registered on our SMP.
      */
     #[Optional('smp_registration', nullable: true)]
@@ -143,13 +143,13 @@ final class MeGetResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * MeGetResponse::with(name: ...)
+     * MeGetResponse::with(creditBalance: ..., name: ..., plan: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MeGetResponse)->withName(...)
+     * (new MeGetResponse)->withCreditBalance(...)->withName(...)->withPlan(...)
      * ```
      */
     public function __construct()
@@ -162,12 +162,14 @@ final class MeGetResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Plan|value-of<Plan> $plan
      * @param list<string>|null $ibans
      * @param list<string>|null $peppolIDs
-     * @param Plan|value-of<Plan>|null $plan
      */
     public static function with(
+        int $creditBalance,
         string $name,
+        Plan|string $plan,
         ?string $bccRecipientEmail = null,
         ?string $companyAddress = null,
         ?string $companyCity = null,
@@ -177,17 +179,17 @@ final class MeGetResponse implements BaseModel
         ?string $companyNumber = null,
         ?string $companyTaxID = null,
         ?string $companyZip = null,
-        ?int $creditBalance = null,
         ?string $description = null,
         ?array $ibans = null,
         ?array $peppolIDs = null,
-        Plan|string|null $plan = null,
         ?bool $smpRegistration = null,
         ?\DateTimeInterface $smpRegistrationDate = null,
     ): self {
         $self = new self;
 
+        $self['creditBalance'] = $creditBalance;
         $self['name'] = $name;
+        $self['plan'] = $plan;
 
         null !== $bccRecipientEmail && $self['bccRecipientEmail'] = $bccRecipientEmail;
         null !== $companyAddress && $self['companyAddress'] = $companyAddress;
@@ -198,13 +200,22 @@ final class MeGetResponse implements BaseModel
         null !== $companyNumber && $self['companyNumber'] = $companyNumber;
         null !== $companyTaxID && $self['companyTaxID'] = $companyTaxID;
         null !== $companyZip && $self['companyZip'] = $companyZip;
-        null !== $creditBalance && $self['creditBalance'] = $creditBalance;
         null !== $description && $self['description'] = $description;
         null !== $ibans && $self['ibans'] = $ibans;
         null !== $peppolIDs && $self['peppolIDs'] = $peppolIDs;
-        null !== $plan && $self['plan'] = $plan;
         null !== $smpRegistration && $self['smpRegistration'] = $smpRegistration;
         null !== $smpRegistrationDate && $self['smpRegistrationDate'] = $smpRegistrationDate;
+
+        return $self;
+    }
+
+    /**
+     * Credit balance of the tenant.
+     */
+    public function withCreditBalance(int $creditBalance): self
+    {
+        $self = clone $this;
+        $self['creditBalance'] = $creditBalance;
 
         return $self;
     }
@@ -213,6 +224,19 @@ final class MeGetResponse implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * Plan of the tenant.
+     *
+     * @param Plan|value-of<Plan> $plan
+     */
+    public function withPlan(Plan|string $plan): self
+    {
+        $self = clone $this;
+        $self['plan'] = $plan;
 
         return $self;
     }
@@ -316,17 +340,6 @@ final class MeGetResponse implements BaseModel
         return $self;
     }
 
-    /**
-     * Credit balance of the tenant.
-     */
-    public function withCreditBalance(int $creditBalance): self
-    {
-        $self = clone $this;
-        $self['creditBalance'] = $creditBalance;
-
-        return $self;
-    }
-
     public function withDescription(?string $description): self
     {
         $self = clone $this;
@@ -357,19 +370,6 @@ final class MeGetResponse implements BaseModel
     {
         $self = clone $this;
         $self['peppolIDs'] = $peppolIDs;
-
-        return $self;
-    }
-
-    /**
-     * Plan of the tenant.
-     *
-     * @param Plan|value-of<Plan> $plan
-     */
-    public function withPlan(Plan|string $plan): self
-    {
-        $self = clone $this;
-        $self['plan'] = $plan;
 
         return $self;
     }

@@ -20,8 +20,6 @@ use EInvoiceAPI\Lookup\LookupGetResponse\DNSInfo\DNSRecord;
  *   smlHostname: string,
  *   status: string,
  *   error?: string|null,
- *   lookupMethod?: string|null,
- *   smpHostname?: string|null,
  * }
  */
 final class DNSInfo implements BaseModel
@@ -56,18 +54,6 @@ final class DNSInfo implements BaseModel
     public ?string $error;
 
     /**
-     * DNS lookup method used: 'naptr' (new spec) or 'busdox' (legacy).
-     */
-    #[Optional(nullable: true)]
-    public ?string $lookupMethod;
-
-    /**
-     * Hostname of the SMP (Service Metadata Publisher) discovered via DNS.
-     */
-    #[Optional(nullable: true)]
-    public ?string $smpHostname;
-
-    /**
      * `new DNSInfo()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -98,8 +84,6 @@ final class DNSInfo implements BaseModel
         string $smlHostname,
         string $status,
         ?string $error = null,
-        ?string $lookupMethod = null,
-        ?string $smpHostname = null,
     ): self {
         $self = new self;
 
@@ -108,8 +92,6 @@ final class DNSInfo implements BaseModel
         $self['status'] = $status;
 
         null !== $error && $self['error'] = $error;
-        null !== $lookupMethod && $self['lookupMethod'] = $lookupMethod;
-        null !== $smpHostname && $self['smpHostname'] = $smpHostname;
 
         return $self;
     }
@@ -156,28 +138,6 @@ final class DNSInfo implements BaseModel
     {
         $self = clone $this;
         $self['error'] = $error;
-
-        return $self;
-    }
-
-    /**
-     * DNS lookup method used: 'naptr' (new spec) or 'busdox' (legacy).
-     */
-    public function withLookupMethod(?string $lookupMethod): self
-    {
-        $self = clone $this;
-        $self['lookupMethod'] = $lookupMethod;
-
-        return $self;
-    }
-
-    /**
-     * Hostname of the SMP (Service Metadata Publisher) discovered via DNS.
-     */
-    public function withSmpHostname(?string $smpHostname): self
-    {
-        $self = clone $this;
-        $self['smpHostname'] = $smpHostname;
 
         return $self;
     }

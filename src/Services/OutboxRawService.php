@@ -13,8 +13,6 @@ use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
-use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams\SortBy;
-use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams\SortOrder;
 use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\OutboxRawContract;
@@ -31,21 +29,11 @@ final class OutboxRawService implements OutboxRawContract
     public function __construct(private Client $client) {}
 
     /**
-     * @deprecated
-     *
      * @api
      *
-     * Retrieve a paginated list of draft documents with filtering options including state and text search.
+     * Retrieve a paginated list of draft documents with filtering options.
      *
-     * @param array{
-     *   page?: int,
-     *   pageSize?: int,
-     *   search?: string|null,
-     *   sortBy?: value-of<SortBy>,
-     *   sortOrder?: SortOrder|value-of<SortOrder>,
-     *   state?: DocumentState|value-of<DocumentState>|null,
-     *   type?: value-of<DocumentType>,
-     * }|OutboxListDraftDocumentsParams $params
+     * @param array{page?: int, pageSize?: int}|OutboxListDraftDocumentsParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
@@ -65,14 +53,7 @@ final class OutboxRawService implements OutboxRawContract
         return $this->client->request(
             method: 'get',
             path: 'api/outbox/drafts',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'pageSize' => 'page_size',
-                    'sortBy' => 'sort_by',
-                    'sortOrder' => 'sort_order',
-                ],
-            ),
+            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
@@ -89,12 +70,10 @@ final class OutboxRawService implements OutboxRawContract
      *   dateTo?: \DateTimeInterface|null,
      *   page?: int,
      *   pageSize?: int,
-     *   receiver?: string|null,
      *   search?: string|null,
      *   sender?: string|null,
-     *   sortBy?: value-of<OutboxListReceivedDocumentsParams\SortBy>,
-     *   sortOrder?: OutboxListReceivedDocumentsParams\SortOrder|value-of<OutboxListReceivedDocumentsParams\SortOrder>,
-     *   type?: value-of<DocumentType>,
+     *   state?: DocumentState|value-of<DocumentState>|null,
+     *   type?: DocumentType|value-of<DocumentType>|null,
      * }|OutboxListReceivedDocumentsParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -121,8 +100,6 @@ final class OutboxRawService implements OutboxRawContract
                     'dateFrom' => 'date_from',
                     'dateTo' => 'date_to',
                     'pageSize' => 'page_size',
-                    'sortBy' => 'sort_by',
-                    'sortOrder' => 'sort_order',
                 ],
             ),
             options: $options,

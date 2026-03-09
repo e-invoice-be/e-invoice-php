@@ -10,8 +10,7 @@ use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\Inbox\InboxListParams\SortBy;
-use EInvoiceAPI\Inbox\InboxListParams\SortOrder;
+use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\InboxContract;
 
@@ -43,10 +42,9 @@ final class InboxService implements InboxContract
      * @param int $page Page number
      * @param int $pageSize Number of items per page
      * @param string|null $search Search in invoice number, seller/buyer names
-     * @param string|null $sender Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
-     * @param SortBy|value-of<SortBy> $sortBy Field to sort by
-     * @param SortOrder|value-of<SortOrder> $sortOrder Sort direction (asc/desc)
-     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type. If not provided, returns all types.
+     * @param string|null $sender Filter by sender ID
+     * @param DocumentState|value-of<DocumentState>|null $state Filter by document state
+     * @param DocumentType|value-of<DocumentType>|null $type Filter by document type
      * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>
@@ -60,8 +58,7 @@ final class InboxService implements InboxContract
         int $pageSize = 20,
         ?string $search = null,
         ?string $sender = null,
-        SortBy|string $sortBy = 'created_at',
-        SortOrder|string $sortOrder = 'desc',
+        DocumentState|string|null $state = null,
         DocumentType|string|null $type = null,
         RequestOptions|array|null $requestOptions = null,
     ): DocumentsNumberPage {
@@ -73,8 +70,7 @@ final class InboxService implements InboxContract
                 'pageSize' => $pageSize,
                 'search' => $search,
                 'sender' => $sender,
-                'sortBy' => $sortBy,
-                'sortOrder' => $sortOrder,
+                'state' => $state,
                 'type' => $type,
             ],
         );
@@ -92,8 +88,6 @@ final class InboxService implements InboxContract
      *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
-     * @param \EInvoiceAPI\Inbox\InboxListCreditNotesParams\SortBy|value-of<\EInvoiceAPI\Inbox\InboxListCreditNotesParams\SortBy> $sortBy Field to sort by
-     * @param \EInvoiceAPI\Inbox\InboxListCreditNotesParams\SortOrder|value-of<\EInvoiceAPI\Inbox\InboxListCreditNotesParams\SortOrder> $sortOrder Sort direction (asc/desc)
      * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>
@@ -103,18 +97,9 @@ final class InboxService implements InboxContract
     public function listCreditNotes(
         int $page = 1,
         int $pageSize = 20,
-        \EInvoiceAPI\Inbox\InboxListCreditNotesParams\SortBy|string $sortBy = 'created_at',
-        \EInvoiceAPI\Inbox\InboxListCreditNotesParams\SortOrder|string $sortOrder = 'desc',
         RequestOptions|array|null $requestOptions = null,
     ): DocumentsNumberPage {
-        $params = Util::removeNulls(
-            [
-                'page' => $page,
-                'pageSize' => $pageSize,
-                'sortBy' => $sortBy,
-                'sortOrder' => $sortOrder,
-            ],
-        );
+        $params = Util::removeNulls(['page' => $page, 'pageSize' => $pageSize]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listCreditNotes(params: $params, requestOptions: $requestOptions);
@@ -129,8 +114,6 @@ final class InboxService implements InboxContract
      *
      * @param int $page Page number
      * @param int $pageSize Number of items per page
-     * @param \EInvoiceAPI\Inbox\InboxListInvoicesParams\SortBy|value-of<\EInvoiceAPI\Inbox\InboxListInvoicesParams\SortBy> $sortBy Field to sort by
-     * @param \EInvoiceAPI\Inbox\InboxListInvoicesParams\SortOrder|value-of<\EInvoiceAPI\Inbox\InboxListInvoicesParams\SortOrder> $sortOrder Sort direction (asc/desc)
      * @param RequestOpts|null $requestOptions
      *
      * @return DocumentsNumberPage<DocumentResponse>
@@ -140,18 +123,9 @@ final class InboxService implements InboxContract
     public function listInvoices(
         int $page = 1,
         int $pageSize = 20,
-        \EInvoiceAPI\Inbox\InboxListInvoicesParams\SortBy|string $sortBy = 'created_at',
-        \EInvoiceAPI\Inbox\InboxListInvoicesParams\SortOrder|string $sortOrder = 'desc',
         RequestOptions|array|null $requestOptions = null,
     ): DocumentsNumberPage {
-        $params = Util::removeNulls(
-            [
-                'page' => $page,
-                'pageSize' => $pageSize,
-                'sortBy' => $sortBy,
-                'sortOrder' => $sortOrder,
-            ],
-        );
+        $params = Util::removeNulls(['page' => $page, 'pageSize' => $pageSize]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listInvoices(params: $params, requestOptions: $requestOptions);

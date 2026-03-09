@@ -59,7 +59,6 @@ final class DocumentsRawService implements DocumentsRawContract
      * Create a new invoice or credit note
      *
      * @param array{
-     *   constructPdf?: bool,
      *   allowances?: list<Allowance|AllowanceShape>|null,
      *   amountDue?: AmountDueShape|null,
      *   attachments?: list<DocumentAttachmentCreate|DocumentAttachmentCreateShape>|null,
@@ -73,10 +72,9 @@ final class DocumentsRawService implements DocumentsRawContract
      *   customerEmail?: string|null,
      *   customerID?: string|null,
      *   customerName?: string|null,
-     *   customerPeppolID?: string|null,
      *   customerTaxID?: string|null,
      *   direction?: DocumentDirection|value-of<DocumentDirection>,
-     *   documentType?: value-of<DocumentType>,
+     *   documentType?: DocumentType|value-of<DocumentType>,
      *   dueDate?: string|null,
      *   invoiceDate?: string|null,
      *   invoiceID?: string|null,
@@ -124,17 +122,12 @@ final class DocumentsRawService implements DocumentsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['constructPdf']);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/',
-            query: Util::array_transform_keys(
-                array_intersect_key($parsed, $query_params),
-                ['constructPdf' => 'construct_pdf'],
-            ),
-            body: (object) array_diff_key($parsed, $query_params),
+            body: (object) $parsed,
             options: $options,
             convert: DocumentResponse::class,
         );
@@ -232,7 +225,7 @@ final class DocumentsRawService implements DocumentsRawContract
     /**
      * @api
      *
-     * Send an invoice or credit note via Peppol. By default, the sender and receiver Peppol IDs are derived from the company (tax) IDs in the document, regardless of whether the document was created from a UBL with a different endpoint ID. To explicitly set the sender or receiver Peppol ID, provide them via the query parameters (sender_peppol_scheme, sender_peppol_id, receiver_peppol_scheme, receiver_peppol_id).
+     * Send an invoice or credit note via Peppol
      *
      * @param array{
      *   email?: string|null,

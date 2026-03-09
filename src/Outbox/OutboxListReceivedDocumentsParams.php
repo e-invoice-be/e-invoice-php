@@ -9,8 +9,7 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\DocumentType;
-use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams\SortBy;
-use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams\SortOrder;
+use EInvoiceAPI\Inbox\DocumentState;
 
 /**
  * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
@@ -22,11 +21,9 @@ use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams\SortOrder;
  *   dateTo?: \DateTimeInterface|null,
  *   page?: int|null,
  *   pageSize?: int|null,
- *   receiver?: string|null,
  *   search?: string|null,
  *   sender?: string|null,
- *   sortBy?: null|SortBy|value-of<SortBy>,
- *   sortOrder?: null|SortOrder|value-of<SortOrder>,
+ *   state?: null|DocumentState|value-of<DocumentState>,
  *   type?: null|DocumentType|value-of<DocumentType>,
  * }
  */
@@ -61,41 +58,27 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     public ?int $pageSize;
 
     /**
-     * Filter by receiver (customer_name, customer_email, customer_tax_id, customer_company_id, customer_id).
-     */
-    #[Optional(nullable: true)]
-    public ?string $receiver;
-
-    /**
      * Search in invoice number, seller/buyer names.
      */
     #[Optional(nullable: true)]
     public ?string $search;
 
     /**
-     * (Deprecated) Filter by sender ID.
+     * Filter by sender ID.
      */
     #[Optional(nullable: true)]
     public ?string $sender;
 
     /**
-     * Field to sort by.
+     * Filter by document state.
      *
-     * @var value-of<SortBy>|null $sortBy
+     * @var value-of<DocumentState>|null $state
      */
-    #[Optional(enum: SortBy::class)]
-    public ?string $sortBy;
+    #[Optional(enum: DocumentState::class, nullable: true)]
+    public ?string $state;
 
     /**
-     * Sort direction (asc/desc).
-     *
-     * @var value-of<SortOrder>|null $sortOrder
-     */
-    #[Optional(enum: SortOrder::class)]
-    public ?string $sortOrder;
-
-    /**
-     * Filter by document type. If not provided, returns all types.
+     * Filter by document type.
      *
      * @var value-of<DocumentType>|null $type
      */
@@ -112,8 +95,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param SortBy|value-of<SortBy>|null $sortBy
-     * @param SortOrder|value-of<SortOrder>|null $sortOrder
+     * @param DocumentState|value-of<DocumentState>|null $state
      * @param DocumentType|value-of<DocumentType>|null $type
      */
     public static function with(
@@ -121,11 +103,9 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
         ?\DateTimeInterface $dateTo = null,
         ?int $page = null,
         ?int $pageSize = null,
-        ?string $receiver = null,
         ?string $search = null,
         ?string $sender = null,
-        SortBy|string|null $sortBy = null,
-        SortOrder|string|null $sortOrder = null,
+        DocumentState|string|null $state = null,
         DocumentType|string|null $type = null,
     ): self {
         $self = new self;
@@ -134,11 +114,9 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
         null !== $dateTo && $self['dateTo'] = $dateTo;
         null !== $page && $self['page'] = $page;
         null !== $pageSize && $self['pageSize'] = $pageSize;
-        null !== $receiver && $self['receiver'] = $receiver;
         null !== $search && $self['search'] = $search;
         null !== $sender && $self['sender'] = $sender;
-        null !== $sortBy && $self['sortBy'] = $sortBy;
-        null !== $sortOrder && $self['sortOrder'] = $sortOrder;
+        null !== $state && $self['state'] = $state;
         null !== $type && $self['type'] = $type;
 
         return $self;
@@ -189,17 +167,6 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     }
 
     /**
-     * Filter by receiver (customer_name, customer_email, customer_tax_id, customer_company_id, customer_id).
-     */
-    public function withReceiver(?string $receiver): self
-    {
-        $self = clone $this;
-        $self['receiver'] = $receiver;
-
-        return $self;
-    }
-
-    /**
      * Search in invoice number, seller/buyer names.
      */
     public function withSearch(?string $search): self
@@ -211,7 +178,7 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     }
 
     /**
-     * (Deprecated) Filter by sender ID.
+     * Filter by sender ID.
      */
     public function withSender(?string $sender): self
     {
@@ -222,33 +189,20 @@ final class OutboxListReceivedDocumentsParams implements BaseModel
     }
 
     /**
-     * Field to sort by.
+     * Filter by document state.
      *
-     * @param SortBy|value-of<SortBy> $sortBy
+     * @param DocumentState|value-of<DocumentState>|null $state
      */
-    public function withSortBy(SortBy|string $sortBy): self
+    public function withState(DocumentState|string|null $state): self
     {
         $self = clone $this;
-        $self['sortBy'] = $sortBy;
+        $self['state'] = $state;
 
         return $self;
     }
 
     /**
-     * Sort direction (asc/desc).
-     *
-     * @param SortOrder|value-of<SortOrder> $sortOrder
-     */
-    public function withSortOrder(SortOrder|string $sortOrder): self
-    {
-        $self = clone $this;
-        $self['sortOrder'] = $sortOrder;
-
-        return $self;
-    }
-
-    /**
-     * Filter by document type. If not provided, returns all types.
+     * Filter by document type.
      *
      * @param DocumentType|value-of<DocumentType>|null $type
      */
