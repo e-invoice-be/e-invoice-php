@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -168,7 +169,7 @@ final class ValidateRawService implements ValidateRawContract
      *
      * Validate the correctness of a UBL document
      *
-     * @param array{file: string}|ValidateValidateUblParams $params
+     * @param array{file: string|FileParam}|ValidateValidateUblParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UblDocumentValidation>

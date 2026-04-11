@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
@@ -75,7 +76,9 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Mock server tests are disabled');
         }
 
-        $result = $this->client->validate->validateUbl(file: 'file');
+        $result = $this->client->validate->validateUbl(
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
@@ -88,7 +91,9 @@ final class ValidateTest extends TestCase
             $this->markTestSkipped('Mock server tests are disabled');
         }
 
-        $result = $this->client->validate->validateUbl(file: 'file');
+        $result = $this->client->validate->validateUbl(
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);

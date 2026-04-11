@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
@@ -108,7 +109,7 @@ final class AttachmentsService implements AttachmentsContract
      */
     public function add(
         string $documentID,
-        string $file,
+        string|FileParam $file,
         RequestOptions|array|null $requestOptions = null,
     ): DocumentAttachment {
         $params = Util::removeNulls(['file' => $file]);

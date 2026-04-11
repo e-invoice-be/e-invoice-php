@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\FileParam;
 
 /**
  * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
@@ -16,7 +17,7 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
  * @see EInvoiceAPI\Services\DocumentsService::createFromPdf()
  *
  * @phpstan-type DocumentCreateFromPdfParamsShape = array{
- *   file: string, customerTaxID?: string|null, vendorTaxID?: string|null
+ *   file: string|FileParam, customerTaxID?: string|null, vendorTaxID?: string|null
  * }
  */
 final class DocumentCreateFromPdfParams implements BaseModel
@@ -59,9 +60,9 @@ final class DocumentCreateFromPdfParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $file,
+        string|FileParam $file,
         ?string $customerTaxID = null,
-        ?string $vendorTaxID = null
+        ?string $vendorTaxID = null,
     ): self {
         $self = new self;
 
@@ -73,7 +74,7 @@ final class DocumentCreateFromPdfParams implements BaseModel
         return $self;
     }
 
-    public function withFile(string $file): self
+    public function withFile(string|FileParam $file): self
     {
         $self = clone $this;
         $self['file'] = $file;

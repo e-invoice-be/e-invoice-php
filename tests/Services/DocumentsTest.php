@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
@@ -77,7 +78,9 @@ final class DocumentsTest extends TestCase
             $this->markTestSkipped('Mock server tests are disabled');
         }
 
-        $result = $this->client->documents->createFromPdf(file: 'file');
+        $result = $this->client->documents->createFromPdf(
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
@@ -91,7 +94,7 @@ final class DocumentsTest extends TestCase
         }
 
         $result = $this->client->documents->createFromPdf(
-            file: 'file',
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             customerTaxID: 'customer_tax_id',
             vendorTaxID: 'vendor_tax_id',
         );

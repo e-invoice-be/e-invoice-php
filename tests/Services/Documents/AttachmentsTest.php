@@ -3,6 +3,7 @@
 namespace Tests\Services\Documents;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
@@ -115,7 +116,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add(
             'document_id',
-            file: 'file'
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -131,7 +132,7 @@ final class AttachmentsTest extends TestCase
 
         $result = $this->client->documents->attachments->add(
             'document_id',
-            file: 'file'
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

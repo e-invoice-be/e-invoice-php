@@ -3,6 +3,7 @@
 namespace Tests\Services\Documents;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
@@ -36,7 +37,9 @@ final class UblTest extends TestCase
             $this->markTestSkipped('Mock server tests are disabled');
         }
 
-        $result = $this->client->documents->ubl->createFromUbl(file: 'file');
+        $result = $this->client->documents->ubl->createFromUbl(
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);
@@ -49,7 +52,9 @@ final class UblTest extends TestCase
             $this->markTestSkipped('Mock server tests are disabled');
         }
 
-        $result = $this->client->documents->ubl->createFromUbl(file: 'file');
+        $result = $this->client->documents->ubl->createFromUbl(
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);

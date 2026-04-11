@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams\Allowance;
@@ -181,7 +182,7 @@ interface DocumentsContract
     /**
      * @api
      *
-     * @param string $file Body param
+     * @param string|FileParam $file Body param
      * @param string|null $customerTaxID Query param
      * @param string|null $vendorTaxID Query param
      * @param RequestOpts|null $requestOptions
@@ -189,7 +190,7 @@ interface DocumentsContract
      * @throws APIException
      */
     public function createFromPdf(
-        string $file,
+        string|FileParam $file,
         ?string $customerTaxID = null,
         ?string $vendorTaxID = null,
         RequestOptions|array|null $requestOptions = null,

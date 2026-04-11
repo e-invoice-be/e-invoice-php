@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -194,7 +195,7 @@ final class DocumentsRawService implements DocumentsRawContract
      * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
      *
      * @param array{
-     *   file: string, customerTaxID?: string|null, vendorTaxID?: string|null
+     *   file: string|FileParam, customerTaxID?: string|null, vendorTaxID?: string|null
      * }|DocumentCreateFromPdfParams $params
      * @param RequestOpts|null $requestOptions
      *

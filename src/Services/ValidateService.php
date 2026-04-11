@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -259,7 +260,7 @@ final class ValidateService implements ValidateContract
      * @throws APIException
      */
     public function validateUbl(
-        string $file,
+        string|FileParam $file,
         RequestOptions|array|null $requestOptions = null
     ): UblDocumentValidation {
         $params = Util::removeNulls(['file' => $file]);

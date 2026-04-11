@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
@@ -171,7 +172,7 @@ interface ValidateContract
      * @throws APIException
      */
     public function validateUbl(
-        string $file,
+        string|FileParam $file,
         RequestOptions|array|null $requestOptions = null
     ): UblDocumentValidation;
 }

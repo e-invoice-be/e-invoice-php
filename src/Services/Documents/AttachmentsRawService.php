@@ -8,6 +8,7 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
@@ -124,7 +125,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
      *
      * Add one or more attachments to an invoice. Be careful: the attachments ARE NOT ADDED to the UBL! They are only stored in our database and can be downloaded later. To add attachments to the UBL, you need to add the attachment(s) via POST /api/documents
      *
-     * @param array{file: string}|AttachmentAddParams $params
+     * @param array{file: string|FileParam}|AttachmentAddParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DocumentAttachment>

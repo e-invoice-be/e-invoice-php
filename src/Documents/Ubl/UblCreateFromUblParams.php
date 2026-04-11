@@ -8,13 +8,14 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\FileParam;
 
 /**
  * Create a new invoice or credit note from a UBL file.
  *
  * @see EInvoiceAPI\Services\Documents\UblService::createFromUbl()
  *
- * @phpstan-type UblCreateFromUblParamsShape = array{file: string}
+ * @phpstan-type UblCreateFromUblParamsShape = array{file: string|FileParam}
  */
 final class UblCreateFromUblParams implements BaseModel
 {
@@ -49,7 +50,7 @@ final class UblCreateFromUblParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file): self
+    public static function with(string|FileParam $file): self
     {
         $self = new self;
 
@@ -58,7 +59,7 @@ final class UblCreateFromUblParams implements BaseModel
         return $self;
     }
 
-    public function withFile(string $file): self
+    public function withFile(string|FileParam $file): self
     {
         $self = clone $this;
         $self['file'] = $file;
