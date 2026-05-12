@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI;
 
 use EInvoiceAPI\Core\BaseClient;
+use EInvoiceAPI\Core\Implementation\StreamingHttpClient;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Services\DocumentsService;
 use EInvoiceAPI\Services\InboxService;
@@ -82,6 +83,11 @@ class Client extends BaseClient
             ),
             $requestOptions,
         );
+
+        if (is_null($options->streamingTransporter)) {
+            assert(!is_null($options->transporter));
+            $options->streamingTransporter = new StreamingHttpClient($options->transporter);
+        }
 
         /** @var array<string, string|null> $headers */
         $headers = [
