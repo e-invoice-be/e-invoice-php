@@ -40,6 +40,8 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   direction?: null|DocumentDirection|value-of<DocumentDirection>,
  *   documentType?: null|DocumentType|value-of<DocumentType>,
  *   dueDate?: string|null,
+ *   errorMessage?: string|null,
+ *   errorType?: string|null,
  *   invoiceDate?: string|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: string|null,
@@ -188,6 +190,18 @@ final class DocumentNewFromPdfResponse implements BaseModel
     public ?string $dueDate;
 
     /**
+     * Error message when success is False.
+     */
+    #[Optional('error_message', nullable: true)]
+    public ?string $errorMessage;
+
+    /**
+     * Error type/category when success is False.
+     */
+    #[Optional('error_type', nullable: true)]
+    public ?string $errorType;
+
+    /**
      * The date when the invoice was issued.
      */
     #[Optional('invoice_date', nullable: true)]
@@ -206,7 +220,7 @@ final class DocumentNewFromPdfResponse implements BaseModel
     public ?string $invoiceTotal;
 
     /**
-     * At least one line item is required.
+     * Line items (may be empty for failed conversions).
      *
      * @var list<Item>|null $items
      */
@@ -432,6 +446,8 @@ final class DocumentNewFromPdfResponse implements BaseModel
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
         ?string $dueDate = null,
+        ?string $errorMessage = null,
+        ?string $errorType = null,
         ?string $invoiceDate = null,
         ?string $invoiceID = null,
         ?string $invoiceTotal = null,
@@ -485,6 +501,8 @@ final class DocumentNewFromPdfResponse implements BaseModel
         null !== $direction && $self['direction'] = $direction;
         null !== $documentType && $self['documentType'] = $documentType;
         null !== $dueDate && $self['dueDate'] = $dueDate;
+        null !== $errorMessage && $self['errorMessage'] = $errorMessage;
+        null !== $errorType && $self['errorType'] = $errorType;
         null !== $invoiceDate && $self['invoiceDate'] = $invoiceDate;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $invoiceTotal && $self['invoiceTotal'] = $invoiceTotal;
@@ -728,6 +746,28 @@ final class DocumentNewFromPdfResponse implements BaseModel
     }
 
     /**
+     * Error message when success is False.
+     */
+    public function withErrorMessage(?string $errorMessage): self
+    {
+        $self = clone $this;
+        $self['errorMessage'] = $errorMessage;
+
+        return $self;
+    }
+
+    /**
+     * Error type/category when success is False.
+     */
+    public function withErrorType(?string $errorType): self
+    {
+        $self = clone $this;
+        $self['errorType'] = $errorType;
+
+        return $self;
+    }
+
+    /**
      * The date when the invoice was issued.
      */
     public function withInvoiceDate(?string $invoiceDate): self
@@ -761,7 +801,7 @@ final class DocumentNewFromPdfResponse implements BaseModel
     }
 
     /**
-     * At least one line item is required.
+     * Line items (may be empty for failed conversions).
      *
      * @param list<Item|ItemShape> $items
      */
