@@ -28,6 +28,9 @@ final class DocumentSendParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * @deprecated
+     */
     #[Optional(nullable: true)]
     public ?string $email;
 
