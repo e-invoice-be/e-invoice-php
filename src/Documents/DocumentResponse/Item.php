@@ -9,11 +9,13 @@ use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Documents\Allowance;
 use EInvoiceAPI\Documents\Charge;
+use EInvoiceAPI\Documents\DocumentResponse\Item\ItemAttribute;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
 /**
  * @phpstan-import-type AllowanceShape from \EInvoiceAPI\Documents\Allowance
  * @phpstan-import-type ChargeShape from \EInvoiceAPI\Documents\Charge
+ * @phpstan-import-type ItemAttributeShape from \EInvoiceAPI\Documents\DocumentResponse\Item\ItemAttribute
  *
  * @phpstan-type ItemShape = array{
  *   allowances?: list<\EInvoiceAPI\Documents\Allowance|AllowanceShape>|null,
@@ -21,6 +23,7 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   charges?: list<\EInvoiceAPI\Documents\Charge|ChargeShape>|null,
  *   date?: null|null,
  *   description?: string|null,
+ *   itemAttributes?: list<ItemAttribute|ItemAttributeShape>|null,
  *   productCode?: string|null,
  *   quantity?: string|null,
  *   tax?: string|null,
@@ -65,6 +68,14 @@ final class Item implements BaseModel
      */
     #[Optional(nullable: true)]
     public ?string $description;
+
+    /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     *
+     * @var list<ItemAttribute>|null $itemAttributes
+     */
+    #[Optional('item_attributes', list: ItemAttribute::class, nullable: true)]
+    public ?array $itemAttributes;
 
     /**
      * The product code of the line item.
@@ -116,6 +127,7 @@ final class Item implements BaseModel
      *
      * @param list<Allowance|AllowanceShape>|null $allowances
      * @param list<Charge|ChargeShape>|null $charges
+     * @param list<ItemAttribute|ItemAttributeShape>|null $itemAttributes
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
     public static function with(
@@ -124,6 +136,7 @@ final class Item implements BaseModel
         ?array $charges = null,
         null $date = null,
         ?string $description = null,
+        ?array $itemAttributes = null,
         ?string $productCode = null,
         ?string $quantity = null,
         ?string $tax = null,
@@ -139,6 +152,7 @@ final class Item implements BaseModel
         null !== $amount && $self['amount'] = $amount;
         null !== $charges && $self['charges'] = $charges;
         null !== $description && $self['description'] = $description;
+        null !== $itemAttributes && $self['itemAttributes'] = $itemAttributes;
         null !== $productCode && $self['productCode'] = $productCode;
         null !== $quantity && $self['quantity'] = $quantity;
         null !== $tax && $self['tax'] = $tax;
@@ -204,6 +218,19 @@ final class Item implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     *
+     * @param list<ItemAttribute|ItemAttributeShape>|null $itemAttributes
+     */
+    public function withItemAttributes(?array $itemAttributes): self
+    {
+        $self = clone $this;
+        $self['itemAttributes'] = $itemAttributes;
 
         return $self;
     }
