@@ -73,7 +73,7 @@ final class DocumentsNumberPage implements BaseModel, BasePage
         }
 
         // @phpstan-ignore-next-line argument.type
-        self::__unserialize($this->parsedBody);
+        $this->unserializeFromApiPayload($this->parsedBody);
 
         if (is_array($items = $this->offsetGet('items'))) {
             $parsed = Conversion::coerce(new ListOf($convert), value: $items);
@@ -111,10 +111,8 @@ final class DocumentsNumberPage implements BaseModel, BasePage
             return null;
         }
 
-        $nextRequest = array_merge_recursive(
-            $this->requestInfo,
-            ['query' => $curr + 1]
-        );
+        $nextRequest = $this->requestInfo;
+        $nextRequest['query'] = [...$nextRequest['query'], 'page' => $curr + 1];
 
         // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];

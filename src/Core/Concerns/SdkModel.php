@@ -100,6 +100,26 @@ trait SdkModel
     /**
      * @internal
      *
+     * Like {@link __unserialize()}, but for raw API payloads, whose keys are
+     * API property names rather than PHP property names
+     *
+     * @param array<string, mixed> $data
+     */
+    public function unserializeFromApiPayload(array $data): void
+    {
+        foreach (self::$converter->properties as $name => $info) {
+            if ($name !== $info->apiName && array_key_exists($info->apiName, array: $data)) {
+                $data[$name] = $data[$info->apiName];
+                unset($data[$info->apiName]);
+            }
+        }
+
+        $this->__unserialize($data);
+    }
+
+    /**
+     * @internal
+     *
      * @return Shape
      */
     public function toProperties(): array
