@@ -159,6 +159,8 @@ final class Item implements BaseModel
         UnitOfMeasureCode|string|null $unit = null,
         ?string $unitPrice = null,
     ): self {
+        null === $date || throw new \TypeError('The date of a line item must be null.');
+
         $self = new self;
 
         $self['date'] = $date;
@@ -236,6 +238,8 @@ final class Item implements BaseModel
      */
     public function withDate(mixed $date): self
     {
+        null === $date || throw new \TypeError('The date of a line item must be null.');
+
         $self = clone $this;
         $self['date'] = $date;
 

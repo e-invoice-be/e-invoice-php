@@ -66,7 +66,7 @@ class ItemDateTypeTest extends TestCase
      */
     #[Test]
     #[DataProvider('itemClasses')]
-    public function testWithAlwaysSerializesNullDate(string $class): void
+    public function testStaticWithAlwaysSerializesNullDate(string $class): void
     {
         $this->assertSame('{"date":null}', json_encode($class::with()));
         $this->assertSame(
@@ -99,6 +99,32 @@ class ItemDateTypeTest extends TestCase
 
         $this->assertNull($item->date);
         $this->assertSame('{"date":null,"description":"Widget"}', json_encode($item));
+    }
+
+    /**
+     * @param ItemClass $class
+     */
+    #[Test]
+    #[DataProvider('itemClasses')]
+    public function testWithDateRejectsADate(string $class): void
+    {
+        $this->expectException(\TypeError::class);
+
+        // @phpstan-ignore argument.type
+        (new $class)->withDate('2024-01-31');
+    }
+
+    /**
+     * @param ItemClass $class
+     */
+    #[Test]
+    #[DataProvider('itemClasses')]
+    public function testStaticWithRejectsADate(string $class): void
+    {
+        $this->expectException(\TypeError::class);
+
+        // @phpstan-ignore argument.type
+        $class::with(date: new \DateTimeImmutable('2024-01-31'));
     }
 
     /**
