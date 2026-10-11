@@ -26,7 +26,7 @@ final class Util
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
     /**
-     * @return array<string,mixed>
+     * @return array<array-key,mixed>
      */
     public static function get_object_vars(object $object): array
     {
@@ -193,7 +193,7 @@ final class Util
         mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
-            /** @var RequestInterface */
+            // @var RequestInterface
             return $req->withBody($body);
         }
 
@@ -203,7 +203,7 @@ final class Util
                 $encoded = json_encode($body, flags: self::JSON_ENCODE_FLAGS);
                 $stream = $factory->createStream($encoded);
 
-                /** @var RequestInterface */
+                // @var RequestInterface
                 return $req->withBody($stream);
             }
         }
@@ -213,14 +213,14 @@ final class Util
             $encoded = implode('', iterator_to_array($gen));
             $stream = $factory->createStream($encoded);
 
-            /** @var RequestInterface */
+            // @var RequestInterface
             return $req->withHeader('Content-Type', "{$contentType}; boundary={$boundary}")->withBody($stream);
         }
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
 
-            /** @var RequestInterface */
+            // @var RequestInterface
             return $req->withBody($stream);
         }
 
