@@ -34,7 +34,7 @@ Releases are manual. The package on Packagist is [`e-invoice/e-invoice-api`](htt
 1. Select the new version. This package follows [SemVer](https://semver.org/spec/v2.0.0.html). While the major version is `0`, a breaking change increases the minor version.
 2. Change `Client::VERSION` in `src/Client.php`. The `User-Agent` header uses this constant.
 3. Add the entry for the new version at the top of `CHANGELOG.md`. Put breaking changes in a `⚠ BREAKING CHANGES` section.
-4. Merge these changes to `main` through a pull request with the title `release: X.Y.Z`.
+4. Merge these changes to `main` through a pull request. They can be a pull request of their own (`release: X.Y.Z`) or part of the last pull request of the release.
 5. Make the tag on the merge commit and push it:
 
    ```sh

@@ -11,7 +11,7 @@ e-invoice.be now maintains this SDK manually. This release removes the parts tha
 * the Composer package name is `e-invoice/e-invoice-api`, the same as on Packagist. If your `composer.json` has a `vcs` repository and `e-invoice-be/e-invoice`, remove them and run `composer require e-invoice/e-invoice-api`
 * remove the `X-Stainless-*` request headers
 * remove `BaseClient::getNormalizedOS()` and `BaseClient::getNormalizedArchitecture()`
-* remove the `$stream` parameter of `BaseClient::request()`, the `BaseStream` interface, the `SdkEnum` trait and `Util::decodeSSE()`. The API has no streaming endpoints
+* remove the `$stream` parameter of `BaseClient::request()`, the `BaseStream` interface, the `SdkEnum` trait and `Util::decodeSSE()`. `Util::decodeContent()` does not decode `text/event-stream` responses now. The API has no streaming endpoints
 
 ### Features
 
