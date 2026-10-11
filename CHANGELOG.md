@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.1 (2026-10-11)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.0...v0.7.1)
+
+### Documentation
+
+* rewrite the README against the current code: a real usage example, the client configuration, the table of resources and methods, file uploads, raw responses and custom HTTP clients
+* add a screenshot of the PHP SDK page on e-invoice.be to the README
+* remove the README statements about `extraBodyParams` and exponential backoff, which the code does not do
+
 ## 0.7.0 (2026-10-11)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.6.0...v0.7.0)
