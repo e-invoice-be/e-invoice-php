@@ -41,3 +41,22 @@ jobs:
 
       - name: Run tests
         run: ./scripts/test
+  syntax:
+    timeout-minutes: 10
+    name: syntax (PHP 8.1)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: 'shivammathur/setup-php@v2'
+        with:
+          php-version: '8.1'
+
+      - name: Check the syntax of src
+        run: |
+          status=0
+          while IFS= read -r -d '' file; do
+            output=$(php -l "$file" 2>&1) || { echo "$output"; status=1; }
+          done < <(find src -name '*.php' -print0)
+          exit "$status"

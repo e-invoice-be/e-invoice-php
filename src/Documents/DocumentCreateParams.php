@@ -70,7 +70,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *     allowances?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance>|null,
  *     amount?: float|string|null,
  *     charges?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge>|null,
- *     date?: null|null,
+ *     date?: null,
  *     description?: string|null,
  *     itemAttributes?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\ItemAttribute>|null,
  *     productCode?: string|null,

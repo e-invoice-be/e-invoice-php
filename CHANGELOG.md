@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.2 (2026-10-11)
+
+Full Changelog: [v0.7.1...v0.7.2](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.1...v0.7.2)
+
+### Bug Fixes
+
+* remove the standalone `null` type from the line item `date` property of the five `Item` classes. PHP 8.1 does not permit this type, so the SDK caused a fatal error on PHP 8.1 ([#9](https://github.com/e-invoice-be/e-invoice-php/issues/9), [#25](https://github.com/e-invoice-be/e-invoice-php/issues/25)). The API specification permits only `null` for this field, and the SDK still sends only `null`
+
+### Chores
+
+* add a CI job that checks the syntax of `src` on PHP 8.1
+
 ## 0.7.1 (2026-10-11)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.0...v0.7.1)
