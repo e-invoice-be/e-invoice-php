@@ -2,61 +2,39 @@
 
 namespace Tests\Services;
 
-use EInvoiceAPI\Client;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\RequestOptions;
-use Nyholm\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
  */
 #[CoversNothing]
-final class OutboxTest extends TestCase
+final class OutboxTest extends ServiceTestCase
 {
-    protected Client $client;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
-        $client = new Client(apiKey: 'My API Key', baseUrl: $testUrl);
-
-        $this->client = $client;
-    }
+    private const DEFAULT_QUERY = [
+        'page' => '1',
+        'page_size' => '20',
+        'sort_by' => 'created_at',
+        'sort_order' => 'desc',
+    ];
 
     #[Test]
     public function testListDraftDocuments(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->queuePage('doc_1', 'DRAFT');
 
-        $page = $this->client->outbox->listDraftDocuments();
+        $page = $this->client->outbox->listDraftDocuments(requestOptions: $this->options());
 
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DocumentsNumberPage::class, $page);
-
-        if ($item = $page->getItems()[0] ?? null) {
-            // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(DocumentResponse::class, $item);
-        }
+        $this->assertRequest('GET', '/api/outbox/drafts', self::DEFAULT_QUERY);
+        $this->assertPage($page, 'doc_1', 'DRAFT');
     }
 
     #[Test]
     public function testListDraftDocumentsWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->queuePage('doc_2', 'DRAFT');
 
         $page = $this->client->outbox->listDraftDocuments(
             page: 1,
@@ -66,41 +44,36 @@ final class OutboxTest extends TestCase
             sortOrder: 'asc',
             state: 'DRAFT',
             type: 'INVOICE',
+            requestOptions: $this->options(),
         );
 
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DocumentsNumberPage::class, $page);
-
-        if ($item = $page->getItems()[0] ?? null) {
-            // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(DocumentResponse::class, $item);
-        }
+        $this->assertRequest('GET', '/api/outbox/drafts', [
+            'page' => '1',
+            'page_size' => '1',
+            'search' => 'search',
+            'sort_by' => 'invoice_date',
+            'sort_order' => 'asc',
+            'state' => 'DRAFT',
+            'type' => 'INVOICE',
+        ]);
+        $this->assertPage($page, 'doc_2', 'DRAFT');
     }
 
     #[Test]
     public function testListReceivedDocuments(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->queuePage('doc_3', 'SENT');
 
-        $page = $this->client->outbox->listReceivedDocuments();
+        $page = $this->client->outbox->listReceivedDocuments(requestOptions: $this->options());
 
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DocumentsNumberPage::class, $page);
-
-        if ($item = $page->getItems()[0] ?? null) {
-            // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(DocumentResponse::class, $item);
-        }
+        $this->assertRequest('GET', '/api/outbox/', self::DEFAULT_QUERY);
+        $this->assertPage($page, 'doc_3', 'SENT');
     }
 
     #[Test]
     public function testListReceivedDocumentsWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->queuePage('doc_4', 'SENT');
 
         $page = $this->client->outbox->listReceivedDocuments(
             dateFrom: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
@@ -113,41 +86,89 @@ final class OutboxTest extends TestCase
             sortBy: 'invoice_date',
             sortOrder: 'asc',
             type: 'INVOICE',
+            requestOptions: $this->options(),
         );
 
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DocumentsNumberPage::class, $page);
-
-        if ($item = $page->getItems()[0] ?? null) {
-            // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(DocumentResponse::class, $item);
-        }
+        $this->assertRequest('GET', '/api/outbox/', [
+            'date_from' => '2019-12-27T18:11:19+00:00',
+            'date_to' => '2019-12-27T18:11:19+00:00',
+            'page' => '1',
+            'page_size' => '1',
+            'receiver' => 'receiver',
+            'search' => 'search',
+            'sender' => 'sender',
+            'sort_by' => 'invoice_date',
+            'sort_order' => 'asc',
+            'type' => 'INVOICE',
+        ]);
+        $this->assertPage($page, 'doc_4', 'SENT');
     }
 
     #[Test]
     public function testListReceivedDocumentsSendsQueryParamsWithTheirApiNames(): void
     {
-        $transporter = new class() implements ClientInterface {
-            public ?RequestInterface $request = null;
+        $this->http->queueJson(['items' => []]);
 
-            public function sendRequest(RequestInterface $request): ResponseInterface
-            {
-                $this->request = $request;
-
-                return new Response(200, ['Content-Type' => 'application/json'], '{"items":[]}');
-            }
-        };
-
-        $this->client->outbox->listReceivedDocuments(
+        $page = $this->client->outbox->listReceivedDocuments(
             receiver: 'acme',
             sortOrder: 'asc',
-            requestOptions: RequestOptions::with(transporter: $transporter),
+            requestOptions: $this->options(),
         );
 
-        parse_str($transporter->request?->getUri()->getQuery() ?? '', $query);
-        $this->assertSame(
-            ['page' => '1', 'page_size' => '20', 'receiver' => 'acme', 'sort_by' => 'created_at', 'sort_order' => 'asc'],
-            $query,
-        );
+        $this->assertRequest('GET', '/api/outbox/', [
+            'page' => '1',
+            'page_size' => '20',
+            'receiver' => 'acme',
+            'sort_by' => 'created_at',
+            'sort_order' => 'asc',
+        ]);
+        $this->assertSame([], $page->getItems());
+    }
+
+    private function queuePage(string $id, string $state): void
+    {
+        $this->http->queueJson([
+            'items' => [
+                [
+                    'id' => $id,
+                    'created_at' => '2024-01-15T10:00:00Z',
+                    'direction' => 'OUTBOUND',
+                    'document_type' => 'INVOICE',
+                    'state' => $state,
+                    'invoice_id' => 'INV-2024-001',
+                    'invoice_total' => '121.00',
+                    'currency' => 'EUR',
+                ],
+            ],
+            'total' => 1,
+            'page' => 1,
+            'page_size' => 20,
+            'pages' => 1,
+            'has_next_page' => false,
+        ]);
+    }
+
+    /**
+     * @param DocumentsNumberPage<DocumentResponse> $page
+     */
+    private function assertPage(DocumentsNumberPage $page, string $id, string $state): void
+    {
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentsNumberPage::class, $page);
+        $this->assertSame(1, $page->total);
+        $this->assertFalse($page->hasNextPage);
+
+        $items = $page->getItems();
+        $this->assertCount(1, $items);
+        $item = $items[0];
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentResponse::class, $item);
+        $this->assertSame($id, $item->id);
+        $this->assertSame('2024-01-15', $item->createdAt->format('Y-m-d'));
+        $this->assertSame('OUTBOUND', $item->direction);
+        $this->assertSame('INVOICE', $item->documentType);
+        $this->assertSame($state, $item->state);
+        $this->assertSame('INV-2024-001', $item->invoiceID);
+        $this->assertSame('121.00', $item->invoiceTotal);
     }
 }

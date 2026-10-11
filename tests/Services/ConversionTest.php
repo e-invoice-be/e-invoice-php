@@ -2,81 +2,117 @@
 
 namespace Tests\Services;
 
-use EInvoiceAPI\Client;
 use EInvoiceAPI\Conversion\DocumentCreateFromPdfTask;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
  */
 #[CoversNothing]
-final class ConversionTest extends TestCase
+final class ConversionTest extends ServiceTestCase
 {
-    protected Client $client;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
-        $client = new Client(apiKey: 'My API Key', baseUrl: $testUrl);
-
-        $this->client = $client;
-    }
-
     #[Test]
     public function testCreateFromPdf(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->http->queueJson(['task_id' => 'task_id']);
 
-        $result = $this->client->conversion->createFromPdf(file: 'file');
+        $result = $this->client->conversion->createFromPdf(
+            file: 'file',
+            requestOptions: $this->options(),
+        );
 
+        $this->assertUploadRequest();
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentCreateFromPdfTask::class, $result);
+        $this->assertSame('task_id', $result->taskID);
+        $this->assertNull($result->status);
     }
 
     #[Test]
     public function testCreateFromPdfWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->http->queueJson(['task_id' => 'task_id', 'status' => 'pending']);
 
-        $result = $this->client->conversion->createFromPdf(file: 'file');
+        $result = $this->client->conversion->createFromPdf(
+            file: 'file',
+            requestOptions: $this->options(),
+        );
 
+        $this->assertUploadRequest();
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentCreateFromPdfTask::class, $result);
+        $this->assertSame('task_id', $result->taskID);
+        $this->assertSame('pending', $result->status);
     }
 
     #[Test]
     public function testRetrieve(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->http->queueJson(['task_id' => 'task_id', 'status' => 'completed']);
 
-        $result = $this->client->conversion->retrieve('task_id');
+        $result = $this->client->conversion->retrieve('task_id', requestOptions: $this->options());
 
+        $this->assertRequest('GET', '/api/conversion/pdf/task_id');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentCreateFromPdfTask::class, $result);
+        $this->assertSame('task_id', $result->taskID);
+        $this->assertSame('completed', $result->status);
     }
 
     #[Test]
     public function testRetrieveResult(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->http->queueJson([
+            'success' => true,
+            'document_type' => 'INVOICE',
+            'direction' => 'OUTBOUND',
+            'state' => 'DRAFT',
+            'invoice_id' => 'INV-2024-001',
+            'invoice_date' => '2024-01-15',
+            'due_date' => '2024-02-14',
+            'currency' => 'EUR',
+            'invoice_total' => '121.00',
+            'customer_name' => 'Acme',
+        ]);
 
-        $result = $this->client->conversion->retrieveResult('task_id');
+        $result = $this->client->conversion->retrieveResult(
+            'task_id',
+            requestOptions: $this->options(),
+        );
 
+        $this->assertRequest('GET', '/api/conversion/pdf/task_id/result');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
+        $this->assertTrue($result->success);
+        $this->assertSame('INVOICE', $result->documentType);
+        $this->assertSame('INV-2024-001', $result->invoiceID);
+        $this->assertSame('2024-01-15', $result->invoiceDate?->format('Y-m-d'));
+        $this->assertSame('121.00', $result->invoiceTotal);
+        $this->assertSame('Acme', $result->customerName);
+        $this->assertNull($result->errorMessage);
+    }
+
+    private function assertUploadRequest(): void
+    {
+        $this->assertCount(1, $this->http->requests);
+        $request = $this->http->requests[0];
+
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('/api/conversion/pdf', $request->getUri()->getPath());
+        $this->assertSame('', $request->getUri()->getQuery());
+        $this->assertSame('Bearer My API Key', $request->getHeaderLine('Authorization'));
+        $this->assertStringStartsWith(
+            'multipart/form-data; boundary=',
+            $request->getHeaderLine('Content-Type'),
+        );
+
+        $body = (string) $request->getBody();
+        $this->assertStringContainsString(
+            'Content-Disposition: form-data; name="file"; filename="upload"',
+            $body,
+        );
+        $this->assertStringContainsString("\r\n\r\nfile\r\n", $body);
     }
 }
