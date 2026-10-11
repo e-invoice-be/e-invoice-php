@@ -4,8 +4,12 @@ namespace Tests\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
+use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
+use EInvoiceAPI\Documents\DocumentGetTimelineResponse\Event;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Documents\DocumentResponse\Item;
+use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -44,6 +48,30 @@ final class DocumentsTest extends TestCase
     }
 
     #[Test]
+    public function testCreateWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->documents->create(
+            constructPdf: true,
+            customerPeppolID: '0208:0123456789',
+            documentType: DocumentType::SELFBILLING_INVOICE,
+            items: [
+                [
+                    'description' => 'description',
+                    'itemAttributes' => [['name' => 'name', 'value' => 'value']],
+                ],
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentResponse::class, $result);
+        $this->assertContainsOnlyInstancesOf(Item::class, $result->items ?? []);
+    }
+
+    #[Test]
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
@@ -54,6 +82,8 @@ final class DocumentsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);
+        $this->assertIsString($result->id);
+        $this->assertNotNull($result['createdAt']);
     }
 
     #[Test]
@@ -97,6 +127,21 @@ final class DocumentsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
+    }
+
+    #[Test]
+    public function testRetrieveTimeline(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->documents->retrieveTimeline('document_id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentGetTimelineResponse::class, $result);
+        $this->assertIsString($result->documentID);
+        $this->assertContainsOnlyInstancesOf(Event::class, $result->events);
     }
 
     #[Test]

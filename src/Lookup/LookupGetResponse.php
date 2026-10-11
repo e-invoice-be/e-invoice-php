@@ -150,6 +150,8 @@ final class LookupGetResponse implements BaseModel
      *   smlHostname: string,
      *   status: string,
      *   error?: string|null,
+     *   lookupMethod?: string|null,
+     *   smpHostname?: string|null,
      * } $dnsInfo
      * @param list<string> $errors
      * @param QueryMetadata|array{
@@ -231,6 +233,8 @@ final class LookupGetResponse implements BaseModel
      *   smlHostname: string,
      *   status: string,
      *   error?: string|null,
+     *   lookupMethod?: string|null,
+     *   smpHostname?: string|null,
      * } $dnsInfo
      */
     public function withDNSInfo(DNSInfo|array $dnsInfo): self

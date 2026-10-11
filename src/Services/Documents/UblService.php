@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
@@ -34,7 +35,7 @@ final class UblService implements UblContract
      * @throws APIException
      */
     public function createFromUbl(
-        string $file,
+        string|FileParam $file,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
         $params = ['file' => $file];

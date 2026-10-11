@@ -9,7 +9,9 @@ use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\WebhooksContract;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
+use EInvoiceAPI\Webhooks\WebhookGetHistoryResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
+use EInvoiceAPI\Webhooks\WebhookTestResponse;
 
 final class WebhooksService implements WebhooksContract
 {
@@ -124,6 +126,47 @@ final class WebhooksService implements WebhooksContract
     ): WebhookDeleteResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($webhookID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Get the history of a webhook
+     *
+     * @throws APIException
+     */
+    public function retrieveHistory(
+        string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookGetHistoryResponse {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieveHistory($webhookID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Send a test event to a webhook for testing and debugging purposes
+     *
+     * @param array<string,mixed> $data Custom event data payload
+     * @param string $eventType Must be valid WebhookEventType
+     *
+     * @throws APIException
+     */
+    public function test(
+        string $webhookID,
+        array $data,
+        string $eventType,
+        ?RequestOptions $requestOptions = null,
+    ): WebhookTestResponse {
+        $params = ['data' => $data, 'eventType' => $eventType];
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->test($webhookID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

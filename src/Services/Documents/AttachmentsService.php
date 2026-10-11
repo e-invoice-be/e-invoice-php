@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services\Documents;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
@@ -86,15 +87,17 @@ final class AttachmentsService implements AttachmentsContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
-     * Add a new attachment to an invoice or credit note
+     * Add one or more attachments to an invoice. Be careful: the attachments ARE NOT ADDED to the UBL! They are only stored in our database and can be downloaded later. To add attachments to the UBL, you need to add the attachment(s) via POST /api/documents
      *
      * @throws APIException
      */
     public function add(
         string $documentID,
-        string $file,
+        string|FileParam $file,
         ?RequestOptions $requestOptions = null
     ): DocumentAttachment {
         $params = ['file' => $file];

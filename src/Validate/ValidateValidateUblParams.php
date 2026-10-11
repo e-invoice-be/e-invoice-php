@@ -8,13 +8,14 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\FileParam;
 
 /**
  * Validate the correctness of a UBL document.
  *
  * @see EInvoiceAPI\Services\ValidateService::validateUbl()
  *
- * @phpstan-type ValidateValidateUblParamsShape = array{file: string}
+ * @phpstan-type ValidateValidateUblParamsShape = array{file: string|FileParam}
  */
 final class ValidateValidateUblParams implements BaseModel
 {
@@ -22,8 +23,8 @@ final class ValidateValidateUblParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Required]
-    public string $file;
+    #[Required(type: FileParam::class)]
+    public string|FileParam $file;
 
     /**
      * `new ValidateValidateUblParams()` is missing required properties by the API.
@@ -49,7 +50,7 @@ final class ValidateValidateUblParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file): self
+    public static function with(string|FileParam $file): self
     {
         $self = new self;
 
@@ -58,7 +59,7 @@ final class ValidateValidateUblParams implements BaseModel
         return $self;
     }
 
-    public function withFile(string $file): self
+    public function withFile(string|FileParam $file): self
     {
         $self = clone $this;
         $self['file'] = $file;

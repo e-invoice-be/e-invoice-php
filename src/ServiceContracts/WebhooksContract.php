@@ -7,7 +7,9 @@ namespace EInvoiceAPI\ServiceContracts;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
+use EInvoiceAPI\Webhooks\WebhookGetHistoryResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
+use EInvoiceAPI\Webhooks\WebhookTestResponse;
 
 interface WebhooksContract
 {
@@ -68,4 +70,29 @@ interface WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDeleteResponse;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function retrieveHistory(
+        string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookGetHistoryResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed> $data Custom event data payload
+     * @param string $eventType Must be valid WebhookEventType
+     *
+     * @throws APIException
+     */
+    public function test(
+        string $webhookID,
+        array $data,
+        string $eventType,
+        ?RequestOptions $requestOptions = null,
+    ): WebhookTestResponse;
 }

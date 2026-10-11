@@ -82,4 +82,17 @@ final class LookupTest extends TestCase
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LookupGetParticipantsResponse::class, $result);
     }
+
+    #[Test]
+    public function testRetrieveReturnsDNSLookupDetails(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->lookup->retrieve(peppolID: 'peppol_id');
+
+        $this->assertIsString($result->dnsInfo->lookupMethod);
+        $this->assertIsString($result->dnsInfo->smpHostname);
+    }
 }

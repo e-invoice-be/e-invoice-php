@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -17,6 +18,7 @@ use EInvoiceAPI\Documents\DocumentCreateParams\Allowance\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentSendParams;
@@ -66,6 +68,7 @@ final class DocumentsRawService implements DocumentsRawContract
      *     taxCode?: 'AE'|'E'|'S'|'Z'|'G'|'O'|'K'|'L'|'M'|'B'|DocumentCreateParams\Charge\TaxCode|null,
      *     taxRate?: float|string|null,
      *   }>|null,
+     *   constructPdf?: bool,
      *   currency?: value-of<CurrencyCode>,
      *   customerAddress?: string|null,
      *   customerAddressRecipient?: string|null,
@@ -73,9 +76,10 @@ final class DocumentsRawService implements DocumentsRawContract
      *   customerEmail?: string|null,
      *   customerID?: string|null,
      *   customerName?: string|null,
+     *   customerPeppolID?: string|null,
      *   customerTaxID?: string|null,
      *   direction?: 'INBOUND'|'OUTBOUND'|DocumentDirection,
-     *   documentType?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType,
+     *   documentType?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType,
      *   dueDate?: string|\DateTimeInterface|null,
      *   invoiceDate?: string|\DateTimeInterface|null,
      *   invoiceID?: string|null,
@@ -84,8 +88,9 @@ final class DocumentsRawService implements DocumentsRawContract
      *     allowances?: list<array<mixed>>|null,
      *     amount?: float|string|null,
      *     charges?: list<array<mixed>>|null,
-     *     date?: null|null,
+     *     date?: null,
      *     description?: string|null,
+     *     itemAttributes?: list<array<mixed>>|null,
      *     productCode?: string|null,
      *     quantity?: float|string|null,
      *     tax?: float|string|null,
@@ -139,12 +144,17 @@ final class DocumentsRawService implements DocumentsRawContract
             $params,
             $requestOptions,
         );
+        $query_params = array_flip(['constructPdf']);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/',
-            body: (object) $parsed,
+            query: Util::array_transform_keys(
+                array_intersect_key($parsed, $query_params),
+                ['constructPdf' => 'construct_pdf'],
+            ),
+            body: (object) array_diff_key($parsed, $query_params),
             options: $options,
             convert: DocumentResponse::class,
         );
@@ -200,7 +210,7 @@ final class DocumentsRawService implements DocumentsRawContract
      * Create a new invoice or credit note from a PDF file. If the 'ubl_document' field is set in the response, it indicates that sufficient details were extracted from the PDF to automatically generate a valid UBL document ready for sending. If 'ubl_document' is not set, human intervention may be required to ensure compliance.
      *
      * @param array{
-     *   file: string, customerTaxID?: string|null, vendorTaxID?: string|null
+     *   file: string|FileParam, customerTaxID?: string|null, vendorTaxID?: string|null
      * }|DocumentCreateFromPdfParams $params
      *
      * @return BaseResponse<DocumentNewFromPdfResponse>
@@ -215,14 +225,14 @@ final class DocumentsRawService implements DocumentsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['customer_tax_id', 'vendor_tax_id']);
+        $query_params = array_flip(['customerTaxID', 'vendorTaxID']);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'api/documents/pdf',
             query: Util::array_transform_keys(
-                array_diff_key($parsed, $query_params),
+                array_intersect_key($parsed, $query_params),
                 [
                     'customerTaxID' => 'customer_tax_id', 'vendorTaxID' => 'vendor_tax_id',
                 ],
@@ -237,7 +247,29 @@ final class DocumentsRawService implements DocumentsRawContract
     /**
      * @api
      *
-     * Send an invoice or credit note via Peppol
+     * Get the timeline of events for an invoice or credit note, including creation, validation, transmission, and delivery events
+     *
+     * @return BaseResponse<DocumentGetTimelineResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveTimeline(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['api/documents/%1$s/timeline', $documentID],
+            options: $requestOptions,
+            convert: DocumentGetTimelineResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Send an invoice or credit note via Peppol. By default, the sender and receiver Peppol IDs are derived from the company (tax) IDs in the document, regardless of whether the document was created from a UBL with a different endpoint ID. To explicitly set the sender or receiver Peppol ID, provide them via the query parameters (sender_peppol_scheme, sender_peppol_id, receiver_peppol_scheme, receiver_peppol_id).
      *
      * @param array{
      *   email?: string|null,

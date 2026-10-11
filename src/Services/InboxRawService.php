@@ -11,10 +11,11 @@ use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Inbox\InboxListCreditNotesParams;
 use EInvoiceAPI\Inbox\InboxListInvoicesParams;
 use EInvoiceAPI\Inbox\InboxListParams;
+use EInvoiceAPI\Inbox\SortField;
+use EInvoiceAPI\Inbox\SortOrder;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\InboxRawContract;
 
@@ -38,8 +39,9 @@ final class InboxRawService implements InboxRawContract
      *   pageSize?: int,
      *   search?: string|null,
      *   sender?: string|null,
-     *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
-     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType|null,
+     *   sortBy?: 'created_at'|'invoice_date'|'due_date'|'invoice_total'|'customer_name'|'vendor_name'|'invoice_id'|SortField,
+     *   sortOrder?: 'asc'|'desc'|SortOrder,
+     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType|null,
      * }|InboxListParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
@@ -48,7 +50,7 @@ final class InboxRawService implements InboxRawContract
      */
     public function list(
         array|InboxListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?RequestOptions $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = InboxListParams::parseRequest(
             $params,
@@ -65,6 +67,8 @@ final class InboxRawService implements InboxRawContract
                     'dateFrom' => 'date_from',
                     'dateTo' => 'date_to',
                     'pageSize' => 'page_size',
+                    'sortBy' => 'sort_by',
+                    'sortOrder' => 'sort_order',
                 ],
             ),
             options: $options,
@@ -78,7 +82,12 @@ final class InboxRawService implements InboxRawContract
      *
      * Retrieve a paginated list of received credit notes with filtering options.
      *
-     * @param array{page?: int, pageSize?: int}|InboxListCreditNotesParams $params
+     * @param array{
+     *   page?: int,
+     *   pageSize?: int,
+     *   sortBy?: 'created_at'|'invoice_date'|'due_date'|'invoice_total'|'customer_name'|'vendor_name'|'invoice_id'|SortField,
+     *   sortOrder?: 'asc'|'desc'|SortOrder,
+     * }|InboxListCreditNotesParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -97,7 +106,14 @@ final class InboxRawService implements InboxRawContract
         return $this->client->request(
             method: 'get',
             path: 'api/inbox/credit-notes',
-            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'pageSize' => 'page_size',
+                    'sortBy' => 'sort_by',
+                    'sortOrder' => 'sort_order',
+                ],
+            ),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,
@@ -109,7 +125,12 @@ final class InboxRawService implements InboxRawContract
      *
      * Retrieve a paginated list of received invoices with filtering options.
      *
-     * @param array{page?: int, pageSize?: int}|InboxListInvoicesParams $params
+     * @param array{
+     *   page?: int,
+     *   pageSize?: int,
+     *   sortBy?: 'created_at'|'invoice_date'|'due_date'|'invoice_total'|'customer_name'|'vendor_name'|'invoice_id'|SortField,
+     *   sortOrder?: 'asc'|'desc'|SortOrder,
+     * }|InboxListInvoicesParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -128,7 +149,14 @@ final class InboxRawService implements InboxRawContract
         return $this->client->request(
             method: 'get',
             path: 'api/inbox/invoices',
-            query: Util::array_transform_keys($parsed, ['pageSize' => 'page_size']),
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'pageSize' => 'page_size',
+                    'sortBy' => 'sort_by',
+                    'sortOrder' => 'sort_order',
+                ],
+            ),
             options: $options,
             convert: DocumentResponse::class,
             page: DocumentsNumberPage::class,

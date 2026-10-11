@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace EInvoiceAPI;
 
 use EInvoiceAPI\Core\BaseClient;
+use EInvoiceAPI\Services\ConversionService;
 use EInvoiceAPI\Services\DocumentsService;
+use EInvoiceAPI\Services\DraftsService;
 use EInvoiceAPI\Services\InboxService;
 use EInvoiceAPI\Services\LookupService;
+use EInvoiceAPI\Services\MailboxService;
 use EInvoiceAPI\Services\MeService;
 use EInvoiceAPI\Services\OutboxService;
+use EInvoiceAPI\Services\StatsService;
 use EInvoiceAPI\Services\ValidateService;
 use EInvoiceAPI\Services\WebhooksService;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -37,6 +41,16 @@ class Client extends BaseClient
     /**
      * @api
      */
+    public DraftsService $drafts;
+
+    /**
+     * @api
+     */
+    public MailboxService $mailbox;
+
+    /**
+     * @api
+     */
     public ValidateService $validate;
 
     /**
@@ -47,7 +61,17 @@ class Client extends BaseClient
     /**
      * @api
      */
+    public ConversionService $conversion;
+
+    /**
+     * @api
+     */
     public MeService $me;
+
+    /**
+     * @api
+     */
+    public StatsService $stats;
 
     /**
      * @api
@@ -88,9 +112,13 @@ class Client extends BaseClient
         $this->documents = new DocumentsService($this);
         $this->inbox = new InboxService($this);
         $this->outbox = new OutboxService($this);
+        $this->drafts = new DraftsService($this);
+        $this->mailbox = new MailboxService($this);
         $this->validate = new ValidateService($this);
         $this->lookup = new LookupService($this);
+        $this->conversion = new ConversionService($this);
         $this->me = new MeService($this);
+        $this->stats = new StatsService($this);
         $this->webhooks = new WebhooksService($this);
     }
 

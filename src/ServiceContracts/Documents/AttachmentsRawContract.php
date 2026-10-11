@@ -58,6 +58,8 @@ interface AttachmentsRawContract
     ): BaseResponse;
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array<mixed>|AttachmentAddParams $params

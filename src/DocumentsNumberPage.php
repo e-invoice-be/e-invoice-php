@@ -11,14 +11,15 @@ use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\DocumentsNumberPage\Item;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type DocumentsNumberPageShape = array{
- *   items?: list<Item>|null,
+ *   items?: list<mixed>|null,
+ *   hasNextPage?: bool|null,
  *   page?: int|null,
  *   pageSize?: int|null,
+ *   pages?: int|null,
  *   total?: int|null,
  * }
  *
@@ -35,14 +36,20 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $items */
-    #[Optional(list: Item::class)]
+    #[Optional(list: 'mixed')]
     public ?array $items;
+
+    #[Optional('has_next_page')]
+    public ?bool $hasNextPage;
 
     #[Optional]
     public ?int $page;
 
     #[Optional('page_size')]
     public ?int $pageSize;
+
+    #[Optional]
+    public ?int $pages;
 
     #[Optional]
     public ?int $total;
@@ -72,8 +79,16 @@ final class DocumentsNumberPage implements BaseModel, BasePage
             return;
         }
 
+        $data = $this->parsedBody;
+        foreach (self::$converter->properties as $name => $info) {
+            if ($name !== $info->apiName && array_key_exists($info->apiName, array: $data)) {
+                $data[$name] = $data[$info->apiName];
+                unset($data[$info->apiName]);
+            }
+        }
+
         // @phpstan-ignore-next-line argument.type
-        self::__unserialize($this->parsedBody);
+        self::__unserialize($data);
 
         if ($this->offsetGet('items')) {
             $acc = Conversion::coerce(
@@ -109,17 +124,19 @@ final class DocumentsNumberPage implements BaseModel, BasePage
     public function nextRequest(): ?array
     {
         /** @var int */
-        $curr = $this->page ?? 1;
-        if (!count($this->getItems()) || ($curr >= ($this->total ?? null))) {
+        $curr = $this->page ?? $this->requestInfo['query']['page'] ?? 1;
+        if (!count($this->getItems()) || false === ($this->hasNextPage ?? null) || ($curr >= ($this->pages ?? PHP_INT_MAX))) {
             return null;
         }
 
-        $nextRequest = array_merge_recursive(
-            $this->requestInfo,
-            ['query' => $curr + 1]
-        );
+        [$path] = explode('?', $this->requestInfo['path'], limit: 2);
+        $nextRequest = [
+            ...$this->requestInfo,
+            'path' => $path,
+            'query' => [...$this->requestInfo['query'], 'page' => $curr + 1],
+        ];
 
         // @phpstan-ignore-next-line return.type
-        return [$nextRequest, $this->options];
+        return [$nextRequest, $this->options->withExtraQueryParams([])];
     }
 }

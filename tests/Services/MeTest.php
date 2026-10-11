@@ -4,9 +4,14 @@ namespace Tests\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Me\MeGetResponse;
+use EInvoiceAPI\RequestOptions;
+use Nyholm\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -38,5 +43,24 @@ final class MeTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MeGetResponse::class, $result);
+    }
+
+    #[Test]
+    public function testRetrieveWithOnlyRequiredFields(): void
+    {
+        $transporter = new class() implements ClientInterface {
+            public function sendRequest(RequestInterface $request): ResponseInterface
+            {
+                return new Response(200, ['Content-Type' => 'application/json'], '{"name":"Acme"}');
+            }
+        };
+
+        $result = $this->client->me->retrieve(
+            requestOptions: RequestOptions::with(transporter: $transporter)
+        );
+
+        $this->assertSame('Acme', $result->name);
+        $this->assertNull($result->creditBalance);
+        $this->assertNull($result->plan);
     }
 }
