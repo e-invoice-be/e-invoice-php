@@ -81,6 +81,8 @@ final class ClientTest extends TestCase
         yield 'symfony' => ['Idle timeout reached for "http://localhost/api/me/".'];
 
         yield 'stream' => ['Connection timed out'];
+
+        yield 'hyphen' => ['Gateway time-out'];
     }
 
     #[Test]
@@ -94,9 +96,10 @@ final class ClientTest extends TestCase
     }
 
     #[Test]
-    public function testNetworkErrorThrowsConnectionException(): void
+    #[DataProvider('networkErrors')]
+    public function testNetworkErrorThrowsConnectionException(string $message): void
     {
-        $refused = $this->networkError('Connection refused');
+        $refused = $this->networkError($message);
         $this->http->queue($refused);
 
         try {
@@ -106,6 +109,16 @@ final class ClientTest extends TestCase
             $this->assertNotInstanceOf(APITimeoutException::class, $e);
             $this->assertSame($refused, $e->getPrevious());
         }
+    }
+
+    /**
+     * @return iterable<string,array{string}>
+     */
+    public static function networkErrors(): iterable
+    {
+        yield 'refused' => ['Connection refused'];
+
+        yield 'url with timeout' => ['Could not resolve host for "http://localhost/timeout?timeout=30"'];
     }
 
     private function options(): RequestOptions

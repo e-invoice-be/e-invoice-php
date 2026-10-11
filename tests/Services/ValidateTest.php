@@ -99,7 +99,7 @@ final class ValidateTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        $this->assertMultipartFileRequest('/api/validate/ubl', 'file', 'upload', 'file');
+        $this->assertUploadRequest('/api/validate/ubl');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
         $this->assertSame('val_123', $result->id);
@@ -131,7 +131,7 @@ final class ValidateTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        $this->assertMultipartFileRequest('/api/validate/ubl', 'file', 'upload', 'file');
+        $this->assertUploadRequest('/api/validate/ubl');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
         $this->assertFalse($result->isValid);
@@ -188,32 +188,6 @@ final class ValidateTest extends ServiceTestCase
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
         $this->assertTrue($result->isValid);
-    }
-
-    /**
-     * Asserts on a multipart request that holds one file part.
-     */
-    private function assertMultipartFileRequest(
-        string $path,
-        string $fieldName,
-        string $fileName,
-        string $content,
-    ): void {
-        $this->assertCount(1, $this->http->requests);
-        $request = $this->http->requests[0];
-
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame($path, $request->getUri()->getPath());
-        $this->assertSame('', $request->getUri()->getQuery());
-        $this->assertSame('Bearer My API Key', $request->getHeaderLine('Authorization'));
-        $this->assertStringStartsWith('multipart/form-data; boundary=', $request->getHeaderLine('Content-Type'));
-
-        $body = (string) $request->getBody();
-        $this->assertStringContainsString(
-            sprintf('Content-Disposition: form-data; name="%s"; filename="%s"', $fieldName, $fileName),
-            $body,
-        );
-        $this->assertStringContainsString("\r\n\r\n{$content}\r\n--", $body);
     }
 
     /**

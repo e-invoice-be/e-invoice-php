@@ -27,7 +27,7 @@ final class UblTest extends ServiceTestCase
             requestOptions: $this->options()
         );
 
-        $this->assertFileUpload();
+        $this->assertUploadRequest('/api/documents/ubl');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);
         $this->assertSame('doc_123', $result->id);
@@ -48,7 +48,7 @@ final class UblTest extends ServiceTestCase
             requestOptions: $this->options()
         );
 
-        $this->assertFileUpload();
+        $this->assertUploadRequest('/api/documents/ubl');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);
         $this->assertSame('DRAFT', $result->state);
@@ -86,27 +86,5 @@ final class UblTest extends ServiceTestCase
             '2024-01-15T10:30:00+00:00',
             $result->validatedAt?->format(DATE_ATOM)
         );
-    }
-
-    /**
-     * Asserts on the multipart upload request that has a `file` part with the content `file`.
-     */
-    private function assertFileUpload(): void
-    {
-        $this->assertCount(1, $this->http->requests);
-        $request = $this->http->requests[0];
-
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame('/api/documents/ubl', $request->getUri()->getPath());
-        $this->assertSame('', $request->getUri()->getQuery());
-        $this->assertSame('Bearer My API Key', $request->getHeaderLine('Authorization'));
-        $this->assertStringStartsWith(
-            'multipart/form-data',
-            $request->getHeaderLine('Content-Type')
-        );
-
-        $body = (string) $request->getBody();
-        $this->assertStringContainsString('name="file"; filename="upload"', $body);
-        $this->assertStringContainsString("\r\n\r\nfile\r\n", $body);
     }
 }

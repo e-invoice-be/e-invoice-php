@@ -23,7 +23,7 @@ final class ConversionTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        $this->assertUploadRequest();
+        $this->assertUploadRequest('/api/conversion/pdf');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentCreateFromPdfTask::class, $result);
         $this->assertSame('task_id', $result->taskID);
@@ -40,7 +40,7 @@ final class ConversionTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        $this->assertUploadRequest();
+        $this->assertUploadRequest('/api/conversion/pdf');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentCreateFromPdfTask::class, $result);
         $this->assertSame('task_id', $result->taskID);
@@ -92,27 +92,5 @@ final class ConversionTest extends ServiceTestCase
         $this->assertSame('121.00', $result->invoiceTotal);
         $this->assertSame('Acme', $result->customerName);
         $this->assertNull($result->errorMessage);
-    }
-
-    private function assertUploadRequest(): void
-    {
-        $this->assertCount(1, $this->http->requests);
-        $request = $this->http->requests[0];
-
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame('/api/conversion/pdf', $request->getUri()->getPath());
-        $this->assertSame('', $request->getUri()->getQuery());
-        $this->assertSame('Bearer My API Key', $request->getHeaderLine('Authorization'));
-        $this->assertStringStartsWith(
-            'multipart/form-data; boundary=',
-            $request->getHeaderLine('Content-Type'),
-        );
-
-        $body = (string) $request->getBody();
-        $this->assertStringContainsString(
-            'Content-Disposition: form-data; name="file"; filename="upload"',
-            $body,
-        );
-        $this->assertStringContainsString("\r\n\r\nfile\r\n", $body);
     }
 }

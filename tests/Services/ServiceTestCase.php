@@ -48,6 +48,41 @@ abstract class ServiceTestCase extends TestCase
         array|string|null $body = null,
         int $index = 0,
     ): RequestInterface {
+        $request = $this->assertRequestLine($method, $path, $query, $index);
+
+        $sentBody = (string) $request->getBody();
+        if (is_array($body)) {
+            $this->assertStringStartsWith('application/json', $request->getHeaderLine('Content-Type'));
+            $this->assertEquals($body, json_decode($sentBody, associative: true, flags: JSON_THROW_ON_ERROR));
+        } else {
+            $this->assertSame($body ?? '', $sentBody);
+        }
+
+        return $request;
+    }
+
+    /**
+     * Asserts on a multipart upload that has one `file` part with the content `file`.
+     *
+     * @param array<string,mixed> $query
+     */
+    protected function assertUploadRequest(string $path, array $query = []): RequestInterface
+    {
+        $request = $this->assertRequestLine('POST', $path, $query, 0);
+
+        $this->assertStringStartsWith('multipart/form-data; boundary=', $request->getHeaderLine('Content-Type'));
+        $sentBody = (string) $request->getBody();
+        $this->assertStringContainsString('Content-Disposition: form-data; name="file"; filename="upload"', $sentBody);
+        $this->assertStringContainsString("\r\n\r\nfile\r\n--", $sentBody);
+
+        return $request;
+    }
+
+    /**
+     * @param array<string,mixed> $query
+     */
+    private function assertRequestLine(string $method, string $path, array $query, int $index): RequestInterface
+    {
         $this->assertArrayHasKey($index, $this->http->requests, 'The client did not send this request.');
         $request = $this->http->requests[$index];
 
@@ -57,14 +92,6 @@ abstract class ServiceTestCase extends TestCase
 
         parse_str($request->getUri()->getQuery(), $sentQuery);
         $this->assertEquals($query, $sentQuery);
-
-        $sentBody = (string) $request->getBody();
-        if (is_array($body)) {
-            $this->assertStringStartsWith('application/json', $request->getHeaderLine('Content-Type'));
-            $this->assertEquals($body, json_decode($sentBody, associative: true, flags: JSON_THROW_ON_ERROR));
-        } else {
-            $this->assertSame($body ?? '', $sentBody);
-        }
 
         return $request;
     }

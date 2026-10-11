@@ -141,7 +141,7 @@ final class AttachmentsTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        $this->assertFileUpload();
+        $this->assertUploadRequest('/api/documents/document_id/attachments');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentAttachment::class, $result);
         $this->assertSame('attachment_id', $result->id);
@@ -159,35 +159,10 @@ final class AttachmentsTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        $this->assertFileUpload();
+        $this->assertUploadRequest('/api/documents/document_id/attachments');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentAttachment::class, $result);
         $this->assertSame(2048, $result->fileSize);
         $this->assertSame('application/pdf', $result->fileType);
-    }
-
-    /**
-     * Asserts on the multipart upload request that has a `file` part with the content `file`.
-     */
-    private function assertFileUpload(): void
-    {
-        $this->assertCount(1, $this->http->requests);
-        $request = $this->http->requests[0];
-
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame(
-            '/api/documents/document_id/attachments',
-            $request->getUri()->getPath()
-        );
-        $this->assertSame('', $request->getUri()->getQuery());
-        $this->assertSame('Bearer My API Key', $request->getHeaderLine('Authorization'));
-        $this->assertStringStartsWith(
-            'multipart/form-data',
-            $request->getHeaderLine('Content-Type')
-        );
-
-        $body = (string) $request->getBody();
-        $this->assertStringContainsString('name="file"; filename="upload"', $body);
-        $this->assertStringContainsString("\r\n\r\nfile\r\n", $body);
     }
 }

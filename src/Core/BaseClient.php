@@ -268,7 +268,9 @@ abstract class BaseClient
     private static function isTimeout(?\Throwable $err): bool
     {
         for (; !is_null($err); $err = $err->getPrevious()) {
-            if (preg_match('/\btime(?:d )?out\b/i', $err->getMessage())) {
+            // Some clients put the request URL in the message.
+            $message = preg_replace('/\S+:\/\/\S+/', '', $err->getMessage()) ?? '';
+            if (preg_match('/\btime(?:d[ -]?| |-)?out\b/i', $message)) {
                 return true;
             }
         }

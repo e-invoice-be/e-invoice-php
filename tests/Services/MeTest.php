@@ -34,6 +34,7 @@ final class MeTest extends ServiceTestCase
 
         $result = $this->client->me->retrieve(requestOptions: $this->options());
 
+        $this->assertRequest('GET', '/api/me/');
         $this->assertSame('Acme', $result->name);
         $this->assertNull($result->creditBalance);
         $this->assertNull($result->plan);

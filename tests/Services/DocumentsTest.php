@@ -12,7 +12,6 @@ use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * @internal
@@ -149,7 +148,7 @@ final class DocumentsTest extends ServiceTestCase
             requestOptions: $this->options()
         );
 
-        $this->assertMultipartRequest('/api/documents/pdf', []);
+        $this->assertUploadRequest('/api/documents/pdf');
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
         $this->assertSame('INV-2024-001', $result->invoiceID);
@@ -170,7 +169,7 @@ final class DocumentsTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        $request = $this->assertMultipartRequest('/api/documents/pdf', [
+        $request = $this->assertUploadRequest('/api/documents/pdf', [
             'customer_tax_id' => 'customer_tax_id',
             'vendor_tax_id' => 'vendor_tax_id',
         ]);
@@ -270,35 +269,5 @@ final class DocumentsTest extends ServiceTestCase
         $this->assertCount(1, $result->issues);
         $this->assertSame('error', $result->issues[0]->type);
         $this->assertSame('PEPPOL-EN16931-R003', $result->issues[0]->ruleID);
-    }
-
-    /**
-     * Asserts on a multipart upload request that has a `file` part with the content `file`.
-     *
-     * @param array<string,string> $query
-     */
-    private function assertMultipartRequest(
-        string $path,
-        array $query
-    ): RequestInterface {
-        $this->assertCount(1, $this->http->requests);
-        $request = $this->http->requests[0];
-
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame($path, $request->getUri()->getPath());
-        $this->assertSame('Bearer My API Key', $request->getHeaderLine('Authorization'));
-
-        parse_str($request->getUri()->getQuery(), $sentQuery);
-        $this->assertEquals($query, $sentQuery);
-
-        $this->assertStringStartsWith(
-            'multipart/form-data',
-            $request->getHeaderLine('Content-Type')
-        );
-        $body = (string) $request->getBody();
-        $this->assertStringContainsString('name="file"; filename="upload"', $body);
-        $this->assertStringContainsString("\r\n\r\nfile\r\n", $body);
-
-        return $request;
     }
 }
