@@ -6,11 +6,11 @@ namespace EInvoiceAPI\Core;
 
 use EInvoiceAPI\Core\Contracts\BasePage;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
-use EInvoiceAPI\Core\Contracts\BaseStream;
 use EInvoiceAPI\Core\Conversion\Contracts\Converter;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Exceptions\APIConnectionException;
 use EInvoiceAPI\Core\Exceptions\APIStatusException;
+use EInvoiceAPI\Core\Exceptions\APITimeoutException;
 use EInvoiceAPI\Core\Implementation\RawResponse;
 use EInvoiceAPI\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -54,7 +54,6 @@ abstract class BaseClient
      * @param array<string,mixed> $query
      * @param array<string,mixed> $headers
      * @param class-string<BasePage<mixed>>|null $page
-     * @param class-string<BaseStream<mixed>>|null $stream
      * @param RequestOptions|array<string,mixed>|null $options
      *
      * @return BaseResponse<mixed>
@@ -67,7 +66,6 @@ abstract class BaseClient
         mixed $body = null,
         string|Converter|ConverterSource|null $convert = null,
         ?string $page = null,
-        ?string $stream = null,
         RequestOptions|array|null $options = [],
     ): BaseResponse {
         // @phpstan-ignore-next-line
@@ -82,61 +80,11 @@ abstract class BaseClient
         $rsp = $this->sendRequest($opts, req: $request, data: $body, redirectCount: 0, retryCount: 0);
 
         // @phpstan-ignore-next-line argument.type
-        return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, stream: $stream, page: $page, convert: $convert ?? 'null');
+        return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, page: $page, convert: $convert ?? 'null');
     }
 
     /** @return array<string,string> */
     abstract protected function authHeaders(): array;
-
-    protected function getNormalizedOS(): string
-    {
-        $os = strtolower(PHP_OS_FAMILY);
-
-        switch ($os) {
-            case 'windows':
-                return 'Windows';
-
-            case 'darwin':
-                return 'MacOS';
-
-            case 'linux':
-                return 'Linux';
-
-            case 'bsd':
-            case 'freebsd':
-            case 'openbsd':
-                return 'BSD';
-
-            case 'solaris':
-                return 'Solaris';
-
-            case 'unix':
-            case 'unknown':
-                return 'Unknown';
-
-            default:
-                return 'Other:'.$os;
-        }
-    }
-
-    protected function getNormalizedArchitecture(): string
-    {
-        $arch = php_uname('m');
-        if (false !== strpos($arch, 'x86_64') || false !== strpos($arch, 'amd64')) {
-            return 'x64';
-        }
-        if (false !== strpos($arch, 'i386') || false !== strpos($arch, 'i686')) {
-            return 'x32';
-        }
-        if (false !== strpos($arch, 'aarch64') || false !== strpos($arch, 'arm64')) {
-            return 'arm64';
-        }
-        if (false !== strpos($arch, 'arm')) {
-            return 'arm';
-        }
-
-        return 'unknown';
-    }
 
     /**
      * @internal
@@ -270,8 +218,6 @@ abstract class BaseClient
     ): ResponseInterface {
         assert(null !== $opts->streamFactory && null !== $opts->transporter);
 
-        /** @var RequestInterface */
-        $req = $req->withHeader('X-Stainless-Retry-Count', strval($retryCount));
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
 
         $rsp = null;
@@ -299,9 +245,11 @@ abstract class BaseClient
 
         if ($code >= 400 || is_null($rsp)) {
             if (!$this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp)) {
-                $exn = is_null($rsp) ? new APIConnectionException($req, previous: $err) : APIStatusException::from(request: $req, response: $rsp);
+                if (!is_null($rsp)) {
+                    throw APIStatusException::from(request: $req, response: $rsp);
+                }
 
-                throw $exn;
+                throw self::isTimeout($err) ? new APITimeoutException($req, previous: $err) : new APIConnectionException($req, previous: $err);
             }
 
             $seconds = $this->retryDelay($opts, retryCount: $redirectCount, rsp: $rsp);
@@ -312,5 +260,19 @@ abstract class BaseClient
         }
 
         return $rsp;
+    }
+
+    /**
+     * PSR-18 has no timeout exception, so the message of the HTTP client must tell.
+     */
+    private static function isTimeout(?\Throwable $err): bool
+    {
+        for (; !is_null($err); $err = $err->getPrevious()) {
+            if (preg_match('/\btime(?:d )?out\b/i', $err->getMessage())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

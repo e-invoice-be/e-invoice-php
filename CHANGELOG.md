@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.7.0 (2026-10-11)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.6.0...v0.7.0)
+
+e-invoice.be now maintains this SDK manually. This release removes the parts that relied on the code generator.
+
+### ⚠ BREAKING CHANGES
+
+* the Composer package name is `e-invoice/e-invoice-api`, the same as on Packagist. If your `composer.json` has a `vcs` repository and `e-invoice-be/e-invoice`, remove them and run `composer require e-invoice/e-invoice-api`
+* remove the `X-Stainless-*` request headers
+* remove `BaseClient::getNormalizedOS()` and `BaseClient::getNormalizedArchitecture()`
+* remove the `$stream` parameter of `BaseClient::request()`, the `BaseStream` interface, the `SdkEnum` trait and `Util::decodeSSE()`. The API has no streaming endpoints
+
+### Features
+
+* throw `APITimeoutException` when a request times out
+* add `Client::VERSION`
+
+### Chores
+
+* run the service tests against a PSR-18 mock client. The tests need no mock server
+* remove the release-please configuration and the code generator metadata
+* run the CI workflow on pushes to `main` and on all pull requests
+
+### Documentation
+
+* add `CONTRIBUTING.md` with the manual release procedure
+* rewrite `SECURITY.md`: send reports to security@e-invoice.be
+* correct the installation instructions and the exception names in the README
+
 ## 0.6.0 (2025-12-10)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.5.0...v0.6.0)

@@ -10,11 +10,6 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
-/**
- * @phpstan-type SSEvent = array{
- *   event?: string|null, data?: string|null, id?: string|null, retry?: int|null
- * }
- */
 final class Util
 {
     public const BUF_SIZE = 8192;
@@ -199,7 +194,7 @@ final class Util
         mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
-            /** @var RequestInterface */
+            // @var RequestInterface
             return $req->withBody($body);
         }
 
@@ -209,7 +204,7 @@ final class Util
                 $encoded = json_encode($body, flags: self::JSON_ENCODE_FLAGS);
                 $stream = $factory->createStream($encoded);
 
-                /** @var RequestInterface */
+                // @var RequestInterface
                 return $req->withBody($stream);
             }
         }
@@ -219,14 +214,14 @@ final class Util
             $encoded = implode('', iterator_to_array($gen));
             $stream = $factory->createStream($encoded);
 
-            /** @var RequestInterface */
+            // @var RequestInterface
             return $req->withHeader('Content-Type', "{$contentType}; boundary={$boundary}")->withBody($stream);
         }
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
 
-            /** @var RequestInterface */
+            // @var RequestInterface
             return $req->withBody($stream);
         }
 
@@ -250,68 +245,6 @@ final class Util
         }
         if ('' !== $buf) {
             yield $buf;
-        }
-    }
-
-    /**
-     * @param \Iterator<string> $lines
-     *
-     * @return \Generator<SSEvent>
-     */
-    public static function decodeSSE(\Iterator $lines): \Generator
-    {
-        $blank = ['event' => null, 'data' => null, 'id' => null, 'retry' => null];
-        $acc = [];
-
-        foreach ($lines as $line) {
-            $line = rtrim($line);
-            if ('' === $line) {
-                if (empty($acc)) {
-                    continue;
-                }
-
-                yield [...$blank, ...$acc];
-                $acc = [];
-            }
-
-            if (str_starts_with($line, ':')) {
-                continue;
-            }
-
-            $matches = [];
-            if (preg_match('/^([^:]+):\s?(.*)$/', $line, $matches)) {
-                [, $field, $value] = $matches;
-
-                switch ($field) {
-                    case 'event':
-                        $acc['event'] = $value;
-
-                        break;
-
-                    case 'data':
-                        if (isset($acc['data'])) {
-                            $acc['data'] .= "\n".$value;
-                        } else {
-                            $acc['data'] = $value;
-                        }
-
-                        break;
-
-                    case 'id':
-                        $acc['id'] = $value;
-
-                        break;
-
-                    case 'retry':
-                        $acc['retry'] = (int) $value;
-
-                        break;
-                }
-            }
-        }
-
-        if (!empty($acc)) {
-            yield [...$blank, ...$acc];
         }
     }
 
@@ -344,13 +277,6 @@ final class Util
                     yield static::decodeJson($line);
                 }
             })();
-        }
-
-        if (str_contains($content_type, needle: 'text/event-stream')) {
-            $it = self::streamIterator($body);
-            $lines = self::decodeLines($it);
-
-            return self::decodeSSE($lines);
         }
 
         return self::streamIterator($body);

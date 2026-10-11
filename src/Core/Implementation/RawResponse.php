@@ -45,7 +45,6 @@ class RawResponse implements BaseResponse
         private array $requestInfo,
         private Converter|ConverterSource|string $convert,
         private ?string $page,
-        private ?string $stream,
     ) {}
 
     public function getRequest(): RequestInterface
@@ -56,15 +55,7 @@ class RawResponse implements BaseResponse
     public function parse(): mixed
     {
         if (!$this->coerced) {
-            if (!is_null($this->stream)) {
-                // @phpstan-ignore-next-line assign.propertyType
-                $this->coercedResponse = new $this->stream(
-                    convert: $this->convert,
-                    request: $this->request,
-                    response: $this->response,
-                    parsedBody: $this->getDecoded(),
-                );
-            } elseif (!is_null($this->page)) {
+            if (!is_null($this->page)) {
                 // @phpstan-ignore-next-line assign.propertyType
                 $this->coercedResponse = new $this->page(
                     convert: $this->convert,
