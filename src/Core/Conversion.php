@@ -163,7 +163,16 @@ final class Conversion
                 }
 
                 if ($value instanceof \Generator) {
-                    return implode('', iterator_to_array($value));
+                    $acc = '';
+                    foreach ($value as $chunk) {
+                        if (!is_scalar($chunk) && !is_null($chunk) && !$chunk instanceof \Stringable) {
+                            throw new \InvalidArgumentException('Expected generator to yield stringable chunks, got '.get_debug_type($chunk));
+                        }
+
+                        $acc .= $chunk;
+                    }
+
+                    return $acc;
                 }
 
                 ++$state->no;

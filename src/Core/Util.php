@@ -26,7 +26,7 @@ final class Util
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
     /**
-     * @return array<string,mixed>
+     * @return array<array-key,mixed>
      */
     public static function get_object_vars(object $object): array
     {
