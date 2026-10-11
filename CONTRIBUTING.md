@@ -15,7 +15,7 @@ You need PHP 8.1 or higher and [Composer](https://getcomposer.org).
 1. Make a branch from `main`.
 2. Change the code and add or update the tests.
 3. Run the checks (see below).
-4. Open a pull request to `main`. The CI workflow runs the lint and test jobs on each pull request.
+4. Open a pull request to `main`. The CI workflow runs the lint, test and syntax jobs on each pull request. The syntax job uses PHP 8.1, the lowest supported version.
 
 ## Running the checks
 

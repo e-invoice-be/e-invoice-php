@@ -19,7 +19,7 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   allowances?: list<\EInvoiceAPI\Documents\Allowance>|null,
  *   amount?: string|null,
  *   charges?: list<\EInvoiceAPI\Documents\Charge>|null,
- *   date?: null|null,
+ *   date?: null,
  *   description?: string|null,
  *   itemAttributes?: list<ItemAttribute>|null,
  *   productCode?: string|null,
@@ -58,8 +58,8 @@ final class Item implements BaseModel
     public ?array $charges;
 
     /** @var null $date */
-    #[Optional(nullable: true)]
-    public null $date;
+    #[Optional(type: 'null', nullable: true)]
+    public mixed $date;
 
     /**
      * The description of the line item.
@@ -141,6 +141,7 @@ final class Item implements BaseModel
      *   taxCode?: value-of<Charge\TaxCode>|null,
      *   taxRate?: string|null,
      * }>|null $charges
+     * @param null $date
      * @param list<ItemAttribute|array{name: string, value?: string|null}>|null $itemAttributes
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
@@ -148,7 +149,7 @@ final class Item implements BaseModel
         ?array $allowances = null,
         ?string $amount = null,
         ?array $charges = null,
-        null $date = null,
+        mixed $date = null,
         ?string $description = null,
         ?array $itemAttributes = null,
         ?string $productCode = null,
@@ -158,6 +159,8 @@ final class Item implements BaseModel
         UnitOfMeasureCode|string|null $unit = null,
         ?string $unitPrice = null,
     ): self {
+        null === $date || throw new \TypeError('The date of a line item must be null.');
+
         $self = new self;
 
         $self['date'] = $date;
@@ -233,8 +236,10 @@ final class Item implements BaseModel
     /**
      * @param null $date
      */
-    public function withDate(null $date): self
+    public function withDate(mixed $date): self
     {
+        null === $date || throw new \TypeError('The date of a line item must be null.');
+
         $self = clone $this;
         $self['date'] = $date;
 

@@ -19,7 +19,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge;
  *   allowances?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance>|null,
  *   amount?: float|string|null,
  *   charges?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge>|null,
- *   date?: null|null,
+ *   date?: null,
  *   description?: string|null,
  *   itemAttributes?: list<Attribute>|null,
  *   productCode?: string|null,
@@ -64,8 +64,8 @@ final class Item implements BaseModel
     public ?array $charges;
 
     /** @var null $date */
-    #[Optional(nullable: true)]
-    public null $date;
+    #[Optional(type: 'null', nullable: true)]
+    public mixed $date;
 
     /**
      * The description of the line item.
@@ -151,6 +151,7 @@ final class Item implements BaseModel
      *   taxCode?: value-of<Charge\TaxCode>|null,
      *   taxRate?: float|string|null,
      * }>|null $charges
+     * @param null $date
      * @param list<Attribute|array{name: string, value?: string|null}>|null $itemAttributes
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
@@ -158,7 +159,7 @@ final class Item implements BaseModel
         ?array $allowances = null,
         float|string|null $amount = null,
         ?array $charges = null,
-        null $date = null,
+        mixed $date = null,
         ?string $description = null,
         ?array $itemAttributes = null,
         ?string $productCode = null,
@@ -168,6 +169,8 @@ final class Item implements BaseModel
         UnitOfMeasureCode|string|null $unit = null,
         float|string|null $unitPrice = null,
     ): self {
+        null === $date || throw new \TypeError('The date of a line item must be null.');
+
         $self = new self;
 
         $self['date'] = $date;
@@ -243,8 +246,10 @@ final class Item implements BaseModel
     /**
      * @param null $date
      */
-    public function withDate(null $date): self
+    public function withDate(mixed $date): self
     {
+        null === $date || throw new \TypeError('The date of a line item must be null.');
+
         $self = clone $this;
         $self['date'] = $date;
 

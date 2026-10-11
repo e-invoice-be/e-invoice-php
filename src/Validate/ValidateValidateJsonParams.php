@@ -75,7 +75,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *     allowances?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance>|null,
  *     amount?: float|string|null,
  *     charges?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge>|null,
- *     date?: null|null,
+ *     date?: null,
  *     description?: string|null,
  *     itemAttributes?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Attribute>|null,
  *     productCode?: string|null,

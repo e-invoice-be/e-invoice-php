@@ -21,7 +21,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 
 class Client extends BaseClient
 {
-    public const VERSION = '0.7.1';
+    public const VERSION = '0.7.2';
 
     public string $apiKey;
 
