@@ -8,13 +8,14 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\FileParam;
 
 /**
- * Add a new attachment to an invoice or credit note.
+ * Add one or more attachments to an invoice. Be careful: the attachments ARE NOT ADDED to the UBL! They are only stored in our database and can be downloaded later. To add attachments to the UBL, you need to add the attachment(s) via POST /api/documents.
  *
  * @see EInvoiceAPI\Services\Documents\AttachmentsService::add()
  *
- * @phpstan-type AttachmentAddParamsShape = array{file: string}
+ * @phpstan-type AttachmentAddParamsShape = array{file: string|FileParam}
  */
 final class AttachmentAddParams implements BaseModel
 {
@@ -22,8 +23,8 @@ final class AttachmentAddParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Required]
-    public string $file;
+    #[Required(type: FileParam::class)]
+    public string|FileParam $file;
 
     /**
      * `new AttachmentAddParams()` is missing required properties by the API.
@@ -49,7 +50,7 @@ final class AttachmentAddParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file): self
+    public static function with(string|FileParam $file): self
     {
         $self = new self;
 
@@ -58,7 +59,7 @@ final class AttachmentAddParams implements BaseModel
         return $self;
     }
 
-    public function withFile(string $file): self
+    public function withFile(string|FileParam $file): self
     {
         $self = clone $this;
         $self['file'] = $file;

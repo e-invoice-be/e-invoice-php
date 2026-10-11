@@ -26,7 +26,7 @@ interface InboxRawContract
      */
     public function list(
         array|InboxListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?RequestOptions $requestOptions = null,
     ): BaseResponse;
 
     /**

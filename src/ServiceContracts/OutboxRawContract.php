@@ -15,6 +15,8 @@ use EInvoiceAPI\RequestOptions;
 interface OutboxRawContract
 {
     /**
+     * @deprecated use `$client->drafts->list()` instead
+     *
      * @api
      *
      * @param array<mixed>|OutboxListDraftDocumentsParams $params

@@ -29,10 +29,13 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
+ *   customerPeppolID?: string|null,
  *   customerTaxID?: string|null,
  *   direction?: value-of<DocumentDirection>|null,
  *   documentType?: value-of<DocumentType>|null,
  *   dueDate?: \DateTimeInterface|null,
+ *   errorMessage?: string|null,
+ *   errorType?: string|null,
  *   invoiceDate?: \DateTimeInterface|null,
  *   invoiceID?: string|null,
  *   invoiceTotal?: string|null,
@@ -147,6 +150,12 @@ final class DocumentNewFromPdfResponse implements BaseModel
     public ?string $customerName;
 
     /**
+     * Customer Peppol ID.
+     */
+    #[Optional('customer_peppol_id', nullable: true)]
+    public ?string $customerPeppolID;
+
+    /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
     #[Optional('customer_tax_id', nullable: true)]
@@ -175,6 +184,18 @@ final class DocumentNewFromPdfResponse implements BaseModel
     public ?\DateTimeInterface $dueDate;
 
     /**
+     * Error message when success is False.
+     */
+    #[Optional('error_message', nullable: true)]
+    public ?string $errorMessage;
+
+    /**
+     * Error type/category when success is False.
+     */
+    #[Optional('error_type', nullable: true)]
+    public ?string $errorType;
+
+    /**
      * The date when the invoice was issued.
      */
     #[Optional('invoice_date', nullable: true)]
@@ -193,7 +214,7 @@ final class DocumentNewFromPdfResponse implements BaseModel
     public ?string $invoiceTotal;
 
     /**
-     * At least one line item is required.
+     * Line items (may be empty for failed conversions).
      *
      * @var list<Item>|null $items
      */
@@ -418,8 +439,9 @@ final class DocumentNewFromPdfResponse implements BaseModel
      *   allowances?: list<Allowance>|null,
      *   amount?: string|null,
      *   charges?: list<Charge>|null,
-     *   date?: null|null,
+     *   date?: null,
      *   description?: string|null,
+     *   itemAttributes?: list<Item\ItemAttribute>|null,
      *   productCode?: string|null,
      *   quantity?: string|null,
      *   tax?: string|null,
@@ -454,10 +476,13 @@ final class DocumentNewFromPdfResponse implements BaseModel
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
+        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
         ?\DateTimeInterface $dueDate = null,
+        ?string $errorMessage = null,
+        ?string $errorType = null,
         ?\DateTimeInterface $invoiceDate = null,
         ?string $invoiceID = null,
         ?string $invoiceTotal = null,
@@ -506,10 +531,13 @@ final class DocumentNewFromPdfResponse implements BaseModel
         null !== $customerEmail && $self['customerEmail'] = $customerEmail;
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $customerName && $self['customerName'] = $customerName;
+        null !== $customerPeppolID && $self['customerPeppolID'] = $customerPeppolID;
         null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
         null !== $direction && $self['direction'] = $direction;
         null !== $documentType && $self['documentType'] = $documentType;
         null !== $dueDate && $self['dueDate'] = $dueDate;
+        null !== $errorMessage && $self['errorMessage'] = $errorMessage;
+        null !== $errorType && $self['errorType'] = $errorType;
         null !== $invoiceDate && $self['invoiceDate'] = $invoiceDate;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $invoiceTotal && $self['invoiceTotal'] = $invoiceTotal;
@@ -715,6 +743,17 @@ final class DocumentNewFromPdfResponse implements BaseModel
     }
 
     /**
+     * Customer Peppol ID.
+     */
+    public function withCustomerPeppolID(?string $customerPeppolID): self
+    {
+        $self = clone $this;
+        $self['customerPeppolID'] = $customerPeppolID;
+
+        return $self;
+    }
+
+    /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
      */
     public function withCustomerTaxID(?string $customerTaxID): self
@@ -763,6 +802,28 @@ final class DocumentNewFromPdfResponse implements BaseModel
     }
 
     /**
+     * Error message when success is False.
+     */
+    public function withErrorMessage(?string $errorMessage): self
+    {
+        $self = clone $this;
+        $self['errorMessage'] = $errorMessage;
+
+        return $self;
+    }
+
+    /**
+     * Error type/category when success is False.
+     */
+    public function withErrorType(?string $errorType): self
+    {
+        $self = clone $this;
+        $self['errorType'] = $errorType;
+
+        return $self;
+    }
+
+    /**
      * The date when the invoice was issued.
      */
     public function withInvoiceDate(?\DateTimeInterface $invoiceDate): self
@@ -796,14 +857,15 @@ final class DocumentNewFromPdfResponse implements BaseModel
     }
 
     /**
-     * At least one line item is required.
+     * Line items (may be empty for failed conversions).
      *
      * @param list<Item|array{
      *   allowances?: list<Allowance>|null,
      *   amount?: string|null,
      *   charges?: list<Charge>|null,
-     *   date?: null|null,
+     *   date?: null,
      *   description?: string|null,
+     *   itemAttributes?: list<Item\ItemAttribute>|null,
      *   productCode?: string|null,
      *   quantity?: string|null,
      *   tax?: string|null,

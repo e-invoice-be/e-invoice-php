@@ -4,7 +4,9 @@ namespace Tests\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
+use EInvoiceAPI\Webhooks\WebhookGetHistoryResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
+use EInvoiceAPI\Webhooks\WebhookTestResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -111,5 +113,52 @@ final class WebhooksTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookDeleteResponse::class, $result);
+    }
+
+    #[Test]
+    public function testRetrieveHistory(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->webhooks->retrieveHistory('webhook_id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookGetHistoryResponse::class, $result);
+    }
+
+    #[Test]
+    public function testTest(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->webhooks->test(
+            'webhook_id',
+            data: ['foo' => 'bar'],
+            eventType: 'event_type'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookTestResponse::class, $result);
+    }
+
+    #[Test]
+    public function testTestWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->webhooks->test(
+            'webhook_id',
+            data: ['foo' => 'bar'],
+            eventType: 'event_type'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookTestResponse::class, $result);
     }
 }

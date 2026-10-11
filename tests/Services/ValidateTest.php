@@ -92,4 +92,36 @@ final class ValidateTest extends TestCase
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
     }
+
+    #[Test]
+    public function testValidateJsonWithCustomerPeppolID(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->validate->validateJson(
+            customerPeppolID: '0208:0123456789'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
+    }
+
+    #[Test]
+    public function testValidateJsonWithItemAttributes(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('Prism tests are disabled');
+        }
+
+        $result = $this->client->validate->validateJson(
+            items: [
+                ['itemAttributes' => [['name' => 'color', 'value' => 'red']]],
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
+    }
 }

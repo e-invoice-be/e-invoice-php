@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Services;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
@@ -71,9 +72,10 @@ final class ValidateRawService implements ValidateRawContract
      *   customerEmail?: string|null,
      *   customerID?: string|null,
      *   customerName?: string|null,
+     *   customerPeppolID?: string|null,
      *   customerTaxID?: string|null,
      *   direction?: 'INBOUND'|'OUTBOUND'|DocumentDirection,
-     *   documentType?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType,
+     *   documentType?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType,
      *   dueDate?: string|\DateTimeInterface|null,
      *   invoiceDate?: string|\DateTimeInterface|null,
      *   invoiceID?: string|null,
@@ -82,8 +84,9 @@ final class ValidateRawService implements ValidateRawContract
      *     allowances?: list<array<mixed>>|null,
      *     amount?: float|string|null,
      *     charges?: list<array<mixed>>|null,
-     *     date?: null|null,
+     *     date?: null,
      *     description?: string|null,
+     *     itemAttributes?: list<array<mixed>>|null,
      *     productCode?: string|null,
      *     quantity?: float|string|null,
      *     tax?: float|string|null,
@@ -183,7 +186,7 @@ final class ValidateRawService implements ValidateRawContract
      *
      * Validate the correctness of a UBL document
      *
-     * @param array{file: string}|ValidateValidateUblParams $params
+     * @param array{file: string|FileParam}|ValidateValidateUblParams $params
      *
      * @return BaseResponse<UblDocumentValidation>
      *

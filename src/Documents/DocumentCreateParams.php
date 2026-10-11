@@ -50,6 +50,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *     taxCode?: value-of<\EInvoiceAPI\Documents\DocumentCreateParams\Charge\TaxCode>|null,
  *     taxRate?: float|string|null,
  *   }>|null,
+ *   constructPdf?: bool,
  *   currency?: CurrencyCode|value-of<CurrencyCode>,
  *   customerAddress?: string|null,
  *   customerAddressRecipient?: string|null,
@@ -57,6 +58,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *   customerEmail?: string|null,
  *   customerID?: string|null,
  *   customerName?: string|null,
+ *   customerPeppolID?: string|null,
  *   customerTaxID?: string|null,
  *   direction?: DocumentDirection|value-of<DocumentDirection>,
  *   documentType?: DocumentType|value-of<DocumentType>,
@@ -70,6 +72,7 @@ use EInvoiceAPI\Inbox\DocumentState;
  *     charges?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge>|null,
  *     date?: null|null,
  *     description?: string|null,
+ *     itemAttributes?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\ItemAttribute>|null,
  *     productCode?: string|null,
  *     quantity?: float|string|null,
  *     tax?: float|string|null,
@@ -158,6 +161,12 @@ final class DocumentCreateParams implements BaseModel
     public ?array $charges;
 
     /**
+     * If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL.
+     */
+    #[Optional]
+    public ?bool $constructPdf;
+
+    /**
      * Currency of the invoice (ISO 4217 currency code).
      *
      * @var value-of<CurrencyCode>|null $currency
@@ -200,6 +209,12 @@ final class DocumentCreateParams implements BaseModel
      */
     #[Optional('customer_name', nullable: true)]
     public ?string $customerName;
+
+    /**
+     * Customer Peppol ID.
+     */
+    #[Optional('customer_peppol_id', nullable: true)]
+    public ?string $customerPeppolID;
 
     /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
@@ -470,8 +485,9 @@ final class DocumentCreateParams implements BaseModel
      *   allowances?: list<Item\Allowance>|null,
      *   amount?: float|string|null,
      *   charges?: list<Item\Charge>|null,
-     *   date?: null|null,
+     *   date?: null,
      *   description?: string|null,
+     *   itemAttributes?: list<Item\ItemAttribute>|null,
      *   productCode?: string|null,
      *   quantity?: float|string|null,
      *   tax?: float|string|null,
@@ -499,6 +515,7 @@ final class DocumentCreateParams implements BaseModel
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
         ?array $charges = null,
+        ?bool $constructPdf = null,
         CurrencyCode|string|null $currency = null,
         ?string $customerAddress = null,
         ?string $customerAddressRecipient = null,
@@ -506,6 +523,7 @@ final class DocumentCreateParams implements BaseModel
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
+        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
@@ -550,6 +568,7 @@ final class DocumentCreateParams implements BaseModel
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
         null !== $billingAddressRecipient && $self['billingAddressRecipient'] = $billingAddressRecipient;
         null !== $charges && $self['charges'] = $charges;
+        null !== $constructPdf && $self['constructPdf'] = $constructPdf;
         null !== $currency && $self['currency'] = $currency;
         null !== $customerAddress && $self['customerAddress'] = $customerAddress;
         null !== $customerAddressRecipient && $self['customerAddressRecipient'] = $customerAddressRecipient;
@@ -557,6 +576,7 @@ final class DocumentCreateParams implements BaseModel
         null !== $customerEmail && $self['customerEmail'] = $customerEmail;
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $customerName && $self['customerName'] = $customerName;
+        null !== $customerPeppolID && $self['customerPeppolID'] = $customerPeppolID;
         null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
         null !== $direction && $self['direction'] = $direction;
         null !== $documentType && $self['documentType'] = $documentType;
@@ -685,6 +705,17 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
+     * If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL.
+     */
+    public function withConstructPdf(bool $constructPdf): self
+    {
+        $self = clone $this;
+        $self['constructPdf'] = $constructPdf;
+
+        return $self;
+    }
+
+    /**
      * Currency of the invoice (ISO 4217 currency code).
      *
      * @param CurrencyCode|value-of<CurrencyCode> $currency
@@ -760,6 +791,17 @@ final class DocumentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['customerName'] = $customerName;
+
+        return $self;
+    }
+
+    /**
+     * Customer Peppol ID.
+     */
+    public function withCustomerPeppolID(?string $customerPeppolID): self
+    {
+        $self = clone $this;
+        $self['customerPeppolID'] = $customerPeppolID;
 
         return $self;
     }
@@ -852,8 +894,9 @@ final class DocumentCreateParams implements BaseModel
      *   allowances?: list<Item\Allowance>|null,
      *   amount?: float|string|null,
      *   charges?: list<Item\Charge>|null,
-     *   date?: null|null,
+     *   date?: null,
      *   description?: string|null,
+     *   itemAttributes?: list<Item\ItemAttribute>|null,
      *   productCode?: string|null,
      *   quantity?: float|string|null,
      *   tax?: float|string|null,

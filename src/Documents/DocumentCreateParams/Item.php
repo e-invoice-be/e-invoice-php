@@ -11,6 +11,7 @@ use EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance\ReasonCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge;
+use EInvoiceAPI\Documents\DocumentCreateParams\Item\ItemAttribute;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 
 /**
@@ -20,6 +21,7 @@ use EInvoiceAPI\Documents\UnitOfMeasureCode;
  *   charges?: list<\EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge>|null,
  *   date?: null|null,
  *   description?: string|null,
+ *   itemAttributes?: list<ItemAttribute>|null,
  *   productCode?: string|null,
  *   quantity?: float|string|null,
  *   tax?: float|string|null,
@@ -61,7 +63,7 @@ final class Item implements BaseModel
     )]
     public ?array $charges;
 
-    /** @var null|null $date */
+    /** @var null $date */
     #[Optional(nullable: true)]
     public null $date;
 
@@ -70,6 +72,14 @@ final class Item implements BaseModel
      */
     #[Optional(nullable: true)]
     public ?string $description;
+
+    /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     *
+     * @var list<ItemAttribute>|null $itemAttributes
+     */
+    #[Optional('item_attributes', list: ItemAttribute::class, nullable: true)]
+    public ?array $itemAttributes;
 
     /**
      * The product code of the line item.
@@ -137,6 +147,7 @@ final class Item implements BaseModel
      *   taxCode?: value-of<Charge\TaxCode>|null,
      *   taxRate?: float|string|null,
      * }>|null $charges
+     * @param list<ItemAttribute|array{name: string, value?: string|null}>|null $itemAttributes
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
     public static function with(
@@ -145,6 +156,7 @@ final class Item implements BaseModel
         ?array $charges = null,
         null $date = null,
         ?string $description = null,
+        ?array $itemAttributes = null,
         ?string $productCode = null,
         float|string|null $quantity = null,
         float|string|null $tax = null,
@@ -160,6 +172,7 @@ final class Item implements BaseModel
         null !== $amount && $self['amount'] = $amount;
         null !== $charges && $self['charges'] = $charges;
         null !== $description && $self['description'] = $description;
+        null !== $itemAttributes && $self['itemAttributes'] = $itemAttributes;
         null !== $productCode && $self['productCode'] = $productCode;
         null !== $quantity && $self['quantity'] = $quantity;
         null !== $tax && $self['tax'] = $tax;
@@ -224,7 +237,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * @param null|null $date
+     * @param null $date
      */
     public function withDate(null $date): self
     {
@@ -241,6 +254,19 @@ final class Item implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+     *
+     * @param list<ItemAttribute|array{name: string, value?: string|null}>|null $itemAttributes
+     */
+    public function withItemAttributes(?array $itemAttributes): self
+    {
+        $self = clone $this;
+        $self['itemAttributes'] = $itemAttributes;
 
         return $self;
     }

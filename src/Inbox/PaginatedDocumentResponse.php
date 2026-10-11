@@ -23,6 +23,7 @@ use EInvoiceAPI\Documents\DocumentType;
 /**
  * @phpstan-type PaginatedDocumentResponseShape = array{
  *   items: list<DocumentResponse>,
+ *   hasNextPage: bool,
  *   page: int,
  *   pageSize: int,
  *   pages: int,
@@ -37,6 +38,9 @@ final class PaginatedDocumentResponse implements BaseModel
     /** @var list<DocumentResponse> $items */
     #[Required(list: DocumentResponse::class)]
     public array $items;
+
+    #[Required('has_next_page')]
+    public bool $hasNextPage;
 
     #[Required]
     public int $page;
@@ -56,7 +60,12 @@ final class PaginatedDocumentResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * PaginatedDocumentResponse::with(
-     *   items: ..., page: ..., pageSize: ..., pages: ..., total: ...
+     *   items: ...,
+     *   hasNextPage: ...,
+     *   page: ...,
+     *   pageSize: ...,
+     *   pages: ...,
+     *   total: ...,
      * )
      * ```
      *
@@ -65,6 +74,7 @@ final class PaginatedDocumentResponse implements BaseModel
      * ```
      * (new PaginatedDocumentResponse)
      *   ->withItems(...)
+     *   ->withHasNextPage(...)
      *   ->withPage(...)
      *   ->withPageSize(...)
      *   ->withPages(...)
@@ -134,14 +144,16 @@ final class PaginatedDocumentResponse implements BaseModel
      */
     public static function with(
         array $items,
+        bool $hasNextPage,
         int $page,
         int $pageSize,
         int $pages,
-        int $total
+        int $total,
     ): self {
         $self = new self;
 
         $self['items'] = $items;
+        $self['hasNextPage'] = $hasNextPage;
         $self['page'] = $page;
         $self['pageSize'] = $pageSize;
         $self['pages'] = $pages;
@@ -206,6 +218,14 @@ final class PaginatedDocumentResponse implements BaseModel
     {
         $self = clone $this;
         $self['items'] = $items;
+
+        return $self;
+    }
+
+    public function withHasNextPage(bool $hasNextPage): self
+    {
+        $self = clone $this;
+        $self['hasNextPage'] = $hasNextPage;
 
         return $self;
     }

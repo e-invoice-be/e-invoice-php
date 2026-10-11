@@ -6,6 +6,7 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentAttachmentCreate;
 use EInvoiceAPI\Documents\DocumentDirection;
@@ -72,9 +73,10 @@ final class ValidateService implements ValidateContract
      * @param string|null $customerEmail The email address of the customer
      * @param string|null $customerID The unique identifier for the customer in your system
      * @param string|null $customerName The company name of the customer/buyer
+     * @param string|null $customerPeppolID Customer Peppol ID
      * @param string|null $customerTaxID Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
      * @param 'INBOUND'|'OUTBOUND'|DocumentDirection $direction The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
-     * @param 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|DocumentType $documentType The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+     * @param 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType $documentType The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
      * @param string|\DateTimeInterface|null $dueDate The date when payment is due
      * @param string|\DateTimeInterface|null $invoiceDate The date when the invoice was issued
      * @param string|null $invoiceID The unique invoice identifier/number
@@ -99,8 +101,9 @@ final class ValidateService implements ValidateContract
      *     taxCode?: 'AE'|'E'|'S'|'Z'|'G'|'O'|'K'|'L'|'M'|'B'|\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge\TaxCode|null,
      *     taxRate?: float|string|null,
      *   }>|null,
-     *   date?: null|null,
+     *   date?: null,
      *   description?: string|null,
+     *   itemAttributes?: list<array{name: string, value?: string|null}>|null,
      *   productCode?: string|null,
      *   quantity?: float|string|null,
      *   tax?: float|string|null,
@@ -162,6 +165,7 @@ final class ValidateService implements ValidateContract
         ?string $customerEmail = null,
         ?string $customerID = null,
         ?string $customerName = null,
+        ?string $customerPeppolID = null,
         ?string $customerTaxID = null,
         string|DocumentDirection|null $direction = null,
         string|DocumentType|null $documentType = null,
@@ -213,6 +217,7 @@ final class ValidateService implements ValidateContract
             'customerEmail' => $customerEmail,
             'customerID' => $customerID,
             'customerName' => $customerName,
+            'customerPeppolID' => $customerPeppolID,
             'customerTaxID' => $customerTaxID,
             'direction' => $direction,
             'documentType' => $documentType,
@@ -287,7 +292,7 @@ final class ValidateService implements ValidateContract
      * @throws APIException
      */
     public function validateUbl(
-        string $file,
+        string|FileParam $file,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
         $params = ['file' => $file];

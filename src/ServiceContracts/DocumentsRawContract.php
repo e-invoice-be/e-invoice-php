@@ -9,6 +9,7 @@ use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentCreateFromPdfParams;
 use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
+use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentSendParams;
@@ -67,6 +68,18 @@ interface DocumentsRawContract
     public function createFromPdf(
         array|DocumentCreateFromPdfParams $params,
         ?RequestOptions $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @return BaseResponse<DocumentGetTimelineResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveTimeline(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
     ): BaseResponse;
 
     /**

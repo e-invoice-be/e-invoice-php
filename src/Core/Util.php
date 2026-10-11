@@ -135,6 +135,12 @@ final class Util
         parse_str($parsed['query'] ?? '', $q2);
 
         $merged_query = array_merge_recursive($q1, $q2, $query);
+        // `http_build_query` would otherwise encode booleans as `1` and `0`.
+        array_walk_recursive($merged_query, static function (mixed &$v): void {
+            if (is_bool($v)) {
+                $v = $v ? 'true' : 'false';
+            }
+        });
         $qs = http_build_query($merged_query, encoding_type: PHP_QUERY_RFC3986);
 
         return $base->withQuery($qs);
@@ -367,6 +373,11 @@ final class Util
     ): \Generator {
         $contentLine = "Content-Type: %s\r\n\r\n";
 
+        if ($val instanceof FileParam) {
+            $contentType ??= $val->contentType;
+            $val = $val->data;
+        }
+
         if (is_resource($val)) {
             yield sprintf($contentLine, $contentType ?? 'application/octet-stream');
             while (!feof($val)) {
@@ -406,6 +417,13 @@ final class Util
             $name = rawurlencode($key);
 
             yield "; name=\"{$name}\"";
+        }
+
+        if ($val instanceof FileParam) {
+            // A quote or a line break would otherwise end the parameter or the header.
+            $filename = strtr($val->filename, ['"' => '%22', "\r" => '%0D', "\n" => '%0A']);
+
+            yield "; filename=\"{$filename}\"";
         }
 
         yield "\r\n";

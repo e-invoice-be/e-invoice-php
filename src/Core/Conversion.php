@@ -61,6 +61,10 @@ final class Conversion
             return $target->coerce($value, state: $state);
         }
 
+        if (is_a($target, class: \DateTimeInterface::class, allow_string: true)) {
+            return self::coerceDateTime($target, value: $value, state: $state);
+        }
+
         return self::tryConvert($target, value: $value, state: $state);
     }
 
@@ -77,6 +81,43 @@ final class Conversion
         self::tryConvert($target, value: $value, state: $state);
 
         return self::dump_unknown($value, state: $state);
+    }
+
+    /**
+     * Accepts the `date` and `date-time` formats, e.g. `2024-01-31` and `2024-01-31T10:15:30Z`.
+     * Values without an offset are read as UTC.
+     *
+     * @param class-string<\DateTimeInterface> $target
+     */
+    private static function coerceDateTime(string $target, mixed $value, CoerceState $state): mixed
+    {
+        if (!is_string($value) || !preg_match('/^\d{4}-\d{2}-\d{2}(?:$|[Tt ])/', $value)) {
+            ++$state->no;
+
+            return $value;
+        }
+
+        try {
+            $utc = new \DateTimeZone('UTC');
+            $date = is_a($target, class: \DateTime::class, allow_string: true)
+                ? new \DateTime($value, $utc)
+                : new \DateTimeImmutable($value, $utc);
+        } catch (\Exception) {
+            ++$state->no;
+
+            return $value;
+        }
+
+        // Out of range values such as `2024-02-30` would otherwise silently roll over.
+        if ($date::getLastErrors()['warning_count'] ?? 0) {
+            ++$state->no;
+
+            return $value;
+        }
+
+        ++$state->yes;
+
+        return $date;
     }
 
     private static function tryConvert(Converter|ConverterSource|string $target, mixed $value, CoerceState|DumpState $state): mixed

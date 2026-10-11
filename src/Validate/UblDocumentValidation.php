@@ -28,7 +28,7 @@ final class UblDocumentValidation implements BaseModel
     #[Required]
     public string $id;
 
-    #[Required('file_name')]
+    #[Required('file_name', nullable: true)]
     public ?string $fileName;
 
     #[Required('is_valid')]

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts\Documents;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
@@ -46,13 +47,15 @@ interface AttachmentsContract
     ): AttachmentDeleteResponse;
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @throws APIException
      */
     public function add(
         string $documentID,
-        string $file,
+        string|FileParam $file,
         ?RequestOptions $requestOptions = null
     ): DocumentAttachment;
 }
