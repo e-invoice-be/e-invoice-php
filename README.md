@@ -10,25 +10,13 @@ The full REST API documentation can be found on [api.e-invoice.be](https://api.e
 
 ## Installation
 
-To use this package, install via Composer by adding the following to your application's `composer.json`:
+Install the package with [Composer](https://getcomposer.org):
 
-<!-- x-release-please-start-version -->
-
-```json
-{
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:e-invoice-be/e-invoice-php.git"
-    }
-  ],
-  "require": {
-    "e-invoice-be/e-invoice": "dev-main"
-  }
-}
+```sh
+composer require e-invoice/e-invoice-api
 ```
 
-<!-- x-release-please-end -->
+The library uses [PSR-18](https://www.php-fig.org/psr/psr-18/) to send requests. If your application has no PSR-18 HTTP client, install one, for example `composer require symfony/http-client nyholm/psr7`.
 
 ## Usage
 
@@ -56,7 +44,7 @@ However, builders are also provided `(new DocumentAttachmentCreate)->withFileNam
 
 ### Pagination
 
-List methods in the E Invoice API are paginated.
+List methods in the e-invoice.be API are paginated.
 
 This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
 
@@ -89,15 +77,20 @@ When the library is unable to connect to the API, or if the API returns a non-su
 <?php
 
 use EInvoiceAPI\Core\Exceptions\APIConnectionException;
+use EInvoiceAPI\Core\Exceptions\APIStatusException;
+use EInvoiceAPI\Core\Exceptions\APITimeoutException;
+use EInvoiceAPI\Core\Exceptions\RateLimitException;
 
 try {
   $documentResponse = $client->documents->create();
+} catch (APITimeoutException $e) {
+  echo "The request timed out", PHP_EOL;
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
-} catch (RateLimitError $e) {
+} catch (RateLimitException $e) {
   echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
-} catch (APIStatusError $e) {
+} catch (APIStatusException $e) {
   echo "Another non-200-range status code was received", PHP_EOL;
   echo $e->getMessage();
 }
@@ -119,24 +112,21 @@ Error codes are as follows:
 | Timeout          | `APITimeoutException`          |
 | Network error    | `APIConnectionException`       |
 
+`APITimeoutException` is a subclass of `APIConnectionException`, so catch it first.
+
 ### Retries
 
 Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
 
-Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, >=500 Internal errors, and timeouts will all be retried by default.
+408 Request Timeout, 409 Conflict, 429 Rate Limit and >=500 Internal errors will all be retried by default. Connection errors and timeouts are not retried.
 
-You can use the `maxRetries` option to configure or disable this:
+You can use the `maxRetries` option to configure or disable this for a request:
 
 ```php
 <?php
 
-use EInvoiceAPI\Client;
 use EInvoiceAPI\RequestOptions;
 
-// Configure the default for all requests:
-$client = new Client(maxRetries: 0);
-
-// Or, configure per-request:
 $result = $client->documents->create(
   requestOptions: RequestOptions::with(maxRetries: 5)
 );
@@ -168,11 +158,11 @@ $documentResponse = $client->documents->create(
 
 #### Undocumented request params
 
-If you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` under the `request_options:` parameter when making a request, as seen in the examples above.
+If you want to explicitly send an extra param, you can do so with `extraQueryParams`, `extraBodyParams` and `extraHeaders` under the `requestOptions:` parameter when making a request, as seen in the example above.
 
 #### Undocumented endpoints
 
-To make requests to undocumented endpoints while retaining the benefit of auth, retries, and so on, you can make requests using `client.request`, like so:
+To make requests to undocumented endpoints while retaining the benefit of auth, retries, and so on, you can make requests using `$client->request`, like so:
 
 ```php
 <?php
@@ -198,4 +188,4 @@ PHP 8.1.0 or higher.
 
 ## Contributing
 
-See [the contributing documentation](https://github.com/e-invoice-be/e-invoice-php/tree/main/CONTRIBUTING.md).
+See [the contributing documentation](CONTRIBUTING.md). To report a security problem, see [the security policy](SECURITY.md).

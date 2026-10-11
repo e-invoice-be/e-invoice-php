@@ -10,11 +10,6 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
-/**
- * @phpstan-type SSEvent = array{
- *   event?: string|null, data?: string|null, id?: string|null, retry?: int|null
- * }
- */
 final class Util
 {
     public const BUF_SIZE = 8192;
@@ -253,68 +248,6 @@ final class Util
         }
     }
 
-    /**
-     * @param \Iterator<string> $lines
-     *
-     * @return \Generator<SSEvent>
-     */
-    public static function decodeSSE(\Iterator $lines): \Generator
-    {
-        $blank = ['event' => null, 'data' => null, 'id' => null, 'retry' => null];
-        $acc = [];
-
-        foreach ($lines as $line) {
-            $line = rtrim($line);
-            if ('' === $line) {
-                if (empty($acc)) {
-                    continue;
-                }
-
-                yield [...$blank, ...$acc];
-                $acc = [];
-            }
-
-            if (str_starts_with($line, ':')) {
-                continue;
-            }
-
-            $matches = [];
-            if (preg_match('/^([^:]+):\s?(.*)$/', $line, $matches)) {
-                [, $field, $value] = $matches;
-
-                switch ($field) {
-                    case 'event':
-                        $acc['event'] = $value;
-
-                        break;
-
-                    case 'data':
-                        if (isset($acc['data'])) {
-                            $acc['data'] .= "\n".$value;
-                        } else {
-                            $acc['data'] = $value;
-                        }
-
-                        break;
-
-                    case 'id':
-                        $acc['id'] = $value;
-
-                        break;
-
-                    case 'retry':
-                        $acc['retry'] = (int) $value;
-
-                        break;
-                }
-            }
-        }
-
-        if (!empty($acc)) {
-            yield [...$blank, ...$acc];
-        }
-    }
-
     public static function decodeJson(string $json): mixed
     {
         return json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
@@ -344,13 +277,6 @@ final class Util
                     yield static::decodeJson($line);
                 }
             })();
-        }
-
-        if (str_contains($content_type, needle: 'text/event-stream')) {
-            $it = self::streamIterator($body);
-            $lines = self::decodeLines($it);
-
-            return self::decodeSSE($lines);
         }
 
         return self::streamIterator($body);

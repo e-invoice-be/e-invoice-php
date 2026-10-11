@@ -21,6 +21,8 @@ use Http\Discovery\Psr18ClientDiscovery;
 
 class Client extends BaseClient
 {
+    public const VERSION = '0.7.0';
+
     public string $apiKey;
 
     /**
@@ -92,19 +94,11 @@ class Client extends BaseClient
         );
 
         parent::__construct(
-            // x-release-please-start-version
             headers: [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'User-Agent' => sprintf('e-invoice/PHP %s', '0.6.0'),
-                'X-Stainless-Lang' => 'php',
-                'X-Stainless-Package-Version' => '0.6.0',
-                'X-Stainless-OS' => $this->getNormalizedOS(),
-                'X-Stainless-Arch' => $this->getNormalizedArchitecture(),
-                'X-Stainless-Runtime' => 'php',
-                'X-Stainless-Runtime-Version' => phpversion(),
+                'User-Agent' => sprintf('e-invoice/PHP %s', self::VERSION),
             ],
-            // x-release-please-end
             baseUrl: $baseUrl,
             options: $options,
         );

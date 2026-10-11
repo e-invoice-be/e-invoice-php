@@ -2,56 +2,79 @@
 
 namespace Tests\Services;
 
-use EInvoiceAPI\Client;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\DocumentsNumberPage;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
  */
 #[CoversNothing]
-final class DraftsTest extends TestCase
+final class DraftsTest extends ServiceTestCase
 {
-    protected Client $client;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
-        $client = new Client(apiKey: 'My API Key', baseUrl: $testUrl);
-
-        $this->client = $client;
-    }
-
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->http->queueJson([
+            'items' => [
+                [
+                    'id' => 'doc_1',
+                    'created_at' => '2024-01-15T10:30:00Z',
+                    'state' => 'DRAFT',
+                ],
+                [
+                    'id' => 'doc_2',
+                    'created_at' => '2024-01-16T10:30:00Z',
+                    'state' => 'DRAFT',
+                ],
+            ],
+            'page' => 1,
+            'page_size' => 20,
+            'pages' => 1,
+            'total' => 2,
+            'has_next_page' => false,
+        ]);
 
-        $page = $this->client->drafts->list();
+        $page = $this->client->drafts->list(requestOptions: $this->options());
 
+        $this->assertRequest('GET', '/api/drafts/', query: [
+            'page' => '1',
+            'page_size' => '20',
+            'sort_by' => 'created_at',
+            'sort_order' => 'desc',
+        ]);
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentsNumberPage::class, $page);
+        $this->assertSame(2, $page->total);
+        $this->assertFalse($page->hasNextPage);
 
-        if ($item = $page->getItems()[0] ?? null) {
-            // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(DocumentResponse::class, $item);
-        }
+        $items = $page->getItems();
+        $this->assertCount(2, $items);
+        $this->assertContainsOnlyInstancesOf(DocumentResponse::class, $items);
+        $this->assertSame('doc_1', $items[0]->id);
+        $this->assertSame('doc_2', $items[1]->id);
+        $this->assertSame('DRAFT', $items[0]->state);
     }
 
     #[Test]
     public function testListWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism tests are disabled');
-        }
+        $this->http->queueJson([
+            'items' => [
+                [
+                    'id' => 'doc_1',
+                    'created_at' => '2024-01-15T10:30:00Z',
+                    'state' => 'DRAFT',
+                    'document_type' => 'INVOICE',
+                ],
+            ],
+            'page' => 1,
+            'page_size' => 1,
+            'pages' => 1,
+            'total' => 1,
+            'has_next_page' => false,
+        ]);
 
         $page = $this->client->drafts->list(
             dateFrom: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
@@ -63,14 +86,29 @@ final class DraftsTest extends TestCase
             sortOrder: 'asc',
             state: 'DRAFT',
             type: 'INVOICE',
+            requestOptions: $this->options(),
         );
 
+        // The SDK formats a date-time as RFC 3339 with a precision of one second.
+        $this->assertRequest('GET', '/api/drafts/', query: [
+            'date_from' => '2019-12-27T18:11:19+00:00',
+            'date_to' => '2019-12-27T18:11:19+00:00',
+            'page' => '1',
+            'page_size' => '1',
+            'search' => 'search',
+            'sort_by' => 'invoice_date',
+            'sort_order' => 'asc',
+            'state' => 'DRAFT',
+            'type' => 'INVOICE',
+        ]);
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentsNumberPage::class, $page);
+        $this->assertSame(1, $page->pageSize);
 
-        if ($item = $page->getItems()[0] ?? null) {
-            // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(DocumentResponse::class, $item);
-        }
+        $items = $page->getItems();
+        $this->assertCount(1, $items);
+        $this->assertContainsOnlyInstancesOf(DocumentResponse::class, $items);
+        $this->assertSame('doc_1', $items[0]->id);
+        $this->assertSame('INVOICE', $items[0]->documentType);
     }
 }
