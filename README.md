@@ -275,7 +275,9 @@ The error types are as follows:
 
 ### Retries
 
-The library automatically retries some errors 2 times by default. If the response has a `Retry-After` header with a number of seconds, the library waits that time before the retry.
+The library automatically retries some errors 2 times by default, with an exponential backoff. The first retry waits `initialRetryDelay` seconds (default 0.5), and each next retry waits twice as long, up to `maxRetryDelay` seconds (default 8). A random jitter takes up to 25% off each delay.
+
+If the response has a `Retry-After` header of more than 0 and at most 60 seconds, the library waits that time instead. The header can be a number of seconds or an HTTP date in the form `Sun, 06 Nov 1994 08:49:37 GMT`. For any other `Retry-After`, the library uses the backoff.
 
 The library retries these status codes: 408 Request Timeout, 409 Conflict, 429 Rate Limit and all codes >= 500. It does not retry connection errors and timeouts.
 
@@ -289,6 +291,19 @@ use EInvoiceAPI\RequestOptions;
 $document = $client->documents->retrieve(
   'doc_123',
   requestOptions: RequestOptions::with(maxRetries: 5),
+);
+```
+
+Use `initialRetryDelay` and `maxRetryDelay` to change the delays:
+
+```php
+<?php
+
+use EInvoiceAPI\RequestOptions;
+
+$document = $client->documents->retrieve(
+  'doc_123',
+  requestOptions: RequestOptions::with(initialRetryDelay: 1.0, maxRetryDelay: 20.0),
 );
 ```
 
