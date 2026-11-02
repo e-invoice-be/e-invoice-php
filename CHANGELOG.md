@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.8.0 (2026-11-02)
+
+Full Changelog: [v0.7.2...v0.8.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.2...v0.8.0)
+
+Brings the SDK in line with the live OpenAPI specification (v1.1.0).
+
+### ⚠ BREAKING CHANGES
+
+* the line item `date` property of the five `Item` classes is now `?\DateTimeInterface`. The API specification now accepts a date for this field. `with()` and `withDate()` accept a date, and `with()` no longer always sends `"date": null`
+* the new optional parameters of `documents->create()` and `validate->validateJson()` sit in alphabetical order, so calls that pass arguments by position must switch to named arguments
+
+### Features
+
+* **documents:** add `retrieveLifecycle()` for `GET /api/documents/{document_id}/lifecycle`
+* **documents, validate:** add `buyerReference`, `customerPhone`, `vendorPhone`, `salesOrder`, `precedingInvoiceID`, `precedingInvoiceDate`, `taxCurrency`, `totalTaxInTaxCurrency` and `roundingAmount` to the document create, response, PDF conversion and JSON validation models
+* **documents, validate:** add `name` and `priceBaseQuantity` to line items
+* errors expose the decoded error body in `$e->body`
+
+### Bug Fixes
+
+* an error response whose body is not JSON (such as a gateway's HTML page) no longer throws `JsonException`, and now throws the matching `APIStatusException` subclass
+* the error message no longer repeats the status summary when a message is passed
+
+### Documentation
+
+* align docstrings with the API specification (payment details, address recipients, purchase order, the `/api/me` fields and others)
+
 ## 0.7.2 (2026-10-11)
 
 Full Changelog: [v0.7.1...v0.7.2](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.1...v0.7.2)

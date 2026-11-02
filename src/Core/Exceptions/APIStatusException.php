@@ -21,11 +21,12 @@ class APIStatusException extends APIException
     ) {
         $this->response = $response;
         $this->status = $response->getStatusCode();
+        $this->body = self::decodeBody($response);
 
-        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => Util::decodeJson($response->getBody())]);
+        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => $this->body]);
 
         if ('' != $message) {
-            $summary .= $message.PHP_EOL.$summary;
+            $summary = $message.PHP_EOL.$summary;
         }
 
         parent::__construct(request: $request, message: $summary, previous: $previous);
@@ -51,5 +52,26 @@ class APIStatusException extends APIException
         };
 
         return new $cls(request: $request, response: $response, message: $message);
+    }
+
+    /**
+     * Decodes the error body: `{"detail": "..."}` for most errors, or
+     * `{"detail": [{"loc": [...], "msg": "...", "type": "..."}]}` for a 422
+     * validation error. A body that is not JSON is kept as a string, and an
+     * empty body is `null`.
+     */
+    private static function decodeBody(ResponseInterface $response): mixed
+    {
+        $raw = (string) $response->getBody();
+
+        if ('' === $raw) {
+            return null;
+        }
+
+        try {
+            return Util::decodeJson($raw);
+        } catch (\JsonException) {
+            return $raw;
+        }
     }
 }

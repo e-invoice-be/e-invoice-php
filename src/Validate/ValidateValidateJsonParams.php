@@ -24,7 +24,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxDetail;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
 
 /**
- * Validate if the JSON document can be converted to a valid UBL document.
+ * Validate if the JSON document can be converted to a valid UBL document. The generated UBL is returned in ubl_document also when is_valid is false, so you can inspect it.
  *
  * @see EInvoiceAPI\Services\ValidateService::validateJson()
  *
@@ -47,6 +47,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *   }>|null,
  *   billingAddress?: string|null,
  *   billingAddressRecipient?: string|null,
+ *   buyerReference?: string|null,
  *   charges?: list<Charge|array{
  *     amount?: float|string|null,
  *     baseAmount?: float|string|null,
@@ -64,6 +65,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *   customerID?: string|null,
  *   customerName?: string|null,
  *   customerPeppolID?: string|null,
+ *   customerPhone?: string|null,
  *   customerTaxID?: string|null,
  *   direction?: DocumentDirection|value-of<DocumentDirection>,
  *   documentType?: DocumentType|value-of<DocumentType>,
@@ -75,9 +77,11 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *     allowances?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance>|null,
  *     amount?: float|string|null,
  *     charges?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge>|null,
- *     date?: null,
+ *     date?: \DateTimeInterface|null,
  *     description?: string|null,
  *     itemAttributes?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Attribute>|null,
+ *     name?: string|null,
+ *     priceBaseQuantity?: float|string,
  *     productCode?: string|null,
  *     quantity?: float|string|null,
  *     tax?: float|string|null,
@@ -93,10 +97,14 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *     swift?: string|null,
  *   }>|null,
  *   paymentTerm?: string|null,
+ *   precedingInvoiceDate?: \DateTimeInterface|null,
+ *   precedingInvoiceID?: string|null,
  *   previousUnpaidBalance?: float|string|null,
  *   purchaseOrder?: string|null,
  *   remittanceAddress?: string|null,
  *   remittanceAddressRecipient?: string|null,
+ *   roundingAmount?: float|string|null,
+ *   salesOrder?: string|null,
  *   serviceAddress?: string|null,
  *   serviceAddressRecipient?: string|null,
  *   serviceEndDate?: \DateTimeInterface|null,
@@ -106,11 +114,13 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *   state?: DocumentState|value-of<DocumentState>,
  *   subtotal?: float|string|null,
  *   taxCode?: \EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxCode|value-of<\EInvoiceAPI\Validate\ValidateValidateJsonParams\TaxCode>,
+ *   taxCurrency?: string|null,
  *   taxDetails?: list<TaxDetail|array{
  *     amount?: float|string|null, rate?: string|null
  *   }>|null,
  *   totalDiscount?: float|string|null,
  *   totalTax?: float|string|null,
+ *   totalTaxInTaxCurrency?: float|string|null,
  *   vatex?: null|Vatex|value-of<Vatex>,
  *   vatexNote?: string|null,
  *   vendorAddress?: string|null,
@@ -118,6 +128,7 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
  *   vendorCompanyID?: string|null,
  *   vendorEmail?: string|null,
  *   vendorName?: string|null,
+ *   vendorPhone?: string|null,
  *   vendorTaxID?: string|null,
  * }
  */
@@ -153,6 +164,12 @@ final class ValidateValidateJsonParams implements BaseModel
     #[Optional('billing_address_recipient', nullable: true)]
     public ?string $billingAddressRecipient;
 
+    /**
+     * The buyer reference (BT-10), e.g. a cost centre or accounting reference requested by the buyer.
+     */
+    #[Optional('buyer_reference', nullable: true)]
+    public ?string $buyerReference;
+
     /** @var list<Charge>|null $charges */
     #[Optional(list: Charge::class, nullable: true)]
     public ?array $charges;
@@ -172,7 +189,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public ?string $customerAddress;
 
     /**
-     * The recipient name at the customer address.
+     * The recipient name at the customer address. Also the customer contact name (BT-56) in the UBL.
      */
     #[Optional('customer_address_recipient', nullable: true)]
     public ?string $customerAddressRecipient;
@@ -206,6 +223,12 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     #[Optional('customer_peppol_id', nullable: true)]
     public ?string $customerPeppolID;
+
+    /**
+     * The telephone number of the customer contact (BT-57).
+     */
+    #[Optional('customer_phone', nullable: true)]
+    public ?string $customerPhone;
 
     /**
      * Customer tax ID. For Belgium this is the VAT number. Must include the country prefix.
@@ -282,13 +305,25 @@ final class ValidateValidateJsonParams implements BaseModel
     public ?string $paymentTerm;
 
     /**
+     * The preceding invoice issue date (BT-26).
+     */
+    #[Optional('preceding_invoice_date', nullable: true)]
+    public ?\DateTimeInterface $precedingInvoiceDate;
+
+    /**
+     * The preceding invoice reference (BT-25): the number of the invoice this document corrects, for example the invoice a credit note credits.
+     */
+    #[Optional('preceding_invoice_id', nullable: true)]
+    public ?string $precedingInvoiceID;
+
+    /**
      * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
      */
     #[Optional('previous_unpaid_balance', nullable: true)]
     public float|string|null $previousUnpaidBalance;
 
     /**
-     * The purchase order reference number.
+     * The purchase order reference number (BT-13).
      */
     #[Optional('purchase_order', nullable: true)]
     public ?string $purchaseOrder;
@@ -304,6 +339,18 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     #[Optional('remittance_address_recipient', nullable: true)]
     public ?string $remittanceAddressRecipient;
+
+    /**
+     * The amount added to the invoice total to round the amount for payment (BT-114), for example to whole kronor (amount_due = invoice_total + rounding_amount when nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum 2 decimals.
+     */
+    #[Optional('rounding_amount', nullable: true)]
+    public float|string|null $roundingAmount;
+
+    /**
+     * The sales order reference (BT-14) assigned by the seller.
+     */
+    #[Optional('sales_order', nullable: true)]
+    public ?string $salesOrder;
 
     /**
      * The address where services were performed or goods were delivered.
@@ -366,6 +413,12 @@ final class ValidateValidateJsonParams implements BaseModel
     )]
     public ?string $taxCode;
 
+    /**
+     * The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is accounted in a currency other than the invoice currency. Must differ from currency and requires total_tax_in_tax_currency.
+     */
+    #[Optional('tax_currency', nullable: true)]
+    public ?string $taxCurrency;
+
     /** @var list<TaxDetail>|null $taxDetails */
     #[Optional('tax_details', list: TaxDetail::class, nullable: true)]
     public ?array $taxDetails;
@@ -383,10 +436,13 @@ final class ValidateValidateJsonParams implements BaseModel
     public float|string|null $totalTax;
 
     /**
-     * VATEX code list for VAT exemption reasons.
-     *
-     * Agency: CEF
-     * Identifier: vatex
+     * The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals.
+     */
+    #[Optional('total_tax_in_tax_currency', nullable: true)]
+    public float|string|null $totalTaxInTaxCurrency;
+
+    /**
+     * VAT exemption reason code (required when tax_code is E or other exempt categories).
      *
      * @var value-of<Vatex>|null $vatex
      */
@@ -406,7 +462,7 @@ final class ValidateValidateJsonParams implements BaseModel
     public ?string $vendorAddress;
 
     /**
-     * The recipient name at the vendor address.
+     * The recipient name at the vendor address. Also the vendor contact name (BT-41) in the UBL, required when vendor and customer are both in Germany (DE-R-005).
      */
     #[Optional('vendor_address_recipient', nullable: true)]
     public ?string $vendorAddressRecipient;
@@ -428,6 +484,12 @@ final class ValidateValidateJsonParams implements BaseModel
      */
     #[Optional('vendor_name', nullable: true)]
     public ?string $vendorName;
+
+    /**
+     * The telephone number of the vendor contact (BT-42). Required when vendor and customer are both in Germany (DE-R-006); it must then hold at least 3 digits (DE-R-027, a warning).
+     */
+    #[Optional('vendor_phone', nullable: true)]
+    public ?string $vendorPhone;
 
     /**
      * Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix.
@@ -476,9 +538,11 @@ final class ValidateValidateJsonParams implements BaseModel
      *   allowances?: list<Item\Allowance>|null,
      *   amount?: float|string|null,
      *   charges?: list<Item\Charge>|null,
-     *   date?: null,
+     *   date?: \DateTimeInterface|null,
      *   description?: string|null,
      *   itemAttributes?: list<Item\Attribute>|null,
+     *   name?: string|null,
+     *   priceBaseQuantity?: float|string,
      *   productCode?: string|null,
      *   quantity?: float|string|null,
      *   tax?: float|string|null,
@@ -505,6 +569,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?array $attachments = null,
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
+        ?string $buyerReference = null,
         ?array $charges = null,
         CurrencyCode|string|null $currency = null,
         ?string $customerAddress = null,
@@ -514,6 +579,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $customerID = null,
         ?string $customerName = null,
         ?string $customerPeppolID = null,
+        ?string $customerPhone = null,
         ?string $customerTaxID = null,
         DocumentDirection|string|null $direction = null,
         DocumentType|string|null $documentType = null,
@@ -525,10 +591,14 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $note = null,
         ?array $paymentDetails = null,
         ?string $paymentTerm = null,
+        ?\DateTimeInterface $precedingInvoiceDate = null,
+        ?string $precedingInvoiceID = null,
         float|string|null $previousUnpaidBalance = null,
         ?string $purchaseOrder = null,
         ?string $remittanceAddress = null,
         ?string $remittanceAddressRecipient = null,
+        float|string|null $roundingAmount = null,
+        ?string $salesOrder = null,
         ?string $serviceAddress = null,
         ?string $serviceAddressRecipient = null,
         ?\DateTimeInterface $serviceEndDate = null,
@@ -538,9 +608,11 @@ final class ValidateValidateJsonParams implements BaseModel
         DocumentState|string|null $state = null,
         float|string|null $subtotal = null,
         ValidateValidateJsonParams\TaxCode|string|null $taxCode = null,
+        ?string $taxCurrency = null,
         ?array $taxDetails = null,
         float|string|null $totalDiscount = null,
         float|string|null $totalTax = null,
+        float|string|null $totalTaxInTaxCurrency = null,
         Vatex|string|null $vatex = null,
         ?string $vatexNote = null,
         ?string $vendorAddress = null,
@@ -548,6 +620,7 @@ final class ValidateValidateJsonParams implements BaseModel
         ?string $vendorCompanyID = null,
         ?string $vendorEmail = null,
         ?string $vendorName = null,
+        ?string $vendorPhone = null,
         ?string $vendorTaxID = null,
     ): self {
         $self = new self;
@@ -557,6 +630,7 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $attachments && $self['attachments'] = $attachments;
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
         null !== $billingAddressRecipient && $self['billingAddressRecipient'] = $billingAddressRecipient;
+        null !== $buyerReference && $self['buyerReference'] = $buyerReference;
         null !== $charges && $self['charges'] = $charges;
         null !== $currency && $self['currency'] = $currency;
         null !== $customerAddress && $self['customerAddress'] = $customerAddress;
@@ -566,6 +640,7 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $customerName && $self['customerName'] = $customerName;
         null !== $customerPeppolID && $self['customerPeppolID'] = $customerPeppolID;
+        null !== $customerPhone && $self['customerPhone'] = $customerPhone;
         null !== $customerTaxID && $self['customerTaxID'] = $customerTaxID;
         null !== $direction && $self['direction'] = $direction;
         null !== $documentType && $self['documentType'] = $documentType;
@@ -577,10 +652,14 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $note && $self['note'] = $note;
         null !== $paymentDetails && $self['paymentDetails'] = $paymentDetails;
         null !== $paymentTerm && $self['paymentTerm'] = $paymentTerm;
+        null !== $precedingInvoiceDate && $self['precedingInvoiceDate'] = $precedingInvoiceDate;
+        null !== $precedingInvoiceID && $self['precedingInvoiceID'] = $precedingInvoiceID;
         null !== $previousUnpaidBalance && $self['previousUnpaidBalance'] = $previousUnpaidBalance;
         null !== $purchaseOrder && $self['purchaseOrder'] = $purchaseOrder;
         null !== $remittanceAddress && $self['remittanceAddress'] = $remittanceAddress;
         null !== $remittanceAddressRecipient && $self['remittanceAddressRecipient'] = $remittanceAddressRecipient;
+        null !== $roundingAmount && $self['roundingAmount'] = $roundingAmount;
+        null !== $salesOrder && $self['salesOrder'] = $salesOrder;
         null !== $serviceAddress && $self['serviceAddress'] = $serviceAddress;
         null !== $serviceAddressRecipient && $self['serviceAddressRecipient'] = $serviceAddressRecipient;
         null !== $serviceEndDate && $self['serviceEndDate'] = $serviceEndDate;
@@ -590,9 +669,11 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $state && $self['state'] = $state;
         null !== $subtotal && $self['subtotal'] = $subtotal;
         null !== $taxCode && $self['taxCode'] = $taxCode;
+        null !== $taxCurrency && $self['taxCurrency'] = $taxCurrency;
         null !== $taxDetails && $self['taxDetails'] = $taxDetails;
         null !== $totalDiscount && $self['totalDiscount'] = $totalDiscount;
         null !== $totalTax && $self['totalTax'] = $totalTax;
+        null !== $totalTaxInTaxCurrency && $self['totalTaxInTaxCurrency'] = $totalTaxInTaxCurrency;
         null !== $vatex && $self['vatex'] = $vatex;
         null !== $vatexNote && $self['vatexNote'] = $vatexNote;
         null !== $vendorAddress && $self['vendorAddress'] = $vendorAddress;
@@ -600,6 +681,7 @@ final class ValidateValidateJsonParams implements BaseModel
         null !== $vendorCompanyID && $self['vendorCompanyID'] = $vendorCompanyID;
         null !== $vendorEmail && $self['vendorEmail'] = $vendorEmail;
         null !== $vendorName && $self['vendorName'] = $vendorName;
+        null !== $vendorPhone && $self['vendorPhone'] = $vendorPhone;
         null !== $vendorTaxID && $self['vendorTaxID'] = $vendorTaxID;
 
         return $self;
@@ -675,6 +757,17 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
+     * The buyer reference (BT-10), e.g. a cost centre or accounting reference requested by the buyer.
+     */
+    public function withBuyerReference(?string $buyerReference): self
+    {
+        $self = clone $this;
+        $self['buyerReference'] = $buyerReference;
+
+        return $self;
+    }
+
+    /**
      * @param list<Charge|array{
      *   amount?: float|string|null,
      *   baseAmount?: float|string|null,
@@ -718,7 +811,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * The recipient name at the customer address.
+     * The recipient name at the customer address. Also the customer contact name (BT-56) in the UBL.
      */
     public function withCustomerAddressRecipient(
         ?string $customerAddressRecipient
@@ -780,6 +873,17 @@ final class ValidateValidateJsonParams implements BaseModel
     {
         $self = clone $this;
         $self['customerPeppolID'] = $customerPeppolID;
+
+        return $self;
+    }
+
+    /**
+     * The telephone number of the customer contact (BT-57).
+     */
+    public function withCustomerPhone(?string $customerPhone): self
+    {
+        $self = clone $this;
+        $self['customerPhone'] = $customerPhone;
 
         return $self;
     }
@@ -872,9 +976,11 @@ final class ValidateValidateJsonParams implements BaseModel
      *   allowances?: list<Item\Allowance>|null,
      *   amount?: float|string|null,
      *   charges?: list<Item\Charge>|null,
-     *   date?: null,
+     *   date?: \DateTimeInterface|null,
      *   description?: string|null,
      *   itemAttributes?: list<Item\Attribute>|null,
+     *   name?: string|null,
+     *   priceBaseQuantity?: float|string,
      *   productCode?: string|null,
      *   quantity?: float|string|null,
      *   tax?: float|string|null,
@@ -930,6 +1036,28 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
+     * The preceding invoice issue date (BT-26).
+     */
+    public function withPrecedingInvoiceDate(?\DateTimeInterface $precedingInvoiceDate): self
+    {
+        $self = clone $this;
+        $self['precedingInvoiceDate'] = $precedingInvoiceDate;
+
+        return $self;
+    }
+
+    /**
+     * The preceding invoice reference (BT-25): the number of the invoice this document corrects, for example the invoice a credit note credits.
+     */
+    public function withPrecedingInvoiceID(?string $precedingInvoiceID): self
+    {
+        $self = clone $this;
+        $self['precedingInvoiceID'] = $precedingInvoiceID;
+
+        return $self;
+    }
+
+    /**
      * The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals.
      */
     public function withPreviousUnpaidBalance(
@@ -942,7 +1070,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * The purchase order reference number.
+     * The purchase order reference number (BT-13).
      */
     public function withPurchaseOrder(?string $purchaseOrder): self
     {
@@ -971,6 +1099,28 @@ final class ValidateValidateJsonParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['remittanceAddressRecipient'] = $remittanceAddressRecipient;
+
+        return $self;
+    }
+
+    /**
+     * The amount added to the invoice total to round the amount for payment (BT-114), for example to whole kronor (amount_due = invoice_total + rounding_amount when nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum 2 decimals.
+     */
+    public function withRoundingAmount(float|string|null $roundingAmount): self
+    {
+        $self = clone $this;
+        $self['roundingAmount'] = $roundingAmount;
+
+        return $self;
+    }
+
+    /**
+     * The sales order reference (BT-14) assigned by the seller.
+     */
+    public function withSalesOrder(?string $salesOrder): self
+    {
+        $self = clone $this;
+        $self['salesOrder'] = $salesOrder;
 
         return $self;
     }
@@ -1084,6 +1234,17 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
+     * The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is accounted in a currency other than the invoice currency. Must differ from currency and requires total_tax_in_tax_currency.
+     */
+    public function withTaxCurrency(?string $taxCurrency): self
+    {
+        $self = clone $this;
+        $self['taxCurrency'] = $taxCurrency;
+
+        return $self;
+    }
+
+    /**
      * @param list<TaxDetail|array{
      *   amount?: float|string|null, rate?: string|null
      * }>|null $taxDetails
@@ -1119,10 +1280,18 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * VATEX code list for VAT exemption reasons.
-     *
-     * Agency: CEF
-     * Identifier: vatex
+     * The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals.
+     */
+    public function withTotalTaxInTaxCurrency(float|string|null $totalTaxInTaxCurrency): self
+    {
+        $self = clone $this;
+        $self['totalTaxInTaxCurrency'] = $totalTaxInTaxCurrency;
+
+        return $self;
+    }
+
+    /**
+     * VAT exemption reason code (required when tax_code is E or other exempt categories).
      *
      * @param Vatex|value-of<Vatex>|null $vatex
      */
@@ -1157,7 +1326,7 @@ final class ValidateValidateJsonParams implements BaseModel
     }
 
     /**
-     * The recipient name at the vendor address.
+     * The recipient name at the vendor address. Also the vendor contact name (BT-41) in the UBL, required when vendor and customer are both in Germany (DE-R-005).
      */
     public function withVendorAddressRecipient(
         ?string $vendorAddressRecipient
@@ -1197,6 +1366,17 @@ final class ValidateValidateJsonParams implements BaseModel
     {
         $self = clone $this;
         $self['vendorName'] = $vendorName;
+
+        return $self;
+    }
+
+    /**
+     * The telephone number of the vendor contact (BT-42). Required when vendor and customer are both in Germany (DE-R-006); it must then hold at least 3 digits (DE-R-027, a warning).
+     */
+    public function withVendorPhone(?string $vendorPhone): self
+    {
+        $self = clone $this;
+        $self['vendorPhone'] = $vendorPhone;
 
         return $self;
     }

@@ -38,7 +38,7 @@ final class ValidateRawService implements ValidateRawContract
     /**
      * @api
      *
-     * Validate if the JSON document can be converted to a valid UBL document
+     * Validate if the JSON document can be converted to a valid UBL document. The generated UBL is returned in ubl_document also when is_valid is false, so you can inspect it.
      *
      * @param array{
      *   allowances?: list<array{
@@ -56,6 +56,7 @@ final class ValidateRawService implements ValidateRawContract
      *   }|DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
      *   billingAddressRecipient?: string|null,
+     *   buyerReference?: string|null,
      *   charges?: list<array{
      *     amount?: float|string|null,
      *     baseAmount?: float|string|null,
@@ -73,6 +74,7 @@ final class ValidateRawService implements ValidateRawContract
      *   customerID?: string|null,
      *   customerName?: string|null,
      *   customerPeppolID?: string|null,
+     *   customerPhone?: string|null,
      *   customerTaxID?: string|null,
      *   direction?: 'INBOUND'|'OUTBOUND'|DocumentDirection,
      *   documentType?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType,
@@ -84,9 +86,11 @@ final class ValidateRawService implements ValidateRawContract
      *     allowances?: list<array<mixed>>|null,
      *     amount?: float|string|null,
      *     charges?: list<array<mixed>>|null,
-     *     date?: null,
+     *     date?: string|\DateTimeInterface|null,
      *     description?: string|null,
      *     itemAttributes?: list<array<mixed>>|null,
+     *     name?: string|null,
+     *     priceBaseQuantity?: float|string,
      *     productCode?: string|null,
      *     quantity?: float|string|null,
      *     tax?: float|string|null,
@@ -102,10 +106,14 @@ final class ValidateRawService implements ValidateRawContract
      *     swift?: string|null,
      *   }|PaymentDetailCreate>|null,
      *   paymentTerm?: string|null,
+     *   precedingInvoiceDate?: string|\DateTimeInterface|null,
+     *   precedingInvoiceID?: string|null,
      *   previousUnpaidBalance?: float|string|null,
      *   purchaseOrder?: string|null,
      *   remittanceAddress?: string|null,
      *   remittanceAddressRecipient?: string|null,
+     *   roundingAmount?: float|string|null,
+     *   salesOrder?: string|null,
      *   serviceAddress?: string|null,
      *   serviceAddressRecipient?: string|null,
      *   serviceEndDate?: string|\DateTimeInterface|null,
@@ -115,9 +123,11 @@ final class ValidateRawService implements ValidateRawContract
      *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState,
      *   subtotal?: float|string|null,
      *   taxCode?: 'AE'|'E'|'S'|'Z'|'G'|'O'|'K'|'L'|'M'|'B'|ValidateValidateJsonParams\TaxCode,
+     *   taxCurrency?: string|null,
      *   taxDetails?: list<array{amount?: float|string|null, rate?: string|null}>|null,
      *   totalDiscount?: float|string|null,
      *   totalTax?: float|string|null,
+     *   totalTaxInTaxCurrency?: float|string|null,
      *   vatex?: value-of<Vatex>,
      *   vatexNote?: string|null,
      *   vendorAddress?: string|null,
@@ -125,6 +135,7 @@ final class ValidateRawService implements ValidateRawContract
      *   vendorCompanyID?: string|null,
      *   vendorEmail?: string|null,
      *   vendorName?: string|null,
+     *   vendorPhone?: string|null,
      *   vendorTaxID?: string|null,
      * }|ValidateValidateJsonParams $params
      *

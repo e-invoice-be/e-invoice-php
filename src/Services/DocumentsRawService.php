@@ -18,6 +18,7 @@ use EInvoiceAPI\Documents\DocumentCreateParams\Allowance\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse;
 use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
@@ -59,6 +60,7 @@ final class DocumentsRawService implements DocumentsRawContract
      *   }|DocumentAttachmentCreate>|null,
      *   billingAddress?: string|null,
      *   billingAddressRecipient?: string|null,
+     *   buyerReference?: string|null,
      *   charges?: list<array{
      *     amount?: float|string|null,
      *     baseAmount?: float|string|null,
@@ -77,6 +79,7 @@ final class DocumentsRawService implements DocumentsRawContract
      *   customerID?: string|null,
      *   customerName?: string|null,
      *   customerPeppolID?: string|null,
+     *   customerPhone?: string|null,
      *   customerTaxID?: string|null,
      *   direction?: 'INBOUND'|'OUTBOUND'|DocumentDirection,
      *   documentType?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType,
@@ -88,9 +91,11 @@ final class DocumentsRawService implements DocumentsRawContract
      *     allowances?: list<array<mixed>>|null,
      *     amount?: float|string|null,
      *     charges?: list<array<mixed>>|null,
-     *     date?: null,
+     *     date?: string|\DateTimeInterface|null,
      *     description?: string|null,
      *     itemAttributes?: list<array<mixed>>|null,
+     *     name?: string|null,
+     *     priceBaseQuantity?: float|string,
      *     productCode?: string|null,
      *     quantity?: float|string|null,
      *     tax?: float|string|null,
@@ -106,10 +111,14 @@ final class DocumentsRawService implements DocumentsRawContract
      *     swift?: string|null,
      *   }|PaymentDetailCreate>|null,
      *   paymentTerm?: string|null,
+     *   precedingInvoiceDate?: string|\DateTimeInterface|null,
+     *   precedingInvoiceID?: string|null,
      *   previousUnpaidBalance?: float|string|null,
      *   purchaseOrder?: string|null,
      *   remittanceAddress?: string|null,
      *   remittanceAddressRecipient?: string|null,
+     *   roundingAmount?: float|string|null,
+     *   salesOrder?: string|null,
      *   serviceAddress?: string|null,
      *   serviceAddressRecipient?: string|null,
      *   serviceEndDate?: string|\DateTimeInterface|null,
@@ -119,9 +128,11 @@ final class DocumentsRawService implements DocumentsRawContract
      *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState,
      *   subtotal?: float|string|null,
      *   taxCode?: 'AE'|'E'|'S'|'Z'|'G'|'O'|'K'|'L'|'M'|'B'|DocumentCreateParams\TaxCode,
+     *   taxCurrency?: string|null,
      *   taxDetails?: list<array{amount?: float|string|null, rate?: string|null}>|null,
      *   totalDiscount?: float|string|null,
      *   totalTax?: float|string|null,
+     *   totalTaxInTaxCurrency?: float|string|null,
      *   vatex?: value-of<Vatex>,
      *   vatexNote?: string|null,
      *   vendorAddress?: string|null,
@@ -129,6 +140,7 @@ final class DocumentsRawService implements DocumentsRawContract
      *   vendorCompanyID?: string|null,
      *   vendorEmail?: string|null,
      *   vendorName?: string|null,
+     *   vendorPhone?: string|null,
      *   vendorTaxID?: string|null,
      * }|DocumentCreateParams $params
      *
@@ -241,6 +253,28 @@ final class DocumentsRawService implements DocumentsRawContract
             body: (object) array_diff_key($parsed, $query_params),
             options: $options,
             convert: DocumentNewFromPdfResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Get the lifecycle events stated about an invoice or credit note after creation (Peppol Message Level and Invoice Responses, partner status events), oldest first. Each event carries a route-agnostic canonical status next to the untouched native code of its source; native codes without a canonical equivalent have canonical_status null
+     *
+     * @return BaseResponse<DocumentGetLifecycleResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveLifecycle(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['api/documents/%1$s/lifecycle', $documentID],
+            options: $requestOptions,
+            convert: DocumentGetLifecycleResponse::class,
         );
     }
 

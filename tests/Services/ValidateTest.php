@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Validate\UblDocumentValidation;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -188,6 +189,101 @@ final class ValidateTest extends ServiceTestCase
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
         $this->assertTrue($result->isValid);
+    }
+
+    #[Test]
+    public function testValidateJsonWithReferencesAndTaxCurrency(): void
+    {
+        $this->http->queueJson(self::validationResponse());
+
+        $result = $this->client->validate->validateJson(
+            buyerReference: 'CC-42',
+            customerPhone: '+32 2 123 45 67',
+            documentType: 'CREDIT_NOTE',
+            precedingInvoiceDate: new \DateTimeImmutable('2026-01-15T00:00:00Z'),
+            precedingInvoiceID: 'INV-2026-001',
+            roundingAmount: '-0.40',
+            salesOrder: 'SO-7',
+            taxCurrency: 'SEK',
+            totalTaxInTaxCurrency: '231.50',
+            vendorPhone: '+49 30 1234567',
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest(
+            'POST',
+            '/api/validate/json',
+            body: [
+                'buyer_reference' => 'CC-42',
+                'customer_phone' => '+32 2 123 45 67',
+                'document_type' => 'CREDIT_NOTE',
+                'preceding_invoice_date' => '2026-01-15T00:00:00+00:00',
+                'preceding_invoice_id' => 'INV-2026-001',
+                'rounding_amount' => '-0.40',
+                'sales_order' => 'SO-7',
+                'tax_code' => 'S',
+                'tax_currency' => 'SEK',
+                'total_tax_in_tax_currency' => '231.50',
+                'vendor_phone' => '+49 30 1234567',
+            ],
+        );
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
+    }
+
+    #[Test]
+    public function testValidateJsonWithItemNamePriceBaseQuantityAndDate(): void
+    {
+        $this->http->queueJson(self::validationResponse());
+
+        $result = $this->client->validate->validateJson(
+            items: [
+                [
+                    'date' => new \DateTimeImmutable('2026-03-01T00:00:00Z'),
+                    'description' => 'Ergonomic wireless mouse',
+                    'name' => 'Wireless mouse',
+                    'priceBaseQuantity' => '100',
+                    'quantity' => '200',
+                    'unitPrice' => '45.00',
+                ],
+                ['date' => null, 'name' => 'Keyboard'],
+            ],
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest(
+            'POST',
+            '/api/validate/json',
+            body: [
+                'items' => [
+                    [
+                        'date' => '2026-03-01T00:00:00+00:00',
+                        'description' => 'Ergonomic wireless mouse',
+                        'name' => 'Wireless mouse',
+                        'price_base_quantity' => '100',
+                        'quantity' => '200',
+                        'unit_price' => '45.00',
+                    ],
+                    ['date' => null, 'name' => 'Keyboard'],
+                ],
+                'tax_code' => 'S',
+            ],
+        );
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(UblDocumentValidation::class, $result);
+    }
+
+    #[Test]
+    public function testValidateJsonItemDateIsOptional(): void
+    {
+        $item = Item::with(
+            date: new \DateTimeImmutable('2026-03-01T00:00:00Z'),
+            priceBaseQuantity: 1000.0,
+        );
+
+        $this->assertEquals(new \DateTimeImmutable('2026-03-01T00:00:00Z'), $item->date);
+        $this->assertSame(1000.0, $item->priceBaseQuantity);
+        $this->assertArrayNotHasKey('date', Item::with(name: 'Keyboard')->toProperties());
     }
 
     /**
