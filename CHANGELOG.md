@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.8.0 (2026-11-02)
+
+Full Changelog: [v0.7.2...v0.8.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.2...v0.8.0)
 
 Brings the SDK in line with the live OpenAPI specification (v1.1.0).
 
