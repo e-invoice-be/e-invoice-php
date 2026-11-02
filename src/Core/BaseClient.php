@@ -93,7 +93,6 @@ abstract class BaseClient
      * @param array<string,mixed> $query
      * @param array<string,string|int|list<string|int>|null> $headers
      * @param array{
-     *   timeout?: float|null,
      *   maxRetries?: int|null,
      *   initialRetryDelay?: float|null,
      *   maxRetryDelay?: float|null,
