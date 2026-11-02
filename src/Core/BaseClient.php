@@ -176,31 +176,44 @@ abstract class BaseClient
 
     /**
      * @internal
+     *
+     * The number of seconds to wait before retry number `$retryCount + 1`.
+     *
+     * A `Retry-After` header of more than 0 and at most 60 seconds wins. Else the
+     * delay is `initialRetryDelay * 2 ** $retryCount`, at most `maxRetryDelay`,
+     * minus a random jitter of up to 25%.
+     *
+     * @param int $retryCount the number of retries that were already done
      */
     protected function retryDelay(
         RequestOptions $opts,
         int $retryCount,
         ?ResponseInterface $rsp
     ): float {
-        if (!empty($header = $rsp?->getHeaderLine('retry-after'))) {
-            if (is_numeric($header)) {
-                return floatval($header);
-            }
-
-            try {
-                $date = new \DateTimeImmutable($header);
-                $span = time() - $date->getTimestamp();
-
-                return max(0.0, $span);
-            } catch (\DateMalformedStringException) {
-            }
+        $retryAfter = self::parseRetryAfter($rsp?->getHeaderLine('retry-after') ?? '');
+        if (!is_null($retryAfter) && $retryAfter > 0 && $retryAfter <= 60) {
+            return $retryAfter;
         }
 
-        $scale = $retryCount ** 2;
+        $naive = min($opts->initialRetryDelay * 2 ** $retryCount, $opts->maxRetryDelay);
         $jitter = 1 - (0.25 * mt_rand() / mt_getrandmax());
-        $naive = $opts->initialRetryDelay * $scale * $jitter;
 
-        return max(0.0, min($naive, $opts->maxRetryDelay));
+        return max(0.0, $naive * $jitter);
+    }
+
+    /**
+     * @internal
+     *
+     * Waits before a retry. Tests override this method, so that they stay fast.
+     */
+    protected function sleep(float $seconds): void
+    {
+        if ($seconds <= 0) {
+            return;
+        }
+
+        $floor = floor($seconds);
+        time_nanosleep((int) $floor, nanoseconds: min(999_999_999, (int) (($seconds - $floor) * 10 ** 9)));
     }
 
     /**
@@ -251,14 +264,36 @@ abstract class BaseClient
                 throw self::isTimeout($err) ? new APITimeoutException($req, previous: $err) : new APIConnectionException($req, previous: $err);
             }
 
-            $seconds = $this->retryDelay($opts, retryCount: $redirectCount, rsp: $rsp);
-            $floor = floor($seconds);
-            time_nanosleep((int) $floor, nanoseconds: (int) ($seconds - $floor) * 10 ** 9);
+            $seconds = $this->retryDelay($opts, retryCount: $retryCount, rsp: $rsp);
+            $this->sleep($seconds);
 
             return $this->sendRequest($opts, req: $req, data: $data, retryCount: ++$retryCount, redirectCount: $redirectCount);
         }
 
         return $rsp;
+    }
+
+    /**
+     * The seconds in a `Retry-After` header: a number of seconds, or an HTTP date.
+     */
+    private static function parseRetryAfter(string $header): ?float
+    {
+        $header = trim($header);
+        if ('' === $header) {
+            return null;
+        }
+
+        if (is_numeric($header)) {
+            return (float) $header;
+        }
+
+        // RFC 9110: senders must use the IMF-fixdate format, e.g. "Sun, 06 Nov 1994 08:49:37 GMT".
+        $date = \DateTimeImmutable::createFromFormat('D, d M Y H:i:s \G\M\T', $header, new \DateTimeZone('UTC'));
+        if (false === $date) {
+            return null;
+        }
+
+        return (float) ($date->getTimestamp() - time());
     }
 
     /**
