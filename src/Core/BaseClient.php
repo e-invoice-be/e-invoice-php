@@ -15,6 +15,8 @@ use EInvoiceAPI\Core\Implementation\RawResponse;
 use EInvoiceAPI\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Client\NetworkExceptionInterface;
+use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -164,19 +166,24 @@ abstract class BaseClient
      *
      * Without a response (a connection error or a timeout), only idempotent methods
      * are retried: the first request may have reached the server, and a retry of a
-     * `POST` could send a document two times
+     * `POST` could send a document two times. An invalid request is not retried.
      */
     protected function shouldRetry(
         RequestOptions $opts,
         RequestInterface $req,
         int $retryCount,
-        ?ResponseInterface $rsp
+        ?ResponseInterface $rsp,
+        ?ClientExceptionInterface $err = null
     ): bool {
         if ($retryCount >= $opts->maxRetries) {
             return false;
         }
 
         if (is_null($rsp)) {
+            if (!self::isRetryableTransportError($err)) {
+                return false;
+            }
+
             return in_array(strtoupper($req->getMethod()), self::IDEMPOTENT_METHODS, true);
         }
 
@@ -272,7 +279,7 @@ abstract class BaseClient
         }
 
         if ($code >= 400 || is_null($rsp)) {
-            if (!$this->shouldRetry($opts, req: $req, retryCount: $retryCount, rsp: $rsp)) {
+            if (!$this->shouldRetry($opts, req: $req, retryCount: $retryCount, rsp: $rsp, err: $err)) {
                 if (!is_null($rsp)) {
                     throw APIStatusException::from(request: $sent, response: $rsp);
                 }
@@ -310,6 +317,21 @@ abstract class BaseClient
         }
 
         return (float) ($date->getTimestamp() - time());
+    }
+
+    /**
+     * A missing response is retried, except when the HTTP client reports an invalid
+     * request. That failure is the caller's fault and a retry cannot succeed.
+     * A network exception is still retried when it is also a request exception:
+     * some clients make the network exception a subclass of the request exception.
+     */
+    private static function isRetryableTransportError(?ClientExceptionInterface $err): bool
+    {
+        if ($err instanceof NetworkExceptionInterface) {
+            return true;
+        }
+
+        return !$err instanceof RequestExceptionInterface;
     }
 
     /**
