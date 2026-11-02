@@ -3,12 +3,19 @@
 namespace Tests\Core;
 
 use EInvoiceAPI\Client;
+use EInvoiceAPI\Core\Exceptions\APIConnectionException;
 use EInvoiceAPI\Core\Exceptions\APIStatusException;
+use EInvoiceAPI\Core\Exceptions\APITimeoutException;
 use EInvoiceAPI\RequestOptions;
 use Nyholm\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\NetworkExceptionInterface;
+use Psr\Http\Client\RequestExceptionInterface;
+use Psr\Http\Message\RequestInterface;
 use Tests\Support\MockClient;
 
 /**
@@ -170,6 +177,270 @@ final class RetryTest extends TestCase
     }
 
     #[Test]
+    public function testGetIsRetriedAfterAConnectionError(): void
+    {
+        $this->http->queue($this->networkError('Connection refused'))->queueJson(['name' => 'Acme']);
+
+        $me = $this->client->me->retrieve(requestOptions: $this->options(maxRetries: 2));
+
+        $this->assertSame('Acme', $me->name);
+        $this->assertCount(2, $this->http->requests);
+        $this->assertCount(1, $this->client->sleeps);
+        $this->assertDelayAround(0.5, $this->client->sleeps[0]);
+    }
+
+    #[Test]
+    #[DataProvider('idempotentMethods')]
+    public function testIdempotentMethodIsRetriedAfterATimeout(string $method): void
+    {
+        $this->http->queue($this->networkError('Operation timed out'))->queueJson();
+
+        $this->client->request($method, path: 'api/me', options: $this->options(maxRetries: 2));
+
+        $this->assertCount(2, $this->http->requests);
+        $this->assertSame(strtoupper($method), $this->http->requests[1]->getMethod());
+        $this->assertCount(1, $this->client->sleeps);
+    }
+
+    /**
+     * @return iterable<string,array{string}>
+     */
+    public static function idempotentMethods(): iterable
+    {
+        yield 'GET' => ['get'];
+
+        yield 'HEAD' => ['head'];
+
+        yield 'PUT' => ['put'];
+
+        yield 'DELETE' => ['delete'];
+
+        yield 'OPTIONS' => ['options'];
+    }
+
+    #[Test]
+    #[DataProvider('nonIdempotentMethods')]
+    public function testNonIdempotentMethodIsNotRetriedAfterAConnectionError(string $method): void
+    {
+        $refused = $this->networkError('Connection refused');
+        $this->http->queue($refused)->queueJson();
+
+        try {
+            $this->client->request($method, path: 'api/documents', body: ['a' => 1], options: $this->options(maxRetries: 2));
+            $this->fail('The client did not throw.');
+        } catch (APIConnectionException $e) {
+            $this->assertNotInstanceOf(APITimeoutException::class, $e);
+            $this->assertSame($refused, $e->getPrevious());
+        }
+
+        $this->assertCount(1, $this->http->requests);
+        $this->assertSame([], $this->client->sleeps);
+    }
+
+    #[Test]
+    #[DataProvider('nonIdempotentMethods')]
+    public function testNonIdempotentMethodIsNotRetriedAfterATimeout(string $method): void
+    {
+        $this->http->queue($this->networkError('Operation timed out'))->queueJson();
+
+        try {
+            $this->client->request($method, path: 'api/documents', body: ['a' => 1], options: $this->options(maxRetries: 2));
+            $this->fail('The client did not throw.');
+        } catch (APITimeoutException) {
+        }
+
+        $this->assertCount(1, $this->http->requests);
+        $this->assertSame([], $this->client->sleeps);
+    }
+
+    /**
+     * @return iterable<string,array{string}>
+     */
+    public static function nonIdempotentMethods(): iterable
+    {
+        yield 'POST' => ['post'];
+
+        yield 'PATCH' => ['patch'];
+    }
+
+    #[Test]
+    public function testPostIsStillRetriedAfterAServerError(): void
+    {
+        $this->http->queueJson(status: 503)->queueJson();
+
+        $this->client->request('post', path: 'api/documents', body: ['a' => 1], options: $this->options(maxRetries: 2));
+
+        $this->assertCount(2, $this->http->requests);
+        $this->assertCount(1, $this->client->sleeps);
+    }
+
+    #[Test]
+    public function testRetryOfAMultipartRequestHasOneBoundary(): void
+    {
+        $this->http->queueJson(status: 503)->queueJson();
+
+        $this->client->request(
+            'post',
+            path: 'api/documents/pdf',
+            headers: ['Content-Type' => 'multipart/form-data'],
+            body: ['file' => 'content'],
+            options: $this->options(maxRetries: 1),
+        );
+
+        $this->assertCount(2, $this->http->requests);
+        foreach ($this->http->requests as $request) {
+            $this->assertMultipartBody($request, 'content');
+        }
+    }
+
+    #[Test]
+    public function testRedirectOfAMultipartRequestKeepsTheMethodAndOneBoundary(): void
+    {
+        $this->http
+            ->queue(new Response(307, ['Location' => '/api/documents/pdf/']))
+            ->queueJson()
+        ;
+
+        $this->client->request(
+            'post',
+            path: 'api/documents/pdf',
+            headers: ['Content-Type' => 'multipart/form-data'],
+            body: ['file' => 'content'],
+            options: $this->options(maxRetries: 0),
+        );
+
+        $this->assertCount(2, $this->http->requests);
+        $this->assertSame('POST', $this->http->requests[1]->getMethod());
+        $this->assertSame('/api/documents/pdf/', $this->http->requests[1]->getUri()->getPath());
+        foreach ($this->http->requests as $request) {
+            $this->assertMultipartBody($request, 'content');
+        }
+        $this->assertSame([], $this->client->sleeps);
+    }
+
+    #[Test]
+    public function testPutBodyIsSentAgainAfterAConnectionError(): void
+    {
+        $this->http->queue($this->networkError('Connection refused'))->queueJson();
+
+        $this->client->request(
+            'put',
+            path: 'api/documents/doc_1',
+            body: ['a' => 1],
+            options: $this->options(maxRetries: 1),
+        );
+
+        $this->assertCount(2, $this->http->requests);
+        foreach ($this->http->requests as $request) {
+            $this->assertSame('PUT', $request->getMethod());
+            $this->assertSame('{"a":1}', (string) $request->getBody());
+            $this->assertSame('application/json', $request->getHeaderLine('Content-Type'));
+            $this->assertSame('', $request->getHeaderLine('Content-Length'));
+        }
+    }
+
+    #[Test]
+    public function testConnectionErrorsAreRetriedAtMostMaxRetriesTimes(): void
+    {
+        $last = $this->networkError('Connection refused');
+        $this->http
+            ->queue($this->networkError('Connection refused'))
+            ->queue($this->networkError('Connection refused'))
+            ->queue($last)
+            ->queueJson(['name' => 'Acme'])
+        ;
+
+        try {
+            $this->client->me->retrieve(requestOptions: $this->options(maxRetries: 2));
+            $this->fail('The client did not throw.');
+        } catch (APIConnectionException $e) {
+            $this->assertNotInstanceOf(APITimeoutException::class, $e);
+            $this->assertSame($last, $e->getPrevious());
+        }
+
+        $this->assertCount(3, $this->http->requests);
+        $this->assertCount(2, $this->client->sleeps);
+        $this->assertDelayAround(0.5, $this->client->sleeps[0]);
+        $this->assertDelayAround(1.0, $this->client->sleeps[1]);
+    }
+
+    #[Test]
+    public function testTimeoutIsThrownAfterTheLastAttempt(): void
+    {
+        $last = $this->networkError('Operation timed out');
+        $this->http->queue($this->networkError('Operation timed out'))->queue($last);
+
+        try {
+            $this->client->me->retrieve(requestOptions: $this->options(maxRetries: 1));
+            $this->fail('The client did not throw.');
+        } catch (APITimeoutException $e) {
+            $this->assertSame($last, $e->getPrevious());
+        }
+
+        $this->assertCount(2, $this->http->requests);
+        $this->assertCount(1, $this->client->sleeps);
+    }
+
+    #[Test]
+    public function testConnectionErrorIsNotRetriedWithZeroMaxRetries(): void
+    {
+        $this->http->queue($this->networkError('Connection refused'))->queueJson(['name' => 'Acme']);
+
+        try {
+            $this->client->me->retrieve(requestOptions: $this->options(maxRetries: 0));
+            $this->fail('The client did not throw.');
+        } catch (APIConnectionException) {
+        }
+
+        $this->assertCount(1, $this->http->requests);
+        $this->assertSame([], $this->client->sleeps);
+    }
+
+    #[Test]
+    public function testGetIsNotRetriedAfterAnInvalidRequest(): void
+    {
+        $invalid = $this->requestError('Invalid HTTP method');
+        $this->http->queue($invalid)->queueJson(['name' => 'Acme']);
+
+        try {
+            $this->client->me->retrieve(requestOptions: $this->options(maxRetries: 2));
+            $this->fail('The client did not throw.');
+        } catch (APIConnectionException $e) {
+            $this->assertNotInstanceOf(APITimeoutException::class, $e);
+            $this->assertSame($invalid, $e->getPrevious());
+        }
+
+        $this->assertCount(1, $this->http->requests);
+        $this->assertSame([], $this->client->sleeps);
+    }
+
+    #[Test]
+    public function testGetIsRetriedAfterAClientExceptionThatIsNotANetworkException(): void
+    {
+        $this->http->queue($this->clientError('Idle timeout reached'))->queueJson(['name' => 'Acme']);
+
+        $me = $this->client->me->retrieve(requestOptions: $this->options(maxRetries: 2));
+
+        $this->assertSame('Acme', $me->name);
+        $this->assertCount(2, $this->http->requests);
+        $this->assertCount(1, $this->client->sleeps);
+    }
+
+    #[Test]
+    public function testGetIsRetriedWhenANetworkErrorIsAlsoARequestException(): void
+    {
+        $error = $this->networkAndRequestError('Connection refused');
+        $this->assertInstanceOf(RequestExceptionInterface::class, $error);
+        $this->http->queue($error)->queueJson(['name' => 'Acme']);
+
+        $me = $this->client->me->retrieve(requestOptions: $this->options(maxRetries: 2));
+
+        $this->assertSame('Acme', $me->name);
+        $this->assertCount(2, $this->http->requests);
+        $this->assertCount(1, $this->client->sleeps);
+    }
+
+    #[Test]
     public function testDefaultSleepWaitsTheFractionOfASecond(): void
     {
         $client = new Client(apiKey: 'My API Key', baseUrl: 'http://localhost');
@@ -200,5 +471,53 @@ final class RetryTest extends TestCase
     {
         $this->assertGreaterThanOrEqual($expected * 0.75, $actual);
         $this->assertLessThanOrEqual($expected, $actual);
+    }
+
+    private function assertMultipartBody(RequestInterface $request, string $content): void
+    {
+        $contentType = $request->getHeaderLine('Content-Type');
+        $this->assertSame(1, substr_count($contentType, 'boundary='), $contentType);
+        $this->assertSame(1, preg_match('/boundary=(\S+)$/', $contentType, $matches), $contentType);
+        $body = (string) $request->getBody();
+        $this->assertStringContainsString('--'.$matches[1], $body);
+        $this->assertStringContainsString($content, $body);
+    }
+
+    private function networkError(string $message): NetworkExceptionInterface
+    {
+        return new class($message) extends \RuntimeException implements NetworkExceptionInterface {
+            public function getRequest(): RequestInterface
+            {
+                throw new \LogicException('Not used.');
+            }
+        };
+    }
+
+    private function requestError(string $message): RequestExceptionInterface
+    {
+        return new class($message) extends \RuntimeException implements RequestExceptionInterface {
+            public function getRequest(): RequestInterface
+            {
+                throw new \LogicException('Not used.');
+            }
+        };
+    }
+
+    /**
+     * Some HTTP clients make the network exception a subclass of the request exception.
+     */
+    private function networkAndRequestError(string $message): NetworkExceptionInterface
+    {
+        return new class($message) extends \RuntimeException implements NetworkExceptionInterface, RequestExceptionInterface {
+            public function getRequest(): RequestInterface
+            {
+                throw new \LogicException('Not used.');
+            }
+        };
+    }
+
+    private function clientError(string $message): ClientExceptionInterface
+    {
+        return new class($message) extends \RuntimeException implements ClientExceptionInterface {};
     }
 }

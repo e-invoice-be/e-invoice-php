@@ -6,8 +6,13 @@
 
 * remove the `timeout` request option (`RequestOptions::$timeout`, `withTimeout()` and `RequestOptions::with(timeout: ...)`). The option had no effect, because PSR-18 has no timeout parameter. Set the timeout on the PSR-18 client and give that client as the `transporter` option. Calls that pass arguments to `RequestOptions::with()` by position must switch to named arguments
 
+### Features
+
+* connection errors (`APIConnectionException`) and timeouts (`APITimeoutException`) are now retried, with the usual backoff and up to `maxRetries` times, for the idempotent methods `GET`, `HEAD`, `PUT`, `DELETE` and `OPTIONS` ([#19](https://github.com/e-invoice-be/e-invoice-php/issues/19)). `POST` and `PATCH` requests are not retried when no response was received, because the first request may have reached the server, and a retry could send a document two times. Retries on status codes do not change
+
 ### Bug Fixes
 
+* a retry or a redirect of a multipart request (for example `documents->createFromPdf()`) no longer adds a second `boundary` to the `Content-Type` header, which made the server unable to read the body
 * date-time values keep their fractions of a second. They go out in the RFC 3339 format with microseconds, e.g. `2019-12-27T18:11:19.117000+00:00` instead of `2019-12-27T18:11:19+00:00`. This applies to the `dateFrom` and `dateTo` filters of `inbox`, `outbox` and `drafts`, the `receivedFrom` and `receivedTo` filters of `mailbox`, and to the JSON form of the response models (`json_encode()`). Fields with the `date` format, such as `invoiceDate`, `dueDate` and the line item `date`, keep the format they had before.
 * the delay between retries is no longer zero ([#20](https://github.com/e-invoice-be/e-invoice-php/issues/20)). The first retry now waits `initialRetryDelay` (0.5 seconds by default), and each next retry waits twice as long, up to `maxRetryDelay` (8 seconds by default), minus a jitter of up to 25%. Before, the client passed the redirect count instead of the retry count, lost the part of the delay below one second, and computed a negative delay for a `Retry-After` date. Requests that fail and are retried now take longer, because the delays are real
 * a `Retry-After` of more than 0 and at most 60 seconds is now the delay. It may be a number of seconds, or an HTTP date such as `Sun, 06 Nov 1994 08:49:37 GMT`, in which case the client waits until that date. Any other value (including 0, a delay over 60 seconds, or a value that is not a number or that date format) falls back to the backoff
@@ -17,6 +22,7 @@
 
 * add a Timeouts section to the README with examples for Symfony HttpClient and Guzzle
 * describe the retry delays and the `initialRetryDelay` and `maxRetryDelay` options in the README
+* describe in the README which errors are retried for which HTTP methods
 
 ## 0.8.0 (2026-11-02)
 
