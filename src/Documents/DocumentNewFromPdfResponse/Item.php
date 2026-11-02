@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\DateOf;
 use EInvoiceAPI\Documents\Allowance;
 use EInvoiceAPI\Documents\Allowance\ReasonCode;
 use EInvoiceAPI\Documents\Allowance\TaxCode;
@@ -59,7 +60,7 @@ final class Item implements BaseModel
     #[Optional(list: Charge::class, nullable: true)]
     public ?array $charges;
 
-    #[Optional(nullable: true)]
+    #[Optional(type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $date;
 
     /**

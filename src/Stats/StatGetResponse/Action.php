@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Stats\StatGetResponse;
 use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\DateOf;
 
 /**
  * Statistics for a specific action in a specific time period.
@@ -37,7 +38,7 @@ final class Action implements BaseModel
     /**
      * The date/period this stat represents. For DAY aggregation this is the specific day, for WEEK it's the start of the week, for MONTH it's the first day of the month.
      */
-    #[Required('stat_date')]
+    #[Required('stat_date', type: new DateOf)]
     public \DateTimeInterface $statDate;
 
     /**

@@ -50,8 +50,8 @@ final class InboxTest extends ServiceTestCase
         );
 
         $this->assertRequest('GET', '/api/inbox/', [
-            'date_from' => '2019-12-27T18:11:19+00:00',
-            'date_to' => '2019-12-27T18:11:19+00:00',
+            'date_from' => '2019-12-27T18:11:19.117000+00:00',
+            'date_to' => '2019-12-27T18:11:19.117000+00:00',
             'page' => '1',
             'page_size' => '1',
             'search' => 'search',

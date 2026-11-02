@@ -14,6 +14,11 @@ use EInvoiceAPI\Core\Conversion\DumpState;
  */
 final class Conversion
 {
+    /**
+     * The RFC 3339 format with microseconds, so that `date-time` values keep their fractions of a second.
+     */
+    public const DATE_TIME_FORMAT = 'Y-m-d\TH:i:s.uP';
+
     public static function dump_unknown(mixed $value, DumpState $state): mixed
     {
         if (is_array($value)) {
@@ -30,7 +35,7 @@ final class Conversion
             }
 
             if (is_a($value, class: \DateTimeInterface::class)) {
-                return $value->format(format: \DateTimeInterface::RFC3339);
+                return $value->format(format: self::DATE_TIME_FORMAT);
             }
 
             if (is_a($value, class: \JsonSerializable::class)) {

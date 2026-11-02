@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\DateOf;
 
 /**
  * Business card information for the Peppol ID.
@@ -28,7 +29,7 @@ final class BusinessCard implements BaseModel
     #[Optional(nullable: true)]
     public ?string $name;
 
-    #[Optional('registration_date', nullable: true)]
+    #[Optional('registration_date', type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $registrationDate;
 
     public function __construct()

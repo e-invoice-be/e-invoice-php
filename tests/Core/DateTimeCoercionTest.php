@@ -8,11 +8,20 @@ use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\DumpState;
 use EInvoiceAPI\Core\Conversion\ListOf;
+use EInvoiceAPI\Documents\DocumentCreate;
+use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
+use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
+use EInvoiceAPI\Mailbox\MailboxListParams;
 use EInvoiceAPI\Me\MeGetResponse;
 use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Stats\StatGetResponse;
+use EInvoiceAPI\Stats\StatGetResponse\Action;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams;
+use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
 use Nyholm\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -151,7 +160,97 @@ class DateTimeCoercionTest extends TestCase
         /** @var MeGetResponse $me */
         $me = Conversion::coerce(MeGetResponse::class, value: ['name' => 'Acme', 'smp_registration_date' => '2024-01-31T10:15:30Z']);
 
-        $this->assertStringContainsString('"smp_registration_date":"2024-01-31T10:15:30+00:00"', json_encode($me) ?: '');
+        $this->assertStringContainsString('"smp_registration_date":"2024-01-31T10:15:30.000000+00:00"', json_encode($me) ?: '');
+    }
+
+    #[Test]
+    public function testDateTimesAreDumpedWithMicroseconds(): void
+    {
+        $dumped = Conversion::dump(MailboxListParams::class, value: [
+            'receivedFrom' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+            'receivedTo' => new \DateTimeImmutable('2019-12-27T18:11:19.123456+02:00'),
+        ]);
+
+        $this->assertSame(
+            ['receivedFrom' => '2019-12-27T18:11:19.117000+00:00', 'receivedTo' => '2019-12-27T18:11:19.123456+02:00'],
+            $dumped,
+        );
+        $this->assertSame(
+            ['2024-01-31T10:15:30.500000+00:00'],
+            Conversion::dump_unknown([new \DateTime('2024-01-31T10:15:30.5Z')], state: new DumpState),
+        );
+    }
+
+    #[Test]
+    public function testDatesKeepTheirFormat(): void
+    {
+        $date = new \DateTimeImmutable('2024-01-31T00:00:00.5Z');
+        $expected = '2024-01-31T00:00:00+00:00';
+
+        foreach ([DocumentCreateParams::class, DocumentCreate::class, ValidateValidateJsonParams::class] as $class) {
+            $dumped = Conversion::dump($class, value: [
+                'dueDate' => $date,
+                'invoiceDate' => $date,
+                'precedingInvoiceDate' => $date,
+                'serviceEndDate' => $date,
+                'serviceStartDate' => $date,
+                'items' => [['date' => $date]],
+            ]);
+
+            $this->assertSame([
+                'due_date' => $expected,
+                'invoice_date' => $expected,
+                'preceding_invoice_date' => $expected,
+                'service_end_date' => $expected,
+                'service_start_date' => $expected,
+                'items' => [['date' => $expected]],
+            ], $dumped, $class);
+        }
+
+        $this->assertSame(['due_date' => null], Conversion::dump(DocumentCreateParams::class, value: ['dueDate' => null]));
+        $this->assertSame(['invoice_date' => '2024-01-15'], Conversion::dump(DocumentCreateParams::class, value: ['invoiceDate' => '2024-01-15']));
+    }
+
+    #[Test]
+    public function testDatesOfAResponseKeepTheirFormatWhenSerializedAgain(): void
+    {
+        $dates = [
+            'due_date' => '2024-01-01',
+            'invoice_date' => '2024-01-02',
+            'preceding_invoice_date' => '2024-01-03',
+            'service_end_date' => '2024-01-04',
+            'service_start_date' => '2024-01-05',
+        ];
+
+        foreach ([DocumentResponse::class, DocumentNewFromPdfResponse::class] as $class) {
+            $model = Conversion::coerce($class, value: ['id' => 'doc_1', ...$dates, 'items' => [['date' => '2024-02-01']]]);
+            $this->assertInstanceOf(\JsonSerializable::class, $model);
+
+            /** @var array<string, mixed> $json */
+            $json = json_decode(json_encode($model) ?: '', associative: true);
+
+            foreach ($dates as $name => $value) {
+                $this->assertSame("{$value}T00:00:00+00:00", $json[$name] ?? null, "{$class}::{$name}");
+            }
+            $this->assertSame('2024-02-01T00:00:00+00:00', $json['items'][0]['date'] ?? null, $class); // @phpstan-ignore-line
+        }
+
+        /** @var DocumentResponse $document */
+        $document = Conversion::coerce(DocumentResponse::class, value: ['id' => 'doc_1', 'created_at' => '2024-01-31T10:15:30.123456Z']);
+        $this->assertStringContainsString('"created_at":"2024-01-31T10:15:30.123456+00:00"', json_encode($document) ?: '');
+
+        /** @var Action $action */
+        $action = Conversion::coerce(Action::class, value: ['action' => 'DOCUMENT_SENT', 'count' => 1, 'stat_date' => '2024-01-31']);
+        $this->assertInstanceOf(\DateTimeInterface::class, $action->statDate);
+        $this->assertStringContainsString('"stat_date":"2024-01-31T00:00:00+00:00"', json_encode($action) ?: '');
+
+        /** @var StatGetResponse $stats */
+        $stats = Conversion::coerce(StatGetResponse::class, value: ['actions' => [], 'aggregation' => 'DAY', 'period_end' => '2024-01-31', 'period_start' => '2024-01-01']);
+        $this->assertStringContainsString('"period_end":"2024-01-31T00:00:00+00:00","period_start":"2024-01-01T00:00:00+00:00"', json_encode($stats) ?: '');
+
+        /** @var BusinessCard $card */
+        $card = Conversion::coerce(BusinessCard::class, value: ['registration_date' => '2024-01-31']);
+        $this->assertStringContainsString('"registration_date":"2024-01-31T00:00:00+00:00"', json_encode($card) ?: '');
     }
 
     #[Test]

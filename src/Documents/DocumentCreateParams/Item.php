@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\DateOf;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance\ReasonCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Item\Allowance\TaxCode;
@@ -65,7 +66,7 @@ final class Item implements BaseModel
     )]
     public ?array $charges;
 
-    #[Optional(nullable: true)]
+    #[Optional(type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $date;
 
     /**

@@ -89,10 +89,10 @@ final class DraftsTest extends ServiceTestCase
             requestOptions: $this->options(),
         );
 
-        // The SDK formats a date-time as RFC 3339 with a precision of one second.
+        // The SDK formats a date-time as RFC 3339 with microseconds.
         $this->assertRequest('GET', '/api/drafts/', query: [
-            'date_from' => '2019-12-27T18:11:19+00:00',
-            'date_to' => '2019-12-27T18:11:19+00:00',
+            'date_from' => '2019-12-27T18:11:19.117000+00:00',
+            'date_to' => '2019-12-27T18:11:19.117000+00:00',
             'page' => '1',
             'page_size' => '1',
             'search' => 'search',

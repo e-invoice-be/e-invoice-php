@@ -7,6 +7,7 @@ namespace EInvoiceAPI\Validate\ValidateValidateJsonParams;
 use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\DateOf;
 use EInvoiceAPI\Documents\UnitOfMeasureCode;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance\ReasonCode;
@@ -65,7 +66,7 @@ final class Item implements BaseModel
     )]
     public ?array $charges;
 
-    #[Optional(nullable: true)]
+    #[Optional(type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $date;
 
     /**
