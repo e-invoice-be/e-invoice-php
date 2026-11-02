@@ -273,6 +273,28 @@ final class RetryTest extends TestCase
     }
 
     #[Test]
+    public function testRetryOfAMultipartRequestHasOneBoundary(): void
+    {
+        $this->http->queueJson(status: 503)->queueJson();
+
+        $this->client->request(
+            'post',
+            path: 'api/documents/pdf',
+            headers: ['Content-Type' => 'multipart/form-data'],
+            body: ['file' => 'content'],
+            options: $this->options(maxRetries: 1),
+        );
+
+        $this->assertCount(2, $this->http->requests);
+        foreach ($this->http->requests as $request) {
+            $contentType = $request->getHeaderLine('Content-Type');
+            $this->assertSame(1, substr_count($contentType, 'boundary='), $contentType);
+            $this->assertSame(1, preg_match('/boundary=(\S+)$/', $contentType, $m), $contentType);
+            $this->assertStringContainsString('--'.$m[1], (string) $request->getBody());
+        }
+    }
+
+    #[Test]
     public function testConnectionErrorsAreRetriedAtMostMaxRetriesTimes(): void
     {
         $last = $this->networkError('Connection refused');

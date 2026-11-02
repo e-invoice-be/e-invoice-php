@@ -244,13 +244,15 @@ abstract class BaseClient
     ): ResponseInterface {
         assert(null !== $opts->streamFactory && null !== $opts->transporter);
 
-        $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
+        // Retries and redirects start again from $req, so that the body is set only
+        // once: a multipart body adds its boundary to the Content-Type header.
+        $sent = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
 
         $rsp = null;
         $err = null;
 
         try {
-            $rsp = $opts->transporter->sendRequest($req);
+            $rsp = $opts->transporter->sendRequest($sent);
         } catch (ClientExceptionInterface $e) {
             $err = $e;
         }
@@ -261,7 +263,7 @@ abstract class BaseClient
             assert(!is_null($rsp));
 
             if ($redirectCount >= 20) {
-                throw new APIConnectionException($req, message: 'Maximum redirects exceeded');
+                throw new APIConnectionException($sent, message: 'Maximum redirects exceeded');
             }
 
             $req = $this->followRedirect($rsp, req: $req);
@@ -272,10 +274,10 @@ abstract class BaseClient
         if ($code >= 400 || is_null($rsp)) {
             if (!$this->shouldRetry($opts, req: $req, retryCount: $retryCount, rsp: $rsp)) {
                 if (!is_null($rsp)) {
-                    throw APIStatusException::from(request: $req, response: $rsp);
+                    throw APIStatusException::from(request: $sent, response: $rsp);
                 }
 
-                throw self::isTimeout($err) ? new APITimeoutException($req, previous: $err) : new APIConnectionException($req, previous: $err);
+                throw self::isTimeout($err) ? new APITimeoutException($sent, previous: $err) : new APIConnectionException($sent, previous: $err);
             }
 
             $seconds = $this->retryDelay($opts, retryCount: $retryCount, rsp: $rsp);

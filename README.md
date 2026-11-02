@@ -282,7 +282,7 @@ If the response has a `Retry-After` header of more than 0 and at most 60 seconds
 The library retries these errors:
 
 - The status codes 408 Request Timeout, 409 Conflict, 429 Rate Limit and all codes >= 500, for all HTTP methods.
-- Connection errors (`APIConnectionException`) and timeouts (`APITimeoutException`), only for the idempotent methods `GET`, `HEAD`, `PUT`, `DELETE` and `OPTIONS`. Without a response, the library cannot know if the request reached the server, so it does not retry `POST` and `PATCH` requests: a retry could send a document two times. A connection error or a timeout has no `Retry-After` header, so the library uses the backoff.
+- Connection errors (`APIConnectionException`) and timeouts (`APITimeoutException`), only for the idempotent methods `GET`, `HEAD`, `PUT`, `DELETE` and `OPTIONS`. Without a response, the library cannot know if the request reached the server, so it does not retry `POST` and `PATCH` requests after these errors: a retry could send a document two times. Note that a status code such as 504 also does not prove that the server did not process a `POST`; set `maxRetries` to 0 for a request that must never be sent twice. A connection error or a timeout has no `Retry-After` header, so the library uses the backoff.
 
 After the last attempt, the library throws the error of that attempt.
 
