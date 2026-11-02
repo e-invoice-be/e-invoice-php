@@ -8,6 +8,7 @@ use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\DateOf;
 use EInvoiceAPI\Stats\StatGetResponse\Action;
 use EInvoiceAPI\Stats\StatGetResponse\Aggregation;
 
@@ -55,13 +56,13 @@ final class StatGetResponse implements BaseModel
     /**
      * End date of the period.
      */
-    #[Required('period_end')]
+    #[Required('period_end', type: new DateOf)]
     public \DateTimeInterface $periodEnd;
 
     /**
      * Start date of the period.
      */
-    #[Required('period_start')]
+    #[Required('period_start', type: new DateOf)]
     public \DateTimeInterface $periodStart;
 
     /**

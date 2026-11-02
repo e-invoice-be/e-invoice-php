@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Bug Fixes
+
+* date-time values keep their fractions of a second. They go out in the RFC 3339 format with microseconds, e.g. `2019-12-27T18:11:19.117000+00:00` instead of `2019-12-27T18:11:19+00:00`. This applies to the `dateFrom` and `dateTo` filters of `inbox`, `outbox` and `drafts`, the `receivedFrom` and `receivedTo` filters of `mailbox`, and to the JSON form of the response models (`json_encode()`). Fields with the `date` format, such as `invoiceDate`, `dueDate` and the line item `date`, keep the format they had
+
 ## 0.8.0 (2026-11-02)
 
 Full Changelog: [v0.7.2...v0.8.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.2...v0.8.0)

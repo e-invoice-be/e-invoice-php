@@ -8,6 +8,7 @@ use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\DateOf;
 use EInvoiceAPI\Documents\DocumentCreateParams\Allowance;
 use EInvoiceAPI\Documents\DocumentCreateParams\Allowance\ReasonCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Allowance\TaxCode;
@@ -264,13 +265,13 @@ final class DocumentCreateParams implements BaseModel
     /**
      * The date when payment is due.
      */
-    #[Optional('due_date', nullable: true)]
+    #[Optional('due_date', type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $dueDate;
 
     /**
      * The date when the invoice was issued.
      */
-    #[Optional('invoice_date', nullable: true)]
+    #[Optional('invoice_date', type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $invoiceDate;
 
     /**
@@ -316,7 +317,7 @@ final class DocumentCreateParams implements BaseModel
     /**
      * The preceding invoice issue date (BT-26).
      */
-    #[Optional('preceding_invoice_date', nullable: true)]
+    #[Optional('preceding_invoice_date', type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $precedingInvoiceDate;
 
     /**
@@ -376,13 +377,13 @@ final class DocumentCreateParams implements BaseModel
     /**
      * The end date of the service period or delivery period.
      */
-    #[Optional('service_end_date', nullable: true)]
+    #[Optional('service_end_date', type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $serviceEndDate;
 
     /**
      * The start date of the service period or delivery period.
      */
-    #[Optional('service_start_date', nullable: true)]
+    #[Optional('service_start_date', type: new DateOf, nullable: true)]
     public ?\DateTimeInterface $serviceStartDate;
 
     /**
