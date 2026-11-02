@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### ⚠ BREAKING CHANGES
+
+* remove the `timeout` request option (`RequestOptions::$timeout`, `withTimeout()` and `RequestOptions::with(timeout: ...)`). The option had no effect, because PSR-18 has no timeout parameter. Set the timeout on the PSR-18 client and give that client as the `transporter` option. Calls that pass arguments to `RequestOptions::with()` by position must switch to named arguments
+
+### Documentation
+
+* add a Timeouts section to the README with examples for Symfony HttpClient and Guzzle
+
 ## 0.8.0 (2026-11-02)
 
 Full Changelog: [v0.7.2...v0.8.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.7.2...v0.8.0)

@@ -18,7 +18,6 @@ use const EInvoiceAPI\Core\OMIT as omit;
 
 /**
  * @phpstan-type request_options = array{
- *   timeout?: float|null,
  *   maxRetries?: int|null,
  *   initialRetryDelay?: float|null,
  *   maxRetryDelay?: float|null,
@@ -36,9 +35,6 @@ final class RequestOptions implements BaseModel
 {
     /** @use SdkModel<request_options> */
     use SdkModel;
-
-    #[Property]
-    public float $timeout = 60;
 
     #[Property]
     public int $maxRetries = 2;
@@ -94,7 +90,6 @@ final class RequestOptions implements BaseModel
      * @param mixed|Omit $extraBodyParams
      */
     public static function with(
-        ?float $timeout = null,
         ?int $maxRetries = null,
         ?float $initialRetryDelay = null,
         ?float $maxRetryDelay = null,
@@ -108,7 +103,6 @@ final class RequestOptions implements BaseModel
     ): self {
         $self = new self;
 
-        null !== $timeout && $self->timeout = $timeout;
         null !== $maxRetries && $self->maxRetries = $maxRetries;
         null !== $initialRetryDelay && $self
             ->initialRetryDelay = $initialRetryDelay
@@ -121,14 +115,6 @@ final class RequestOptions implements BaseModel
         null !== $uriFactory && $self->uriFactory = $uriFactory;
         null !== $streamFactory && $self->streamFactory = $streamFactory;
         null !== $requestFactory && $self->requestFactory = $requestFactory;
-
-        return $self;
-    }
-
-    public function withTimeout(float $timeout): self
-    {
-        $self = clone $this;
-        $self->timeout = $timeout;
 
         return $self;
     }
