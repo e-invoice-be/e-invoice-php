@@ -33,6 +33,11 @@ use Psr\Http\Message\UriInterface;
  */
 abstract class BaseClient
 {
+    /**
+     * The methods that are retried after a connection error or a timeout.
+     */
+    private const IDEMPOTENT_METHODS = ['GET', 'HEAD', 'PUT', 'DELETE', 'OPTIONS'];
+
     protected UriInterface $baseUrl;
 
     /**
@@ -156,9 +161,14 @@ abstract class BaseClient
 
     /**
      * @internal
+     *
+     * Without a response (a connection error or a timeout), only idempotent methods
+     * are retried: the first request may have reached the server, and a retry of a
+     * `POST` could send a document two times
      */
     protected function shouldRetry(
         RequestOptions $opts,
+        RequestInterface $req,
         int $retryCount,
         ?ResponseInterface $rsp
     ): bool {
@@ -166,7 +176,11 @@ abstract class BaseClient
             return false;
         }
 
-        $code = $rsp?->getStatusCode();
+        if (is_null($rsp)) {
+            return in_array(strtoupper($req->getMethod()), self::IDEMPOTENT_METHODS, true);
+        }
+
+        $code = $rsp->getStatusCode();
         if (408 == $code || 409 == $code || 429 == $code || $code >= 500) {
             return true;
         }
@@ -256,7 +270,7 @@ abstract class BaseClient
         }
 
         if ($code >= 400 || is_null($rsp)) {
-            if (!$this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp)) {
+            if (!$this->shouldRetry($opts, req: $req, retryCount: $retryCount, rsp: $rsp)) {
                 if (!is_null($rsp)) {
                     throw APIStatusException::from(request: $req, response: $rsp);
                 }

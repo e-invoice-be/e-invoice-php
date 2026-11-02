@@ -279,7 +279,12 @@ The library automatically retries some errors 2 times by default, with an expone
 
 If the response has a `Retry-After` header of more than 0 and at most 60 seconds, the library waits that time instead. The header can be a number of seconds or an HTTP date in the form `Sun, 06 Nov 1994 08:49:37 GMT`. For any other `Retry-After`, the library uses the backoff.
 
-The library retries these status codes: 408 Request Timeout, 409 Conflict, 429 Rate Limit and all codes >= 500. It does not retry connection errors and timeouts.
+The library retries these errors:
+
+- The status codes 408 Request Timeout, 409 Conflict, 429 Rate Limit and all codes >= 500, for all HTTP methods.
+- Connection errors (`APIConnectionException`) and timeouts (`APITimeoutException`), only for the idempotent methods `GET`, `HEAD`, `PUT`, `DELETE` and `OPTIONS`. Without a response, the library cannot know if the request reached the server, so it does not retry `POST` and `PATCH` requests: a retry could send a document two times. A connection error or a timeout has no `Retry-After` header, so the library uses the backoff.
+
+After the last attempt, the library throws the error of that attempt.
 
 Use the `maxRetries` option to change or disable the retries for a request:
 
