@@ -292,6 +292,43 @@ $document = $client->documents->retrieve(
 );
 ```
 
+### Timeouts
+
+The library has no timeout option, because [PSR-18](https://www.php-fig.org/psr/psr-18/) has no timeout parameter. The timeout of a request is the timeout of the PSR-18 client that sends it. To change it, configure the timeout on your HTTP client and give that client as the `transporter` option. When the client reports a timeout, the library throws `APITimeoutException`.
+
+With [Symfony HttpClient](https://symfony.com/doc/current/http_client.html), `timeout` is the maximum idle time and `max_duration` is the maximum total time of a request, in seconds:
+
+```php
+<?php
+
+use EInvoiceAPI\RequestOptions;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient\Psr18Client;
+
+$transporter = new Psr18Client(HttpClient::create(['timeout' => 10, 'max_duration' => 30]));
+
+$document = $client->documents->retrieve(
+  'doc_123',
+  requestOptions: RequestOptions::with(transporter: $transporter),
+);
+```
+
+With [Guzzle](https://docs.guzzlephp.org/en/stable/request-options.html#timeout), `connect_timeout` is the maximum time to connect and `timeout` is the maximum total time of a request, in seconds:
+
+```php
+<?php
+
+use EInvoiceAPI\RequestOptions;
+use GuzzleHttp\Client as GuzzleClient;
+
+$transporter = new GuzzleClient(['connect_timeout' => 5, 'timeout' => 30]);
+
+$document = $client->documents->retrieve(
+  'doc_123',
+  requestOptions: RequestOptions::with(transporter: $transporter),
+);
+```
+
 ## Advanced concepts
 
 ### Raw responses
@@ -311,7 +348,7 @@ $document = $response->parse();
 
 ### Using a different HTTP client
 
-By default the library uses the PSR-18 client and the PSR-17 factories that [`php-http/discovery`](https://github.com/php-http/discovery) finds. To use a different PSR-18 client for a request, for example one with your timeout or proxy configuration, give it as the `transporter` option:
+By default the library uses the PSR-18 client and the PSR-17 factories that [`php-http/discovery`](https://github.com/php-http/discovery) finds. To use a different PSR-18 client for a request, for example one with your [timeout](#timeouts) or proxy configuration, give it as the `transporter` option:
 
 ```php
 <?php
