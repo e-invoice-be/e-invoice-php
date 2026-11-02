@@ -13,6 +13,7 @@ use EInvoiceAPI\Documents\DocumentCreateParams\Allowance\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentDirection;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse;
 use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
@@ -52,15 +53,17 @@ interface DocumentsContract
      *   taxCode?: 'AE'|'E'|'S'|'Z'|'G'|'O'|'K'|'L'|'M'|'B'|\EInvoiceAPI\Documents\DocumentCreateParams\Charge\TaxCode|null,
      *   taxRate?: float|string|null,
      * }>|null $charges Body param:
+     * @param string|null $buyerReference Body param: The buyer reference (BT-10), e.g. a cost centre or accounting reference requested by the buyer
      * @param bool $constructPdf query param: If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL
      * @param 'EUR'|'USD'|'GBP'|'JPY'|'CHF'|'CAD'|'AUD'|'NZD'|'CNY'|'INR'|'SEK'|'NOK'|'DKK'|'SGD'|'HKD'|CurrencyCode $currency Body param: Currency of the invoice (ISO 4217 currency code)
      * @param string|null $customerAddress Body param: The address of the customer/buyer
-     * @param string|null $customerAddressRecipient Body param: The recipient name at the customer address
+     * @param string|null $customerAddressRecipient Body param: The recipient name at the customer address. Also the customer contact name (BT-56) in the UBL
      * @param string|null $customerCompanyID Body param: Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
      * @param string|null $customerEmail Body param: The email address of the customer
      * @param string|null $customerID Body param: The unique identifier for the customer in your system
      * @param string|null $customerName Body param: The company name of the customer/buyer
      * @param string|null $customerPeppolID Body param: Customer Peppol ID
+     * @param string|null $customerPhone Body param: The telephone number of the customer contact (BT-57)
      * @param string|null $customerTaxID Body param: Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
      * @param 'INBOUND'|'OUTBOUND'|DocumentDirection $direction Body param: The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
      * @param 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType $documentType Body param: The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
@@ -88,9 +91,11 @@ interface DocumentsContract
      *     taxCode?: 'AE'|'E'|'S'|'Z'|'G'|'O'|'K'|'L'|'M'|'B'|\EInvoiceAPI\Documents\DocumentCreateParams\Item\Charge\TaxCode|null,
      *     taxRate?: float|string|null,
      *   }>|null,
-     *   date?: null,
+     *   date?: string|\DateTimeInterface|null,
      *   description?: string|null,
      *   itemAttributes?: list<array{name: string, value?: string|null}>|null,
+     *   name?: string|null,
+     *   priceBaseQuantity?: float|string,
      *   productCode?: string|null,
      *   quantity?: float|string|null,
      *   tax?: float|string|null,
@@ -106,10 +111,14 @@ interface DocumentsContract
      *   swift?: string|null,
      * }|PaymentDetailCreate>|null $paymentDetails Body param:
      * @param string|null $paymentTerm Body param: The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+     * @param string|\DateTimeInterface|null $precedingInvoiceDate Body param: The preceding invoice issue date (BT-26)
+     * @param string|null $precedingInvoiceID Body param: The preceding invoice reference (BT-25): the number of the invoice this document corrects, for example the invoice a credit note credits
      * @param float|string|null $previousUnpaidBalance Body param: The previous unpaid balance from prior invoices, if any. Must be positive and rounded to maximum 2 decimals
-     * @param string|null $purchaseOrder Body param: The purchase order reference number
+     * @param string|null $purchaseOrder Body param: The purchase order reference number (BT-13)
      * @param string|null $remittanceAddress Body param: The address where payment should be sent or remitted to
      * @param string|null $remittanceAddressRecipient Body param: The recipient name at the remittance address
+     * @param float|string|null $roundingAmount Body param: The amount added to the invoice total to round the amount for payment (BT-114), for example to whole kronor (amount_due = invoice_total + rounding_amount when nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum 2 decimals
+     * @param string|null $salesOrder Body param: The sales order reference (BT-14) assigned by the seller
      * @param string|null $serviceAddress Body param: The address where services were performed or goods were delivered
      * @param string|null $serviceAddressRecipient Body param: The recipient name at the service address
      * @param string|\DateTimeInterface|null $serviceEndDate Body param: The end date of the service period or delivery period
@@ -122,18 +131,21 @@ interface DocumentsContract
      * @param list<array{
      *   amount?: float|string|null, rate?: string|null
      * }>|null $taxDetails Body param:
+     * @param string|null $taxCurrency Body param: The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is accounted in a currency other than the invoice currency. Must differ from currency and requires total_tax_in_tax_currency
      * @param float|string|null $totalDiscount Body param: The net financial discount/charge of the invoice (non-VAT charges minus non-VAT allowances). Can be positive (net charge), negative (net discount), or zero. Must be rounded to maximum 2 decimals
      * @param float|string|null $totalTax Body param: The total tax amount of the invoice. Must be positive and rounded to maximum 2 decimals
+     * @param float|string|null $totalTaxInTaxCurrency Body param: The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
      * @param 'VATEX-EU-79-C'|'VATEX-EU-132'|'VATEX-EU-132-1A'|'VATEX-EU-132-1B'|'VATEX-EU-132-1C'|'VATEX-EU-132-1D'|'VATEX-EU-132-1E'|'VATEX-EU-132-1F'|'VATEX-EU-132-1G'|'VATEX-EU-132-1H'|'VATEX-EU-132-1I'|'VATEX-EU-132-1J'|'VATEX-EU-132-1K'|'VATEX-EU-132-1L'|'VATEX-EU-132-1M'|'VATEX-EU-132-1N'|'VATEX-EU-132-1O'|'VATEX-EU-132-1P'|'VATEX-EU-132-1Q'|'VATEX-EU-143'|'VATEX-EU-143-1A'|'VATEX-EU-143-1B'|'VATEX-EU-143-1C'|'VATEX-EU-143-1D'|'VATEX-EU-143-1E'|'VATEX-EU-143-1F'|'VATEX-EU-143-1FA'|'VATEX-EU-143-1G'|'VATEX-EU-143-1H'|'VATEX-EU-143-1I'|'VATEX-EU-143-1J'|'VATEX-EU-143-1K'|'VATEX-EU-143-1L'|'VATEX-EU-144'|'VATEX-EU-146-1E'|'VATEX-EU-148'|'VATEX-EU-148-A'|'VATEX-EU-148-B'|'VATEX-EU-148-C'|'VATEX-EU-148-D'|'VATEX-EU-148-E'|'VATEX-EU-148-F'|'VATEX-EU-148-G'|'VATEX-EU-151'|'VATEX-EU-151-1A'|'VATEX-EU-151-1AA'|'VATEX-EU-151-1B'|'VATEX-EU-151-1C'|'VATEX-EU-151-1D'|'VATEX-EU-151-1E'|'VATEX-EU-159'|'VATEX-EU-309'|'VATEX-EU-AE'|'VATEX-EU-D'|'VATEX-EU-F'|'VATEX-EU-G'|'VATEX-EU-I'|'VATEX-EU-IC'|'VATEX-EU-O'|'VATEX-EU-J'|'VATEX-FR-FRANCHISE'|'VATEX-FR-CNWVAT'|Vatex|null $vatex Body param: VATEX code list for VAT exemption reasons
      *
      * Agency: CEF
      * Identifier: vatex
      * @param string|null $vatexNote Body param: Textual explanation for VAT exemption
      * @param string|null $vendorAddress Body param: The address of the vendor/seller
-     * @param string|null $vendorAddressRecipient Body param: The recipient name at the vendor address
+     * @param string|null $vendorAddressRecipient Body param: The recipient name at the vendor address. Also the vendor contact name (BT-41) in the UBL, required when vendor and customer are both in Germany (DE-R-005)
      * @param string|null $vendorCompanyID Body param: Vendor company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
      * @param string|null $vendorEmail Body param: The email address of the vendor
      * @param string|null $vendorName Body param: The name of the vendor/seller/supplier
+     * @param string|null $vendorPhone Body param: The telephone number of the vendor contact (BT-42). Required when vendor and customer are both in Germany (DE-R-006); it must then hold at least 3 digits (DE-R-027, a warning)
      * @param string|null $vendorTaxID Body param: Vendor tax ID. For Belgium this is the VAT number. Must include the country prefix
      *
      * @throws APIException
@@ -144,6 +156,7 @@ interface DocumentsContract
         ?array $attachments = null,
         ?string $billingAddress = null,
         ?string $billingAddressRecipient = null,
+        ?string $buyerReference = null,
         ?array $charges = null,
         ?bool $constructPdf = null,
         string|CurrencyCode|null $currency = null,
@@ -154,6 +167,7 @@ interface DocumentsContract
         ?string $customerID = null,
         ?string $customerName = null,
         ?string $customerPeppolID = null,
+        ?string $customerPhone = null,
         ?string $customerTaxID = null,
         string|DocumentDirection|null $direction = null,
         string|DocumentType|null $documentType = null,
@@ -165,10 +179,14 @@ interface DocumentsContract
         ?string $note = null,
         ?array $paymentDetails = null,
         ?string $paymentTerm = null,
+        string|\DateTimeInterface|null $precedingInvoiceDate = null,
+        ?string $precedingInvoiceID = null,
         float|string|null $previousUnpaidBalance = null,
         ?string $purchaseOrder = null,
         ?string $remittanceAddress = null,
         ?string $remittanceAddressRecipient = null,
+        float|string|null $roundingAmount = null,
+        ?string $salesOrder = null,
         ?string $serviceAddress = null,
         ?string $serviceAddressRecipient = null,
         string|\DateTimeInterface|null $serviceEndDate = null,
@@ -178,9 +196,11 @@ interface DocumentsContract
         string|DocumentState|null $state = null,
         float|string|null $subtotal = null,
         string|\EInvoiceAPI\Documents\DocumentCreateParams\TaxCode $taxCode = 'S',
+        ?string $taxCurrency = null,
         ?array $taxDetails = null,
         float|string|null $totalDiscount = null,
         float|string|null $totalTax = null,
+        float|string|null $totalTaxInTaxCurrency = null,
         string|Vatex|null $vatex = null,
         ?string $vatexNote = null,
         ?string $vendorAddress = null,
@@ -188,6 +208,7 @@ interface DocumentsContract
         ?string $vendorCompanyID = null,
         ?string $vendorEmail = null,
         ?string $vendorName = null,
+        ?string $vendorPhone = null,
         ?string $vendorTaxID = null,
         ?RequestOptions $requestOptions = null,
     ): DocumentResponse;
@@ -227,6 +248,16 @@ interface DocumentsContract
         ?string $vendorTaxID = null,
         ?RequestOptions $requestOptions = null,
     ): DocumentNewFromPdfResponse;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function retrieveLifecycle(
+        string $documentID,
+        ?RequestOptions $requestOptions = null
+    ): DocumentGetLifecycleResponse;
 
     /**
      * @api

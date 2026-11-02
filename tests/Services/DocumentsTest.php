@@ -3,6 +3,12 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse\Event as LifecycleEvent;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse\Event\CanonicalStatus;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse\Event\Direction;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse\Event\Level;
+use EInvoiceAPI\Documents\DocumentGetLifecycleResponse\Event\Source;
 use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
 use EInvoiceAPI\Documents\DocumentGetTimelineResponse\Event;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
@@ -94,6 +100,104 @@ final class DocumentsTest extends ServiceTestCase
     }
 
     #[Test]
+    public function testCreateWithBusinessReferences(): void
+    {
+        $this->http->queueJson([
+            'id' => 'doc_123',
+            'created_at' => '2024-01-15T10:30:00Z',
+        ]);
+
+        $this->client->documents->create(
+            buyerReference: 'CC-42',
+            customerPhone: '+32 2 123 45 67',
+            items: [
+                [
+                    'date' => new \DateTimeImmutable('2024-01-31T00:00:00Z'),
+                    'name' => 'Wireless mouse',
+                    'priceBaseQuantity' => 100,
+                    'unitPrice' => '250.00',
+                ],
+            ],
+            precedingInvoiceDate: '2024-01-15',
+            precedingInvoiceID: 'INV-2024-001',
+            roundingAmount: '-0.40',
+            salesOrder: 'SO-7',
+            taxCurrency: 'SEK',
+            totalTaxInTaxCurrency: 1150.5,
+            vendorPhone: '+49 30 1234567',
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('POST', '/api/documents/', body: [
+            'buyer_reference' => 'CC-42',
+            'customer_phone' => '+32 2 123 45 67',
+            'items' => [
+                [
+                    'date' => '2024-01-31T00:00:00+00:00',
+                    'name' => 'Wireless mouse',
+                    'price_base_quantity' => 100,
+                    'unit_price' => '250.00',
+                ],
+            ],
+            'preceding_invoice_date' => '2024-01-15',
+            'preceding_invoice_id' => 'INV-2024-001',
+            'rounding_amount' => '-0.40',
+            'sales_order' => 'SO-7',
+            'tax_code' => 'S',
+            'tax_currency' => 'SEK',
+            'total_tax_in_tax_currency' => 1150.5,
+            'vendor_phone' => '+49 30 1234567',
+        ]);
+    }
+
+    #[Test]
+    public function testRetrieveWithBusinessReferences(): void
+    {
+        $this->http->queueJson([
+            'id' => 'document_id',
+            'created_at' => '2024-01-15T10:30:00Z',
+            'buyer_reference' => 'CC-42',
+            'customer_phone' => '+32 2 123 45 67',
+            'items' => [
+                [
+                    'date' => '2024-01-31',
+                    'description' => 'Ergonomic, 2.4 GHz',
+                    'name' => 'Wireless mouse',
+                    'price_base_quantity' => '100',
+                ],
+            ],
+            'preceding_invoice_date' => '2024-01-15',
+            'preceding_invoice_id' => 'INV-2024-001',
+            'rounding_amount' => '-0.40',
+            'sales_order' => 'SO-7',
+            'tax_currency' => 'SEK',
+            'total_tax_in_tax_currency' => '1150.50',
+            'vendor_phone' => '+49 30 1234567',
+        ]);
+
+        $result = $this->client->documents->retrieve(
+            'document_id',
+            requestOptions: $this->options()
+        );
+
+        $this->assertSame('CC-42', $result->buyerReference);
+        $this->assertSame('+32 2 123 45 67', $result->customerPhone);
+        $this->assertSame('2024-01-15', $result->precedingInvoiceDate?->format('Y-m-d'));
+        $this->assertSame('INV-2024-001', $result->precedingInvoiceID);
+        $this->assertSame('-0.40', $result->roundingAmount);
+        $this->assertSame('SO-7', $result->salesOrder);
+        $this->assertSame('SEK', $result->taxCurrency);
+        $this->assertSame('1150.50', $result->totalTaxInTaxCurrency);
+        $this->assertSame('+49 30 1234567', $result->vendorPhone);
+
+        $item = ($result->items ?? [])[0];
+        $this->assertSame('2024-01-31', $item->date?->format('Y-m-d'));
+        $this->assertSame('Wireless mouse', $item->name);
+        $this->assertSame('Ergonomic, 2.4 GHz', $item->description);
+        $this->assertSame('100', $item->priceBaseQuantity);
+    }
+
+    #[Test]
     public function testRetrieve(): void
     {
         $this->http->queueJson([
@@ -179,6 +283,107 @@ final class DocumentsTest extends ServiceTestCase
         $this->assertInstanceOf(DocumentNewFromPdfResponse::class, $result);
         $this->assertSame('customer_tax_id', $result->customerTaxID);
         $this->assertSame('vendor_tax_id', $result->vendorTaxID);
+    }
+
+    #[Test]
+    public function testCreateFromPdfWithBusinessReferences(): void
+    {
+        $this->http->queueJson([
+            'buyer_reference' => 'CC-42',
+            'customer_phone' => '+32 2 123 45 67',
+            'items' => [['date' => '2024-01-31', 'name' => 'Wireless mouse', 'price_base_quantity' => '1']],
+            'note' => 'Thank you',
+            'payment_details' => [['iban' => 'BE71096123456769']],
+            'preceding_invoice_date' => '2024-01-15',
+            'preceding_invoice_id' => 'INV-2024-001',
+            'rounding_amount' => '0.10',
+            'sales_order' => 'SO-7',
+            'subtotal' => '100.00',
+            'success' => true,
+            'tax_currency' => 'SEK',
+            'total_tax_in_tax_currency' => '1150.50',
+            'vendor_phone' => '+49 30 1234567',
+        ]);
+
+        $result = $this->client->documents->createFromPdf(
+            file: 'file',
+            requestOptions: $this->options()
+        );
+
+        $this->assertSame('CC-42', $result->buyerReference);
+        $this->assertSame('+32 2 123 45 67', $result->customerPhone);
+        $this->assertSame('Wireless mouse', ($result->items ?? [])[0]->name);
+        $this->assertSame('2024-01-31', ($result->items ?? [])[0]->date?->format('Y-m-d'));
+        $this->assertSame('Thank you', $result->note);
+        $this->assertSame('BE71096123456769', ($result->paymentDetails ?? [])[0]->iban);
+        $this->assertSame('2024-01-15', $result->precedingInvoiceDate?->format('Y-m-d'));
+        $this->assertSame('INV-2024-001', $result->precedingInvoiceID);
+        $this->assertSame('0.10', $result->roundingAmount);
+        $this->assertSame('SO-7', $result->salesOrder);
+        $this->assertSame('100.00', $result->subtotal);
+        $this->assertTrue($result->success);
+        $this->assertSame('SEK', $result->taxCurrency);
+        $this->assertSame('1150.50', $result->totalTaxInTaxCurrency);
+        $this->assertSame('+49 30 1234567', $result->vendorPhone);
+    }
+
+    #[Test]
+    public function testRetrieveLifecycle(): void
+    {
+        $this->http->queueJson([
+            'document_id' => 'document_id',
+            'events' => [
+                [
+                    'level' => 'transport',
+                    'canonical_status' => 'delivered',
+                    'native_code' => 'AP',
+                    'source' => 'peppol:mlr',
+                    'direction' => 'in',
+                    'reason_code' => null,
+                    'reason' => null,
+                    'occurred_at' => '2024-01-15T10:31:00Z',
+                ],
+                [
+                    'level' => 'business',
+                    'canonical_status' => null,
+                    'native_code' => 'XX',
+                    'source' => 'fr:superpdp',
+                    'direction' => 'in',
+                    'reason_code' => 'REF',
+                    'reason' => 'Unknown reference',
+                    'occurred_at' => '2024-01-16T09:00:00Z',
+                ],
+            ],
+        ]);
+
+        $result = $this->client->documents->retrieveLifecycle(
+            'document_id',
+            requestOptions: $this->options()
+        );
+
+        $this->assertRequest('GET', '/api/documents/document_id/lifecycle');
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DocumentGetLifecycleResponse::class, $result);
+        $this->assertSame('document_id', $result->documentID);
+        $this->assertCount(2, $result->events);
+        $this->assertContainsOnlyInstancesOf(LifecycleEvent::class, $result->events);
+
+        [$delivered, $unmapped] = $result->events;
+        $this->assertSame(Level::TRANSPORT->value, $delivered->level);
+        $this->assertSame(CanonicalStatus::DELIVERED->value, $delivered->canonicalStatus);
+        $this->assertSame('AP', $delivered->nativeCode);
+        $this->assertSame(Source::PEPPOL_MLR->value, $delivered->source);
+        $this->assertSame(Direction::IN->value, $delivered->direction);
+        $this->assertNull($delivered->reasonCode);
+        $this->assertNull($delivered->reason);
+        $this->assertSame('2024-01-15T10:31:00+00:00', $delivered->occurredAt->format(DATE_ATOM));
+
+        $this->assertSame('business', $unmapped->level);
+        $this->assertNull($unmapped->canonicalStatus);
+        $this->assertSame('XX', $unmapped->nativeCode);
+        $this->assertSame('fr:superpdp', $unmapped->source);
+        $this->assertSame('REF', $unmapped->reasonCode);
+        $this->assertSame('Unknown reference', $unmapped->reason);
     }
 
     #[Test]

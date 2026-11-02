@@ -126,7 +126,7 @@ The client has one property for each resource of the API. Together they cover th
 
 | Property                           | Methods                                                                                 |
 | ---------------------------------- | --------------------------------------------------------------------------------------- |
-| `$client->documents`               | `create`, `retrieve`, `delete`, `createFromPdf`, `retrieveTimeline`, `send`, `validate` |
+| `$client->documents`               | `create`, `retrieve`, `delete`, `createFromPdf`, `retrieveTimeline`, `retrieveLifecycle`, `send`, `validate` |
 | `$client->documents->attachments`  | `retrieve`, `list`, `delete`, `add`                                                     |
 | `$client->documents->ubl`          | `createFromUbl`, `get`                                                                  |
 | `$client->inbox`                   | `list`, `listInvoices`, `listCreditNotes`                                               |
@@ -248,9 +248,12 @@ try {
   echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusException $e) {
   echo "Another non-200-range status code was received", PHP_EOL;
-  echo $e->getMessage();
+  echo $e->status, PHP_EOL;
+  var_dump($e->body['detail'] ?? $e->body);
 }
 ```
+
+`$e->body` holds the decoded error body. Most errors return `{"detail": "..."}`. A 422 validation error returns `{"detail": [{"loc": [...], "msg": "...", "type": "..."}]}`. A body that is not JSON is kept as a string, and an empty body is `null`.
 
 The error types are as follows:
 

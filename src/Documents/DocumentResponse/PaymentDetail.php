@@ -22,7 +22,7 @@ final class PaymentDetail implements BaseModel
     use SdkModel;
 
     /**
-     * Bank account number (for non-IBAN accounts).
+     * Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces and hyphens are removed.
      */
     #[Optional('bank_account_number', nullable: true)]
     public ?string $bankAccountNumber;
@@ -40,7 +40,7 @@ final class PaymentDetail implements BaseModel
     public ?string $paymentReference;
 
     /**
-     * SWIFT/BIC code of the bank.
+     * The payment service provider identifier (BT-86): the BIC of the payee's bank, or `SE:BANKGIRO` / `SE:PLUSGIRO` when `bank_account_number` is a Swedish bankgiro or plusgiro number.
      */
     #[Optional(nullable: true)]
     public ?string $swift;
@@ -72,7 +72,7 @@ final class PaymentDetail implements BaseModel
     }
 
     /**
-     * Bank account number (for non-IBAN accounts).
+     * Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces and hyphens are removed.
      */
     public function withBankAccountNumber(?string $bankAccountNumber): self
     {
@@ -105,7 +105,7 @@ final class PaymentDetail implements BaseModel
     }
 
     /**
-     * SWIFT/BIC code of the bank.
+     * The payment service provider identifier (BT-86): the BIC of the payee's bank, or `SE:BANKGIRO` / `SE:PLUSGIRO` when `bank_account_number` is a Swedish bankgiro or plusgiro number.
      */
     public function withSwift(?string $swift): self
     {

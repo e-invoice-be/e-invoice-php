@@ -82,7 +82,7 @@ final class MeGetResponse implements BaseModel
     public ?string $companyNumber;
 
     /**
-     * Company tax ID. For Belgium this is the VAT number. Must include the country prefix.
+     * Company tax ID (VAT number), including the country prefix. Stored in compact form: uppercased with separators removed, e.g. `BE0123456789`.
      */
     #[Optional('company_tax_id', nullable: true)]
     public ?string $companyTaxID;
@@ -127,13 +127,13 @@ final class MeGetResponse implements BaseModel
     public ?string $plan;
 
     /**
-     * Whether the tenant is registered on our SMP.
+     * Legacy field. Does not show whether a Peppol ID is published: it is usually `false`, also for a tenant whose Peppol IDs are published.
      */
     #[Optional('smp_registration', nullable: true)]
     public ?bool $smpRegistration;
 
     /**
-     * Date when the tenant was registered on SMP.
+     * Legacy field. Does not show whether or when a Peppol ID was published.
      */
     #[Optional('smp_registration_date', nullable: true)]
     public ?\DateTimeInterface $smpRegistrationDate;
@@ -295,7 +295,7 @@ final class MeGetResponse implements BaseModel
     }
 
     /**
-     * Company tax ID. For Belgium this is the VAT number. Must include the country prefix.
+     * Company tax ID (VAT number), including the country prefix. Stored in compact form: uppercased with separators removed, e.g. `BE0123456789`.
      */
     public function withCompanyTaxID(?string $companyTaxID): self
     {
@@ -375,7 +375,7 @@ final class MeGetResponse implements BaseModel
     }
 
     /**
-     * Whether the tenant is registered on our SMP.
+     * Legacy field. Does not show whether a Peppol ID is published: it is usually `false`, also for a tenant whose Peppol IDs are published.
      */
     public function withSmpRegistration(?bool $smpRegistration): self
     {
@@ -386,7 +386,7 @@ final class MeGetResponse implements BaseModel
     }
 
     /**
-     * Date when the tenant was registered on SMP.
+     * Legacy field. Does not show whether or when a Peppol ID was published.
      */
     public function withSmpRegistrationDate(
         ?\DateTimeInterface $smpRegistrationDate

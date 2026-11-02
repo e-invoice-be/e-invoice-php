@@ -38,6 +38,9 @@ final class UblDocumentValidation implements BaseModel
     #[Required(list: Issue::class)]
     public array $issues;
 
+    /**
+     * The UBL document as an XML string, returned whenever it could be generated, also when the document is not valid. Only is_valid tells whether it is valid.
+     */
     #[Optional('ubl_document', nullable: true)]
     public ?string $ublDocument;
 
@@ -141,6 +144,9 @@ final class UblDocumentValidation implements BaseModel
         return $self;
     }
 
+    /**
+     * The UBL document as an XML string, returned whenever it could be generated, also when the document is not valid. Only is_valid tells whether it is valid.
+     */
     public function withUblDocument(?string $ublDocument): self
     {
         $self = clone $this;

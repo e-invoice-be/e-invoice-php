@@ -19,9 +19,11 @@ use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge;
  *   allowances?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Allowance>|null,
  *   amount?: float|string|null,
  *   charges?: list<\EInvoiceAPI\Validate\ValidateValidateJsonParams\Item\Charge>|null,
- *   date?: null,
+ *   date?: \DateTimeInterface|null,
  *   description?: string|null,
  *   itemAttributes?: list<Attribute>|null,
+ *   name?: string|null,
+ *   priceBaseQuantity?: float|string,
  *   productCode?: string|null,
  *   quantity?: float|string|null,
  *   tax?: float|string|null,
@@ -63,12 +65,11 @@ final class Item implements BaseModel
     )]
     public ?array $charges;
 
-    /** @var null $date */
-    #[Optional(type: 'null', nullable: true)]
-    public mixed $date;
+    #[Optional(nullable: true)]
+    public ?\DateTimeInterface $date;
 
     /**
-     * The description of the line item.
+     * The description of the line item (BT-154). Doubles as the item name when `name` is omitted, so a posted line item needs a `name` or a `description`. On a received document it holds the item description, or the item name (BT-153) when the document has no item description; CII documents with both combine them as `name: description`.
      */
     #[Optional(nullable: true)]
     public ?string $description;
@@ -84,6 +85,18 @@ final class Item implements BaseModel
         nullable: true,
     )]
     public ?array $itemAttributes;
+
+    /**
+     * The item name (BT-153), for example the product name. Written to cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the item name. A posted line item needs a `name` or a `description`; a line item with neither is rejected with 422.
+     */
+    #[Optional(nullable: true)]
+    public ?string $name;
+
+    /**
+     * The item price base quantity (BT-149). The number of item units to which the unit price applies, for example 100 when the unit price is a price for each 100 units. Must be greater than 0. Defaults to 1.
+     */
+    #[Optional('price_base_quantity')]
+    public float|string|null $priceBaseQuantity;
 
     /**
      * The product code of the line item.
@@ -110,7 +123,7 @@ final class Item implements BaseModel
     public float|string|null $taxRate;
 
     /**
-     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
+     * The unit of measure of the line item.
      *
      * @var value-of<UnitOfMeasureCode>|null $unit
      */
@@ -151,7 +164,6 @@ final class Item implements BaseModel
      *   taxCode?: value-of<Charge\TaxCode>|null,
      *   taxRate?: float|string|null,
      * }>|null $charges
-     * @param null $date
      * @param list<Attribute|array{name: string, value?: string|null}>|null $itemAttributes
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */
@@ -159,9 +171,11 @@ final class Item implements BaseModel
         ?array $allowances = null,
         float|string|null $amount = null,
         ?array $charges = null,
-        mixed $date = null,
+        ?\DateTimeInterface $date = null,
         ?string $description = null,
         ?array $itemAttributes = null,
+        ?string $name = null,
+        float|string|null $priceBaseQuantity = null,
         ?string $productCode = null,
         float|string|null $quantity = null,
         float|string|null $tax = null,
@@ -169,17 +183,16 @@ final class Item implements BaseModel
         UnitOfMeasureCode|string|null $unit = null,
         float|string|null $unitPrice = null,
     ): self {
-        null === $date || throw new \TypeError('The date of a line item must be null.');
-
         $self = new self;
-
-        $self['date'] = $date;
 
         null !== $allowances && $self['allowances'] = $allowances;
         null !== $amount && $self['amount'] = $amount;
         null !== $charges && $self['charges'] = $charges;
+        null !== $date && $self['date'] = $date;
         null !== $description && $self['description'] = $description;
         null !== $itemAttributes && $self['itemAttributes'] = $itemAttributes;
+        null !== $name && $self['name'] = $name;
+        null !== $priceBaseQuantity && $self['priceBaseQuantity'] = $priceBaseQuantity;
         null !== $productCode && $self['productCode'] = $productCode;
         null !== $quantity && $self['quantity'] = $quantity;
         null !== $tax && $self['tax'] = $tax;
@@ -243,13 +256,8 @@ final class Item implements BaseModel
         return $self;
     }
 
-    /**
-     * @param null $date
-     */
-    public function withDate(mixed $date): self
+    public function withDate(?\DateTimeInterface $date): self
     {
-        null === $date || throw new \TypeError('The date of a line item must be null.');
-
         $self = clone $this;
         $self['date'] = $date;
 
@@ -257,7 +265,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * The description of the line item.
+     * The description of the line item (BT-154). Doubles as the item name when `name` is omitted, so a posted line item needs a `name` or a `description`. On a received document it holds the item description, or the item name (BT-153) when the document has no item description; CII documents with both combine them as `name: description`.
      */
     public function withDescription(?string $description): self
     {
@@ -276,6 +284,28 @@ final class Item implements BaseModel
     {
         $self = clone $this;
         $self['itemAttributes'] = $itemAttributes;
+
+        return $self;
+    }
+
+    /**
+     * The item name (BT-153), for example the product name. Written to cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the item name. A posted line item needs a `name` or a `description`; a line item with neither is rejected with 422.
+     */
+    public function withName(?string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * The item price base quantity (BT-149). The number of item units to which the unit price applies, for example 100 when the unit price is a price for each 100 units. Must be greater than 0. Defaults to 1.
+     */
+    public function withPriceBaseQuantity(float|string $priceBaseQuantity): self
+    {
+        $self = clone $this;
+        $self['priceBaseQuantity'] = $priceBaseQuantity;
 
         return $self;
     }
@@ -325,7 +355,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
+     * The unit of measure of the line item.
      *
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */

@@ -9,6 +9,9 @@ class APIException extends EInvoiceAPIException
 {
     public ?int $status = null;
 
+    /**
+     * The decoded error body of the response, such as `['detail' => '...']`.
+     */
     public mixed $body = null;
 
     public ?ResponseInterface $response = null;

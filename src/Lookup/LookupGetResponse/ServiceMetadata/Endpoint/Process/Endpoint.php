@@ -42,7 +42,7 @@ final class Endpoint implements BaseModel
     public string $transportProfile;
 
     /**
-     * Certificate information for a Peppol endpoint.
+     * Certificate information for this endpoint.
      */
     #[Optional(nullable: true)]
     public ?Certificate $certificate;
@@ -153,7 +153,7 @@ final class Endpoint implements BaseModel
     }
 
     /**
-     * Certificate information for a Peppol endpoint.
+     * Certificate information for this endpoint.
      *
      * @param Certificate|array{
      *   status: string, details?: array<string,mixed>|null, error?: string|null
