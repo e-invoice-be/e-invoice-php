@@ -51,7 +51,7 @@ final class Allowance implements BaseModel
     public ?string $reason;
 
     /**
-     * Allowance reason codes for invoice discounts and charges.
+     * The code for the allowance reason.
      *
      * @var value-of<ReasonCode>|null $reasonCode
      */
@@ -155,7 +155,7 @@ final class Allowance implements BaseModel
     }
 
     /**
-     * Allowance reason codes for invoice discounts and charges.
+     * The code for the allowance reason.
      *
      * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
      */

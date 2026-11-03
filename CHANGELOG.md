@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.9.0 (2026-11-03)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.8.0...v0.9.0)
+
+Checked against the live OpenAPI specification (v1.1.0). All 41 operations have a matching SDK method, and the spec removes or renames nothing.
 
 ### ⚠ BREAKING CHANGES
 
@@ -23,6 +27,8 @@
 * add a Timeouts section to the README with examples for Symfony HttpClient and Guzzle
 * describe the retry delays and the `initialRetryDelay` and `maxRetryDelay` options in the README
 * describe in the README which errors are retried for which HTTP methods
+* align docstrings with the API specification: nullable enum properties (`vatex`, the line item `unit`, the allowance and charge `reasonCode`, the charge `taxCode`) now carry the property's own description instead of the enum's, and the `retrieveLifecycle()` description is complete
+* the `@phpstan` array shape of `PaginatedDocumentResponse::with()` and `withItems()` now lists every `DocumentResponse` key, including `createdAt`
 
 ## 0.8.0 (2026-11-02)
 

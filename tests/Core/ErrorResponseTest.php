@@ -52,20 +52,36 @@ final class ErrorResponseTest extends TestCase
     #[Test]
     public function testValidationErrorBodyIsExposed(): void
     {
-        $detail = [['loc' => ['body', 'event_type'], 'msg' => 'Field required', 'type' => 'missing']];
+        // The 422 of `GET /api/webhooks/{webhook_id}` is an `HTTPValidationError`.
+        $detail = [['loc' => ['path', 'webhook_id'], 'msg' => 'Field required', 'type' => 'missing']];
         $this->http->queueJson(['detail' => $detail], 422);
+
+        try {
+            $this->client->webhooks->retrieve('webhook_id', requestOptions: $this->options());
+            $this->fail('The client did not throw.');
+        } catch (UnprocessableEntityException $e) {
+            $this->assertSame(422, $e->status);
+            $this->assertSame(['detail' => $detail], $e->body);
+        }
+    }
+
+    #[Test]
+    public function testUnprocessableEntityWithErrorResponseBodyIsExposed(): void
+    {
+        // The 422 of `POST /api/webhooks/{webhook_id}/test` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'Invalid event type'], 422);
 
         try {
             $this->client->webhooks->test(
                 'webhook_id',
                 data: [],
-                eventType: 'document.received',
+                eventType: 'not.an.event',
                 requestOptions: $this->options(),
             );
             $this->fail('The client did not throw.');
         } catch (UnprocessableEntityException $e) {
             $this->assertSame(422, $e->status);
-            $this->assertSame(['detail' => $detail], $e->body);
+            $this->assertSame(['detail' => 'Invalid event type'], $e->body);
         }
     }
 

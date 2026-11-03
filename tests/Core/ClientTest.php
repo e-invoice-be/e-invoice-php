@@ -44,6 +44,47 @@ final class ClientTest extends TestCase
     }
 
     #[Test]
+    public function testDefaultBaseUrlIsTheServerOfTheSpec(): void
+    {
+        $previous = getenv('E_INVOICE_BASE_URL');
+        putenv('E_INVOICE_BASE_URL');
+
+        try {
+            $client = new Client(apiKey: 'My API Key');
+        } finally {
+            false === $previous ? putenv('E_INVOICE_BASE_URL') : putenv("E_INVOICE_BASE_URL={$previous}");
+        }
+
+        $this->http->queueJson(['name' => 'Acme']);
+
+        $client->me->retrieve(requestOptions: $this->options());
+
+        $this->assertSame('https://api.e-invoice.be/api/me/', (string) $this->http->requests[0]->getUri());
+    }
+
+    #[Test]
+    public function testApiKeyIsSentAsBearerToken(): void
+    {
+        $this->http->queueJson(['name' => 'Acme']);
+
+        $this->client->me->retrieve(requestOptions: $this->options());
+
+        $this->assertSame('Bearer My API Key', $this->http->requests[0]->getHeaderLine('Authorization'));
+    }
+
+    #[Test]
+    public function testWithoutApiKeyNoAuthorizationHeaderIsSent(): void
+    {
+        // `GET /api/validate/peppol-id` has no `security` in the spec.
+        $client = new Client(apiKey: '', baseUrl: 'http://localhost');
+        $this->http->queueJson(['is_valid' => true]);
+
+        $client->validate->validatePeppolID(peppolID: '0208:0123456789', requestOptions: $this->options());
+
+        $this->assertFalse($this->http->requests[0]->hasHeader('Authorization'));
+    }
+
+    #[Test]
     public function testRequestHasNoTelemetryHeaders(): void
     {
         $this->http->queueJson(['name' => 'Acme']);
