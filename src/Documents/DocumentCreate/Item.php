@@ -120,7 +120,7 @@ final class Item implements BaseModel
     public float|string|null $taxRate;
 
     /**
-     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
+     * The unit of measure of the line item.
      *
      * @var value-of<UnitOfMeasureCode>|null $unit
      */
@@ -352,7 +352,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
+     * The unit of measure of the line item.
      *
      * @param UnitOfMeasureCode|value-of<UnitOfMeasureCode>|null $unit
      */

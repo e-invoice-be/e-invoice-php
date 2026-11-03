@@ -385,10 +385,7 @@ final class DocumentResponse implements BaseModel
     public ?string $totalTaxInTaxCurrency;
 
     /**
-     * VATEX code list for VAT exemption reasons.
-     *
-     * Agency: CEF
-     * Identifier: vatex
+     * VAT exemption reason code (required when tax_code is E or other exempt categories).
      *
      * @var value-of<Vatex>|null $vatex
      */
@@ -1257,10 +1254,7 @@ final class DocumentResponse implements BaseModel
     }
 
     /**
-     * VATEX code list for VAT exemption reasons.
-     *
-     * Agency: CEF
-     * Identifier: vatex
+     * VAT exemption reason code (required when tax_code is E or other exempt categories).
      *
      * @param Vatex|value-of<Vatex>|null $vatex
      */

@@ -259,7 +259,7 @@ final class DocumentsRawService implements DocumentsRawContract
     /**
      * @api
      *
-     * Get the lifecycle events stated about an invoice or credit note after creation (Peppol Message Level and Invoice Responses, partner status events), oldest first. Each event carries a route-agnostic canonical status next to the untouched native code of its source; native codes without a canonical equivalent have canonical_status null
+     * Get the lifecycle events stated about an invoice or credit note after creation (Peppol Message Level and Invoice Responses, partner status events), oldest first. Each event carries a route-agnostic canonical status next to the untouched native code of its source; native codes without a canonical equivalent have canonical_status null.
      *
      * @return BaseResponse<DocumentGetLifecycleResponse>
      *

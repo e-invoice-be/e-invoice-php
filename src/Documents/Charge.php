@@ -53,7 +53,7 @@ final class Charge implements BaseModel
     public ?string $reason;
 
     /**
-     * Charge reason codes for invoice charges and fees.
+     * The code for the charge reason.
      *
      * @var value-of<ReasonCode>|null $reasonCode
      */
@@ -61,11 +61,7 @@ final class Charge implements BaseModel
     public ?string $reasonCode;
 
     /**
-     * Duty or tax or fee category codes (Subset of UNCL5305).
-     *
-     * Agency: UN/CEFACT
-     * Version: D.16B
-     * Subset: OpenPEPPOL
+     * The VAT category code that applies to the charge.
      *
      * @var value-of<TaxCode>|null $taxCode
      */
@@ -158,7 +154,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * Charge reason codes for invoice charges and fees.
+     * The code for the charge reason.
      *
      * @param ReasonCode|value-of<ReasonCode>|null $reasonCode
      */
@@ -171,11 +167,7 @@ final class Charge implements BaseModel
     }
 
     /**
-     * Duty or tax or fee category codes (Subset of UNCL5305).
-     *
-     * Agency: UN/CEFACT
-     * Version: D.16B
-     * Subset: OpenPEPPOL
+     * The VAT category code that applies to the charge.
      *
      * @param TaxCode|value-of<TaxCode>|null $taxCode
      */

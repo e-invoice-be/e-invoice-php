@@ -99,6 +99,49 @@ final class WebhooksTest extends ServiceTestCase
     }
 
     #[Test]
+    public function testUpdateWithOptionalParams(): void
+    {
+        $this->http->queueJson(self::webhookResponse([
+            'events' => ['document.sent'],
+            'url' => 'https://example.com/hook',
+            'enabled' => false,
+        ]));
+
+        $result = $this->client->webhooks->update(
+            'webhook_id',
+            enabled: false,
+            events: ['document.sent'],
+            url: 'https://example.com/hook',
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest(
+            'PUT',
+            '/api/webhooks/webhook_id',
+            body: ['enabled' => false, 'events' => ['document.sent'], 'url' => 'https://example.com/hook'],
+        );
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookResponse::class, $result);
+        $this->assertSame(['document.sent'], $result->events);
+        $this->assertSame('https://example.com/hook', $result->url);
+        $this->assertFalse($result->enabled);
+    }
+
+    #[Test]
+    public function testResponseWithoutEnabledIsParsed(): void
+    {
+        // `enabled` is not in the `required` list of `WebhookResponse`.
+        $response = self::webhookResponse();
+        unset($response['enabled']);
+        $this->http->queueJson($response);
+
+        $result = $this->client->webhooks->retrieve('webhook_id', requestOptions: $this->options());
+
+        $this->assertSame('webhook_id', $result->id);
+        $this->assertNull($result->enabled);
+    }
+
+    #[Test]
     public function testList(): void
     {
         $this->http->queueJson([
