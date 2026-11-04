@@ -126,7 +126,7 @@ final class Util
             $base = $base->withUserInfo($user ?? '', $pass);
         }
         if ('' !== ($path = $parsed['path'] ?? '')) {
-            $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath($base->getPath().'/'.$path);
+            $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath(rtrim($base->getPath(), '/').'/'.$path);
         }
 
         [$q1, $q2] = [[], []];

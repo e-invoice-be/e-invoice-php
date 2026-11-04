@@ -43,16 +43,12 @@ final class RequestBuildingTest extends TestCase
     }
 
     /**
-     * Bug: `Util::joinUri()` appends `/` and the path to the path of the base URL, so a
-     * base URL that ends with `/` gives a path with `//`, e.g. `https://api.e-invoice.be//api/me/`.
+     * A base URL that ends with `/` must not give a path with `//`, e.g. `https://api.e-invoice.be//api/me/`.
      */
     #[Test]
     #[DataProvider('baseUrlsWithTrailingSlash')]
     public function testTrailingSlashOfTheBaseUrlDoesNotDoubleTheSlash(string $baseUrl, string $expected): void
     {
-        $this->markTestSkipped('Bug in src/Core/Util.php (joinUri): a base URL that ends with "/" gives "//" in the path.');
-
-        // @phpstan-ignore deadCode.unreachable
         $this->retrieveMe(new Client(apiKey: 'k', baseUrl: $baseUrl));
 
         $this->assertSame($expected, (string) $this->request()->getUri());
