@@ -15,15 +15,18 @@ interface StatsContract
      * @api
      *
      * @param 'DAY'|'WEEK'|'MONTH'|Aggregation|null $aggregation Aggregation type: DAY, WEEK, or MONTH. Defaults to DAY.
-     * @param string|\DateTimeInterface|null $endDate End date in yyyy-mm-dd format, or a date. If not provided, queries to latest available data.
-     * @param string|\DateTimeInterface|null $startDate Start date in yyyy-mm-dd format, or a date. If not provided, queries from earliest available data.
+     * @param string|null $endDate End date in yyyy-mm-dd format. If not provided, queries to latest available data.
+     * @param string|null $startDate Start date in yyyy-mm-dd format. If not provided, queries from earliest available data.
+     *
+     * `$startDate` and `$endDate` stay `?string` so an existing implementation keeps loading.
+     * `StatsService::retrieve()` also accepts a `\DateTimeInterface`: a parameter type may be wider than the interface.
      *
      * @throws APIException
      */
     public function retrieve(
         string|Aggregation|null $aggregation = 'DAY',
-        string|\DateTimeInterface|null $endDate = null,
-        string|\DateTimeInterface|null $startDate = null,
+        ?string $endDate = null,
+        ?string $startDate = null,
         ?RequestOptions $requestOptions = null,
     ): StatGetResponse;
 }

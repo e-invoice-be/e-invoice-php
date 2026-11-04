@@ -4,7 +4,7 @@
 
 ### Features
 
-* **stats:** `startDate` and `endDate` of `stats->retrieve()`, `stats->raw->retrieve()` and `StatRetrieveParams` also accept a `\DateTimeInterface` ([#47](https://github.com/e-invoice-be/e-invoice-php/issues/47)). It is sent as `yyyy-mm-dd`, the calendar date in the object's own time zone. A string is still sent as given
+* **stats:** `startDate` and `endDate` of `stats->retrieve()`, `stats->raw->retrieve()` and `StatRetrieveParams` also accept a `\DateTimeInterface` ([#47](https://github.com/e-invoice-be/e-invoice-php/issues/47)). It is sent as `yyyy-mm-dd`, the calendar date in the object's own time zone. A string is still sent as given. `StatsContract::retrieve()` keeps `?string`, so an existing implementation of the interface still loads; `StatsService` accepts a date as well
 
 ## 0.9.1 (2026-11-04)
 

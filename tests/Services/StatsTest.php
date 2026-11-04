@@ -2,6 +2,8 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\StatsContract;
 use EInvoiceAPI\Stats\StatGetResponse;
 use EInvoiceAPI\Stats\StatGetResponse\Action;
 use EInvoiceAPI\Stats\StatRetrieveParams;
@@ -92,6 +94,31 @@ final class StatsTest extends ServiceTestCase
         $this->assertSame('2024-01-01', $result->periodStart->format('Y-m-d'));
         $this->assertSame('2024-01-31', $result->periodEnd->format('Y-m-d'));
         $this->assertSame('2024-01-15', $result->actions[0]->statDate->format('Y-m-d'));
+    }
+
+    /**
+     * Widening these parameters on the interface is a fatal error for a class that still types them `?string`.
+     * `StatsService::retrieve()` accepts a date because its parameter types are wider.
+     */
+    #[Test]
+    public function testStringImplementationOfTheContractStillLoads(): void
+    {
+        $implementation = new class() implements StatsContract {
+            public function retrieve(
+                string|Aggregation|null $aggregation = 'DAY',
+                ?string $endDate = null,
+                ?string $startDate = null,
+                ?RequestOptions $requestOptions = null,
+            ): StatGetResponse {
+                // Referenced so static analysis does not report the parameters as unused.
+                unset($aggregation, $endDate, $startDate, $requestOptions);
+
+                throw new \LogicException('not called');
+            }
+        };
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(StatsContract::class, $implementation);
     }
 
     #[Test]
