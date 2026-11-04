@@ -84,7 +84,7 @@ abstract class BaseClient
         $request = Util::withSetHeaders($request, headers: $headers);
 
         // @phpstan-ignore-next-line argument.type
-        $rsp = $this->sendRequest($opts, req: $request, data: $body, redirectCount: 0, retryCount: 0);
+        $rsp = $this->sendRequest($opts, req: $request, data: $req['body'], redirectCount: 0, retryCount: 0);
 
         // @phpstan-ignore-next-line argument.type
         return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, page: $page, convert: $convert ?? 'null');
@@ -139,7 +139,9 @@ abstract class BaseClient
             ...$headers,
             ...($options->extraHeaders ?? []), ];
 
-        $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $body];
+        $mergedBody = self::mergeExtraBodyParams($body, extra: $options->extraBodyParams);
+
+        $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $mergedBody];
 
         return [$req, $options];
     }
@@ -294,6 +296,54 @@ abstract class BaseClient
         }
 
         return $rsp;
+    }
+
+    /**
+     * @internal
+     *
+     * Adds the `extraBodyParams` request option to the body: as keys of a JSON
+     * object, or as parts of a multipart body. An extra parameter overrides the
+     * parameter of the same name. Without a body, the extra parameters are the body.
+     *
+     * A list is not a map. Merging one would add the keys `"0"`, `"1"`, … and
+     * `json_encode` would turn a JSON array into an object, so a list is rejected
+     * instead. An empty array is a map with no fields and is still merged.
+     *
+     * @throws \InvalidArgumentException when the extra parameters are not a map, or the
+     *                                   body is not one
+     */
+    private static function mergeExtraBodyParams(mixed $body, mixed $extra): mixed
+    {
+        if (is_null($extra) || [] === $extra || ($extra instanceof \stdClass && [] === (array) $extra)) {
+            return $body;
+        }
+        if (!is_array($extra) && !$extra instanceof \stdClass) {
+            throw new \InvalidArgumentException('extraBodyParams must be an array or a stdClass object, got '.get_debug_type($extra));
+        }
+
+        /** @var array<mixed> $extraFields */
+        $extraFields = (array) $extra;
+        if ([] !== $extraFields && array_is_list($extraFields)) {
+            throw new \InvalidArgumentException('extraBodyParams must be a map of parameters, got a list');
+        }
+        if (is_null($body)) {
+            return (object) $extra;
+        }
+        // `[]` is a list too, and a body with no fields still takes the extra parameters.
+        if (is_array($body) || $body instanceof \stdClass) {
+            /** @var array<mixed> $bodyFields */
+            $bodyFields = (array) $body;
+            if ([] !== $bodyFields && array_is_list($bodyFields)) {
+                throw new \InvalidArgumentException('extraBodyParams cannot be merged into a list body');
+            }
+        }
+        if (!is_array($body) && !$body instanceof \stdClass) {
+            throw new \InvalidArgumentException('extraBodyParams cannot be merged into a body of type '.get_debug_type($body));
+        }
+
+        $merged = array_replace((array) $body, (array) $extra);
+
+        return is_array($body) ? $merged : (object) $merged;
     }
 
     /**

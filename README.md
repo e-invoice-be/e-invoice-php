@@ -385,7 +385,7 @@ $me = $client->me->retrieve(
 
 #### Undocumented parameters
 
-You can send undocumented query parameters and headers to any endpoint with the `extraQueryParams` and `extraHeaders` request options:
+You can send undocumented query parameters, body parameters and headers to any endpoint with the `extraQueryParams`, `extraBodyParams` and `extraHeaders` request options:
 
 ```php
 <?php
@@ -395,12 +395,13 @@ use EInvoiceAPI\RequestOptions;
 $document = $client->documents->create(
   requestOptions: RequestOptions::with(
     extraQueryParams: ['my_query_parameter' => 'value'],
+    extraBodyParams: ['my_body_parameter' => 'value'],
     extraHeaders: ['my-header' => 'value'],
   ),
 );
 ```
 
-Note: an extra header overrides the header of the same name that the library sends.
+Note: an extra header overrides the header of the same name that the library sends, and an extra body parameter overrides the body parameter of the same name. The extra body parameters are added as keys of a JSON body or as parts of a multipart body; a request without a body, a `GET` request included, sends them as its JSON body. `extraBodyParams` must be a map, an array with string keys or a `stdClass` object. A list, or a value of another type, throws an `InvalidArgumentException`. So does a request whose body is a list, or not an array or a `stdClass` (for example a raw string or a stream given to `$client->request`): merging a list would turn a JSON array into an object.
 
 #### Undocumented endpoints
 
