@@ -1,5 +1,11 @@
 # e-invoice.be PHP API library
 
+[![CI](https://github.com/e-invoice-be/e-invoice-php/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/e-invoice-be/e-invoice-php/actions/workflows/ci.yml?query=branch%3Amain)
+[![Latest version on Packagist](https://img.shields.io/packagist/v/e-invoice/e-invoice-api)](https://packagist.org/packages/e-invoice/e-invoice-api)
+[![PHP version](https://img.shields.io/packagist/dependency-v/e-invoice/e-invoice-api/php)](https://packagist.org/packages/e-invoice/e-invoice-api)
+[![PHPStan level max](https://img.shields.io/badge/PHPStan-level%20max-brightgreen)](https://github.com/e-invoice-be/e-invoice-php/blob/main/phpstan.dist.neon)
+[![License](https://img.shields.io/packagist/l/e-invoice/e-invoice-api)](https://github.com/e-invoice-be/e-invoice-php/blob/main/LICENSE)
+
 [![The PHP SDK page on e-invoice.be](.github/assets/peppol-api-php.png)](https://e-invoice.be/peppol-api/php)
 
 This library gives access to the [e-invoice.be](https://e-invoice.be) Peppol API from any PHP 8.1+ application. With it you can create, validate, send and receive electronic invoices and credit notes on the Peppol network.
