@@ -4,6 +4,8 @@ namespace Tests\Core;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\RequestOptions;
+use Nyholm\Psr7\Response;
+use Nyholm\Psr7\Stream;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -213,15 +215,9 @@ final class RequestBuildingTest extends TestCase
         }
     }
 
-    /**
-     * Bug: `extraBodyParams` is accepted, but no code reads it, so the body is sent without the extra parameters.
-     */
     #[Test]
     public function testExtraBodyParamsAreSent(): void
     {
-        $this->markTestSkipped('Bug: the extraBodyParams request option is never applied (src/RequestOptions.php, src/Core/BaseClient.php buildRequest).');
-
-        // @phpstan-ignore deadCode.unreachable
         $this->http->queueJson(['id' => 'w', 'events' => ['a'], 'secret' => 's', 'url' => 'u']);
 
         $this->client()->webhooks->create(
@@ -230,9 +226,241 @@ final class RequestBuildingTest extends TestCase
             requestOptions: $this->options(extraBodyParams: ['undocumented' => 'value']),
         );
 
-        $body = json_decode((string) $this->request()->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
-        $this->assertIsArray($body);
-        $this->assertSame('value', $body['undocumented'] ?? null);
+        $this->assertSame(['events' => ['a'], 'url' => 'u', 'enabled' => true, 'undocumented' => 'value'], $this->jsonBody());
+    }
+
+    #[Test]
+    public function testExtraBodyParamOverridesTheParameterOfTheSameName(): void
+    {
+        $this->http->queueJson(['id' => 'w', 'events' => ['a'], 'secret' => 's', 'url' => 'u']);
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: ['url' => 'v']),
+        );
+
+        $this->assertSame(['events' => ['a'], 'url' => 'v', 'enabled' => true], $this->jsonBody());
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreSentAsAnObject(): void
+    {
+        $this->http->queueJson(['id' => 'w', 'events' => ['a'], 'secret' => 's', 'url' => 'u']);
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: (object) ['undocumented' => 'value']),
+        );
+
+        $this->assertSame('value', $this->jsonBody()['undocumented'] ?? null);
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreTheBodyOfARequestWithoutABody(): void
+    {
+        $this->http->queueJson();
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $this->assertSame(['undocumented' => 'value'], $this->jsonBody());
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreAddedAsMultipartParts(): void
+    {
+        $this->http->queueJson(['invoice_id' => 'i', 'success' => true]);
+
+        $this->client()->documents->createFromPdf(
+            file: 'pdf',
+            requestOptions: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $body = (string) $this->request()->getBody();
+        $this->assertStringContainsString('name="file"', $body);
+        $this->assertMatchesRegularExpression('/name="undocumented"\r\n(?:[^\r\n]+\r\n)*\r\nvalue\r\n/', $body);
+    }
+
+    #[Test]
+    #[DataProvider('emptyExtraBodyParams')]
+    public function testEmptyExtraBodyParamsLeaveARequestWithoutABody(mixed $extraBodyParams): void
+    {
+        $this->retrieveMe($this->client(), $this->options(extraBodyParams: $extraBodyParams));
+
+        $this->assertSame('', (string) $this->request()->getBody());
+    }
+
+    /** @return iterable<string,array{mixed}> */
+    public static function emptyExtraBodyParams(): iterable
+    {
+        yield 'null' => [null];
+
+        yield 'array' => [[]];
+
+        yield 'object' => [new \stdClass];
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreSentAgainOnARetry(): void
+    {
+        $this->http->queueJson(status: 500);
+        $this->http->queueJson(['id' => 'w', 'events' => ['a'], 'secret' => 's', 'url' => 'u']);
+
+        $client = new class(apiKey: 'k', baseUrl: 'http://localhost') extends Client {
+            protected function sleep(float $seconds): void {}
+        };
+        $client->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: RequestOptions::with(maxRetries: 1, extraBodyParams: ['undocumented' => 'value'], transporter: $this->http),
+        );
+
+        $this->assertCount(2, $this->http->requests);
+        $this->assertSameBodies(['events' => ['a'], 'url' => 'u', 'enabled' => true, 'undocumented' => 'value']);
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreSentAgainOnARedirect(): void
+    {
+        $this->http
+            ->queue(new Response(307, ['Location' => '/api/webhooks/']))
+            ->queueJson(['id' => 'w', 'events' => ['a'], 'secret' => 's', 'url' => 'u'])
+        ;
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $this->assertCount(2, $this->http->requests);
+        $this->assertSame('POST', $this->http->requests[1]->getMethod());
+        $this->assertSame('/api/webhooks/', $this->http->requests[1]->getUri()->getPath());
+        $this->assertSameBodies(['events' => ['a'], 'url' => 'u', 'enabled' => true, 'undocumented' => 'value']);
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreTheBodyOfAGetRequest(): void
+    {
+        $this->http->queueJson(['name' => 'Acme']);
+
+        $this->client()->me->retrieve(
+            requestOptions: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $request = $this->request();
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame(['undocumented' => 'value'], $this->jsonBody());
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreMergedIntoAnEmptyArrayBody(): void
+    {
+        $this->http->queueJson();
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            body: [],
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $this->assertSame(['undocumented' => 'value'], $this->jsonBody());
+    }
+
+    #[Test]
+    public function testExtraBodyParamsThatAreAListAreRejected(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams must be a map of parameters, got a list');
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: ['value']),
+        );
+    }
+
+    #[Test]
+    public function testExtraBodyParamsThatAreAListAsAnObjectAreRejected(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams must be a map of parameters, got a list');
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: (object) ['value']),
+        );
+    }
+
+    #[Test]
+    public function testExtraBodyParamsCannotBeMergedIntoAListBody(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams cannot be merged into a list body');
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            body: ['raw'],
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+    }
+
+    #[Test]
+    public function testExtraBodyParamsCannotBeMergedIntoAListBodyGivenAsAnObject(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams cannot be merged into a list body');
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            body: (object) ['raw'],
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+    }
+
+    #[Test]
+    public function testExtraBodyParamsThatAreNotAMapAreRejected(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams must be an array or a stdClass object, got string');
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: 'value'),
+        );
+    }
+
+    #[Test]
+    #[DataProvider('bodiesThatAreNotAMap')]
+    public function testExtraBodyParamsCannotBeMergedIntoABodyThatIsNotAMap(mixed $body, string $type): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("extraBodyParams cannot be merged into a body of type {$type}");
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            body: $body,
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+    }
+
+    /** @return iterable<string,array{mixed,string}> */
+    public static function bodiesThatAreNotAMap(): iterable
+    {
+        yield 'string' => ['raw', 'string'];
+
+        yield 'stream' => [Stream::create('raw'), Stream::class];
     }
 
     private function client(): Client
@@ -263,6 +491,30 @@ final class RequestBuildingTest extends TestCase
         $this->http->queueJson(['name' => 'Acme']);
 
         $client->me->retrieve(requestOptions: $options ?? $this->options());
+    }
+
+    /** @return array<mixed> */
+    private function jsonBody(): array
+    {
+        $body = json_decode((string) $this->request()->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
+        $this->assertIsArray($body);
+
+        return $body;
+    }
+
+    /**
+     * Every recorded request carries this JSON object, extras included once.
+     *
+     * @param array<mixed> $expected
+     */
+    private function assertSameBodies(array $expected): void
+    {
+        $this->assertNotEmpty($this->http->requests);
+        foreach ($this->http->requests as $request) {
+            $body = json_decode((string) $request->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
+            $this->assertIsArray($body);
+            $this->assertSame($expected, $body);
+        }
     }
 
     private function request(): RequestInterface
