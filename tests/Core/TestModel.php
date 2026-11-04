@@ -43,7 +43,9 @@ class TestModel implements BaseModel
         $this->ageYears = $ageYears;
         $this->owner = $owner;
 
-        null != $friends && $this->friends = $friends;
+        if (null !== $friends) {
+            $this->friends = $friends;
+        }
     }
 }
 
@@ -63,10 +65,10 @@ class TestModelTest extends TestCase
             ageYears: 12,
             owner: null,
         );
-        $this->assertEquals(12, $model->ageYears);
+        $this->assertSame(12, $model->ageYears);
 
         ++$model->ageYears;
-        $this->assertEquals(13, $model->ageYears);
+        $this->assertSame(13, $model->ageYears);
     }
 
     #[Test]
@@ -110,8 +112,8 @@ class TestModelTest extends TestCase
         );
         $modelNullFriends->friends = null;
 
-        $this->assertEquals(12, $modelUnsetFriends->ageYears);
-        $this->assertEquals(12, $modelNullFriends->ageYears);
+        $this->assertSame(12, $modelUnsetFriends->ageYears);
+        $this->assertSame(12, $modelNullFriends->ageYears);
 
         $this->assertTrue($modelUnsetFriends->offsetExists('ageYears'));
         $this->assertTrue($modelNullFriends->offsetExists('ageYears'));

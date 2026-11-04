@@ -141,16 +141,19 @@ class DocumentsNumberPageTest extends TestCase
 
     private function options(): RequestOptions
     {
-        $transporter = new class($this->bodies, $this->requests) implements ClientInterface {
+        $record = function (RequestInterface $request): void {
+            $this->requests[] = $request;
+        };
+        $transporter = new class($this->bodies, $record) implements ClientInterface {
             /**
              * @param list<array<string,mixed>> $bodies
-             * @param list<RequestInterface> $requests
+             * @param \Closure(RequestInterface): void $record
              */
-            public function __construct(private array $bodies, private array &$requests) {}
+            public function __construct(private array $bodies, private \Closure $record) {}
 
             public function sendRequest(RequestInterface $request): ResponseInterface
             {
-                $this->requests[] = $request;
+                ($this->record)($request);
                 $body = array_shift($this->bodies) ?? ['items' => []];
 
                 return new Response(200, ['Content-Type' => 'application/json'], json_encode($body) ?: '');

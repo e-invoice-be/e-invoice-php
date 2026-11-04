@@ -132,15 +132,18 @@ class MultipartFileTest extends TestCase
 
     private function options(): RequestOptions
     {
-        $transporter = new class($this->requests) implements ClientInterface {
+        $record = function (RequestInterface $request): void {
+            $this->requests[] = $request;
+        };
+        $transporter = new class($record) implements ClientInterface {
             /**
-             * @param list<RequestInterface> $requests
+             * @param \Closure(RequestInterface): void $record
              */
-            public function __construct(private array &$requests) {}
+            public function __construct(private \Closure $record) {}
 
             public function sendRequest(RequestInterface $request): ResponseInterface
             {
-                $this->requests[] = $request;
+                ($this->record)($request);
 
                 return new Response(200, ['Content-Type' => 'application/json'], '{}');
             }
