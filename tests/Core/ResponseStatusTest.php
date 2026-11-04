@@ -81,7 +81,14 @@ final class ResponseStatusTest extends TestCase
 
         yield '404' => [404, NotFoundException::class];
 
+        // The spec documents 405, 406 and 415 (`ErrorResponse`) without a dedicated exception.
+        yield '405' => [405, APIStatusException::class];
+
+        yield '406' => [406, APIStatusException::class];
+
         yield '409' => [409, ConflictException::class];
+
+        yield '415' => [415, APIStatusException::class];
 
         yield '418' => [418, APIStatusException::class];
 

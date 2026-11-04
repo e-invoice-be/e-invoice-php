@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.9.1 (2026-11-04)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.9.0...v0.9.1)
+
+Checked against the live OpenAPI specification (v1.1.0). All 41 operations have a matching SDK method, and the spec removes or renames nothing. The SDK's endpoints, parameters, models and enums already match the spec, so this release changes no API surface.
 
 ### Bug Fixes
 
