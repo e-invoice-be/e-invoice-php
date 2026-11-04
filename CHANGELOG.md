@@ -5,6 +5,7 @@
 ### ⚠ BREAKING CHANGES
 
 * remove the unused `EInvoiceAPI\Documents\DocumentCreate` model and its `EInvoiceAPI\Documents\DocumentCreate\*` classes ([#49](https://github.com/e-invoice-be/e-invoice-php/issues/49)). No SDK method took or returned them: `$client->documents->create()` takes its fields as named arguments (typed by `DocumentCreateParams` and its `DocumentCreateParams\*` classes), and `$client->validate->validateJson()` uses `ValidateValidateJsonParams`. Code that built a `DocumentCreate` must pass the same fields to `documents->create()`, or use the matching `DocumentCreateParams\*` classes (for example `DocumentCreateParams\Item` for `DocumentCreate\Item`)
+* `$client->webhooks->update()` can now send an explicit `null` for `enabled`, `events` and `url` ([#46](https://github.com/e-invoice-be/e-invoice-php/issues/46)). A param you leave out is still omitted from the request, but passing `null` now sends `null` instead of dropping the field. If you pass `null` to mean "leave unchanged", leave the param out instead. `WebhooksContract::update()` uses the same parameter types, so an implementation of that contract has to accept them.
 
 ### Features
 

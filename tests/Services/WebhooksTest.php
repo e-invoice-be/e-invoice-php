@@ -126,6 +126,44 @@ final class WebhooksTest extends ServiceTestCase
     }
 
     #[Test]
+    public function testUpdateSendsAnExplicitNull(): void
+    {
+        $this->http->queueJson(self::webhookResponse());
+
+        $this->client->webhooks->update(
+            'webhook_id',
+            enabled: null,
+            events: null,
+            url: null,
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest(
+            'PUT',
+            '/api/webhooks/webhook_id',
+            body: ['enabled' => null, 'events' => null, 'url' => null],
+        );
+        $this->assertSame(
+            '{"enabled":null,"events":null,"url":null}',
+            (string) $this->http->requests[0]->getBody(),
+        );
+    }
+
+    #[Test]
+    public function testUpdateOmitsOnlyTheParamsLeftOut(): void
+    {
+        $this->http->queueJson(self::webhookResponse());
+
+        $this->client->webhooks->update(
+            'webhook_id',
+            url: null,
+            requestOptions: $this->options(),
+        );
+
+        $this->assertSame('{"url":null}', (string) $this->http->requests[0]->getBody());
+    }
+
+    #[Test]
     public function testResponseWithoutEnabledIsParsed(): void
     {
         // `enabled` is not in the `required` list of `WebhookResponse`.
