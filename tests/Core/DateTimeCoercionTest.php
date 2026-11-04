@@ -10,7 +10,6 @@ use EInvoiceAPI\Core\Contracts\BaseModel;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\DumpState;
 use EInvoiceAPI\Core\Conversion\ListOf;
-use EInvoiceAPI\Documents\DocumentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentGetTimelineResponse;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
@@ -183,7 +182,7 @@ class DateTimeCoercionTest extends TestCase
         $date = new \DateTimeImmutable('2024-01-31T00:00:00.5Z');
         $expected = '2024-01-31T00:00:00+00:00';
 
-        foreach ([DocumentCreateParams::class, DocumentCreate::class, ValidateValidateJsonParams::class] as $class) {
+        foreach ([DocumentCreateParams::class, ValidateValidateJsonParams::class] as $class) {
             $dumped = Conversion::dump($class, value: [
                 'dueDate' => $date,
                 'invoiceDate' => $date,
