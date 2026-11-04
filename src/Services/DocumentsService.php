@@ -301,7 +301,6 @@ final class DocumentsService implements DocumentsContract
             'vendorPhone' => $vendorPhone,
             'vendorTaxID' => $vendorTaxID,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
         // @phpstan-ignore-next-line argument.type
@@ -321,7 +320,6 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($documentID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -338,7 +336,6 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentDeleteResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($documentID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -366,10 +363,8 @@ final class DocumentsService implements DocumentsContract
             'customerTaxID' => $customerTaxID,
             'vendorTaxID' => $vendorTaxID,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createFromPdf(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -386,7 +381,6 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentGetLifecycleResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveLifecycle($documentID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -403,7 +397,6 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): DocumentGetTimelineResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveTimeline($documentID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -432,10 +425,8 @@ final class DocumentsService implements DocumentsContract
             'senderPeppolID' => $senderPeppolID,
             'senderPeppolScheme' => $senderPeppolScheme,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->send($documentID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -452,7 +443,6 @@ final class DocumentsService implements DocumentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblDocumentValidation {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validate($documentID, requestOptions: $requestOptions);
 
         return $response->parse();

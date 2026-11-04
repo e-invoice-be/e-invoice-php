@@ -68,10 +68,8 @@ final class OutboxService implements OutboxContract
             'state' => $state,
             'type' => $type,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listDraftDocuments(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -122,10 +120,8 @@ final class OutboxService implements OutboxContract
             'sortOrder' => $sortOrder,
             'type' => $type,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listReceivedDocuments(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

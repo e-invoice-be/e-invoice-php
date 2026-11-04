@@ -21,7 +21,6 @@ use EInvoiceAPI\ServiceContracts\OutboxRawContract;
 
 final class OutboxRawService implements OutboxRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

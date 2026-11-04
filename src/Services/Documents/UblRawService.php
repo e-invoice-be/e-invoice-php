@@ -16,7 +16,6 @@ use EInvoiceAPI\ServiceContracts\Documents\UblRawContract;
 
 final class UblRawService implements UblRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

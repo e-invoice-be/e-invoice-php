@@ -20,7 +20,6 @@ use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
 final class WebhooksRawService implements WebhooksRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

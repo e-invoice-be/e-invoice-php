@@ -39,7 +39,6 @@ class RequestOptionsTest extends TestCase
         $this->expectException(\Error::class);
         $this->expectExceptionMessage('Unknown named parameter $timeout');
 
-        // @phpstan-ignore-next-line argument.type
         RequestOptions::parse(['timeout' => 5.0]);
     }
 }

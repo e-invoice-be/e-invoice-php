@@ -66,7 +66,6 @@ class RawResponse implements BaseResponse
                     parsedBody: $this->getDecoded(),
                 );
             } else {
-                // @phpstan-ignore-next-line assign.propertyType
                 $this->coercedResponse = Conversion::coerce(
                     $this->convert,
                     value: $this->getDecoded(),
