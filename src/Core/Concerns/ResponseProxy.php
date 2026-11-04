@@ -89,7 +89,7 @@ trait ResponseProxy
     public function withStatus(int $code, string $reasonPhrase = ''): static
     {
         $self = clone $this;
-        $self->response = $this->response->withstatus($code, reasonPhrase: $reasonPhrase);
+        $self->response = $this->response->withStatus($code, reasonPhrase: $reasonPhrase);
 
         return $self;
     }

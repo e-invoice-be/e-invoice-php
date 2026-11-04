@@ -44,7 +44,7 @@ final class Conversion
 
             $acc = get_object_vars($value);
 
-            return empty($acc) ? (object) $acc : self::dump_unknown($acc, state: $state);
+            return [] === $acc ? (object) $acc : self::dump_unknown($acc, state: $state);
         }
 
         return $value;
@@ -96,7 +96,7 @@ final class Conversion
      */
     private static function coerceDateTime(string $target, mixed $value, CoerceState $state): mixed
     {
-        if (!is_string($value) || !preg_match('/^\d{4}-\d{2}-\d{2}(?:$|[Tt ])/', $value)) {
+        if (!is_string($value) || 1 !== preg_match('/^\d{4}-\d{2}-\d{2}(?:$|[Tt ])/', $value)) {
             ++$state->no;
 
             return $value;
@@ -114,7 +114,7 @@ final class Conversion
         }
 
         // Out of range values such as `2024-02-30` would otherwise silently roll over.
-        if ($date::getLastErrors()['warning_count'] ?? 0) {
+        if (($date::getLastErrors()['warning_count'] ?? 0) > 0) {
             ++$state->no;
 
             return $value;
