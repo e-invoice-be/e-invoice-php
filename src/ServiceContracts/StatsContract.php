@@ -18,6 +18,9 @@ interface StatsContract
      * @param string|null $endDate End date in yyyy-mm-dd format. If not provided, queries to latest available data.
      * @param string|null $startDate Start date in yyyy-mm-dd format. If not provided, queries from earliest available data.
      *
+     * `$startDate` and `$endDate` stay `?string` so an existing implementation keeps loading.
+     * `StatsService::retrieve()` also accepts a `\DateTimeInterface`: a parameter type may be wider than the interface.
+     *
      * @throws APIException
      */
     public function retrieve(

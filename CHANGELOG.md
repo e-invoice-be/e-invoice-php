@@ -6,6 +6,10 @@
 
 * remove the unused `EInvoiceAPI\Documents\DocumentCreate` model and its `EInvoiceAPI\Documents\DocumentCreate\*` classes ([#49](https://github.com/e-invoice-be/e-invoice-php/issues/49)). No SDK method took or returned them: `$client->documents->create()` takes its fields as named arguments (typed by `DocumentCreateParams` and its `DocumentCreateParams\*` classes), and `$client->validate->validateJson()` uses `ValidateValidateJsonParams`. Code that built a `DocumentCreate` must pass the same fields to `documents->create()`, or use the matching `DocumentCreateParams\*` classes (for example `DocumentCreateParams\Item` for `DocumentCreate\Item`)
 
+### Features
+
+* **stats:** `startDate` and `endDate` of `stats->retrieve()`, `stats->raw->retrieve()` and `StatRetrieveParams` also accept a `\DateTimeInterface` ([#47](https://github.com/e-invoice-be/e-invoice-php/issues/47)). It is sent as `yyyy-mm-dd`, the calendar date in the object's own time zone. A string is still sent as given. `StatsContract::retrieve()` keeps `?string`, so an existing implementation of the interface still loads; `StatsService` accepts a date as well
+
 ### Bug Fixes
 
 * `documents->create()` and `validate->validateJson()` now show the defaults of the API specification in their signatures, and send them: `currency: CurrencyCode::EUR`, `direction: DocumentDirection::OUTBOUND`, `documentType: DocumentType::INVOICE` and `state: DocumentState::DRAFT` (these were `null`, so the fields were left out), and `taxCode: TaxCode::S` (was the string `'S'`) ([#48](https://github.com/e-invoice-be/e-invoice-php/issues/48)). The server applies the same defaults to an absent field. Passing `null` for `currency`, `direction`, `documentType` or `state` still leaves the field out

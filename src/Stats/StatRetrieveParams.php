@@ -8,6 +8,7 @@ use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Concerns\SdkParams;
 use EInvoiceAPI\Core\Contracts\BaseModel;
+use EInvoiceAPI\Core\Conversion\QueryDateOf;
 use EInvoiceAPI\Stats\StatRetrieveParams\Aggregation;
 
 /**
@@ -17,8 +18,8 @@ use EInvoiceAPI\Stats\StatRetrieveParams\Aggregation;
  *
  * @phpstan-type StatRetrieveParamsShape = array{
  *   aggregation?: null|Aggregation|value-of<Aggregation>,
- *   endDate?: string|null,
- *   startDate?: string|null,
+ *   endDate?: string|\DateTimeInterface|null,
+ *   startDate?: string|\DateTimeInterface|null,
  * }
  */
 final class StatRetrieveParams implements BaseModel
@@ -36,16 +37,16 @@ final class StatRetrieveParams implements BaseModel
     public ?string $aggregation;
 
     /**
-     * End date in yyyy-mm-dd format. If not provided, queries to latest available data.
+     * End date in yyyy-mm-dd format, or a date. If not provided, queries to latest available data.
      */
-    #[Optional(nullable: true)]
-    public ?string $endDate;
+    #[Optional(type: new QueryDateOf, nullable: true)]
+    public string|\DateTimeInterface|null $endDate;
 
     /**
-     * Start date in yyyy-mm-dd format. If not provided, queries from earliest available data.
+     * Start date in yyyy-mm-dd format, or a date. If not provided, queries from earliest available data.
      */
-    #[Optional(nullable: true)]
-    public ?string $startDate;
+    #[Optional(type: new QueryDateOf, nullable: true)]
+    public string|\DateTimeInterface|null $startDate;
 
     public function __construct()
     {
@@ -61,8 +62,8 @@ final class StatRetrieveParams implements BaseModel
      */
     public static function with(
         Aggregation|string|null $aggregation = null,
-        ?string $endDate = null,
-        ?string $startDate = null,
+        string|\DateTimeInterface|null $endDate = null,
+        string|\DateTimeInterface|null $startDate = null,
     ): self {
         $self = new self;
 
@@ -87,9 +88,9 @@ final class StatRetrieveParams implements BaseModel
     }
 
     /**
-     * End date in yyyy-mm-dd format. If not provided, queries to latest available data.
+     * End date in yyyy-mm-dd format, or a date. If not provided, queries to latest available data.
      */
-    public function withEndDate(?string $endDate): self
+    public function withEndDate(string|\DateTimeInterface|null $endDate): self
     {
         $self = clone $this;
         $self['endDate'] = $endDate;
@@ -98,9 +99,9 @@ final class StatRetrieveParams implements BaseModel
     }
 
     /**
-     * Start date in yyyy-mm-dd format. If not provided, queries from earliest available data.
+     * Start date in yyyy-mm-dd format, or a date. If not provided, queries from earliest available data.
      */
-    public function withStartDate(?string $startDate): self
+    public function withStartDate(string|\DateTimeInterface|null $startDate): self
     {
         $self = clone $this;
         $self['startDate'] = $startDate;
