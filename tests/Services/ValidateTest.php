@@ -2,9 +2,14 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\Core\Conversion;
+use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
+use EInvoiceAPI\Core\Conversion\UnionOf;
 use EInvoiceAPI\Validate\UblDocumentValidation;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
@@ -282,6 +287,63 @@ final class ValidateTest extends ServiceTestCase
         $this->assertEquals(new \DateTimeImmutable('2026-03-01T00:00:00Z'), $item->date);
         $this->assertSame(1000.0, $item->priceBaseQuantity);
         $this->assertArrayNotHasKey('date', Item::with(name: 'Keyboard')->toProperties());
+    }
+
+    /**
+     * @param class-string<ConverterSource> $class
+     */
+    #[Test]
+    #[DataProvider('numberOrStringUnions')]
+    public function testNumberOrStringUnionDumpsBothVariants(string $class): void
+    {
+        $this->assertInstanceOf(UnionOf::class, $class::converter());
+        $this->assertSame($class::converter(), $class::converter());
+        $this->assertSame(21.5, Conversion::coerce($class, value: 21.5));
+        $this->assertSame(21.5, Conversion::dump($class, value: 21.5));
+        $this->assertSame('21.50', Conversion::dump($class, value: '21.50'));
+    }
+
+    /**
+     * The number-or-string amount, rate and quantity fields of the
+     * DocumentCreate body (`anyOf: [number, string, null]`) have a union class
+     * that dumps either variant unchanged.
+     *
+     * @return iterable<string,array{class-string<ConverterSource>}>
+     */
+    public static function numberOrStringUnions(): iterable
+    {
+        foreach ([
+            ValidateValidateJsonParams\AmountDue::class,
+            ValidateValidateJsonParams\InvoiceTotal::class,
+            ValidateValidateJsonParams\PreviousUnpaidBalance::class,
+            ValidateValidateJsonParams\Subtotal::class,
+            ValidateValidateJsonParams\TotalDiscount::class,
+            ValidateValidateJsonParams\TotalTax::class,
+            ValidateValidateJsonParams\TaxDetail\Amount::class,
+            ValidateValidateJsonParams\Allowance\Amount::class,
+            ValidateValidateJsonParams\Allowance\BaseAmount::class,
+            ValidateValidateJsonParams\Allowance\MultiplierFactor::class,
+            ValidateValidateJsonParams\Allowance\TaxRate::class,
+            ValidateValidateJsonParams\Charge\Amount::class,
+            ValidateValidateJsonParams\Charge\BaseAmount::class,
+            ValidateValidateJsonParams\Charge\MultiplierFactor::class,
+            ValidateValidateJsonParams\Charge\TaxRate::class,
+            Item\Amount::class,
+            Item\Quantity::class,
+            Item\Tax::class,
+            Item\TaxRate::class,
+            Item\UnitPrice::class,
+            Item\Allowance\Amount::class,
+            Item\Allowance\BaseAmount::class,
+            Item\Allowance\MultiplierFactor::class,
+            Item\Allowance\TaxRate::class,
+            Item\Charge\Amount::class,
+            Item\Charge\BaseAmount::class,
+            Item\Charge\MultiplierFactor::class,
+            Item\Charge\TaxRate::class,
+        ] as $class) {
+            yield $class => [$class];
+        }
     }
 
     /**
