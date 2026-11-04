@@ -152,7 +152,7 @@ final class ModelConversionTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        // @phpstan-ignore offsetAccess.notFound, argument.type
+        // @phpstan-ignore offsetAccess.notFound
         $unused = $webhook[0];
         $this->fail('Unexpected value '.get_debug_type($unused));
     }
