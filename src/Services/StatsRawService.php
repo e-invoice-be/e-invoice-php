@@ -28,8 +28,8 @@ final class StatsRawService implements StatsRawContract
      *
      * @param array{
      *   aggregation?: 'DAY'|'WEEK'|'MONTH'|Aggregation|null,
-     *   endDate?: string|null,
-     *   startDate?: string|null,
+     *   endDate?: string|\DateTimeInterface|null,
+     *   startDate?: string|\DateTimeInterface|null,
      * }|StatRetrieveParams $params
      *
      * @return BaseResponse<StatGetResponse>
