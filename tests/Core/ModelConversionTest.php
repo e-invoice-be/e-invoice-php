@@ -181,10 +181,9 @@ final class ModelConversionTest extends TestCase
     }
 
     /**
-     * Bug: `offsetGet()` returns by reference, and `return null;` is not a variable, so each
-     * array read of an absent field raises the notice "Only variable references should be returned
-     * by reference". An error handler that throws on notices (as many frameworks install) turns it
-     * into an exception.
+     * Because `offsetGet()` returns by reference, an absent field must be returned through a
+     * variable; returning the literal `null` raises "Only variable references should be returned
+     * by reference", which strict error handlers (as in many frameworks) turn into an exception.
      */
     #[Test]
     public function testReadingAnAbsentFieldRaisesNoNotice(): void

@@ -153,7 +153,7 @@ trait SdkModel
             // literal `null` raises "Only variable references should be returned by reference".
             $null = null;
 
-            return $null; // @phpstan-ignore-line
+            return $null;
         }
 
         if (array_key_exists($offset, array: $this->_data)) {
