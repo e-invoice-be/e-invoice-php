@@ -6,12 +6,15 @@ namespace EInvoiceAPI\Services;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Implementation\Omit;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\WebhooksContract;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookGetHistoryResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use EInvoiceAPI\Webhooks\WebhookTestResponse;
+
+use const EInvoiceAPI\Core\OMIT as omit;
 
 final class WebhooksService implements WebhooksContract
 {
@@ -73,19 +76,24 @@ final class WebhooksService implements WebhooksContract
      *
      * Update a webhook by ID
      *
-     * @param list<string>|null $events
+     * Leave a param out to keep its current value, or pass `null` to send an
+     * explicit `null` for it.
+     *
+     * @param list<string>|Omit|null $events
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        ?bool $enabled = null,
-        ?array $events = null,
-        ?string $url = null,
+        bool|Omit|null $enabled = omit,
+        array|Omit|null $events = omit,
+        string|Omit|null $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
-        $params = ['enabled' => $enabled, 'events' => $events, 'url' => $url];
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = [];
+        omit !== $enabled && $params['enabled'] = $enabled;
+        omit !== $events && $params['events'] = $events;
+        omit !== $url && $params['url'] = $url;
 
         $response = $this->raw->update($webhookID, params: $params, requestOptions: $requestOptions);
 

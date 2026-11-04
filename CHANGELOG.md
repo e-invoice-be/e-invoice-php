@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Bug Fixes
+
+* `$client->webhooks->update()` can now send an explicit `null` for `enabled`, `events` and `url` ([#46](https://github.com/e-invoice-be/e-invoice-php/issues/46)). A param you leave out is still omitted from the request, but passing `null` now sends `null` instead of dropping the field. If you pass `null` to mean "leave unchanged", leave the param out instead
+
 ## 0.9.1 (2026-11-04)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.9.0...v0.9.1)

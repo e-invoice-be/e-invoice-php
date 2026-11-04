@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace EInvoiceAPI\ServiceContracts;
 
 use EInvoiceAPI\Core\Exceptions\APIException;
+use EInvoiceAPI\Core\Implementation\Omit;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookGetHistoryResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use EInvoiceAPI\Webhooks\WebhookTestResponse;
+
+use const EInvoiceAPI\Core\OMIT as omit;
 
 interface WebhooksContract
 {
@@ -40,15 +43,18 @@ interface WebhooksContract
     /**
      * @api
      *
-     * @param list<string>|null $events
+     * Leave a param out to keep its current value, or pass `null` to send an
+     * explicit `null` for it.
+     *
+     * @param list<string>|Omit|null $events
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        ?bool $enabled = null,
-        ?array $events = null,
-        ?string $url = null,
+        bool|Omit|null $enabled = omit,
+        array|Omit|null $events = omit,
+        string|Omit|null $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse;
 
