@@ -5,11 +5,14 @@
 ### Bug Fixes
 
 * the `extraBodyParams` request option is now sent ([#36](https://github.com/e-invoice-be/e-invoice-php/issues/36)). Before, it was accepted and silently dropped. Its keys are added to the JSON body, or as parts of a multipart body, and override the body parameters of the same name. A request without a body, a `GET` included, sends them as its JSON body. A value that is not a map (a list, or anything other than an array or a `stdClass` object) throws an `InvalidArgumentException`. So does a request body that is a list, or not an array or a `stdClass` (for example a string or a stream given to `$client->request`): merging a list would turn a JSON array into an object
+* a base URL that ends with `/` (`https://api.e-invoice.be/`, `https://proxy.example/e-invoice/`) no longer sends `//` in the request path
 * a base URL with credentials (`https://user:pass@host`) keeps its password, and a path of `"0"` is no longer dropped
 * an API key of `"0"` is now sent as the bearer token
 * a file upload read from a stream no longer loses chunks that are exactly `"0"`
 * a multipart body with integer keys no longer throws a `TypeError`
 * the minimum versions of the dependencies are now ones that work: `psr/http-message` `^1.1|^2` (1.0 has no parameter types, which made loading the SDK a fatal error) and `php-http/discovery` `^1.15` (older releases lack the PSR-17/PSR-18 discovery classes)
+* reading a property that doesn't exist on a model throws a message that names the model's class instead of holding its JSON, which for a webhook included its signing secret
+* responses with a structured-syntax JSON content type, such as `application/vnd.api+json` or `application/problem+json`, are now decoded as JSON instead of being returned as a raw stream ([#38](https://github.com/e-invoice-be/e-invoice-php/issues/38))
 
 ## 0.9.0 (2026-11-03)
 
