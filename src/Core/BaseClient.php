@@ -320,15 +320,21 @@ abstract class BaseClient
         if (!is_array($extra) && !$extra instanceof \stdClass) {
             throw new \InvalidArgumentException('extraBodyParams must be an array or a stdClass object, got '.get_debug_type($extra));
         }
-        if (is_array($extra) && array_is_list($extra)) {
+        /** @var array<mixed> $extraFields */
+        $extraFields = (array) $extra;
+        if ([] !== $extraFields && array_is_list($extraFields)) {
             throw new \InvalidArgumentException('extraBodyParams must be a map of parameters, got a list');
         }
         if (is_null($body)) {
             return (object) $extra;
         }
         // `[]` is a list too, and a body with no fields still takes the extra parameters.
-        if (is_array($body) && [] !== $body && array_is_list($body)) {
-            throw new \InvalidArgumentException('extraBodyParams cannot be merged into a list body');
+        if (is_array($body) || $body instanceof \stdClass) {
+            /** @var array<mixed> $bodyFields */
+            $bodyFields = (array) $body;
+            if ([] !== $bodyFields && array_is_list($bodyFields)) {
+                throw new \InvalidArgumentException('extraBodyParams cannot be merged into a list body');
+            }
         }
         if (!is_array($body) && !$body instanceof \stdClass) {
             throw new \InvalidArgumentException('extraBodyParams cannot be merged into a body of type '.get_debug_type($body));

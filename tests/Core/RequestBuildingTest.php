@@ -391,6 +391,19 @@ final class RequestBuildingTest extends TestCase
     }
 
     #[Test]
+    public function testExtraBodyParamsThatAreAListAsAnObjectAreRejected(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams must be a map of parameters, got a list');
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: (object) ['value']),
+        );
+    }
+
+    #[Test]
     public function testExtraBodyParamsCannotBeMergedIntoAListBody(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -400,6 +413,20 @@ final class RequestBuildingTest extends TestCase
             method: 'post',
             path: 'api/undocumented',
             body: ['raw'],
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+    }
+
+    #[Test]
+    public function testExtraBodyParamsCannotBeMergedIntoAListBodyGivenAsAnObject(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams cannot be merged into a list body');
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            body: (object) ['raw'],
             options: $this->options(extraBodyParams: ['undocumented' => 'value']),
         );
     }
