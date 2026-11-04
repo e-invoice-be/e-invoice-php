@@ -16,7 +16,7 @@ final class Util
 
     public const JSON_ENCODE_FLAGS = JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
 
-    public const JSON_CONTENT_TYPE = '/^application\/(?:vnd(?:.[^.]+)*+)?json(?!l)/';
+    public const JSON_CONTENT_TYPE = '/^application\/(?:[\w.-]+\+)?json(?!l)/';
 
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
