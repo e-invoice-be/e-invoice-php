@@ -189,9 +189,6 @@ final class ModelConversionTest extends TestCase
     #[Test]
     public function testReadingAnAbsentFieldRaisesNoNotice(): void
     {
-        $this->markTestSkipped('Bug in src/Core/Concerns/SdkModel.php offsetGet (return null by reference): reading an absent field raises an E_NOTICE.');
-
-        // @phpstan-ignore deadCode.unreachable
         $webhook = self::webhook();
         unset($webhook['enabled']);
 

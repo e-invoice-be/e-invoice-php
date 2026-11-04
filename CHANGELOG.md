@@ -9,6 +9,7 @@
 * a file upload read from a stream no longer loses chunks that are exactly `"0"`
 * a multipart body with integer keys no longer throws a `TypeError`
 * the minimum versions of the dependencies are now ones that work: `psr/http-message` `^1.1|^2` (1.0 has no parameter types, which made loading the SDK a fatal error) and `php-http/discovery` `^1.15` (older releases lack the PSR-17/PSR-18 discovery classes)
+* reading an absent model field through array access (`$document['note']`) no longer raises the notice "Only variable references should be returned by reference", which frameworks such as Laravel turn into an exception
 
 ## 0.9.0 (2026-11-03)
 

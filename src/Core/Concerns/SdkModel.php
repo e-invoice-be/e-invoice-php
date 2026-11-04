@@ -149,7 +149,11 @@ trait SdkModel
         }
 
         if (!$this->offsetExists($offset)) { // @phpstan-ignore-line
-            return null; // @phpstan-ignore-line
+            // A by-reference function must return a variable: returning the
+            // literal `null` raises "Only variable references should be returned by reference".
+            $null = null;
+
+            return $null; // @phpstan-ignore-line
         }
 
         if (array_key_exists($offset, array: $this->_data)) {
