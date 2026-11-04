@@ -5,6 +5,13 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   lint:
     timeout-minutes: 10
@@ -18,32 +25,80 @@ jobs:
         uses: 'shivammathur/setup-php@v2'
         with:
           php-version: '8.3'
+          coverage: none
+          tools: composer:v2
 
-      - name: Run Bootstrap
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Get the Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ runner.os }}-php8.3-${{ hashFiles('composer.json') }}
+          restore-keys: composer-${{ runner.os }}-php8.3-
+
+      - name: Run bootstrap
         run: ./scripts/bootstrap
+
+      - name: Audit dependencies
+        run: composer audit
 
       - name: Run lints
         run: ./scripts/lint
 
       - name: Check formatting
         run: ./scripts/format --check
+
   test:
     timeout-minutes: 10
-    name: test
+    name: test (PHP ${{ matrix.php }}${{ matrix.dependencies == 'lowest' && ', lowest deps' || '' }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3', '8.4', '8.5']
+        dependencies: [highest]
+        include:
+          - php: '8.2'
+            dependencies: lowest
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up PHP
         uses: 'shivammathur/setup-php@v2'
         with:
-          php-version: '8.3'
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Get the Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ runner.os }}-php${{ matrix.php }}-${{ matrix.dependencies }}-${{ hashFiles('composer.json') }}
+          restore-keys: composer-${{ runner.os }}-php${{ matrix.php }}-${{ matrix.dependencies }}-
 
       - name: Run bootstrap
+        if: matrix.dependencies == 'highest'
         run: ./scripts/bootstrap
+
+      - name: Install the lowest dependencies
+        if: matrix.dependencies == 'lowest'
+        run: composer update --prefer-lowest --prefer-stable --no-interaction --no-progress
 
       - name: Run tests
         run: ./scripts/test
+
   syntax:
     timeout-minutes: 10
     name: syntax (PHP 8.1)
@@ -55,6 +110,7 @@ jobs:
         uses: 'shivammathur/setup-php@v2'
         with:
           php-version: '8.1'
+          coverage: none
 
       - name: Check the syntax of src
         run: |
