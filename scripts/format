@@ -4,5 +4,11 @@ set -e
 
 cd -- "$(dirname -- "$0")/.."
 
+if [ "${1:-}" = "--check" ]; then
+  shift
+  echo "==> Checking formatting with php-cs-fixer"
+  exec -- ./vendor/bin/php-cs-fixer fix --dry-run --diff "$@"
+fi
+
 echo "==> Running php-cs-fixer"
-exec -- ./vendor/bin/php-cs-fixer fix
+exec -- ./vendor/bin/php-cs-fixer fix "$@"

@@ -24,6 +24,9 @@ jobs:
 
       - name: Run lints
         run: ./scripts/lint
+
+      - name: Check formatting
+        run: ./scripts/format --check
   test:
     timeout-minutes: 10
     name: test
