@@ -21,9 +21,6 @@
       "php-http/discovery": false,
       "phpstan/extension-installer": true
     },
-    "platform": {
-      "php": "8.3"
-    },
     "preferred-install": "dist",
     "sort-packages": true
   },
