@@ -57,7 +57,7 @@ final class Util
     }
 
     /**
-     * @param string|int|list<string|int>|callable $key
+     * @param string|int|list<string|int>|callable(mixed): mixed $key
      */
     public static function dig(
         mixed $array,
@@ -72,9 +72,10 @@ final class Util
                 return $array[$key];
             }
 
-            if (is_array($key) && !empty($key)) {
-                if (array_key_exists($fst = $key[0], array: $array)) {
-                    return self::dig($array[$fst], key: array_slice($key, 1));
+            if (is_array($key) && [] !== $key) {
+                $fst = array_shift($key);
+                if (array_key_exists($fst, array: $array)) {
+                    return self::dig($array[$fst], key: $key);
                 }
             }
         }
@@ -91,7 +92,7 @@ final class Util
             return $path;
         }
 
-        if (empty($path)) {
+        if ([] === $path) {
             return '';
         }
 
@@ -109,19 +110,22 @@ final class Util
         array $query = []
     ): UriInterface {
         $parsed = parse_url($path);
-        if ($scheme = $parsed['scheme'] ?? null) {
+        if (null !== ($scheme = $parsed['scheme'] ?? null)) {
             $base = $base->withScheme($scheme);
         }
-        if ($host = $parsed['host'] ?? null) {
+        if (null !== ($host = $parsed['host'] ?? null)) {
             $base = $base->withHost($host);
         }
-        if ($port = $parsed['port'] ?? null) {
+        if (null !== ($port = $parsed['port'] ?? null)) {
             $base = $base->withPort($port);
         }
-        if (($user = $parsed['user'] ?? null) || ($pass = $parsed['pass'] ?? null)) {
-            $base = $base->withUserInfo($user ?? '', $pass ?? null);
+        // Both are read first: a short circuit would otherwise drop the password.
+        $user = $parsed['user'] ?? null;
+        $pass = $parsed['pass'] ?? null;
+        if (null !== $user || null !== $pass) {
+            $base = $base->withUserInfo($user ?? '', $pass);
         }
-        if ($path = $parsed['path'] ?? null) {
+        if ('' !== ($path = $parsed['path'] ?? '')) {
             $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath($base->getPath().'/'.$path);
         }
 
@@ -194,34 +198,30 @@ final class Util
         mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
-            /** @var RequestInterface */
             return $req->withBody($body);
         }
 
         $contentType = $req->getHeaderLine('Content-Type');
-        if (preg_match(self::JSON_CONTENT_TYPE, $contentType)) {
+        if (1 === preg_match(self::JSON_CONTENT_TYPE, $contentType)) {
             if (is_array($body) || is_object($body)) {
                 $encoded = json_encode($body, flags: self::JSON_ENCODE_FLAGS);
                 $stream = $factory->createStream($encoded);
 
-                /** @var RequestInterface */
                 return $req->withBody($stream);
             }
         }
 
-        if (preg_match('/^multipart\/form-data/', $contentType)) {
+        if (1 === preg_match('/^multipart\/form-data/', $contentType)) {
             [$boundary, $gen] = self::encodeMultipartStreaming($body);
             $encoded = implode('', iterator_to_array($gen));
             $stream = $factory->createStream($encoded);
 
-            /** @var RequestInterface */
             return $req->withHeader('Content-Type', "{$contentType}; boundary={$boundary}")->withBody($stream);
         }
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
 
-            /** @var RequestInterface */
             return $req->withBody($stream);
         }
 
@@ -255,20 +255,20 @@ final class Util
 
     public static function decodeContent(ResponseInterface $rsp): mixed
     {
-        if (204 == $rsp->getStatusCode()) {
+        if (204 === $rsp->getStatusCode()) {
             return null;
         }
 
         $content_type = $rsp->getHeaderLine('Content-Type');
         $body = $rsp->getBody();
 
-        if (preg_match(self::JSON_CONTENT_TYPE, subject: $content_type)) {
+        if (1 === preg_match(self::JSON_CONTENT_TYPE, subject: $content_type)) {
             $json = $body->getContents();
 
             return self::decodeJson($json);
         }
 
-        if (preg_match(self::JSONL_CONTENT_TYPE, subject: $content_type)) {
+        if (1 === preg_match(self::JSONL_CONTENT_TYPE, subject: $content_type)) {
             $it = self::streamIterator($body);
             $lines = self::decodeLines($it);
 
@@ -288,7 +288,7 @@ final class Util
     }
 
     /**
-     * @param list<callable> $closing
+     * @param list<callable(): void> $closing
      *
      * @return \Generator<string>
      */
@@ -307,7 +307,9 @@ final class Util
         if (is_resource($val)) {
             yield sprintf($contentLine, $contentType ?? 'application/octet-stream');
             while (!feof($val)) {
-                if ($read = fread($val, length: self::BUF_SIZE)) {
+                // A chunk such as "0" is falsy: skip only a failed or empty read.
+                $read = fread($val, length: self::BUF_SIZE);
+                if (false !== $read && '' !== $read) {
                     yield $read;
                 }
             }
@@ -325,7 +327,7 @@ final class Util
     }
 
     /**
-     * @param list<callable> $closing
+     * @param list<callable(): void> $closing
      *
      * @return \Generator<string>
      */
@@ -372,7 +374,7 @@ final class Util
             try {
                 if (is_array($body) || is_object($body)) {
                     foreach ((array) $body as $key => $val) {
-                        foreach (static::writeMultipartChunk(boundary: $boundary, key: $key, val: $val, closing: $closing) as $chunk) {
+                        foreach (static::writeMultipartChunk(boundary: $boundary, key: (string) $key, val: $val, closing: $closing) as $chunk) {
                             yield $chunk;
                         }
                     }

@@ -23,7 +23,6 @@ use EInvoiceAPI\Stats\StatGetResponse\Action;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse\BusinessCard;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -57,10 +56,7 @@ class DateTimeTestModel implements BaseModel
 
 /**
  * @internal
- *
- * @coversNothing
  */
-#[CoversNothing]
 class DateTimeCoercionTest extends TestCase
 {
     #[Test]

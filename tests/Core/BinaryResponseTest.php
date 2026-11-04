@@ -5,7 +5,6 @@ namespace Tests\Core;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\RequestOptions;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +15,6 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-#[CoversNothing]
 class BinaryResponseTest extends TestCase
 {
     #[Test]

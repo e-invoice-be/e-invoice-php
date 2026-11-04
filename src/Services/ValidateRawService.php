@@ -29,7 +29,6 @@ use EInvoiceAPI\Validate\ValidateValidateUblParams;
 
 final class ValidateRawService implements ValidateRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

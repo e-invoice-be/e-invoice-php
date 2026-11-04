@@ -1,0 +1,18 @@
+* text=auto eol=lf
+*.png binary
+
+# Leave the development files out of the dist archive that Composer
+# installs. The archive keeps src/, composer.json, README.md, LICENSE and
+# CHANGELOG.md.
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/.phpactor.json export-ignore
+/CONTRIBUTING.md export-ignore
+/SECURITY.md export-ignore
+/phpstan.dist.neon export-ignore
+/phpunit.xml.dist export-ignore
+/scripts export-ignore
+/tests export-ignore

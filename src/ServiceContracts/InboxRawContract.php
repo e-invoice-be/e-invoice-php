@@ -13,12 +13,17 @@ use EInvoiceAPI\Inbox\InboxListInvoicesParams;
 use EInvoiceAPI\Inbox\InboxListParams;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type InboxListParamsShape from InboxListParams
+ * @phpstan-import-type InboxListCreditNotesParamsShape from InboxListCreditNotesParams
+ * @phpstan-import-type InboxListInvoicesParamsShape from InboxListInvoicesParams
+ */
 interface InboxRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|InboxListParams $params
+     * @param InboxListParamsShape|InboxListParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -32,7 +37,7 @@ interface InboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|InboxListCreditNotesParams $params
+     * @param InboxListCreditNotesParamsShape|InboxListCreditNotesParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -46,7 +51,7 @@ interface InboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|InboxListInvoicesParams $params
+     * @param InboxListInvoicesParamsShape|InboxListInvoicesParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *

@@ -4,14 +4,12 @@ namespace Tests\Services\Documents;
 
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Services\ServiceTestCase;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class AttachmentsTest extends ServiceTestCase
 {
     private const ATTACHMENT = [

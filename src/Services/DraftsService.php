@@ -72,10 +72,8 @@ final class DraftsService implements DraftsContract
             'state' => $state,
             'type' => $type,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

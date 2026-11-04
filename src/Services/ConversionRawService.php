@@ -16,7 +16,6 @@ use EInvoiceAPI\ServiceContracts\ConversionRawContract;
 
 final class ConversionRawService implements ConversionRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

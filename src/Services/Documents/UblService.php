@@ -40,7 +40,6 @@ final class UblService implements UblContract
     ): DocumentResponse {
         $params = ['file' => $file];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createFromUbl(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -57,7 +56,6 @@ final class UblService implements UblContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): UblGetResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->get($documentID, requestOptions: $requestOptions);
 
         return $response->parse();

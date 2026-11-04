@@ -4,13 +4,11 @@ namespace Tests\Services;
 
 use EInvoiceAPI\Conversion\DocumentCreateFromPdfTask;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class ConversionTest extends ServiceTestCase
 {
     #[Test]

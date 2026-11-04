@@ -10,12 +10,15 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Stats\StatGetResponse;
 use EInvoiceAPI\Stats\StatRetrieveParams;
 
+/**
+ * @phpstan-import-type StatRetrieveParamsShape from StatRetrieveParams
+ */
 interface StatsRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|StatRetrieveParams $params
+     * @param StatRetrieveParamsShape|StatRetrieveParams $params
      *
      * @return BaseResponse<StatGetResponse>
      *

@@ -16,7 +16,6 @@ use EInvoiceAPI\Stats\StatRetrieveParams\Aggregation;
 
 final class StatsRawService implements StatsRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

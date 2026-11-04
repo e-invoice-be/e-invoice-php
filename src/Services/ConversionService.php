@@ -40,7 +40,6 @@ final class ConversionService implements ConversionContract
     ): DocumentCreateFromPdfTask {
         $params = ['file' => $file];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createFromPdf(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -57,7 +56,6 @@ final class ConversionService implements ConversionContract
         string $taskID,
         ?RequestOptions $requestOptions = null
     ): DocumentCreateFromPdfTask {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($taskID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -74,7 +72,6 @@ final class ConversionService implements ConversionContract
         string $taskID,
         ?RequestOptions $requestOptions = null
     ): DocumentNewFromPdfResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveResult($taskID, requestOptions: $requestOptions);
 
         return $response->parse();

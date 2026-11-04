@@ -6,7 +6,6 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIConnectionException;
 use EInvoiceAPI\Core\Exceptions\APITimeoutException;
 use EInvoiceAPI\RequestOptions;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +16,6 @@ use Tests\Support\MockClient;
 /**
  * @internal
  */
-#[CoversNothing]
 final class ClientTest extends TestCase
 {
     private Client $client;
@@ -82,6 +80,17 @@ final class ClientTest extends TestCase
         $client->validate->validatePeppolID(peppolID: '0208:0123456789', requestOptions: $this->options());
 
         $this->assertFalse($this->http->requests[0]->hasHeader('Authorization'));
+    }
+
+    #[Test]
+    public function testFalsyApiKeyIsStillSent(): void
+    {
+        $client = new Client(apiKey: '0', baseUrl: 'http://localhost');
+        $this->http->queueJson(['name' => 'Acme']);
+
+        $client->me->retrieve(requestOptions: $this->options());
+
+        $this->assertSame('Bearer 0', $this->http->requests[0]->getHeaderLine('Authorization'));
     }
 
     #[Test]

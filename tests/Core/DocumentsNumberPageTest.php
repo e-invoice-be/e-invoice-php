@@ -7,7 +7,6 @@ use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Mailbox\InboundEmailResponse;
 use EInvoiceAPI\RequestOptions;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -17,7 +16,6 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-#[CoversNothing]
 class DocumentsNumberPageTest extends TestCase
 {
     /** @var list<RequestInterface> */
@@ -129,6 +127,21 @@ class DocumentsNumberPageTest extends TestCase
         $this->assertSame([...$first, 'page' => '3'], $third);
     }
 
+    #[Test]
+    public function testNextPageOfTheLastPageThrows(): void
+    {
+        $page = $this->client([
+            ['items' => [['id' => 'doc_1']], 'page' => 1, 'pages' => 1, 'has_next_page' => false],
+        ])->inbox->list(requestOptions: $this->options());
+
+        $this->assertSame([$page], iterator_to_array($page, preserve_keys: false));
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('No next page expected');
+
+        $page->getNextPage();
+    }
+
     /**
      * @param list<array<string,mixed>> $bodies
      */
@@ -141,16 +154,19 @@ class DocumentsNumberPageTest extends TestCase
 
     private function options(): RequestOptions
     {
-        $transporter = new class($this->bodies, $this->requests) implements ClientInterface {
+        $record = function (RequestInterface $request): void {
+            $this->requests[] = $request;
+        };
+        $transporter = new class($this->bodies, $record) implements ClientInterface {
             /**
              * @param list<array<string,mixed>> $bodies
-             * @param list<RequestInterface> $requests
+             * @param \Closure(RequestInterface): void $record
              */
-            public function __construct(private array $bodies, private array &$requests) {}
+            public function __construct(private array $bodies, private \Closure $record) {}
 
             public function sendRequest(RequestInterface $request): ResponseInterface
             {
-                $this->requests[] = $request;
+                ($this->record)($request);
                 $body = array_shift($this->bodies) ?? ['items' => []];
 
                 return new Response(200, ['Content-Type' => 'application/json'], json_encode($body) ?: '');

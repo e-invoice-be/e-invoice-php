@@ -48,10 +48,8 @@ final class StatsService implements StatsContract
             'endDate' => $endDate,
             'startDate' => $startDate,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

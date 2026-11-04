@@ -12,6 +12,10 @@ use EInvoiceAPI\Mailbox\MailboxDownloadAttachmentParams;
 use EInvoiceAPI\Mailbox\MailboxListParams;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type MailboxListParamsShape from MailboxListParams
+ * @phpstan-import-type MailboxDownloadAttachmentParamsShape from MailboxDownloadAttachmentParams
+ */
 interface MailboxRawContract
 {
     /**
@@ -29,7 +33,7 @@ interface MailboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|MailboxListParams $params
+     * @param MailboxListParamsShape|MailboxListParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<InboundEmailResponse>>
      *
@@ -43,7 +47,7 @@ interface MailboxRawContract
     /**
      * @api
      *
-     * @param array<mixed>|MailboxDownloadAttachmentParams $params
+     * @param MailboxDownloadAttachmentParamsShape|MailboxDownloadAttachmentParams $params
      *
      * @return BaseResponse<string>
      *

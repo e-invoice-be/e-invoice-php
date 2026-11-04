@@ -13,7 +13,6 @@ use EInvoiceAPI\ServiceContracts\MeRawContract;
 
 final class MeRawService implements MeRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

@@ -11,12 +11,15 @@ use EInvoiceAPI\Documents\Ubl\UblCreateFromUblParams;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type UblCreateFromUblParamsShape from UblCreateFromUblParams
+ */
 interface UblRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|UblCreateFromUblParams $params
+     * @param UblCreateFromUblParamsShape|UblCreateFromUblParams $params
      *
      * @return BaseResponse<DocumentResponse>
      *

@@ -13,12 +13,17 @@ use EInvoiceAPI\Validate\ValidateValidatePeppolIDParams;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 use EInvoiceAPI\Validate\ValidateValidateUblParams;
 
+/**
+ * @phpstan-import-type ValidateValidateJsonParamsShape from ValidateValidateJsonParams
+ * @phpstan-import-type ValidateValidatePeppolIDParamsShape from ValidateValidatePeppolIDParams
+ * @phpstan-import-type ValidateValidateUblParamsShape from ValidateValidateUblParams
+ */
 interface ValidateRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|ValidateValidateJsonParams $params
+     * @param ValidateValidateJsonParamsShape|ValidateValidateJsonParams $params
      *
      * @return BaseResponse<UblDocumentValidation>
      *
@@ -32,7 +37,7 @@ interface ValidateRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ValidateValidatePeppolIDParams $params
+     * @param ValidateValidatePeppolIDParamsShape|ValidateValidatePeppolIDParams $params
      *
      * @return BaseResponse<ValidateValidatePeppolIDResponse>
      *
@@ -46,7 +51,7 @@ interface ValidateRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ValidateValidateUblParams $params
+     * @param ValidateValidateUblParamsShape|ValidateValidateUblParams $params
      *
      * @return BaseResponse<UblDocumentValidation>
      *

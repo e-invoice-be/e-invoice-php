@@ -14,6 +14,8 @@ use EInvoiceAPI\RequestOptions;
 /**
  * @internal
  *
+ * @phpstan-import-type normalized_request from \EInvoiceAPI\Core\BaseClient
+ *
  * @template Item
  */
 trait SdkPage
@@ -44,7 +46,7 @@ trait SdkPage
     public function getNextPage(): static
     {
         $next = $this->nextRequest();
-        if (!$next) {
+        if (null === $next) {
             throw new \RuntimeException(
                 'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.'
             );
@@ -63,7 +65,7 @@ trait SdkPage
     /**
      * Iterator yielding each page (instance of static).
      *
-     * @return \Generator<static>
+     * @return \Generator<int, static>
      */
     public function getIterator(): \Generator
     {
@@ -103,7 +105,7 @@ trait SdkPage
     /**
      * @internal
      *
-     * @return array{normalized_request, RequestOptions}
+     * @return array{normalized_request, RequestOptions}|null
      */
     abstract protected function nextRequest(): ?array;
 }

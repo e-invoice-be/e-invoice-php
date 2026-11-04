@@ -11,12 +11,15 @@ use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type ConversionCreateFromPdfParamsShape from ConversionCreateFromPdfParams
+ */
 interface ConversionRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|ConversionCreateFromPdfParams $params
+     * @param ConversionCreateFromPdfParamsShape|ConversionCreateFromPdfParams $params
      *
      * @return BaseResponse<DocumentCreateFromPdfTask>
      *
