@@ -4,6 +4,7 @@ namespace Tests\Core;
 
 use EInvoiceAPI\Client;
 use EInvoiceAPI\RequestOptions;
+use Nyholm\Psr7\Response;
 use Nyholm\Psr7\Stream;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -324,11 +325,83 @@ final class RequestBuildingTest extends TestCase
         );
 
         $this->assertCount(2, $this->http->requests);
-        foreach ($this->http->requests as $request) {
-            $body = json_decode((string) $request->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
-            $this->assertIsArray($body);
-            $this->assertSame('value', $body['undocumented'] ?? null);
-        }
+        $this->assertSameBodies(['events' => ['a'], 'url' => 'u', 'enabled' => true, 'undocumented' => 'value']);
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreSentAgainOnARedirect(): void
+    {
+        $this->http
+            ->queue(new Response(307, ['Location' => '/api/webhooks/']))
+            ->queueJson(['id' => 'w', 'events' => ['a'], 'secret' => 's', 'url' => 'u'])
+        ;
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $this->assertCount(2, $this->http->requests);
+        $this->assertSame('POST', $this->http->requests[1]->getMethod());
+        $this->assertSame('/api/webhooks/', $this->http->requests[1]->getUri()->getPath());
+        $this->assertSameBodies(['events' => ['a'], 'url' => 'u', 'enabled' => true, 'undocumented' => 'value']);
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreTheBodyOfAGetRequest(): void
+    {
+        $this->http->queueJson(['name' => 'Acme']);
+
+        $this->client()->me->retrieve(
+            requestOptions: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $request = $this->request();
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame(['undocumented' => 'value'], $this->jsonBody());
+    }
+
+    #[Test]
+    public function testExtraBodyParamsAreMergedIntoAnEmptyArrayBody(): void
+    {
+        $this->http->queueJson();
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            body: [],
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
+
+        $this->assertSame(['undocumented' => 'value'], $this->jsonBody());
+    }
+
+    #[Test]
+    public function testExtraBodyParamsThatAreAListAreRejected(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams must be a map of parameters, got a list');
+
+        $this->client()->webhooks->create(
+            events: ['a'],
+            url: 'u',
+            requestOptions: $this->options(extraBodyParams: ['value']),
+        );
+    }
+
+    #[Test]
+    public function testExtraBodyParamsCannotBeMergedIntoAListBody(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('extraBodyParams cannot be merged into a list body');
+
+        $this->client()->request(
+            method: 'post',
+            path: 'api/undocumented',
+            body: ['raw'],
+            options: $this->options(extraBodyParams: ['undocumented' => 'value']),
+        );
     }
 
     #[Test]
@@ -404,6 +477,21 @@ final class RequestBuildingTest extends TestCase
         $this->assertIsArray($body);
 
         return $body;
+    }
+
+    /**
+     * Every recorded request carries this JSON object, extras included once.
+     *
+     * @param array<mixed> $expected
+     */
+    private function assertSameBodies(array $expected): void
+    {
+        $this->assertNotEmpty($this->http->requests);
+        foreach ($this->http->requests as $request) {
+            $body = json_decode((string) $request->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
+            $this->assertIsArray($body);
+            $this->assertSame($expected, $body);
+        }
     }
 
     private function request(): RequestInterface

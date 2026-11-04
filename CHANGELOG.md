@@ -4,7 +4,7 @@
 
 ### Bug Fixes
 
-* the `extraBodyParams` request option is now sent ([#36](https://github.com/e-invoice-be/e-invoice-php/issues/36)). Before, it was accepted and silently dropped. Its keys are added to the JSON body, or as parts of a multipart body, and override the body parameters of the same name. A request without a body sends them as its JSON body. A value that is not an array or a `stdClass` object, or a request body that is not one of those (for example a string or a stream given to `$client->request`), throws an `InvalidArgumentException`
+* the `extraBodyParams` request option is now sent ([#36](https://github.com/e-invoice-be/e-invoice-php/issues/36)). Before, it was accepted and silently dropped. Its keys are added to the JSON body, or as parts of a multipart body, and override the body parameters of the same name. A request without a body, a `GET` included, sends them as its JSON body. A value that is not a map (a list, or anything other than an array or a `stdClass` object) throws an `InvalidArgumentException`. So does a request body that is a list, or not an array or a `stdClass` (for example a string or a stream given to `$client->request`): merging a list would turn a JSON array into an object
 * a base URL with credentials (`https://user:pass@host`) keeps its password, and a path of `"0"` is no longer dropped
 * an API key of `"0"` is now sent as the bearer token
 * a file upload read from a stream no longer loses chunks that are exactly `"0"`
