@@ -320,6 +320,7 @@ abstract class BaseClient
         if (!is_array($extra) && !$extra instanceof \stdClass) {
             throw new \InvalidArgumentException('extraBodyParams must be an array or a stdClass object, got '.get_debug_type($extra));
         }
+
         /** @var array<mixed> $extraFields */
         $extraFields = (array) $extra;
         if ([] !== $extraFields && array_is_list($extraFields)) {
