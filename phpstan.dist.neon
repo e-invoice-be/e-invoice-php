@@ -3,13 +3,67 @@ parameters:
     phpVersion:
         min: 80100
         max: 80499
-    treatPhpDocTypesAsCertain: false
     paths:
         - src
         - tests
-    ignoreErrors:
-        - identifier: parameter.defaultValue
-        - identifier: trait.unused
-        - identifier: property.onlyWritten
 
-    reportUnmatchedIgnoredErrors: false
+    # The SDK validates its input at runtime (e.g. a non-string offset on a
+    # model) because callers do not necessarily run a static analyser, so the
+    # PHPDoc types are not certain.
+    treatPhpDocTypesAsCertain: false
+
+    reportUnmatchedIgnoredErrors: true
+    checkMissingCallableSignature: true
+    checkBenevolentUnionTypes: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportPossiblyNonexistentConstantArrayOffset: true
+    reportAnyTypeWideningInVarTag: true
+    reportAlwaysTrueInLastCondition: true
+    reportWrongPhpDocTypeInVarTag: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+
+    strictRules:
+        # A short ternary is the idiom for defaults such as `getenv('X') ?: 'default'`.
+        disallowedShortTernary: false
+
+    ignoreErrors:
+        # The builders of the models set each given value with the idiom
+        # `null !== $x && $self['x'] = $x;` (650+ times).
+        -
+            identifier: booleanAnd.rightNotBoolean
+            path: src/*
+
+        # PHPUnit's assertions are static methods that are called as `$this->assert*()`.
+        -
+            identifier: staticMethod.dynamicCall
+            path: tests/*
+
+        # The tests check the responses of fixtures whose shape they know.
+        -
+            identifier: offsetAccess.notFound
+            path: tests/*
+
+        # The tests keep covering the deprecated methods until they are removed.
+        -
+            identifier: method.deprecated
+            path: tests/*
+
+        # The models type their array access with `key-of<Shape>`, narrower than
+        # the `string` offset of `\ArrayAccess`, to check the keys of callers.
+        -
+            identifier: method.childParameterType
+            path: src/Core/Concerns/SdkModel.php
+
+        # The generator writes the nested enums of these params two ways: the
+        # services accept the enum objects and the params shapes accept null, so
+        # neither shape contains the other. The runtime accepts both.
+        -
+            identifier: method.childParameterType
+            paths:
+                - src/Services/DocumentsRawService.php
+                - src/Services/ValidateRawService.php
+
+        # The models read and write their properties by name.
+        -
+            identifier: property.dynamicName
+            path: src/Core/Concerns/SdkModel.php
