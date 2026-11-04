@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Bug Fixes
+
+* `documents->create()` and `validate->validateJson()` now show the defaults of the API specification in their signatures, and send them: `currency: CurrencyCode::EUR`, `direction: DocumentDirection::OUTBOUND`, `documentType: DocumentType::INVOICE` and `state: DocumentState::DRAFT` (these were `null`, so the fields were left out), and `taxCode: TaxCode::S` (was the string `'S'`) ([#48](https://github.com/e-invoice-be/e-invoice-php/issues/48)). The server applies the same defaults to an absent field. Passing `null` for `currency`, `direction`, `documentType` or `state` still leaves the field out
+
 ## 0.9.1 (2026-11-04)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.9.0...v0.9.1)

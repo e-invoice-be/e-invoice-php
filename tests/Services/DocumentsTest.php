@@ -2,6 +2,8 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\Documents\CurrencyCode;
+use EInvoiceAPI\Documents\DocumentCreateParams\TaxCode;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentGetLifecycleResponse;
 use EInvoiceAPI\Documents\DocumentGetLifecycleResponse\Event as LifecycleEvent;
@@ -15,6 +17,7 @@ use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentResponse\Item;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -36,11 +39,58 @@ final class DocumentsTest extends ServiceTestCase
             requestOptions: $this->options()
         );
 
-        $this->assertRequest('POST', '/api/documents/', body: ['tax_code' => 'S']);
+        // The service sends the defaults of the API specification.
+        $this->assertRequest('POST', '/api/documents/', body: [
+            'currency' => 'EUR',
+            'direction' => 'OUTBOUND',
+            'document_type' => 'INVOICE',
+            'state' => 'DRAFT',
+            'tax_code' => 'S',
+        ]);
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DocumentResponse::class, $result);
         $this->assertSame('doc_123', $result->id);
         $this->assertSame('DRAFT', $result->state);
+    }
+
+    #[Test]
+    public function testCreateOverridesTheSpecDefaults(): void
+    {
+        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z']);
+
+        $this->client->documents->create(
+            currency: CurrencyCode::USD,
+            direction: 'INBOUND',
+            documentType: DocumentType::CREDIT_NOTE,
+            state: DocumentState::SENT,
+            taxCode: TaxCode::Z,
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('POST', '/api/documents/', body: [
+            'currency' => 'USD',
+            'direction' => 'INBOUND',
+            'document_type' => 'CREDIT_NOTE',
+            'state' => 'SENT',
+            'tax_code' => 'Z',
+        ]);
+    }
+
+    #[Test]
+    public function testCreateOmitsADefaultedFieldPassedAsNull(): void
+    {
+        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z']);
+
+        $this->client->documents->create(
+            currency: null,
+            direction: null,
+            documentType: null,
+            state: null,
+            requestOptions: $this->options(),
+        );
+
+        // The server then applies its own default.
+        $this->assertRequest('POST', '/api/documents/', body: ['tax_code' => 'S']);
     }
 
     #[Test]
@@ -77,7 +127,9 @@ final class DocumentsTest extends ServiceTestCase
             '/api/documents/',
             query: ['construct_pdf' => 'true'],
             body: [
+                'currency' => 'EUR',
                 'customer_peppol_id' => '0208:0123456789',
+                'direction' => 'OUTBOUND',
                 'document_type' => 'SELFBILLING_INVOICE',
                 'items' => [
                     [
@@ -85,6 +137,7 @@ final class DocumentsTest extends ServiceTestCase
                         'item_attributes' => [['name' => 'name', 'value' => 'value']],
                     ],
                 ],
+                'state' => 'DRAFT',
                 'tax_code' => 'S',
             ],
         );
@@ -128,7 +181,10 @@ final class DocumentsTest extends ServiceTestCase
 
         $this->assertRequest('POST', '/api/documents/', body: [
             'buyer_reference' => 'CC-42',
+            'currency' => 'EUR',
             'customer_phone' => '+32 2 123 45 67',
+            'direction' => 'OUTBOUND',
+            'document_type' => 'INVOICE',
             'items' => [
                 [
                     'date' => '2024-01-31T00:00:00+00:00',
@@ -141,6 +197,7 @@ final class DocumentsTest extends ServiceTestCase
             'preceding_invoice_id' => 'INV-2024-001',
             'rounding_amount' => '-0.40',
             'sales_order' => 'SO-7',
+            'state' => 'DRAFT',
             'tax_code' => 'S',
             'tax_currency' => 'SEK',
             'total_tax_in_tax_currency' => 1150.5,

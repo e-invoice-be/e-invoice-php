@@ -5,6 +5,7 @@ namespace Tests\Services;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\UnionOf;
+use EInvoiceAPI\Documents\DocumentDirection;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
@@ -24,13 +25,42 @@ final class ValidateTest extends ServiceTestCase
 
         $result = $this->client->validate->validateJson(requestOptions: $this->options());
 
-        // The service sends the default tax code of the API specification.
-        $this->assertRequest('POST', '/api/validate/json', body: ['tax_code' => 'S']);
+        // The service sends the defaults of the API specification.
+        $this->assertRequest('POST', '/api/validate/json', body: [
+            'currency' => 'EUR',
+            'direction' => 'OUTBOUND',
+            'document_type' => 'INVOICE',
+            'state' => 'DRAFT',
+            'tax_code' => 'S',
+        ]);
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
         $this->assertSame('val_123', $result->id);
         $this->assertTrue($result->isValid);
         $this->assertSame([], $result->issues);
+    }
+
+    #[Test]
+    public function testValidateJsonOverridesTheSpecDefaults(): void
+    {
+        $this->http->queueJson(self::validationResponse());
+
+        $this->client->validate->validateJson(
+            currency: 'GBP',
+            direction: DocumentDirection::INBOUND,
+            documentType: 'DEBIT_NOTE',
+            state: 'RECEIVED',
+            taxCode: 'E',
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('POST', '/api/validate/json', body: [
+            'currency' => 'GBP',
+            'direction' => 'INBOUND',
+            'document_type' => 'DEBIT_NOTE',
+            'state' => 'RECEIVED',
+            'tax_code' => 'E',
+        ]);
     }
 
     #[Test]
@@ -159,7 +189,14 @@ final class ValidateTest extends ServiceTestCase
         $this->assertRequest(
             'POST',
             '/api/validate/json',
-            body: ['customer_peppol_id' => '0208:0123456789', 'tax_code' => 'S'],
+            body: [
+                'currency' => 'EUR',
+                'customer_peppol_id' => '0208:0123456789',
+                'direction' => 'OUTBOUND',
+                'document_type' => 'INVOICE',
+                'state' => 'DRAFT',
+                'tax_code' => 'S',
+            ],
         );
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
@@ -183,9 +220,13 @@ final class ValidateTest extends ServiceTestCase
             'POST',
             '/api/validate/json',
             body: [
+                'currency' => 'EUR',
+                'direction' => 'OUTBOUND',
+                'document_type' => 'INVOICE',
                 'items' => [
                     ['item_attributes' => [['name' => 'color', 'value' => 'red']]],
                 ],
+                'state' => 'DRAFT',
                 'tax_code' => 'S',
             ],
         );
@@ -218,12 +259,15 @@ final class ValidateTest extends ServiceTestCase
             '/api/validate/json',
             body: [
                 'buyer_reference' => 'CC-42',
+                'currency' => 'EUR',
                 'customer_phone' => '+32 2 123 45 67',
+                'direction' => 'OUTBOUND',
                 'document_type' => 'CREDIT_NOTE',
                 'preceding_invoice_date' => '2026-01-15T00:00:00+00:00',
                 'preceding_invoice_id' => 'INV-2026-001',
                 'rounding_amount' => '-0.40',
                 'sales_order' => 'SO-7',
+                'state' => 'DRAFT',
                 'tax_code' => 'S',
                 'tax_currency' => 'SEK',
                 'total_tax_in_tax_currency' => '231.50',
@@ -258,6 +302,9 @@ final class ValidateTest extends ServiceTestCase
             'POST',
             '/api/validate/json',
             body: [
+                'currency' => 'EUR',
+                'direction' => 'OUTBOUND',
+                'document_type' => 'INVOICE',
                 'items' => [
                     [
                         'date' => '2026-03-01T00:00:00+00:00',
@@ -269,6 +316,7 @@ final class ValidateTest extends ServiceTestCase
                     ],
                     ['date' => null, 'name' => 'Keyboard'],
                 ],
+                'state' => 'DRAFT',
                 'tax_code' => 'S',
             ],
         );
