@@ -20,7 +20,6 @@ use EInvoiceAPI\ServiceContracts\DraftsRawContract;
 
 final class DraftsRawService implements DraftsRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

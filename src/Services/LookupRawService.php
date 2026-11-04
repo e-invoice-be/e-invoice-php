@@ -17,7 +17,6 @@ use EInvoiceAPI\ServiceContracts\LookupRawContract;
 
 final class LookupRawService implements LookupRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

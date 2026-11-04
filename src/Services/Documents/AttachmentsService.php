@@ -41,7 +41,6 @@ final class AttachmentsService implements AttachmentsContract
     ): DocumentAttachment {
         $params = ['documentID' => $documentID];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($attachmentID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -60,7 +59,6 @@ final class AttachmentsService implements AttachmentsContract
         string $documentID,
         ?RequestOptions $requestOptions = null
     ): array {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list($documentID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -80,7 +78,6 @@ final class AttachmentsService implements AttachmentsContract
     ): AttachmentDeleteResponse {
         $params = ['documentID' => $documentID];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($attachmentID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -102,7 +99,6 @@ final class AttachmentsService implements AttachmentsContract
     ): DocumentAttachment {
         $params = ['file' => $file];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->add($documentID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

@@ -280,7 +280,6 @@ final class ValidateService implements ValidateContract
             'vendorPhone' => $vendorPhone,
             'vendorTaxID' => $vendorTaxID,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
         // @phpstan-ignore-next-line argument.type
@@ -304,7 +303,6 @@ final class ValidateService implements ValidateContract
     ): ValidateValidatePeppolIDResponse {
         $params = ['peppolID' => $peppolID];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validatePeppolID(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -323,7 +321,6 @@ final class ValidateService implements ValidateContract
     ): UblDocumentValidation {
         $params = ['file' => $file];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validateUbl(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

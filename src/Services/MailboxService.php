@@ -40,7 +40,6 @@ final class MailboxService implements MailboxContract
         string $inboundEmailID,
         ?RequestOptions $requestOptions = null
     ): InboundEmailResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($inboundEmailID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -88,10 +87,8 @@ final class MailboxService implements MailboxContract
             'sortOrder' => $sortOrder,
             'status' => $status,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -113,7 +110,6 @@ final class MailboxService implements MailboxContract
     ): string {
         $params = ['inboundEmailID' => $inboundEmailID];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->downloadAttachment($filename, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -130,7 +126,6 @@ final class MailboxService implements MailboxContract
         string $inboundEmailID,
         ?RequestOptions $requestOptions = null
     ): InboundEmailResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->reprocess($inboundEmailID, requestOptions: $requestOptions);
 
         return $response->parse();

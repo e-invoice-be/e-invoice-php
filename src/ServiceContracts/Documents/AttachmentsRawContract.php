@@ -13,12 +13,17 @@ use EInvoiceAPI\Documents\Attachments\AttachmentRetrieveParams;
 use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type AttachmentRetrieveParamsShape from AttachmentRetrieveParams
+ * @phpstan-import-type AttachmentDeleteParamsShape from AttachmentDeleteParams
+ * @phpstan-import-type AttachmentAddParamsShape from AttachmentAddParams
+ */
 interface AttachmentsRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|AttachmentRetrieveParams $params
+     * @param AttachmentRetrieveParamsShape|AttachmentRetrieveParams $params
      *
      * @return BaseResponse<DocumentAttachment>
      *
@@ -45,7 +50,7 @@ interface AttachmentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|AttachmentDeleteParams $params
+     * @param AttachmentDeleteParamsShape|AttachmentDeleteParams $params
      *
      * @return BaseResponse<AttachmentDeleteResponse>
      *
@@ -62,7 +67,7 @@ interface AttachmentsRawContract
      *
      * @api
      *
-     * @param array<mixed>|AttachmentAddParams $params
+     * @param AttachmentAddParamsShape|AttachmentAddParams $params
      *
      * @return BaseResponse<DocumentAttachment>
      *

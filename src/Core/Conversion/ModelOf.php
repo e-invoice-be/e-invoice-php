@@ -30,7 +30,7 @@ final class ModelOf implements Converter
         foreach ($this->class->getProperties() as $property) {
             $attributes = [...$property->getAttributes(Required::class), ...$property->getAttributes(Optional::class)];
 
-            if (!empty($attributes)) {
+            if ([] !== $attributes) {
                 $name = $property->getName();
                 $properties[$name] = new PropertyInfo($property);
             }
@@ -46,7 +46,7 @@ final class ModelOf implements Converter
             return $value;
         }
 
-        if (!is_array($value) || (!empty($value) && array_is_list($value))) {
+        if (!is_array($value) || ([] !== $value && array_is_list($value))) {
             ++$state->no;
 
             return $value;
@@ -114,7 +114,7 @@ final class ModelOf implements Converter
                 }
             }
 
-            return empty($acc) ? ((object) $acc) : $acc;
+            return [] === $acc ? ((object) $acc) : $acc;
         }
 
         ++$state->no;

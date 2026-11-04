@@ -33,7 +33,6 @@ use EInvoiceAPI\Validate\UblDocumentValidation;
 
 final class DocumentsRawService implements DocumentsRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */

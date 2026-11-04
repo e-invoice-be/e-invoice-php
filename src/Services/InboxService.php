@@ -71,10 +71,8 @@ final class InboxService implements InboxContract
             'sortOrder' => $sortOrder,
             'type' => $type,
         ];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -110,7 +108,6 @@ final class InboxService implements InboxContract
         // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listCreditNotes(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -146,7 +143,6 @@ final class InboxService implements InboxContract
         // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listInvoices(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

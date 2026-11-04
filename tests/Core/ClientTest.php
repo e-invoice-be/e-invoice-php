@@ -83,6 +83,17 @@ final class ClientTest extends TestCase
     }
 
     #[Test]
+    public function testFalsyApiKeyIsStillSent(): void
+    {
+        $client = new Client(apiKey: '0', baseUrl: 'http://localhost');
+        $this->http->queueJson(['name' => 'Acme']);
+
+        $client->me->retrieve(requestOptions: $this->options());
+
+        $this->assertSame('Bearer 0', $this->http->requests[0]->getHeaderLine('Authorization'));
+    }
+
+    #[Test]
     public function testRequestHasNoTelemetryHeaders(): void
     {
         $this->http->queueJson(['name' => 'Acme']);

@@ -49,7 +49,7 @@ final class UnionOf implements Converter
             static fn (array $a, array $b): int => $a[0][0] <=> $b[0][0] ?: $a[0][1] <=> $b[0][1] ?: $a[0][2] <=> $b[0][2]
         );
 
-        if (empty($alternatives)) {
+        if ([] === $alternatives) {
             ++$state->no;
 
             return $value;
@@ -93,7 +93,7 @@ final class UnionOf implements Converter
             static fn (array $a, array $b): int => $a[0][0] <=> $b[0][0] ?: $a[0][1] <=> $b[0][1] ?: $a[0][2] <=> $b[0][2]
         );
 
-        if (empty($alternatives)) {
+        if ([] === $alternatives) {
             ++$state->no;
 
             return Conversion::dump_unknown($value, state: $state);

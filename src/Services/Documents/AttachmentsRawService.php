@@ -19,7 +19,6 @@ use EInvoiceAPI\ServiceContracts\Documents\AttachmentsRawContract;
 
 final class AttachmentsRawService implements AttachmentsRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */
@@ -45,7 +44,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
             $params,
             $requestOptions,
         );
-        $documentID = $parsed['documentID'];
+        $documentID = $parsed['documentID']; // @phpstan-ignore offsetAccess.notFound (a required param of the shape)
         unset($parsed['documentID']);
 
         // @phpstan-ignore-next-line return.type
@@ -99,7 +98,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
             $params,
             $requestOptions,
         );
-        $documentID = $parsed['documentID'];
+        $documentID = $parsed['documentID']; // @phpstan-ignore offsetAccess.notFound (a required param of the shape)
         unset($parsed['documentID']);
 
         // @phpstan-ignore-next-line return.type

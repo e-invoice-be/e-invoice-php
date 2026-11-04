@@ -41,7 +41,6 @@ final class LookupService implements LookupContract
     ): LookupGetResponse {
         $params = ['peppolID' => $peppolID];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -63,10 +62,8 @@ final class LookupService implements LookupContract
         ?RequestOptions $requestOptions = null,
     ): LookupGetParticipantsResponse {
         $params = ['query' => $query, 'countryCode' => $countryCode];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveParticipants(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

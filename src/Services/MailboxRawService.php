@@ -20,7 +20,6 @@ use EInvoiceAPI\ServiceContracts\MailboxRawContract;
 
 final class MailboxRawService implements MailboxRawContract
 {
-    // @phpstan-ignore-next-line
     /**
      * @internal
      */
@@ -118,7 +117,7 @@ final class MailboxRawService implements MailboxRawContract
             $params,
             $requestOptions,
         );
-        $inboundEmailID = $parsed['inboundEmailID'];
+        $inboundEmailID = $parsed['inboundEmailID']; // @phpstan-ignore offsetAccess.notFound (a required param of the shape)
         unset($parsed['inboundEmailID']);
 
         // @phpstan-ignore-next-line return.type

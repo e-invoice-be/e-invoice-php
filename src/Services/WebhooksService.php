@@ -47,7 +47,6 @@ final class WebhooksService implements WebhooksContract
         // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -64,7 +63,6 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -87,10 +85,8 @@ final class WebhooksService implements WebhooksContract
         ?RequestOptions $requestOptions = null,
     ): WebhookResponse {
         $params = ['enabled' => $enabled, 'events' => $events, 'url' => $url];
-        // @phpstan-ignore-next-line function.impossibleType
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($webhookID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -107,7 +103,6 @@ final class WebhooksService implements WebhooksContract
      */
     public function list(?RequestOptions $requestOptions = null): array
     {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(requestOptions: $requestOptions);
 
         return $response->parse();
@@ -124,7 +119,6 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDeleteResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -141,7 +135,6 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookGetHistoryResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveHistory($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
@@ -165,7 +158,6 @@ final class WebhooksService implements WebhooksContract
     ): WebhookTestResponse {
         $params = ['data' => $data, 'eventType' => $eventType];
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->test($webhookID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

@@ -35,7 +35,6 @@ final class MeService implements MeContract
     public function retrieve(
         ?RequestOptions $requestOptions = null
     ): MeGetResponse {
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve(requestOptions: $requestOptions);
 
         return $response->parse();

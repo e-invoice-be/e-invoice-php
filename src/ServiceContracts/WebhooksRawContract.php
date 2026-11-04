@@ -15,12 +15,17 @@ use EInvoiceAPI\Webhooks\WebhookTestParams;
 use EInvoiceAPI\Webhooks\WebhookTestResponse;
 use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
+/**
+ * @phpstan-import-type WebhookCreateParamsShape from WebhookCreateParams
+ * @phpstan-import-type WebhookUpdateParamsShape from WebhookUpdateParams
+ * @phpstan-import-type WebhookTestParamsShape from WebhookTestParams
+ */
 interface WebhooksRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|WebhookCreateParams $params
+     * @param WebhookCreateParamsShape|WebhookCreateParams $params
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -46,7 +51,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param array<mixed>|WebhookUpdateParams $params
+     * @param WebhookUpdateParamsShape|WebhookUpdateParams $params
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -94,7 +99,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param array<mixed>|WebhookTestParams $params
+     * @param WebhookTestParamsShape|WebhookTestParams $params
      *
      * @return BaseResponse<WebhookTestResponse>
      *

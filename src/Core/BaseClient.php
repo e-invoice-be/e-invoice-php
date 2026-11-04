@@ -152,7 +152,7 @@ abstract class BaseClient
         RequestInterface $req
     ): RequestInterface {
         $location = $rsp->getHeaderLine('Location');
-        if (!$location) {
+        if ('' === $location) {
             throw new APIConnectionException($req, message: 'Redirection without Location header');
         }
 
@@ -188,7 +188,7 @@ abstract class BaseClient
         }
 
         $code = $rsp->getStatusCode();
-        if (408 == $code || 409 == $code || 429 == $code || $code >= 500) {
+        if (408 === $code || 409 === $code || 429 === $code || $code >= 500) {
             return true;
         }
 
@@ -342,7 +342,7 @@ abstract class BaseClient
         for (; !is_null($err); $err = $err->getPrevious()) {
             // Some clients put the request URL in the message.
             $message = preg_replace('/\S+:\/\/\S+/', '', $err->getMessage()) ?? '';
-            if (preg_match('/\btime(?:d[ -]?| |-)?out\b/i', $message)) {
+            if (1 === preg_match('/\btime(?:d[ -]?| |-)?out\b/i', $message)) {
                 return true;
             }
         }

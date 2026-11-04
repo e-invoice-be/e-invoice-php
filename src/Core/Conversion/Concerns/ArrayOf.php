@@ -54,7 +54,7 @@ trait ArrayOf
         }
         ++$state->yes;
 
-        if (empty($value)) {
+        if ([] === $value) {
             return $this->empty();
         }
 
