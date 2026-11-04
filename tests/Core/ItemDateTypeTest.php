@@ -2,7 +2,6 @@
 
 namespace Tests\Core;
 
-use EInvoiceAPI\Documents\DocumentCreate;
 use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
@@ -12,7 +11,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @phpstan-type ItemClass = class-string<DocumentCreate\Item|DocumentCreateParams\Item|DocumentNewFromPdfResponse\Item|DocumentResponse\Item|ValidateValidateJsonParams\Item>
+ * @phpstan-type ItemClass = class-string<DocumentCreateParams\Item|DocumentNewFromPdfResponse\Item|DocumentResponse\Item|ValidateValidateJsonParams\Item>
  *
  * @internal
  */
@@ -125,8 +124,6 @@ class ItemDateTypeTest extends TestCase
      */
     public static function itemClasses(): iterable
     {
-        yield 'DocumentCreate' => [DocumentCreate\Item::class];
-
         yield 'DocumentCreateParams' => [DocumentCreateParams\Item::class];
 
         yield 'DocumentNewFromPdfResponse' => [DocumentNewFromPdfResponse\Item::class];

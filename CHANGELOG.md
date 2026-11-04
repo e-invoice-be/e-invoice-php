@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### ⚠ BREAKING CHANGES
+
+* remove the unused `EInvoiceAPI\Documents\DocumentCreate` model and its `EInvoiceAPI\Documents\DocumentCreate\*` classes ([#49](https://github.com/e-invoice-be/e-invoice-php/issues/49)). No SDK method took or returned them: `$client->documents->create()` takes its fields as named arguments (typed by `DocumentCreateParams` and its `DocumentCreateParams\*` classes), and `$client->validate->validateJson()` uses `ValidateValidateJsonParams`. Code that built a `DocumentCreate` must pass the same fields to `documents->create()`, or use the matching `DocumentCreateParams\*` classes (for example `DocumentCreateParams\Item` for `DocumentCreate\Item`)
+
 ## 0.9.1 (2026-11-04)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.9.0...v0.9.1)
