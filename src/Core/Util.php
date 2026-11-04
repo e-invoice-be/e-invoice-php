@@ -16,7 +16,7 @@ final class Util
 
     public const JSON_ENCODE_FLAGS = JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
 
-    public const JSON_CONTENT_TYPE = '/^application\/(?:vnd(?:.[^.]+)*+)?json(?!l)/';
+    public const JSON_CONTENT_TYPE = '/^application\/(?:[\w.-]+\+)?json(?!l)/';
 
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
@@ -126,7 +126,7 @@ final class Util
             $base = $base->withUserInfo($user ?? '', $pass);
         }
         if ('' !== ($path = $parsed['path'] ?? '')) {
-            $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath($base->getPath().'/'.$path);
+            $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath(rtrim($base->getPath(), '/').'/'.$path);
         }
 
         [$q1, $q2] = [[], []];

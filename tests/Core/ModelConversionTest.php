@@ -88,15 +88,11 @@ final class ModelConversionTest extends TestCase
     }
 
     /**
-     * Bug: the message interpolates `{$this}`, the JSON of the whole model, instead of the class name.
-     * The message of a `WebhookResponse` thus holds the webhook secret.
+     * The message names the class, never the model's data: a `WebhookResponse` holds the webhook secret.
      */
     #[Test]
     public function testErrorForAnUnknownPropertyNamesTheClassAndNotTheData(): void
     {
-        $this->markTestSkipped('Bug in src/Core/Concerns/SdkModel.php __get: the message holds the JSON of the model (e.g. the webhook secret) instead of its class.');
-
-        // @phpstan-ignore deadCode.unreachable
         try {
             self::webhook()->__get('nope');
             $this->fail('The model did not throw.');
