@@ -8,6 +8,7 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\MockClient;
@@ -99,19 +100,53 @@ final class RawResponseTest extends TestCase
         $this->assertSame(['a' => 1], Util::decodeContent($response));
     }
 
-    /**
-     * Bug: in `Util::JSON_CONTENT_TYPE` the possessive `(?:.[^.]+)*+` also takes the `json`
-     * of a vendor type, so no `application/vnd.*json` type matches and the body is streamed.
-     */
     #[Test]
     public function testVendorJsonContentTypeIsDecoded(): void
     {
-        $this->markTestSkipped('Bug in src/Core/Util.php JSON_CONTENT_TYPE: application/vnd.*+json is not decoded as JSON.');
-
-        // @phpstan-ignore deadCode.unreachable
         $response = new Response(200, ['Content-Type' => 'application/vnd.api+json; charset=utf-8'], '{"a":1}');
 
         $this->assertSame(['a' => 1], Util::decodeContent($response));
+    }
+
+    #[Test]
+    public function testProblemJsonContentTypeIsDecoded(): void
+    {
+        $response = new Response(422, ['Content-Type' => 'application/problem+json'], '{"title":"Invalid"}');
+
+        $this->assertSame(['title' => 'Invalid'], Util::decodeContent($response));
+    }
+
+    #[Test]
+    #[DataProvider('jsonContentTypes')]
+    public function testJsonContentTypePattern(string $contentType, bool $matches): void
+    {
+        $this->assertSame($matches, 1 === preg_match(Util::JSON_CONTENT_TYPE, $contentType));
+    }
+
+    /**
+     * @return iterable<string, array{string, bool}>
+     */
+    public static function jsonContentTypes(): iterable
+    {
+        yield 'json' => ['application/json', true];
+
+        yield 'json with charset' => ['application/json; charset=utf-8', true];
+
+        yield 'vendor json' => ['application/vnd.api+json', true];
+
+        yield 'vendor json with dots' => ['application/vnd.e-invoice.v1+json', true];
+
+        yield 'problem json' => ['application/problem+json', true];
+
+        yield 'json lines' => ['application/jsonl', false];
+
+        yield 'vendor json lines' => ['application/vnd.api+jsonl', false];
+
+        yield 'json without a suffix separator' => ['application/vndjson', false];
+
+        yield 'ndjson' => ['application/x-ndjson', false];
+
+        yield 'text' => ['text/json', false];
     }
 
     #[Test]
