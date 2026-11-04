@@ -7,7 +7,6 @@ use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Mailbox\InboundEmailResponse;
 use EInvoiceAPI\RequestOptions;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -17,7 +16,6 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-#[CoversNothing]
 class DocumentsNumberPageTest extends TestCase
 {
     /** @var list<RequestInterface> */
@@ -127,6 +125,21 @@ class DocumentsNumberPageTest extends TestCase
         $this->assertSame('yes', $first['extra'] ?? null);
         $this->assertSame([...$first, 'page' => '2'], $second);
         $this->assertSame([...$first, 'page' => '3'], $third);
+    }
+
+    #[Test]
+    public function testNextPageOfTheLastPageThrows(): void
+    {
+        $page = $this->client([
+            ['items' => [['id' => 'doc_1']], 'page' => 1, 'pages' => 1, 'has_next_page' => false],
+        ])->inbox->list(requestOptions: $this->options());
+
+        $this->assertSame([$page], iterator_to_array($page, preserve_keys: false));
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('No next page expected');
+
+        $page->getNextPage();
     }
 
     /**

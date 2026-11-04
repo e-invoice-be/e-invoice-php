@@ -4,13 +4,11 @@ namespace Tests\Services;
 
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\DocumentsNumberPage;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class DraftsTest extends ServiceTestCase
 {
     #[Test]

@@ -16,13 +16,11 @@ use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentResponse\Item;
 use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\Validate\UblDocumentValidation;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class DocumentsTest extends ServiceTestCase
 {
     #[Test]

@@ -4,13 +4,11 @@ namespace Tests\Services;
 
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class LookupTest extends ServiceTestCase
 {
     #[Test]

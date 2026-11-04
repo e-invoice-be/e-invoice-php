@@ -7,7 +7,6 @@ use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
 use EInvoiceAPI\RequestOptions;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -16,10 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
- *
- * @coversNothing
  */
-#[CoversNothing]
 class MultipartFileTest extends TestCase
 {
     /** @var list<RequestInterface> */

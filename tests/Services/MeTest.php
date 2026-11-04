@@ -3,13 +3,11 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Me\MeGetResponse;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class MeTest extends ServiceTestCase
 {
     #[Test]

@@ -5,13 +5,11 @@ namespace Tests\Services;
 use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Mailbox\InboundEmailResponse;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class MailboxTest extends ServiceTestCase
 {
     private const EMAIL = [

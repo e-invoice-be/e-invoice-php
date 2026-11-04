@@ -5,13 +5,11 @@ namespace Tests\Services;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class ValidateTest extends ServiceTestCase
 {
     #[Test]

@@ -4,14 +4,12 @@ namespace Tests\Services\Documents;
 
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Services\ServiceTestCase;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class UblTest extends ServiceTestCase
 {
     #[Test]

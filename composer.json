@@ -49,6 +49,7 @@
     "format": "./scripts/format",
     "format:check": "./scripts/format --check",
     "lint": "./scripts/lint",
-    "test": "./scripts/test"
+    "test": "./scripts/test",
+    "test:coverage": "./scripts/test --coverage --min=95"
   }
 }

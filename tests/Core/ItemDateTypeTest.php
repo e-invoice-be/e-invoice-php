@@ -7,7 +7,6 @@ use EInvoiceAPI\Documents\DocumentCreateParams;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -16,10 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @phpstan-type ItemClass = class-string<DocumentCreate\Item|DocumentCreateParams\Item|DocumentNewFromPdfResponse\Item|DocumentResponse\Item|ValidateValidateJsonParams\Item>
  *
  * @internal
- *
- * @coversNothing
  */
-#[CoversNothing]
 class ItemDateTypeTest extends TestCase
 {
     /**
