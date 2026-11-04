@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 
+* a base URL that ends with `/` (`https://api.e-invoice.be/`, `https://proxy.example/e-invoice/`) no longer sends `//` in the request path
 * a base URL with credentials (`https://user:pass@host`) keeps its password, and a path of `"0"` is no longer dropped
 * an API key of `"0"` is now sent as the bearer token
 * a file upload read from a stream no longer loses chunks that are exactly `"0"`
