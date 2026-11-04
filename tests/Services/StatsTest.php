@@ -2,8 +2,11 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\ServiceContracts\StatsContract;
 use EInvoiceAPI\Stats\StatGetResponse;
 use EInvoiceAPI\Stats\StatGetResponse\Action;
+use EInvoiceAPI\Stats\StatRetrieveParams;
 use EInvoiceAPI\Stats\StatRetrieveParams\Aggregation;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -91,5 +94,134 @@ final class StatsTest extends ServiceTestCase
         $this->assertSame('2024-01-01', $result->periodStart->format('Y-m-d'));
         $this->assertSame('2024-01-31', $result->periodEnd->format('Y-m-d'));
         $this->assertSame('2024-01-15', $result->actions[0]->statDate->format('Y-m-d'));
+    }
+
+    /**
+     * Widening these parameters on the interface is a fatal error for a class that still types them `?string`.
+     * `StatsService::retrieve()` accepts a date because its parameter types are wider.
+     */
+    #[Test]
+    public function testStringImplementationOfTheContractStillLoads(): void
+    {
+        $implementation = new class() implements StatsContract {
+            public function retrieve(
+                string|Aggregation|null $aggregation = 'DAY',
+                ?string $endDate = null,
+                ?string $startDate = null,
+                ?RequestOptions $requestOptions = null,
+            ): StatGetResponse {
+                // Referenced so static analysis does not report the parameters as unused.
+                unset($aggregation, $endDate, $startDate, $requestOptions);
+
+                throw new \LogicException('not called');
+            }
+        };
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(StatsContract::class, $implementation);
+    }
+
+    #[Test]
+    public function testRetrieveSendsDateObjectsAsDates(): void
+    {
+        $this->http->queueJson(self::STATS);
+
+        $this->client->stats->retrieve(
+            endDate: new \DateTimeImmutable('2019-12-27T23:30:15.5+02:00'),
+            startDate: new \DateTime('2019-12-01'),
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('GET', '/api/stats', [
+            'aggregation' => 'DAY',
+            'end_date' => '2019-12-27',
+            'start_date' => '2019-12-01',
+        ]);
+    }
+
+    #[Test]
+    public function testRetrieveSendsDateStringsVerbatim(): void
+    {
+        $this->http->queueJson(self::STATS);
+
+        $this->client->stats->retrieve(
+            endDate: '2019-12-27',
+            startDate: 'not-a-date',
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('GET', '/api/stats', [
+            'aggregation' => 'DAY',
+            'end_date' => '2019-12-27',
+            'start_date' => 'not-a-date',
+        ]);
+    }
+
+    #[Test]
+    public function testRawRetrieveSendsDateObjectsAsDates(): void
+    {
+        $this->http->queueJson(self::STATS);
+        $this->http->queueJson(self::STATS);
+
+        $this->client->stats->raw->retrieve(
+            StatRetrieveParams::with(
+                endDate: new \DateTimeImmutable('2019-12-27'),
+                startDate: '2019-12-01',
+            ),
+            requestOptions: $this->options(),
+        );
+        $this->client->stats->raw->retrieve(
+            ['endDate' => new \DateTimeImmutable('2019-12-27'), 'startDate' => null],
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('GET', '/api/stats', [
+            'end_date' => '2019-12-27',
+            'start_date' => '2019-12-01',
+        ]);
+        $this->assertRequest('GET', '/api/stats', ['end_date' => '2019-12-27'], index: 1);
+    }
+
+    #[Test]
+    public function testParamsKeepTheDateTheCallerGave(): void
+    {
+        $date = new \DateTimeImmutable('2019-12-27');
+        $params = StatRetrieveParams::with()->withStartDate($date)->withEndDate('2019-12-31');
+
+        $this->assertSame($date, $params->startDate);
+        $this->assertSame('2019-12-31', $params->endDate);
+        $this->assertSame(['endDate' => '2019-12-31', 'startDate' => '2019-12-27'], $params->jsonSerialize());
+    }
+
+    #[Test]
+    public function testParamsFromAnArrayKeepDatesAndStringifyScalars(): void
+    {
+        $date = new \DateTimeImmutable('2019-12-27');
+        $params = StatRetrieveParams::fromArray(['startDate' => $date, 'endDate' => 20191231]);
+
+        $this->assertSame($date, $params->startDate);
+        $this->assertSame('20191231', $params->endDate);
+    }
+
+    #[Test]
+    public function testClearedDateIsNotSent(): void
+    {
+        $this->http->queueJson(self::STATS);
+        $params = StatRetrieveParams::with(endDate: new \DateTimeImmutable('2019-12-27'))->withEndDate(null);
+
+        $this->client->stats->raw->retrieve($params, requestOptions: $this->options());
+
+        $this->assertRequest('GET', '/api/stats');
+    }
+
+    #[Test]
+    public function testParamsSurviveSerialization(): void
+    {
+        $params = StatRetrieveParams::with(startDate: new \DateTimeImmutable('2019-12-27'));
+
+        $copy = unserialize(serialize($params));
+
+        $this->assertInstanceOf(StatRetrieveParams::class, $copy);
+        $this->assertSame(['startDate' => '2019-12-27'], $copy->jsonSerialize());
     }
 }
