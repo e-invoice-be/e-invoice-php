@@ -84,7 +84,7 @@ abstract class BaseClient
         $request = Util::withSetHeaders($request, headers: $headers);
 
         // @phpstan-ignore-next-line argument.type
-        $rsp = $this->sendRequest($opts, req: $request, data: $body, redirectCount: 0, retryCount: 0);
+        $rsp = $this->sendRequest($opts, req: $request, data: $req['body'], redirectCount: 0, retryCount: 0);
 
         // @phpstan-ignore-next-line argument.type
         return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, page: $page, convert: $convert ?? 'null');
@@ -139,7 +139,9 @@ abstract class BaseClient
             ...$headers,
             ...($options->extraHeaders ?? []), ];
 
-        $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $body];
+        $mergedBody = self::mergeExtraBodyParams($body, extra: $options->extraBodyParams);
+
+        $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $mergedBody];
 
         return [$req, $options];
     }
@@ -294,6 +296,36 @@ abstract class BaseClient
         }
 
         return $rsp;
+    }
+
+    /**
+     * @internal
+     *
+     * Adds the `extraBodyParams` request option to the body: as keys of a JSON
+     * object, or as parts of a multipart body. An extra parameter overrides the
+     * parameter of the same name. Without a body, the extra parameters are the body.
+     *
+     * @throws \InvalidArgumentException when the extra parameters are not an array or a
+     *                                   `stdClass` object, or the body is not one
+     */
+    private static function mergeExtraBodyParams(mixed $body, mixed $extra): mixed
+    {
+        if (is_null($extra) || [] === $extra || ($extra instanceof \stdClass && [] === (array) $extra)) {
+            return $body;
+        }
+        if (!is_array($extra) && !$extra instanceof \stdClass) {
+            throw new \InvalidArgumentException('extraBodyParams must be an array or a stdClass object, got '.get_debug_type($extra));
+        }
+        if (is_null($body)) {
+            return (object) $extra;
+        }
+        if (!is_array($body) && !$body instanceof \stdClass) {
+            throw new \InvalidArgumentException('extraBodyParams cannot be merged into a body of type '.get_debug_type($body));
+        }
+
+        $merged = array_replace((array) $body, (array) $extra);
+
+        return is_array($body) ? $merged : (object) $merged;
     }
 
     /**
