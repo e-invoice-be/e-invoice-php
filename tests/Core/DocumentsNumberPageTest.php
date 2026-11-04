@@ -7,7 +7,6 @@ use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Mailbox\InboundEmailResponse;
 use EInvoiceAPI\RequestOptions;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -17,7 +16,6 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-#[CoversNothing]
 class DocumentsNumberPageTest extends TestCase
 {
     /** @var list<RequestInterface> */

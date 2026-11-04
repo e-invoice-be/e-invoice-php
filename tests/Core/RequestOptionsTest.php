@@ -3,16 +3,12 @@
 namespace Tests\Core;
 
 use EInvoiceAPI\RequestOptions;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
-#[CoversNothing]
 class RequestOptionsTest extends TestCase
 {
     /**

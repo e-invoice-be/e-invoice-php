@@ -6,7 +6,6 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Exceptions\APIConnectionException;
 use EInvoiceAPI\Core\Exceptions\APITimeoutException;
 use EInvoiceAPI\RequestOptions;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +16,6 @@ use Tests\Support\MockClient;
 /**
  * @internal
  */
-#[CoversNothing]
 final class ClientTest extends TestCase
 {
     private Client $client;

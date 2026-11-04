@@ -6,7 +6,6 @@ use EInvoiceAPI\Core\Attributes\Optional;
 use EInvoiceAPI\Core\Attributes\Required;
 use EInvoiceAPI\Core\Concerns\SdkModel;
 use EInvoiceAPI\Core\Contracts\BaseModel;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -49,10 +48,7 @@ class TestModel implements BaseModel
 
 /**
  * @internal
- *
- * @coversNothing
  */
-#[CoversNothing]
 class TestModelTest extends TestCase
 {
     #[Test]

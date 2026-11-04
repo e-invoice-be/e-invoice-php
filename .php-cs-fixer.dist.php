@@ -10,6 +10,8 @@ return (new Config())
     ->setRules([
         '@PhpCsFixer' => true,
         'phpdoc_align' => false,
+        // `@coversNothing` / `#[CoversNothing]` would turn off code coverage for every test.
+        'php_unit_test_class_requires_covers' => false,
         'new_with_parentheses' => ['named_class' => false],
         'ordered_types' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],
         'phpdoc_types_order' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],

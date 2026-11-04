@@ -11,7 +11,6 @@ use EInvoiceAPI\Core\Exceptions\UnprocessableEntityException;
 use EInvoiceAPI\RequestOptions;
 use Nyholm\Psr7\Request;
 use Nyholm\Psr7\Response;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\MockClient;
@@ -19,7 +18,6 @@ use Tests\Support\MockClient;
 /**
  * @internal
  */
-#[CoversNothing]
 final class ErrorResponseTest extends TestCase
 {
     private Client $client;

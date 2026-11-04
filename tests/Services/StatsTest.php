@@ -5,13 +5,11 @@ namespace Tests\Services;
 use EInvoiceAPI\Stats\StatGetResponse;
 use EInvoiceAPI\Stats\StatGetResponse\Action;
 use EInvoiceAPI\Stats\StatRetrieveParams\Aggregation;
-use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
  * @internal
  */
-#[CoversNothing]
 final class StatsTest extends ServiceTestCase
 {
     private const STATS = [
