@@ -99,6 +99,46 @@ jobs:
       - name: Run tests
         run: ./scripts/test
 
+  coverage:
+    timeout-minutes: 10
+    name: coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: 'shivammathur/setup-php@v2'
+        with:
+          php-version: '8.3'
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Get the Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ runner.os }}-php8.3-${{ hashFiles('composer.json') }}
+          restore-keys: composer-${{ runner.os }}-php8.3-
+
+      - name: Run bootstrap
+        run: ./scripts/bootstrap
+
+      - name: Run tests with a minimum line coverage
+        run: composer test:coverage
+
+      - name: Upload the coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: build/coverage/
+          if-no-files-found: ignore
+
   syntax:
     timeout-minutes: 10
     name: syntax (PHP 8.1)
