@@ -55,7 +55,7 @@ interface DocumentsContract
      * }>|null $charges Body param:
      * @param string|null $buyerReference Body param: The buyer reference (BT-10), e.g. a cost centre or accounting reference requested by the buyer
      * @param bool $constructPdf query param: If true, generate a constructed PDF from the document and include it both as document attachment and embedded in the UBL
-     * @param 'EUR'|'USD'|'GBP'|'JPY'|'CHF'|'CAD'|'AUD'|'NZD'|'CNY'|'INR'|'SEK'|'NOK'|'DKK'|'SGD'|'HKD'|CurrencyCode $currency Body param: Currency of the invoice (ISO 4217 currency code)
+     * @param 'EUR'|'USD'|'GBP'|'JPY'|'CHF'|'CAD'|'AUD'|'NZD'|'CNY'|'INR'|'SEK'|'NOK'|'DKK'|'SGD'|'HKD'|CurrencyCode|null $currency Body param: Currency of the invoice (ISO 4217 currency code). Null leaves the field out, so the server applies its default
      * @param string|null $customerAddress Body param: The address of the customer/buyer
      * @param string|null $customerAddressRecipient Body param: The recipient name at the customer address. Also the customer contact name (BT-56) in the UBL
      * @param string|null $customerCompanyID Body param: Customer company ID. For Belgium this is the CBE number or their EUID (European Unique Identifier) number. In the Netherlands this is the KVK number.
@@ -65,8 +65,8 @@ interface DocumentsContract
      * @param string|null $customerPeppolID Body param: Customer Peppol ID
      * @param string|null $customerPhone Body param: The telephone number of the customer contact (BT-57)
      * @param string|null $customerTaxID Body param: Customer tax ID. For Belgium this is the VAT number. Must include the country prefix
-     * @param 'INBOUND'|'OUTBOUND'|DocumentDirection $direction Body param: The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
-     * @param 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType $documentType Body param: The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+     * @param 'INBOUND'|'OUTBOUND'|DocumentDirection|null $direction Body param: The direction of the document: INBOUND (purchases) or OUTBOUND (sales). Null leaves the field out, so the server applies its default
+     * @param 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType|null $documentType Body param: The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE. Null leaves the field out, so the server applies its default
      * @param string|\DateTimeInterface|null $dueDate Body param: The date when payment is due
      * @param string|\DateTimeInterface|null $invoiceDate Body param: The date when the invoice was issued
      * @param string|null $invoiceID Body param: The unique invoice identifier/number
@@ -125,7 +125,7 @@ interface DocumentsContract
      * @param string|\DateTimeInterface|null $serviceStartDate Body param: The start date of the service period or delivery period
      * @param string|null $shippingAddress Body param: The shipping/delivery address
      * @param string|null $shippingAddressRecipient Body param: The recipient name at the shipping address
-     * @param 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState $state Body param: The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
+     * @param 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null $state Body param: The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED. Null leaves the field out, so the server applies its default
      * @param float|string|null $subtotal Body param: The taxable base of the invoice. Should be the sum of all line items - allowances (for example commercial discounts) + charges with impact on VAT. Must be positive and rounded to maximum 2 decimals
      * @param 'AE'|'E'|'S'|'Z'|'G'|'O'|'K'|'L'|'M'|'B'|\EInvoiceAPI\Documents\DocumentCreateParams\TaxCode $taxCode Body param: Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E for exempt)
      * @param list<array{
@@ -156,7 +156,7 @@ interface DocumentsContract
         ?string $buyerReference = null,
         ?array $charges = null,
         ?bool $constructPdf = null,
-        string|CurrencyCode|null $currency = null,
+        string|CurrencyCode|null $currency = CurrencyCode::EUR,
         ?string $customerAddress = null,
         ?string $customerAddressRecipient = null,
         ?string $customerCompanyID = null,
@@ -166,8 +166,8 @@ interface DocumentsContract
         ?string $customerPeppolID = null,
         ?string $customerPhone = null,
         ?string $customerTaxID = null,
-        string|DocumentDirection|null $direction = null,
-        string|DocumentType|null $documentType = null,
+        string|DocumentDirection|null $direction = DocumentDirection::OUTBOUND,
+        string|DocumentType|null $documentType = DocumentType::INVOICE,
         string|\DateTimeInterface|null $dueDate = null,
         string|\DateTimeInterface|null $invoiceDate = null,
         ?string $invoiceID = null,
@@ -190,9 +190,9 @@ interface DocumentsContract
         string|\DateTimeInterface|null $serviceStartDate = null,
         ?string $shippingAddress = null,
         ?string $shippingAddressRecipient = null,
-        string|DocumentState|null $state = null,
+        string|DocumentState|null $state = DocumentState::DRAFT,
         float|string|null $subtotal = null,
-        string|\EInvoiceAPI\Documents\DocumentCreateParams\TaxCode $taxCode = 'S',
+        string|\EInvoiceAPI\Documents\DocumentCreateParams\TaxCode $taxCode = \EInvoiceAPI\Documents\DocumentCreateParams\TaxCode::S,
         ?string $taxCurrency = null,
         ?array $taxDetails = null,
         float|string|null $totalDiscount = null,
