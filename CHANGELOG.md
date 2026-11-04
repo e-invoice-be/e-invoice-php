@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### ⚠ BREAKING CHANGES
+
+* remove the unused `EInvoiceAPI\Documents\DocumentCreate` model and its `EInvoiceAPI\Documents\DocumentCreate\*` classes ([#49](https://github.com/e-invoice-be/e-invoice-php/issues/49)). No SDK method took or returned them: `$client->documents->create()` takes its fields as named arguments (typed by `DocumentCreateParams` and its `DocumentCreateParams\*` classes), and `$client->validate->validateJson()` uses `ValidateValidateJsonParams`. Code that built a `DocumentCreate` must pass the same fields to `documents->create()`, or use the matching `DocumentCreateParams\*` classes (for example `DocumentCreateParams\Item` for `DocumentCreate\Item`)
+
 ### Bug Fixes
 
 * `documents->create()` and `validate->validateJson()` now show the defaults of the API specification in their signatures, and send them: `currency: CurrencyCode::EUR`, `direction: DocumentDirection::OUTBOUND`, `documentType: DocumentType::INVOICE` and `state: DocumentState::DRAFT` (these were `null`, so the fields were left out), and `taxCode: TaxCode::S` (was the string `'S'`) ([#48](https://github.com/e-invoice-be/e-invoice-php/issues/48)). The server applies the same defaults to an absent field. Passing `null` for `currency`, `direction`, `documentType` or `state` still leaves the field out

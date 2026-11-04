@@ -352,9 +352,9 @@ final class ValidateTest extends ServiceTestCase
     }
 
     /**
-     * The number-or-string amount, rate and quantity fields of the
-     * DocumentCreate body (`anyOf: [number, string, null]`) have a union class
-     * that dumps either variant unchanged.
+     * The number-or-string amount, rate and quantity fields of the spec's
+     * `DocumentCreate` schema (`anyOf: [number, string, null]`) have a union
+     * class that dumps either variant unchanged.
      *
      * @return iterable<string,array{class-string<ConverterSource>}>
      */
