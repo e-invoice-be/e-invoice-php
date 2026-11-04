@@ -12,12 +12,16 @@ use EInvoiceAPI\Lookup\LookupRetrieveParams;
 use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type LookupRetrieveParamsShape from LookupRetrieveParams
+ * @phpstan-import-type LookupRetrieveParticipantsParamsShape from LookupRetrieveParticipantsParams
+ */
 interface LookupRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|LookupRetrieveParams $params
+     * @param LookupRetrieveParamsShape|LookupRetrieveParams $params
      *
      * @return BaseResponse<LookupGetResponse>
      *
@@ -31,7 +35,7 @@ interface LookupRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LookupRetrieveParticipantsParams $params
+     * @param LookupRetrieveParticipantsParamsShape|LookupRetrieveParticipantsParams $params
      *
      * @return BaseResponse<LookupGetParticipantsResponse>
      *

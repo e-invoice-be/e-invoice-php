@@ -17,12 +17,17 @@ use EInvoiceAPI\Documents\DocumentSendParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 
+/**
+ * @phpstan-import-type DocumentCreateParamsShape from DocumentCreateParams
+ * @phpstan-import-type DocumentCreateFromPdfParamsShape from DocumentCreateFromPdfParams
+ * @phpstan-import-type DocumentSendParamsShape from DocumentSendParams
+ */
 interface DocumentsRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|DocumentCreateParams $params
+     * @param DocumentCreateParamsShape|DocumentCreateParams $params
      *
      * @return BaseResponse<DocumentResponse>
      *
@@ -60,7 +65,7 @@ interface DocumentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DocumentCreateFromPdfParams $params
+     * @param DocumentCreateFromPdfParamsShape|DocumentCreateFromPdfParams $params
      *
      * @return BaseResponse<DocumentNewFromPdfResponse>
      *
@@ -98,7 +103,7 @@ interface DocumentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DocumentSendParams $params
+     * @param DocumentSendParamsShape|DocumentSendParams $params
      *
      * @return BaseResponse<DocumentResponse>
      *

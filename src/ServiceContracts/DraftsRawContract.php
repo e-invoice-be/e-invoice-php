@@ -11,12 +11,15 @@ use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Drafts\DraftListParams;
 use EInvoiceAPI\RequestOptions;
 
+/**
+ * @phpstan-import-type DraftListParamsShape from DraftListParams
+ */
 interface DraftsRawContract
 {
     /**
      * @api
      *
-     * @param array<mixed>|DraftListParams $params
+     * @param DraftListParamsShape|DraftListParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
