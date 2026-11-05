@@ -12,8 +12,10 @@ use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\StatsRawContract;
 use EInvoiceAPI\Stats\StatGetResponse;
 use EInvoiceAPI\Stats\StatRetrieveParams;
-use EInvoiceAPI\Stats\StatRetrieveParams\Aggregation;
 
+/**
+ * @phpstan-import-type StatRetrieveParamsShape from StatRetrieveParams
+ */
 final class StatsRawService implements StatsRawContract
 {
     /**
@@ -26,11 +28,7 @@ final class StatsRawService implements StatsRawContract
      *
      * Retrieve usage statistics for billing purposes. Returns statistics for document sent and document received actions, grouped by aggregation period (day/week/month). If no date parameters are provided, returns daily stats for all available data.
      *
-     * @param array{
-     *   aggregation?: 'DAY'|'WEEK'|'MONTH'|Aggregation|null,
-     *   endDate?: string|\DateTimeInterface|null,
-     *   startDate?: string|\DateTimeInterface|null,
-     * }|StatRetrieveParams $params
+     * @param StatRetrieveParamsShape|StatRetrieveParams $params
      *
      * @return BaseResponse<StatGetResponse>
      *

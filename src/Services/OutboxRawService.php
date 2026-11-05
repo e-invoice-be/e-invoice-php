@@ -9,16 +9,16 @@ use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
-use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\Inbox\DocumentState;
-use EInvoiceAPI\Inbox\SortField;
-use EInvoiceAPI\Inbox\SortOrder;
 use EInvoiceAPI\Outbox\OutboxListDraftDocumentsParams;
 use EInvoiceAPI\Outbox\OutboxListReceivedDocumentsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\OutboxRawContract;
 
+/**
+ * @phpstan-import-type OutboxListDraftDocumentsParamsShape from OutboxListDraftDocumentsParams
+ * @phpstan-import-type OutboxListReceivedDocumentsParamsShape from OutboxListReceivedDocumentsParams
+ */
 final class OutboxRawService implements OutboxRawContract
 {
     /**
@@ -33,15 +33,7 @@ final class OutboxRawService implements OutboxRawContract
      *
      * Retrieve a paginated list of draft documents with filtering options including state and text search.
      *
-     * @param array{
-     *   page?: int,
-     *   pageSize?: int,
-     *   search?: string|null,
-     *   sortBy?: 'created_at'|'invoice_date'|'due_date'|'invoice_total'|'customer_name'|'vendor_name'|'invoice_id'|SortField,
-     *   sortOrder?: 'asc'|'desc'|SortOrder,
-     *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
-     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType|null,
-     * }|OutboxListDraftDocumentsParams $params
+     * @param OutboxListDraftDocumentsParamsShape|OutboxListDraftDocumentsParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *
@@ -79,18 +71,7 @@ final class OutboxRawService implements OutboxRawContract
      *
      * Retrieve a paginated list of sent documents with filtering options including state, type, sender, date range, and text search.
      *
-     * @param array{
-     *   dateFrom?: string|\DateTimeInterface|null,
-     *   dateTo?: string|\DateTimeInterface|null,
-     *   page?: int,
-     *   pageSize?: int,
-     *   receiver?: string|null,
-     *   search?: string|null,
-     *   sender?: string|null,
-     *   sortBy?: 'created_at'|'invoice_date'|'due_date'|'invoice_total'|'customer_name'|'vendor_name'|'invoice_id'|SortField,
-     *   sortOrder?: 'asc'|'desc'|SortOrder,
-     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType|null,
-     * }|OutboxListReceivedDocumentsParams $params
+     * @param OutboxListReceivedDocumentsParamsShape|OutboxListReceivedDocumentsParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *

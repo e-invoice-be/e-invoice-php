@@ -282,7 +282,6 @@ final class ValidateService implements ValidateContract
         ];
         $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validateJson(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();

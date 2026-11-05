@@ -18,8 +18,8 @@ use EInvoiceAPI\Inbox\SortOrder;
  * @see EInvoiceAPI\Services\OutboxService::listReceivedDocuments()
  *
  * @phpstan-type OutboxListReceivedDocumentsParamsShape = array{
- *   dateFrom?: \DateTimeInterface|null,
- *   dateTo?: \DateTimeInterface|null,
+ *   dateFrom?: string|\DateTimeInterface|null,
+ *   dateTo?: string|\DateTimeInterface|null,
  *   page?: int,
  *   pageSize?: int,
  *   receiver?: string|null,

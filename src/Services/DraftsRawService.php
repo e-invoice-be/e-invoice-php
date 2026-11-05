@@ -9,15 +9,14 @@ use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\Documents\DocumentResponse;
-use EInvoiceAPI\Documents\DocumentType;
 use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Drafts\DraftListParams;
-use EInvoiceAPI\Inbox\DocumentState;
-use EInvoiceAPI\Inbox\SortField;
-use EInvoiceAPI\Inbox\SortOrder;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\DraftsRawContract;
 
+/**
+ * @phpstan-import-type DraftListParamsShape from DraftListParams
+ */
 final class DraftsRawService implements DraftsRawContract
 {
     /**
@@ -30,17 +29,7 @@ final class DraftsRawService implements DraftsRawContract
      *
      * Retrieve a paginated list of draft documents with filtering options including state and text search.
      *
-     * @param array{
-     *   dateFrom?: string|\DateTimeInterface|null,
-     *   dateTo?: string|\DateTimeInterface|null,
-     *   page?: int,
-     *   pageSize?: int,
-     *   search?: string|null,
-     *   sortBy?: 'created_at'|'invoice_date'|'due_date'|'invoice_total'|'customer_name'|'vendor_name'|'invoice_id'|SortField,
-     *   sortOrder?: 'asc'|'desc'|SortOrder,
-     *   state?: 'DRAFT'|'TRANSIT'|'FAILED'|'SENT'|'RECEIVED'|DocumentState|null,
-     *   type?: 'INVOICE'|'CREDIT_NOTE'|'DEBIT_NOTE'|'SELFBILLING_INVOICE'|'SELFBILLING_CREDIT_NOTE'|DocumentType|null,
-     * }|DraftListParams $params
+     * @param DraftListParamsShape|DraftListParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<DocumentResponse>>
      *

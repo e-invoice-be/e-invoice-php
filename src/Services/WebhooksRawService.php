@@ -18,6 +18,11 @@ use EInvoiceAPI\Webhooks\WebhookTestParams;
 use EInvoiceAPI\Webhooks\WebhookTestResponse;
 use EInvoiceAPI\Webhooks\WebhookUpdateParams;
 
+/**
+ * @phpstan-import-type WebhookCreateParamsShape from WebhookCreateParams
+ * @phpstan-import-type WebhookUpdateParamsShape from WebhookUpdateParams
+ * @phpstan-import-type WebhookTestParamsShape from WebhookTestParams
+ */
 final class WebhooksRawService implements WebhooksRawContract
 {
     /**
@@ -30,9 +35,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Create a new webhook
      *
-     * @param array{
-     *   events: list<string>, url: string, enabled?: bool
-     * }|WebhookCreateParams $params
+     * @param WebhookCreateParamsShape|WebhookCreateParams $params
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -84,9 +87,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Update a webhook by ID
      *
-     * @param array{
-     *   enabled?: bool|null, events?: list<string>|null, url?: string|null
-     * }|WebhookUpdateParams $params
+     * @param WebhookUpdateParamsShape|WebhookUpdateParams $params
      *
      * @return BaseResponse<WebhookResponse>
      *
@@ -181,9 +182,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Send a test event to a webhook for testing and debugging purposes
      *
-     * @param array{
-     *   data: array<string,mixed>, eventType: string
-     * }|WebhookTestParams $params
+     * @param WebhookTestParamsShape|WebhookTestParams $params
      *
      * @return BaseResponse<WebhookTestResponse>
      *
