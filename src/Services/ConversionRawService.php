@@ -9,11 +9,13 @@ use EInvoiceAPI\Conversion\ConversionCreateFromPdfParams;
 use EInvoiceAPI\Conversion\DocumentCreateFromPdfTask;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\ConversionRawContract;
 
+/**
+ * @phpstan-import-type ConversionCreateFromPdfParamsShape from ConversionCreateFromPdfParams
+ */
 final class ConversionRawService implements ConversionRawContract
 {
     /**
@@ -26,7 +28,7 @@ final class ConversionRawService implements ConversionRawContract
      *
      * Convert a PDF to a document
      *
-     * @param array{file: string|FileParam}|ConversionCreateFromPdfParams $params
+     * @param ConversionCreateFromPdfParamsShape|ConversionCreateFromPdfParams $params
      *
      * @return BaseResponse<DocumentCreateFromPdfTask>
      *

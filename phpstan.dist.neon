@@ -54,15 +54,6 @@ parameters:
             identifier: method.childParameterType
             path: src/Core/Concerns/SdkModel.php
 
-        # The generator writes the nested enums of these params two ways: the
-        # services accept the enum objects and the params shapes accept null, so
-        # neither shape contains the other. The runtime accepts both.
-        -
-            identifier: method.childParameterType
-            paths:
-                - src/Services/DocumentsRawService.php
-                - src/Services/ValidateRawService.php
-
         # The models read and write their properties by name.
         -
             identifier: property.dynamicName

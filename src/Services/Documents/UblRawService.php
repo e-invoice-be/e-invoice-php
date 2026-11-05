@@ -7,13 +7,15 @@ namespace EInvoiceAPI\Services\Documents;
 use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\Ubl\UblCreateFromUblParams;
 use EInvoiceAPI\Documents\Ubl\UblGetResponse;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\UblRawContract;
 
+/**
+ * @phpstan-import-type UblCreateFromUblParamsShape from UblCreateFromUblParams
+ */
 final class UblRawService implements UblRawContract
 {
     /**
@@ -26,7 +28,7 @@ final class UblRawService implements UblRawContract
      *
      * Create a new invoice or credit note from a UBL file
      *
-     * @param array{file: string|FileParam}|UblCreateFromUblParams $params
+     * @param UblCreateFromUblParamsShape|UblCreateFromUblParams $params
      *
      * @return BaseResponse<DocumentResponse>
      *

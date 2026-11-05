@@ -9,15 +9,16 @@ use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Exceptions\APIException;
 use EInvoiceAPI\Core\Util;
 use EInvoiceAPI\DocumentsNumberPage;
-use EInvoiceAPI\Inbox\SortOrder;
 use EInvoiceAPI\Mailbox\InboundEmailResponse;
-use EInvoiceAPI\Mailbox\InboundEmailSortField;
-use EInvoiceAPI\Mailbox\InboundEmailStatus;
 use EInvoiceAPI\Mailbox\MailboxDownloadAttachmentParams;
 use EInvoiceAPI\Mailbox\MailboxListParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\MailboxRawContract;
 
+/**
+ * @phpstan-import-type MailboxListParamsShape from MailboxListParams
+ * @phpstan-import-type MailboxDownloadAttachmentParamsShape from MailboxDownloadAttachmentParams
+ */
 final class MailboxRawService implements MailboxRawContract
 {
     /**
@@ -52,17 +53,7 @@ final class MailboxRawService implements MailboxRawContract
      *
      * Retrieve a paginated list of received inbound emails with filtering, search, and sorting options.
      *
-     * @param array{
-     *   page?: int,
-     *   pageSize?: int,
-     *   processed?: bool|null,
-     *   receivedFrom?: string|\DateTimeInterface|null,
-     *   receivedTo?: string|\DateTimeInterface|null,
-     *   search?: string|null,
-     *   sortBy?: 'received_at'|'created_at'|InboundEmailSortField,
-     *   sortOrder?: 'asc'|'desc'|SortOrder,
-     *   status?: 'pending'|'success'|'failed'|InboundEmailStatus|null,
-     * }|MailboxListParams $params
+     * @param MailboxListParamsShape|MailboxListParams $params
      *
      * @return BaseResponse<DocumentsNumberPage<InboundEmailResponse>>
      *
@@ -102,7 +93,7 @@ final class MailboxRawService implements MailboxRawContract
      *
      * Download a specific attachment from an inbound email by filename. Returns the binary content with the correct Content-Type.
      *
-     * @param array{inboundEmailID: string}|MailboxDownloadAttachmentParams $params
+     * @param MailboxDownloadAttachmentParamsShape|MailboxDownloadAttachmentParams $params
      *
      * @return BaseResponse<string>
      *

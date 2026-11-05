@@ -8,7 +8,6 @@ use EInvoiceAPI\Client;
 use EInvoiceAPI\Core\Contracts\BaseResponse;
 use EInvoiceAPI\Core\Conversion\ListOf;
 use EInvoiceAPI\Core\Exceptions\APIException;
-use EInvoiceAPI\Core\FileParam;
 use EInvoiceAPI\Documents\Attachments\AttachmentAddParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteParams;
 use EInvoiceAPI\Documents\Attachments\AttachmentDeleteResponse;
@@ -17,6 +16,11 @@ use EInvoiceAPI\Documents\Attachments\DocumentAttachment;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\Documents\AttachmentsRawContract;
 
+/**
+ * @phpstan-import-type AttachmentRetrieveParamsShape from AttachmentRetrieveParams
+ * @phpstan-import-type AttachmentDeleteParamsShape from AttachmentDeleteParams
+ * @phpstan-import-type AttachmentAddParamsShape from AttachmentAddParams
+ */
 final class AttachmentsRawService implements AttachmentsRawContract
 {
     /**
@@ -29,7 +33,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
      *
      * Get attachment details with for an invoice or credit note with link to download file (signed URL, valid for 1 hour)
      *
-     * @param array{documentID: string}|AttachmentRetrieveParams $params
+     * @param AttachmentRetrieveParamsShape|AttachmentRetrieveParams $params
      *
      * @return BaseResponse<DocumentAttachment>
      *
@@ -83,7 +87,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
      *
      * Delete an attachment from an invoice or credit note
      *
-     * @param array{documentID: string}|AttachmentDeleteParams $params
+     * @param AttachmentDeleteParamsShape|AttachmentDeleteParams $params
      *
      * @return BaseResponse<AttachmentDeleteResponse>
      *
@@ -117,7 +121,7 @@ final class AttachmentsRawService implements AttachmentsRawContract
      *
      * Add one or more attachments to an invoice. Be careful: the attachments ARE NOT ADDED to the UBL! They are only stored in our database and can be downloaded later. To add attachments to the UBL, you need to add the attachment(s) via POST /api/documents
      *
-     * @param array{file: string|FileParam}|AttachmentAddParams $params
+     * @param AttachmentAddParamsShape|AttachmentAddParams $params
      *
      * @return BaseResponse<DocumentAttachment>
      *

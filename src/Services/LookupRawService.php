@@ -15,6 +15,10 @@ use EInvoiceAPI\Lookup\LookupRetrieveParticipantsParams;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\LookupRawContract;
 
+/**
+ * @phpstan-import-type LookupRetrieveParamsShape from LookupRetrieveParams
+ * @phpstan-import-type LookupRetrieveParticipantsParamsShape from LookupRetrieveParticipantsParams
+ */
 final class LookupRawService implements LookupRawContract
 {
     /**
@@ -27,7 +31,7 @@ final class LookupRawService implements LookupRawContract
      *
      * Lookup Peppol ID. The peppol_id must be in the form of `<scheme>:<id>`. The scheme is a 4-digit code representing the identifier scheme, and the id is the actual identifier value. For example, for a Belgian company it is `0208:0123456789` (where 0208 is the scheme for Belgian enterprises, followed by the 10 digits of the official BTW / KBO number).
      *
-     * @param array{peppolID: string}|LookupRetrieveParams $params
+     * @param LookupRetrieveParamsShape|LookupRetrieveParams $params
      *
      * @return BaseResponse<LookupGetResponse>
      *
@@ -57,9 +61,7 @@ final class LookupRawService implements LookupRawContract
      *
      * Lookup Peppol participants by name or other identifiers. You can limit the search to a specific country by providing the country code.
      *
-     * @param array{
-     *   query: string, countryCode?: string|null
-     * }|LookupRetrieveParticipantsParams $params
+     * @param LookupRetrieveParticipantsParamsShape|LookupRetrieveParticipantsParams $params
      *
      * @return BaseResponse<LookupGetParticipantsResponse>
      *

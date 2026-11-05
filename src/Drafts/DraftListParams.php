@@ -19,8 +19,8 @@ use EInvoiceAPI\Inbox\SortOrder;
  * @see EInvoiceAPI\Services\DraftsService::list()
  *
  * @phpstan-type DraftListParamsShape = array{
- *   dateFrom?: \DateTimeInterface|null,
- *   dateTo?: \DateTimeInterface|null,
+ *   dateFrom?: string|\DateTimeInterface|null,
+ *   dateTo?: string|\DateTimeInterface|null,
  *   page?: int,
  *   pageSize?: int,
  *   search?: string|null,
