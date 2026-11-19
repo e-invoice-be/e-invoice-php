@@ -4,6 +4,7 @@ namespace Tests\Services;
 
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\TaxCode;
+use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
 use EInvoiceAPI\Documents\DocumentDeleteResponse;
 use EInvoiceAPI\Documents\DocumentGetLifecycleResponse;
 use EInvoiceAPI\Documents\DocumentGetLifecycleResponse\Event as LifecycleEvent;
@@ -16,7 +17,9 @@ use EInvoiceAPI\Documents\DocumentGetTimelineResponse\Event;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use EInvoiceAPI\Documents\DocumentResponse;
 use EInvoiceAPI\Documents\DocumentResponse\Item;
+use EInvoiceAPI\Documents\DocumentResponse\Vatex as ResponseVatex;
 use EInvoiceAPI\Documents\DocumentType;
+use EInvoiceAPI\Documents\UnitOfMeasureCode;
 use EInvoiceAPI\Inbox\DocumentState;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use PHPUnit\Framework\Attributes\Test;
@@ -203,6 +206,59 @@ final class DocumentsTest extends ServiceTestCase
             'total_tax_in_tax_currency' => 1150.5,
             'vendor_phone' => '+49 30 1234567',
         ]);
+    }
+
+    #[Test]
+    public function testCreateWithTheFullCodeLists(): void
+    {
+        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z']);
+
+        // VATEX-FR-* and the full UNECE Rec 20 list (MTS, XT1) came with spec 1.1.0.
+        $this->client->documents->create(
+            items: [
+                ['name' => 'Rope', 'unit' => UnitOfMeasureCode::MTS],
+                ['name' => 'Totes', 'unit' => 'XT1'],
+            ],
+            taxCode: TaxCode::E,
+            vatex: Vatex::VATEX_FR_CGI261_1,
+            vatexNote: 'Exonération de TVA, article 261 du CGI',
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('POST', '/api/documents/', body: [
+            'currency' => 'EUR',
+            'direction' => 'OUTBOUND',
+            'document_type' => 'INVOICE',
+            'items' => [
+                ['name' => 'Rope', 'unit' => 'MTS'],
+                ['name' => 'Totes', 'unit' => 'XT1'],
+            ],
+            'state' => 'DRAFT',
+            'tax_code' => 'E',
+            'vatex' => 'VATEX-FR-CGI261-1',
+            'vatex_note' => 'Exonération de TVA, article 261 du CGI',
+        ]);
+    }
+
+    #[Test]
+    public function testRetrieveWithTheFullCodeLists(): void
+    {
+        $this->http->queueJson([
+            'id' => 'document_id',
+            'created_at' => '2024-01-15T10:30:00Z',
+            'items' => [['unit' => 'KWH']],
+            'shipping_address_recipient' => 'Warehouse 3',
+            'vatex' => 'VATEX-EU-153',
+        ]);
+
+        $result = $this->client->documents->retrieve(
+            'document_id',
+            requestOptions: $this->options()
+        );
+
+        $this->assertSame(UnitOfMeasureCode::KWH->value, ($result->items ?? [])[0]->unit);
+        $this->assertSame('Warehouse 3', $result->shippingAddressRecipient);
+        $this->assertSame(ResponseVatex::VATEX_EU_153->value, $result->vatex);
     }
 
     #[Test]

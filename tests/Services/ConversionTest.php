@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use EInvoiceAPI\Conversion\DocumentCreateFromPdfTask;
+use EInvoiceAPI\Core\Exceptions\NotFoundException;
 use EInvoiceAPI\Documents\DocumentNewFromPdfResponse;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -14,7 +15,8 @@ final class ConversionTest extends ServiceTestCase
     #[Test]
     public function testCreateFromPdf(): void
     {
-        $this->http->queueJson(['task_id' => 'task_id']);
+        // `POST /api/conversion/pdf` answers 201.
+        $this->http->queueJson(['task_id' => 'task_id'], 201);
 
         $result = $this->client->conversion->createFromPdf(
             file: 'file',
@@ -31,7 +33,7 @@ final class ConversionTest extends ServiceTestCase
     #[Test]
     public function testCreateFromPdfWithOptionalParams(): void
     {
-        $this->http->queueJson(['task_id' => 'task_id', 'status' => 'pending']);
+        $this->http->queueJson(['task_id' => 'task_id', 'status' => 'pending'], 201);
 
         $result = $this->client->conversion->createFromPdf(
             file: 'file',
@@ -90,5 +92,39 @@ final class ConversionTest extends ServiceTestCase
         $this->assertSame('121.00', $result->invoiceTotal);
         $this->assertSame('Acme', $result->customerName);
         $this->assertNull($result->errorMessage);
+    }
+
+    #[Test]
+    public function testRetrieveOfAnExpiredTaskThrowsNotFound(): void
+    {
+        // The 404 of `GET /api/conversion/pdf/{task_id}` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'Task not found or expired'], 404);
+
+        try {
+            $this->client->conversion->retrieve('task_id', requestOptions: $this->options());
+            $this->fail('The client did not throw.');
+        } catch (NotFoundException $e) {
+            $this->assertSame(404, $e->status);
+            $this->assertSame(['detail' => 'Task not found or expired'], $e->body);
+        }
+
+        $this->assertRequest('GET', '/api/conversion/pdf/task_id');
+    }
+
+    #[Test]
+    public function testRetrieveResultOfAnExpiredTaskThrowsNotFound(): void
+    {
+        // The 404 of `GET /api/conversion/pdf/{task_id}/result` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'PDF conversion result not found or expired'], 404);
+
+        try {
+            $this->client->conversion->retrieveResult('task_id', requestOptions: $this->options());
+            $this->fail('The client did not throw.');
+        } catch (NotFoundException $e) {
+            $this->assertSame(404, $e->status);
+            $this->assertSame(['detail' => 'PDF conversion result not found or expired'], $e->body);
+        }
+
+        $this->assertRequest('GET', '/api/conversion/pdf/task_id/result');
     }
 }
