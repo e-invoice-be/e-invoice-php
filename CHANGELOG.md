@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.10.0 (2026-11-19)
+
+Full Changelog: [v0.9.1...v0.10.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.9.1...v0.10.0)
+
+Checked against the live OpenAPI specification (v1.1.0). All 41 operations have a matching SDK method, and the spec removes or renames nothing. The spec's code lists have grown, and three field descriptions changed; this release adds the new codes and descriptions.
 
 ### ⚠ BREAKING CHANGES
 
@@ -10,10 +14,16 @@
 ### Features
 
 * **stats:** `startDate` and `endDate` of `stats->retrieve()`, `stats->raw->retrieve()` and `StatRetrieveParams` also accept a `\DateTimeInterface` ([#47](https://github.com/e-invoice-be/e-invoice-php/issues/47)). It is sent as `yyyy-mm-dd`, the calendar date in the object's own time zone. A string is still sent as given. `StatsContract::retrieve()` keeps `?string`, so an existing implementation of the interface still loads; `StatsService` accepts a date as well
+* **documents:** `EInvoiceAPI\Documents\UnitOfMeasureCode` now holds the spec's full UN/ECE Recommendation 20 code list, 2380 codes (was 1031), for example `XT1` and `ACT`. No existing case was renamed or removed. The `unit` literal union in the `documents->create()` and `validate->validateJson()` docblocks lists the same codes
+* **documents:** the `Vatex` enums (`Documents\DocumentCreateParams\Vatex`, `Documents\DocumentResponse\Vatex`, `Documents\DocumentNewFromPdfResponse\Vatex` and `Validate\ValidateValidateJsonParams\Vatex`) now hold the spec's 88 VATEX codes (was 62). The new codes are `VATEX-EU-135-1`, `VATEX-EU-153`, `VATEX-FR-AE`, `VATEX-FR-298SEXDECIESA` and 22 `VATEX-FR-CGI*` codes. No existing case was renamed or removed
 
 ### Bug Fixes
 
 * `documents->create()` and `validate->validateJson()` now show the defaults of the API specification in their signatures, and send them: `currency: CurrencyCode::EUR`, `direction: DocumentDirection::OUTBOUND`, `documentType: DocumentType::INVOICE` and `state: DocumentState::DRAFT` (these were `null`, so the fields were left out), and `taxCode: TaxCode::S` (was the string `'S'`) ([#48](https://github.com/e-invoice-be/e-invoice-php/issues/48)). The server applies the same defaults to an absent field. Passing `null` for `currency`, `direction`, `documentType` or `state` still leaves the field out
+
+### Documentation
+
+* the `shippingAddressRecipient`, `vatex` and `vatexNote` docs on the document create, response, from-PDF response and validate-JSON models and methods now use the spec's descriptions: the deliver-to party name (BT-70), the VAT exemption reason code (BT-121) and text (BT-120), and the tax codes that require an exemption reason (E, AE, K, G and O) or don't allow one (S, Z, L and M)
 
 ## 0.9.1 (2026-11-04)
 

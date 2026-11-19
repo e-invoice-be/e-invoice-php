@@ -393,7 +393,7 @@ final class DocumentCreateParams implements BaseModel
     public ?string $shippingAddress;
 
     /**
-     * The recipient name at the shipping address.
+     * The name of the deliver-to party (BT-70).
      */
     #[Optional('shipping_address_recipient', nullable: true)]
     public ?string $shippingAddressRecipient;
@@ -452,7 +452,7 @@ final class DocumentCreateParams implements BaseModel
     public float|string|null $totalTaxInTaxCurrency;
 
     /**
-     * VAT exemption reason code (required when tax_code is E or other exempt categories).
+     * VAT exemption reason code (BT-121), from the VATEX code list. An exemption reason (vatex or vatex_note) is required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M.
      *
      * @var value-of<Vatex>|null $vatex
      */
@@ -460,7 +460,7 @@ final class DocumentCreateParams implements BaseModel
     public ?string $vatex;
 
     /**
-     * Textual explanation for VAT exemption.
+     * VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M.
      */
     #[Optional('vatex_note', nullable: true)]
     public ?string $vatexNote;
@@ -1207,7 +1207,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * The recipient name at the shipping address.
+     * The name of the deliver-to party (BT-70).
      */
     public function withShippingAddressRecipient(
         ?string $shippingAddressRecipient
@@ -1314,7 +1314,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * VAT exemption reason code (required when tax_code is E or other exempt categories).
+     * VAT exemption reason code (BT-121), from the VATEX code list. An exemption reason (vatex or vatex_note) is required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M.
      *
      * @param Vatex|value-of<Vatex>|null $vatex
      */
@@ -1327,7 +1327,7 @@ final class DocumentCreateParams implements BaseModel
     }
 
     /**
-     * Textual explanation for VAT exemption.
+     * VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M.
      */
     public function withVatexNote(?string $vatexNote): self
     {

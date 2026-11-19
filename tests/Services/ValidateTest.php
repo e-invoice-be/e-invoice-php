@@ -9,6 +9,7 @@ use EInvoiceAPI\Documents\DocumentDirection;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams\Item;
+use EInvoiceAPI\Validate\ValidateValidateJsonParams\Vatex;
 use EInvoiceAPI\Validate\ValidateValidatePeppolIDResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -322,6 +323,76 @@ final class ValidateTest extends ServiceTestCase
         );
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UblDocumentValidation::class, $result);
+    }
+
+    /**
+     * The spec's `VATExemptionCode` enum has the French VATEX codes and
+     * VATEX-EU-135-1 and VATEX-EU-153.
+     */
+    #[Test]
+    public function testValidateJsonWithNewVatexCodes(): void
+    {
+        $this->http->queueJson(self::validationResponse());
+        $this->http->queueJson(self::validationResponse());
+
+        $this->client->validate->validateJson(
+            shippingAddressRecipient: 'Warehouse 3',
+            taxCode: 'E',
+            vatex: Vatex::VATEX_FR_CGI261_D_1_BIS,
+            vatexNote: 'Article 261 D-1 bis CGI',
+            requestOptions: $this->options(),
+        );
+        $this->client->validate->validateJson(
+            taxCode: 'E',
+            vatex: 'VATEX-EU-135-1',
+            requestOptions: $this->options(),
+        );
+
+        $defaults = [
+            'currency' => 'EUR',
+            'direction' => 'OUTBOUND',
+            'document_type' => 'INVOICE',
+            'state' => 'DRAFT',
+            'tax_code' => 'E',
+        ];
+        $this->assertRequest('POST', '/api/validate/json', body: [
+            ...$defaults,
+            'shipping_address_recipient' => 'Warehouse 3',
+            'vatex' => 'VATEX-FR-CGI261D-1BIS',
+            'vatex_note' => 'Article 261 D-1 bis CGI',
+        ]);
+        $this->assertRequest('POST', '/api/validate/json', body: [
+            ...$defaults,
+            'vatex' => 'VATEX-EU-135-1',
+        ], index: 1);
+
+        $this->assertSame(Vatex::VATEX_EU_153, Vatex::from('VATEX-EU-153'));
+        $this->assertSame(Vatex::VATEX_FR_298_SEXDECIESA, Vatex::from('VATEX-FR-298SEXDECIESA'));
+        $this->assertCount(88, Vatex::cases());
+    }
+
+    /**
+     * The `unit` of a line item takes every code of the spec's
+     * `UnitOfMeasureCode` enum, for example ACT.
+     */
+    #[Test]
+    public function testValidateJsonWithItemUnit(): void
+    {
+        $this->http->queueJson(self::validationResponse());
+
+        $this->client->validate->validateJson(
+            items: [['name' => 'Box', 'unit' => 'XT1'], ['name' => 'Act', 'unit' => 'ACT']],
+            requestOptions: $this->options(),
+        );
+
+        $this->assertRequest('POST', '/api/validate/json', body: [
+            'currency' => 'EUR',
+            'direction' => 'OUTBOUND',
+            'document_type' => 'INVOICE',
+            'items' => [['name' => 'Box', 'unit' => 'XT1'], ['name' => 'Act', 'unit' => 'ACT']],
+            'state' => 'DRAFT',
+            'tax_code' => 'S',
+        ]);
     }
 
     #[Test]
