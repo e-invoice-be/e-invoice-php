@@ -5,6 +5,7 @@ namespace Tests\Services;
 use EInvoiceAPI\Core\Conversion;
 use EInvoiceAPI\Core\Conversion\Contracts\ConverterSource;
 use EInvoiceAPI\Core\Conversion\UnionOf;
+use EInvoiceAPI\Core\Exceptions\RateLimitException;
 use EInvoiceAPI\Documents\DocumentDirection;
 use EInvoiceAPI\Validate\UblDocumentValidation;
 use EInvoiceAPI\Validate\ValidateValidateJsonParams;
@@ -22,7 +23,8 @@ final class ValidateTest extends ServiceTestCase
     #[Test]
     public function testValidateJson(): void
     {
-        $this->http->queueJson(self::validationResponse());
+        // `POST /api/validate/json` answers 201 with a `UBLDocumentValidationResponse`.
+        $this->http->queueJson(self::validationResponse(), 201);
 
         $result = $this->client->validate->validateJson(requestOptions: $this->options());
 
@@ -127,7 +129,8 @@ final class ValidateTest extends ServiceTestCase
     #[Test]
     public function testValidateUbl(): void
     {
-        $this->http->queueJson(self::validationResponse(['file_name' => 'upload']));
+        // `POST /api/validate/ubl` answers 201 with a `UBLDocumentValidationResponse`.
+        $this->http->queueJson(self::validationResponse(['file_name' => 'upload']), 201);
 
         $result = $this->client->validate->validateUbl(
             file: 'file',
@@ -140,6 +143,26 @@ final class ValidateTest extends ServiceTestCase
         $this->assertSame('val_123', $result->id);
         $this->assertSame('upload', $result->fileName);
         $this->assertTrue($result->isValid);
+    }
+
+    #[Test]
+    public function testValidateUblThrowsRateLimit(): void
+    {
+        // The 429 of `POST /api/validate/ubl` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'Rate limit exceeded'], 429);
+
+        try {
+            $this->client->validate->validateUbl(
+                file: 'file',
+                requestOptions: $this->options()->withMaxRetries(0),
+            );
+            $this->fail('The client did not throw.');
+        } catch (RateLimitException $e) {
+            $this->assertSame(429, $e->status);
+            $this->assertSame(['detail' => 'Rate limit exceeded'], $e->body);
+        }
+
+        $this->assertUploadRequest('/api/validate/ubl');
     }
 
     #[Test]

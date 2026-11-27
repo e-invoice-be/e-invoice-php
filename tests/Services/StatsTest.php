@@ -2,6 +2,7 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\Core\Exceptions\BadRequestException;
 use EInvoiceAPI\RequestOptions;
 use EInvoiceAPI\ServiceContracts\StatsContract;
 use EInvoiceAPI\Stats\StatGetResponse;
@@ -42,6 +43,23 @@ final class StatsTest extends ServiceTestCase
         $this->assertSame(31, $result->totalDays);
         $this->assertSame(0.06, $result->averageDailyUsage);
         $this->assertNull($result->budgetEstimationDays);
+    }
+
+    #[Test]
+    public function testRetrieveThrowsBadRequest(): void
+    {
+        // The 400 of `GET /api/stats` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'start_date must be before end_date'], 400);
+
+        try {
+            $this->client->stats->retrieve(requestOptions: $this->options());
+            $this->fail('The client did not throw.');
+        } catch (BadRequestException $e) {
+            $this->assertSame(400, $e->status);
+            $this->assertSame(['detail' => 'start_date must be before end_date'], $e->body);
+        }
+
+        $this->assertRequest('GET', '/api/stats', ['aggregation' => 'DAY']);
     }
 
     #[Test]

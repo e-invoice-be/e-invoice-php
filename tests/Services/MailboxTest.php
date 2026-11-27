@@ -2,6 +2,7 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\Core\Exceptions\ConflictException;
 use EInvoiceAPI\DocumentsNumberPage;
 use EInvoiceAPI\Mailbox\InboundEmailResponse;
 use Nyholm\Psr7\Response;
@@ -138,7 +139,8 @@ final class MailboxTest extends ServiceTestCase
     #[Test]
     public function testReprocess(): void
     {
-        $this->http->queueJson([...self::EMAIL, 'processed' => false, 'processed_at' => null]);
+        // `POST /api/mailbox/{inbound_email_id}/reprocess` answers 202 with an `InboundEmailResponse`.
+        $this->http->queueJson([...self::EMAIL, 'processed' => false, 'processed_at' => null], 202);
 
         $result = $this->client->mailbox->reprocess(
             'inbound_email_id',
@@ -151,6 +153,26 @@ final class MailboxTest extends ServiceTestCase
         $this->assertSame('inbound_email_id', $result->id);
         $this->assertFalse($result->processed);
         $this->assertNull($result->processedAt);
+    }
+
+    #[Test]
+    public function testReprocessThrowsConflict(): void
+    {
+        // The 409 of `POST /api/mailbox/{inbound_email_id}/reprocess` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'Inbound email cannot be reprocessed'], 409);
+
+        try {
+            $this->client->mailbox->reprocess(
+                'inbound_email_id',
+                requestOptions: $this->options()->withMaxRetries(0),
+            );
+            $this->fail('The client did not throw.');
+        } catch (ConflictException $e) {
+            $this->assertSame(409, $e->status);
+            $this->assertSame(['detail' => 'Inbound email cannot be reprocessed'], $e->body);
+        }
+
+        $this->assertRequest('POST', '/api/mailbox/inbound_email_id/reprocess');
     }
 
     private function queuePage(): void

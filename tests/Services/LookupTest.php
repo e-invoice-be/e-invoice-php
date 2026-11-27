@@ -2,6 +2,7 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\Core\Exceptions\InternalServerException;
 use EInvoiceAPI\Lookup\LookupGetParticipantsResponse;
 use EInvoiceAPI\Lookup\LookupGetResponse;
 use PHPUnit\Framework\Attributes\Test;
@@ -77,6 +78,26 @@ final class LookupTest extends ServiceTestCase
         $this->assertSame('query', $result->queryTerms);
         $this->assertSame(1, $result->totalCount);
         $this->assertSame(1, $result->usedCount);
+    }
+
+    #[Test]
+    public function testRetrieveParticipantsThrowsWhenUnavailable(): void
+    {
+        // The 503 of `GET /api/lookup/participants` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'Peppol directory unavailable'], 503);
+
+        try {
+            $this->client->lookup->retrieveParticipants(
+                query: 'query',
+                requestOptions: $this->options()->withMaxRetries(0),
+            );
+            $this->fail('The client did not throw.');
+        } catch (InternalServerException $e) {
+            $this->assertSame(503, $e->status);
+            $this->assertSame(['detail' => 'Peppol directory unavailable'], $e->body);
+        }
+
+        $this->assertRequest('GET', '/api/lookup/participants', ['query' => 'query']);
     }
 
     #[Test]

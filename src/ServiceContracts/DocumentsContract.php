@@ -269,6 +269,8 @@ interface DocumentsContract
     /**
      * @api
      *
+     * @param string|null $email (Deprecated)
+     *
      * @throws APIException
      */
     public function send(
