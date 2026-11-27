@@ -2,10 +2,15 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\Core\Exceptions\NotFoundException;
+use EInvoiceAPI\Core\Exceptions\UnprocessableEntityException;
+use EInvoiceAPI\RequestOptions;
+use EInvoiceAPI\Services\WebhooksService;
 use EInvoiceAPI\Webhooks\WebhookDeleteResponse;
 use EInvoiceAPI\Webhooks\WebhookGetHistoryResponse;
 use EInvoiceAPI\Webhooks\WebhookResponse;
 use EInvoiceAPI\Webhooks\WebhookTestResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 /**
@@ -282,6 +287,113 @@ final class WebhooksTest extends ServiceTestCase
             ['status_code' => 200, 'duration_ms' => 42],
             $result->webhookDeliveryResult,
         );
+    }
+
+    /**
+     * @param \Closure(WebhooksService, RequestOptions): mixed $call
+     * @param array<string,mixed>|null $body
+     */
+    #[Test]
+    #[DataProvider('callsOfAnUnknownWebhook')]
+    public function testUnknownWebhookThrowsNotFound(\Closure $call, string $method, string $path, ?array $body): void
+    {
+        // The 404 of these operations is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'Webhook not found'], 404);
+
+        try {
+            $call($this->client->webhooks, $this->options());
+            $this->fail('The client did not throw.');
+        } catch (NotFoundException $e) {
+            $this->assertSame(404, $e->status);
+            $this->assertSame(['detail' => 'Webhook not found'], $e->body);
+        }
+
+        $this->assertRequest($method, $path, body: $body);
+    }
+
+    /**
+     * @return iterable<string,array{\Closure(WebhooksService, RequestOptions): mixed, string, string, array<string,mixed>|null}>
+     */
+    public static function callsOfAnUnknownWebhook(): iterable
+    {
+        yield 'retrieve' => [
+            static fn (WebhooksService $s, RequestOptions $o) => $s->retrieve('webhook_id', requestOptions: $o),
+            'GET',
+            '/api/webhooks/webhook_id',
+            null,
+        ];
+
+        yield 'update' => [
+            static fn (WebhooksService $s, RequestOptions $o) => $s->update('webhook_id', enabled: false, requestOptions: $o),
+            'PUT',
+            '/api/webhooks/webhook_id',
+            ['enabled' => false],
+        ];
+
+        yield 'delete' => [
+            static fn (WebhooksService $s, RequestOptions $o) => $s->delete('webhook_id', requestOptions: $o),
+            'DELETE',
+            '/api/webhooks/webhook_id',
+            null,
+        ];
+
+        yield 'test' => [
+            static fn (WebhooksService $s, RequestOptions $o) => $s->test('webhook_id', data: [], eventType: 'document.received', requestOptions: $o),
+            'POST',
+            '/api/webhooks/webhook_id/test',
+            ['data' => [], 'event_type' => 'document.received'],
+        ];
+    }
+
+    /**
+     * @param \Closure(WebhooksService, RequestOptions): mixed $call
+     * @param array<string,mixed>|null $body
+     */
+    #[Test]
+    #[DataProvider('callsWithInvalidWebhookData')]
+    public function testInvalidWebhookDataThrowsUnprocessableEntity(\Closure $call, string $method, string $path, ?array $body): void
+    {
+        // The 422 of `POST /api/webhooks/`, `PUT /api/webhooks/{webhook_id}` and
+        // `POST /api/webhooks/{webhook_id}/test` is an `ErrorResponse`, not an
+        // `HTTPValidationError`.
+        $this->http->queueJson(['detail' => 'Invalid webhook data'], 422);
+
+        try {
+            $call($this->client->webhooks, $this->options());
+            $this->fail('The client did not throw.');
+        } catch (UnprocessableEntityException $e) {
+            $this->assertSame(422, $e->status);
+            $this->assertSame(['detail' => 'Invalid webhook data'], $e->body);
+        }
+
+        $this->assertRequest($method, $path, body: $body);
+    }
+
+    /**
+     * @return iterable<string,array{\Closure(WebhooksService, RequestOptions): mixed, string, string, array<string,mixed>|null}>
+     */
+    public static function callsWithInvalidWebhookData(): iterable
+    {
+        yield 'create' => [
+            static fn (WebhooksService $s, RequestOptions $o) => $s->create(events: [], url: 'not a url', requestOptions: $o),
+            'POST',
+            '/api/webhooks/',
+            ['events' => [], 'url' => 'not a url', 'enabled' => true],
+        ];
+
+        yield 'update' => [
+            static fn (WebhooksService $s, RequestOptions $o) => $s->update('webhook_id', url: 'not a url', requestOptions: $o),
+            'PUT',
+            '/api/webhooks/webhook_id',
+            ['url' => 'not a url'],
+        ];
+
+        yield 'test' => [
+            static fn (WebhooksService $s, RequestOptions $o) => $s->test('webhook_id', data: [], eventType: 'not.an.event', requestOptions: $o),
+            'POST',
+            '/api/webhooks/webhook_id/test',
+            ['data' => [], 'event_type' => 'not.an.event'],
+        ];
     }
 
     /**

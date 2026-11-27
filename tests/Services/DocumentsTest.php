@@ -2,6 +2,7 @@
 
 namespace Tests\Services;
 
+use EInvoiceAPI\Core\Exceptions\NotFoundException;
 use EInvoiceAPI\Documents\CurrencyCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\TaxCode;
 use EInvoiceAPI\Documents\DocumentCreateParams\Vatex;
@@ -36,7 +37,7 @@ final class DocumentsTest extends ServiceTestCase
             'id' => 'doc_123',
             'created_at' => '2024-01-15T10:30:00Z',
             'state' => 'DRAFT',
-        ]);
+        ], 201);
 
         $result = $this->client->documents->create(
             requestOptions: $this->options()
@@ -59,7 +60,7 @@ final class DocumentsTest extends ServiceTestCase
     #[Test]
     public function testCreateOverridesTheSpecDefaults(): void
     {
-        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z']);
+        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z'], 201);
 
         $this->client->documents->create(
             currency: CurrencyCode::USD,
@@ -82,7 +83,7 @@ final class DocumentsTest extends ServiceTestCase
     #[Test]
     public function testCreateOmitsADefaultedFieldPassedAsNull(): void
     {
-        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z']);
+        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z'], 201);
 
         $this->client->documents->create(
             currency: null,
@@ -110,7 +111,7 @@ final class DocumentsTest extends ServiceTestCase
                     'item_attributes' => [['name' => 'name', 'value' => 'value']],
                 ],
             ],
-        ]);
+        ], 201);
 
         $result = $this->client->documents->create(
             constructPdf: true,
@@ -159,7 +160,7 @@ final class DocumentsTest extends ServiceTestCase
         $this->http->queueJson([
             'id' => 'doc_123',
             'created_at' => '2024-01-15T10:30:00Z',
-        ]);
+        ], 201);
 
         $this->client->documents->create(
             buyerReference: 'CC-42',
@@ -211,7 +212,7 @@ final class DocumentsTest extends ServiceTestCase
     #[Test]
     public function testCreateWithTheFullCodeLists(): void
     {
-        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z']);
+        $this->http->queueJson(['id' => 'doc_123', 'created_at' => '2024-01-15T10:30:00Z'], 201);
 
         // VATEX-FR-* and the full UNECE Rec 20 list (MTS, XT1) came with spec 1.1.0.
         $this->client->documents->create(
@@ -335,6 +336,26 @@ final class DocumentsTest extends ServiceTestCase
     }
 
     #[Test]
+    public function testRetrieveOfAnUnknownDocumentThrowsNotFound(): void
+    {
+        // The 404 of `GET /api/documents/{document_id}` is an `ErrorResponse`.
+        $this->http->queueJson(['detail' => 'Document not found'], 404);
+
+        try {
+            $this->client->documents->retrieve(
+                'document_id',
+                requestOptions: $this->options()
+            );
+            $this->fail('The client did not throw.');
+        } catch (NotFoundException $e) {
+            $this->assertSame(404, $e->status);
+            $this->assertSame(['detail' => 'Document not found'], $e->body);
+        }
+
+        $this->assertRequest('GET', '/api/documents/document_id');
+    }
+
+    #[Test]
     public function testDelete(): void
     {
         $this->http->queueJson(['is_deleted' => true]);
@@ -356,7 +377,7 @@ final class DocumentsTest extends ServiceTestCase
         $this->http->queueJson([
             'invoice_id' => 'INV-2024-001',
             'success' => true,
-        ]);
+        ], 201);
 
         $result = $this->client->documents->createFromPdf(
             file: 'file',
@@ -375,7 +396,7 @@ final class DocumentsTest extends ServiceTestCase
         $this->http->queueJson([
             'customer_tax_id' => 'customer_tax_id',
             'vendor_tax_id' => 'vendor_tax_id',
-        ]);
+        ], 201);
 
         $result = $this->client->documents->createFromPdf(
             file: 'file',
@@ -414,7 +435,7 @@ final class DocumentsTest extends ServiceTestCase
             'tax_currency' => 'SEK',
             'total_tax_in_tax_currency' => '1150.50',
             'vendor_phone' => '+49 30 1234567',
-        ]);
+        ], 201);
 
         $result = $this->client->documents->createFromPdf(
             file: 'file',

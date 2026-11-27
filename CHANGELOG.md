@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.10.1 (2026-11-27)
+
+Full Changelog: [v0.10.0...v0.10.1](https://github.com/e-invoice-be/e-invoice-php/compare/v0.10.0...v0.10.1)
+
+Checked against the live OpenAPI specification (v1.1.0). All 41 operations have a matching SDK method, the spec removes or renames nothing, and no SDK method lacks a spec operation. The paths, methods, params, defaults, enums, request bodies, response schemas, base URL, auth and error shapes match the spec, so this release changes no request or response.
+
+### Documentation
+
+* **documents:** the docblocks of `DocumentsService::send()` and `DocumentsContract::send()` now mark the `email` param as deprecated, as the spec does for the `email` query param of `POST /api/documents/{document_id}/send`. `DocumentSendParams` already did
+
 ## 0.10.0 (2026-11-19)
 
 Full Changelog: [v0.9.1...v0.10.0](https://github.com/e-invoice-be/e-invoice-php/compare/v0.9.1...v0.10.0)
